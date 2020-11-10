@@ -1,30 +1,85 @@
 ---
-title: "CaseStudyRebecca_SedimentRespiration"
+title: "Case Study"
+subtitle: "Sediment Respiration Pulses in Intermittent Rivers and Ephemeral Streams (Schiller et al., 2019)"
 author: "Rebecca"
 date: "10 November 2020"
 output: html_document
 ---
 
+#Intro
+Most streams emit large quanitites of CO2 to the atmosphere, but so far contribution of intermittent rivers and ephemeral streams (IRES) were not included in these fluxes. 
+
+#Methods
+## Field and lab
+A standardizes protocol was used to collect sediments and measure environmental variables from different regions of the world. Sediment samples were then analysed and measurements were taken upon rewetting.
+
+## Statistical Analyses
+In a first step, differences among measuring methods were tested. Second, the relationship between sediment respiration changes upon rewetting was measured using gls(). These first two steps are for now not of interest. 
+The third step was to model causal relationships between environmental drivers and sediment respiration change upon rewetting using SEM, which is described in the following.
+
+The authors distinguish between proximal drivers: Clay Content, Organic Carbon and C/N ratio, and distal drivers: Land use, Precipitation, Temperature, Riparian Cover and Channel Width.
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# load packages
+library(lavaan)
+library (readxl)
+library (spdep)
+library(SoDA)
+library(ade4)
+library(adespatial)
+library(ggplot2)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+```{r}
+# load data
+setwd("C:/Users/Rebecca/polybox/PhD/UZH Courses/2020-SEM")
+reaches <- read_excel("C:/Users/Rebecca/polybox/PhD/UZH Courses/2020-SEM/Data_Sediment Respiration.xlsx", 
+                      sheet = "Data")
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+# create new variables Response.microresp, Response.bottle and Landuse
+
+reaches$Response.microresp <- reaches$CO2MicrorespWet - reaches$CO2MicrorespDry # response of sediment respiration as difference between wet-dry for the Microresp method
+reaches$Response.bottles <- reaches$CO2Bottles - reaches$CO2MicrorespDry # response of sediment respiration as difference between wet-dry for the Bottle method
+reaches$Landuse <- reaches$PercentAgriculture + reaches$PercentUrban # Landuse as a measure of  anthropogenic area expressed as the sum of the percentages of agriculture area and urban area
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+## create metamodel as described in the paper
+metamodel <- '
+Response.microresp ~ Organic Carbon + CarbonNitrogenRatio + ClayCoult
+Organic Carbon ~ Landuse + AnnualPrecipitation + AnnualTemperature+RiparianCover
+CarbonNitrogenRatio ~ Landuse+ Annual Precipitation + AnnualTemperature+ RiparianCover
+RiparianCover ~ ActiveChannelWidth + Landuse
+'
+```
+
+Exploratory data anlaysis suggested the need to square-root transform or ln-transform the response variables (including respiration rates) and five explanatory variables to ensure linearity of relationships and hence the suitability of the global estimation method. So let's see what we find:
+
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+## explanatory variables
+hist(reaches$OrganicCarbon) ## left skewed
+hist(reaches$CarbonNitrogenRatio) ## left skewed
+hist(reaches$ClayCoult) ## left skewed
+hist(reaches$RiparianCover) ## bimodal
+hist(reaches$AnnualTemperature) ## normal
+hist(reaches$AnnualPrecipitation) ## left skewed
+hist(reaches$ActiveChannelWidth) ## left skewed
+hist(reaches$Landuse) ## bimodal
+## response variables
+hist(reaches$Response.bottles) ## left skewed
+hist(reaches$Response.microresp) ## left skewed
+```
+
+
+sem()
+
+moindices()
+
