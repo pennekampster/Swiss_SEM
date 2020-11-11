@@ -1,0 +1,102 @@
+---
+title: "Case Study: SEM - from Theory to Practice"
+subtitle: "Linking the Agricultural Landscape of the Midwest to Stream Health with Structural Equation Modeling [(Schmidt et al., 2019)](https://doi.org/10.1021/acs.est.8b04381)"
+author: "Fabienne Wiederkehr"
+date: "11/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction^[Schmidt, T.S., Van Metre, P.C., Carlisle, D.M. (2019). Linking the Agricultural Landscape of the Midwest to Stream Health with Structural Equation Modeling. _Environmental Science Technology_, _53_, 452-462. https://doi.org/10.1021/acs.est.8b04381]
+
+The expanding human population as well as their actions on the landscape (e.g. developments in infrastructure, agriculture, and industry) threaten the ecological integrity of stream ecosystems. Understanding how these landscape modifications affect the stream habitat, water quality, and ultimately stream biology, is a primary goal of stream ecology and crucial for the development of effective management strategies that maintain our freshwater resources.
+
+For background, we here provide the abstract from their paper. For more details, please refer to the study itself. ![](Schmidt-et-al_2019_Abstract.jpeg)
+
+## Data Exploration
+
+Schmidt et al. (2019) performed all modelling in R using the packages `psych`, `data.table`, `lavaan`, and `semplot`, thus we, too, will (install and) load them. If you are not yet familiar with these packages, use the in-built help function (e.g. `?lavaan`) to find out more about them. The authors provide their data and metadata [here](https://www.sciencebase.gov/catalog/item/5b463148e4b060350a15a836)^[https://www.sciencebase.gov/catalog/item/5b463148e4b060350a15a836], and the supplementary material [here](https://pubs.acs.org/doi/suppl/10.1021/acs.est.8b04381/suppl_file/es8b04381_si_001.pdf)^[https://pubs.acs.org/doi/suppl/10.1021/acs.est.8b04381/suppl_file/es8b04381_si_001.pdf]. We will download the data and get started in R:
+
+```{r, include=FALSE}
+# Load packages
+require(psych)
+require(data.table)
+require(lavaan)
+require(semPlot)
+```
+
+```{r}
+# Set working directory and load data
+setwd("~/Git_Projects/Swiss_SEM/Case studies/Schmidt-et-al_2019")
+dat <- read.csv("Schmidt-et-al_2019.csv", sep=";")
+```
+
+First, we need to inspect and transform the data to meet the assumptions of normality and heterogeneity of variance. Data scales impact the internal matrix manipulations. `lavaan` is fussy about data scales, since they impact the internal matrix manipulations. Although it will let us know if it has a problem with our data, it is good practice to inspect the data beforehands. The authors of this study list the specific transformations for predictor variables in Table S1, and those for the ecology variables in the main text. We transform the data accordingly:
+
+```{r}
+# Transform data
+dat2 <- dat # duplicate data to avoid overwriting original data
+dat2$BasinArea <- log10(dat$BasinArea) # example for how to log10 transform variable
+```
+
+```{r, echo=FALSE}
+# Data transformations
+dat2$BasinArea <- log10(dat$BasinArea) #Basin Area
+dat2$Bank <- log10(dat$Bank+1) #Channel Erosion
+dat2$PctCanopy <- asin(sqrt(dat$PctCanopy/100)) #Percent Canopy
+dat2$RBS <- dat$RBS^(1/4) #Relative Bed Stability
+dat2$Bifenthrin <- log10(dat$Bifenthrin+1) #Bifenthrin
+dat2$imidacloprid <- log10(dat$imidacloprid+1) #Imidacloprid
+dat2$pyrethroid_deg_sum <- log10(dat$pyrethroid_deg_sum+1) #Pyrethroid Degradates
+dat2$median.of.sumconcn_triazH <- log10(dat$median.of.sumconcn_triazH+1) #Triazine Herbizides
+dat2$NH3_MED_42DAY <- log10(dat$NH3_MED_42DAY+1) #Ammonia
+dat2$TN_MED_42DAY <- log10(dat$TN_MED_42DAY) #Total Nitrogen
+dat2$TP_MED_42DAY <- log10(dat$TP_MED_42DAY) #Total Phosphorus
+dat2$BC_2.RelAbun <- dat$BC_2.RelAbun^(1/4) #BC2, integrity of algal community
+dat2$BC_3.RelAbun <- dat$BC_3.RelAbun^(1/2) #BC3, integrity of algal community
+dat2$BC_4.RelAbun <- dat$BC_4.RelAbun^(1/2) #BC4, integrity of algal community
+```
+
+After transformation, the data were centred and standardised "by subtracting the mean value for each variable from each observation and then dividing by the standard deviation of all observations for that variable". Luckily, this is just what the function `scale` does:
+
+```{r}
+# Centre and standardise data
+dat3 <- data.table(scale(dat2[,-1])) # scale() function returns matrix, thus we apply data.table() function
+```
+
+We are now ready to specify our model:
+
+```{r, size=0.5}
+# Step 1: Specify model
+mod.sm<-'
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  PctCanopy ~ BasinArea + r50_ForestTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  NH3_MED_42DAY ~ BasinArea + r50_ForestTotal2011
+  Bifenthrin ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  pyrethroid_deg_sum ~ UrbanTotal2011 + AgricultureTotal2011
+  imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
+  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
+  median.of.sumconcn_triazH ~ SandContent + AgricultureTotal2011
+  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+  pyrethroid_deg_sum ~~ imidacloprid
+  TN_MED_42DAY ~~ TP_MED_42DAY
+'
+
+# Step 2: Estimate model
+mod.sm.fit <- sem(mod.sm, data = dat3, estimator = "MLR")
+
+# Step 3: Extract results
+summary(mod.sm.fit, standardized = TRUE, fit.measures = TRUE , rsquare = TRUE)
+```

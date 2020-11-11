@@ -1,0 +1,28 @@
+---
+title: "modelling_basic"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## What dataset to use, properties of data?
+
+## LM visualisation
+
+## SEM visualisation (very simple)
+
+
+## latent and composite variables
+
+
+model comparison, evaluation (GOF etc.), interpretation and pruning
+autocorrelation (temporal, spatial)
+visualize LM and SEM as DAGs to highlight their conceptual difference and the benefit  of SEM
+
+
+```{r cars}
+summary(cars)
+```
+
