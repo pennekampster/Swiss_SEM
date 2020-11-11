@@ -1,17 +1,27 @@
 ---
 title: "Data preparation"
+date: "10 November 2020"
+author: 
+- "Rachel"
+- "Eliane"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+
+## Data from Cedar Creek Ecosystem Science Reserve
+
+We downloaded following files from https://www.cedarcreek.umn.edu:
+
+
+## Combine the different datasets
+
+We combined the different data files into one big dataset:
+
+```{r,  include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
 
-## Prepare the data from Cedar Creek Ecosystem Science Reserve
+# load data
 
-We downloaded following files from https://www.cedarcreek.umn.edu and combined them into one big dataset:
 
-```{r cars}
-summary(cars)
 ```
 
