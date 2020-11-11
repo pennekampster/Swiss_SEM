@@ -21,6 +21,10 @@ We combined the different data files into one big dataset:
 knitr::opts_chunk$set(echo = TRUE)
 
 # load data
+f1 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Percent light penetration.txt", sep="\t", header=TRUE)
+
+
+
 
 
 ```
