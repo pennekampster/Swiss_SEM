@@ -8,21 +8,17 @@ output: html_document
 ---
 
 
-## Data from Cedar Creek Ecosystem Science Reserve
+## Data from Welk et al. (2014) Biotic Interactions Overrule Plant Responses to Climate, Depending on the Species' Biogeography
 
-We downloaded following files from https://www.cedarcreek.umn.edu:
+We downloaded the data from https://idata.idiv.de/ddm/Data/ShowData/18
 
 
-## Combine the different datasets
-
-We combined the different data files into one big dataset:
 
 ```{r,  include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 # load data
-f1 <- read.table("~/Swiss_SEM/data_preparation/e120_Percent light penetration.txt", sep="\t", header=TRUE)
-
+raw_data <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/18_4_data_Welk_etal_PlosOne.csv", sep=";", header=TRUE)
 
 
 
