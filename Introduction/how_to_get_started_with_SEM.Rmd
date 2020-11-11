@@ -9,25 +9,122 @@ output: beamer_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Why would one use SEM?
+## What is a SEM?
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Comments:
+Each slide represents a concept/topic to teach. Can be expanded to more slides.
+Content must be revisited to be consistent in wording, concepts etc.
+Specially required feedback on causality, meta-model, backdoor criterion, loops.
+Concepts for technical part that could be introduced also here: global vs local, information criteria for arrow selection (for me better on technical part).
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+## What is a SEM?
 
-## What is SEM?
+Here we ask students about what is a SEM, why they want to learn them etc.
+Will set the baseline for the concepts will be later introduced and to measure the level of the students.
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+## Research questions
 
-## SEM process involving several steps in an order
+The importance of questions in science -> We are scientist and we try to explain the reality surrounding us.
+In this course, the focus is in ecology and evolution.
 
-## Meta-model (2nd step in Jim’s guideline (2012))
+## Example of the working system
 
-## Assumptions of SEM (Jim Grace slides Tubingen SEMWorkshop)
+Description of the study system where data come from.
+Add some nice pictures.
 
-## Types of models (thinking about the modeling process: from theory to data)
+## Question of interest
 
-## What data sampling (covered in Intro-tutorial) ⇒ just one slide
+Present one research question based on the data.
+This question only NEEDS to include 2 variables.
+Ask students about how they would address this question.
+
+## Graphical representation
+
+Introduce the graphical model representation (X -> Y):
+- Variables are nodes.
+- Arrows are causal relationships.
+Use the question in the previous part as example.
+
+## Causality
+
+The arrow mean causality.
+Is it the case in science?
+Explain the concept and discuss with students the topic.
+Show the difference between direct effects and correlation together with the graphical representation
+
+## Simple statistical model
+
+Present the bivariate model.
+Include the equation and a plot.
+It is important that students understand that all they know can be defined with a graphical representation.
+
+## Multivariate questions
+
+Discuss with students other variables that may affect B.
+Introduce a new variable and the question that it answers.
+Show the graphical model (X1 -> Y, X2 -> Y).
+Include the equation and the two partial plots.
+Be clear this is a multiple regression model.
+
+## Interaction questions (Moderation)
+
+Present another question involving a new variable with an interactive effect (X3 -> (Y -> Z)).
+Show the graphical representation.
+Explanation of interactive effects.
+Include partial plots to illustrate the interaction effect. 
+Make clear that this is the same as an interaction in traditional regression models.
+
+## Indirect effect (Mediation)
+
+Present another question involving a new variable (X1 -> Y -> Z).
+Show the graphical representation.
+Explanation of indirect effects.
+Include partial plots for both to illustrate the indirect effect. 
+
+## Types of variables
+
+Until now everything was about paths but modelling also involves variables.
+Definition of composite variables + examples.
+Definition of latent variables + examples.
+Make clear the difference between both.
+
+## System level approach
+
+Show a very complex model including multiple types of variables, arrows (direct and correlations) for the study system.
+The complex model is built based on submodels, each one addressing specific questions.
+We need a framework to analyze this together -> SEM
+Discuss about complexity in ecology and if SEM is useful to answer your questions ("We need to do things as simple as possible, but no simpler").
+
+## Assumptions of SEM 
+
+Assumptions common to any statistical analysis (normality, amount of data, experimental design...).
+Assumptions specific to SEM (data in the same scale...).
+
+## Thinking about the model
+
+Which variables include in the model 
+- Supported by theory.
+- Ecologically meaningful.
+- Garbage in - garbage out concept (both data quality and ecologically meaningful).
+
+Setting arrow direction.
+- Causal vs correlation.
+- Support for both directions, how to proceed (loops).
+
+Good practice: Table of causal relationships before analysis.
+
+## Meta-model
+
+Thinking about what is missing in the model, measurement errors etc.
+Present the concept of meta-model and impications for research.
+Include a graphical representation of the meta-model as what is missing in the model.
+
+## Modelling philosophy 
+
+Two approaches: from theory (hypothesis) to data (exploratories).
+Show as a continuum between two extremes.
+Importance of being aware about what the model is telling to us.
+Finall discussion about what SEM provides and the importance of system thinking in ecology.
+
+
 

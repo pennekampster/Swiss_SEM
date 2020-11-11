@@ -1,0 +1,50 @@
+---
+title: "How to present SEMs?"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Exercice
+
+We have now analysed the model. 
+
+How would you draw the model output to represent the minimum information required in order to reproduce this model?
+
+\begin{center}
+Draw your idea
+\end{center}
+
+
+# What can you expect to see out in nature?
+
+##  Non-ecological examples
+
+Causal inference, DAGs
+Psychology
+
+*insert SEMs*
+
+
+
+# What can you expect to see out in nature?
+
+## What ecologists do
+
+Very good examples & very bad examples
+
+*insert SEMs*
+
+
+
+# Discussion
+## What makes a good data visualization?
+
+# What is a good SEM
+## Theory
+
+*Maybe one slide drawing heavily on theory from people like Edward Tufte*
+*Information/ink ratio*
+
