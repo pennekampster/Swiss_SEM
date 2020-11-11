@@ -1,0 +1,33 @@
+---
+title: "How_to_get_started_with_SEM"
+author: "FP"
+date: "11/11/2020"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Why would one use SEM?
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## What is SEM?
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## SEM process involving several steps in an order
+
+## Meta-model (2nd step in Jim’s guideline (2012))
+
+## Assumptions of SEM (Jim Grace slides Tubingen SEMWorkshop)
+
+## Types of models (thinking about the modeling process: from theory to data)
+
+## What data sampling (covered in Intro-tutorial) ⇒ just one slide
+
