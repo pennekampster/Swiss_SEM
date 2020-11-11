@@ -426,20 +426,23 @@ summary {
 </div>
 <div id="data-exploration" class="section level2">
 <h2>Data Exploration</h2>
-<p>Schmidt et al. (2019) performed all modelling in R using the packages <code>psych</code>, <code>data.table</code>, <code>lavaan</code>, and <code>semplot</code>, thus we, too, will (install and) load them. If you are not yet familiar with these packages, use the in-built help function (e.g. <code>?lavaan</code>) to find out more about them. The authors provide their data and metadata <a href="https://www.sciencebase.gov/catalog/item/5b463148e4b060350a15a836">here</a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, and the supplementary material <a href="https://pubs.acs.org/doi/suppl/10.1021/acs.est.8b04381/suppl_file/es8b04381_si_001.pdf">here</a><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. We will download the data and get started in R:</p>
+<p>Schmidt et al. (2019) performed all modelling in R using the packages <code>psych</code>, <code>data.table</code>, <code>lavaan</code>, and <code>semPlot</code>, thus we, too, will (install and) load them. If you are not yet familiar with these packages, use the built-in help function (e.g. <code>?lavaan</code>) to find out more about them. The authors provide their data and metadata <a href="https://www.sciencebase.gov/catalog/item/5b463148e4b060350a15a836">here</a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, and the supplementary material <a href="https://pubs.acs.org/doi/suppl/10.1021/acs.est.8b04381/suppl_file/es8b04381_si_001.pdf">here</a><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. We will download the data and get started in R:</p>
 <pre class="r"><code># Set working directory and load data
-setwd(&quot;~/Git_Projects/Swiss_SEM/Case studies/Schmidt-et-al_2019&quot;)
+setwd(&quot;~/Git_Projects/Swiss_SEM/Case_Studies/Schmidt-et-al_2019&quot;)
 dat &lt;- read.csv(&quot;Schmidt-et-al_2019.csv&quot;, sep=&quot;;&quot;)</code></pre>
 <p>First, we need to inspect and transform the data to meet the assumptions of normality and heterogeneity of variance. Data scales impact the internal matrix manipulations. <code>lavaan</code> is fussy about data scales, since they impact the internal matrix manipulations. Although it will let us know if it has a problem with our data, it is good practice to inspect the data beforehands. The authors of this study list the specific transformations for predictor variables in Table S1, and those for the ecology variables in the main text. We transform the data accordingly:</p>
 <pre class="r"><code># Transform data
 dat2 &lt;- dat # duplicate data to avoid overwriting original data
-dat2$BasinArea &lt;- log10(dat$BasinArea) # example for how to log10 transform variable</code></pre>
-<p>After transformation, the data were centred and standardised “by subtracting the mean value for each variable from each observation and then dividing by the standard deviation of all observations for that variable”. Luckily, this is just what the function <code>scale</code> does:</p>
+dat2$BasinArea &lt;- log10(dat$BasinArea) # example for how to log10-transform variable</code></pre>
+<p>After transformation, the data need to be centred and standardised “by subtracting the mean value for each variable from each observation and then dividing by the standard deviation of all observations for that variable”. Luckily, this is just what the function <code>scale()</code> does:</p>
 <pre class="r"><code># Centre and standardise data
 dat3 &lt;- data.table(scale(dat2[,-1])) # scale() function returns matrix, thus we apply data.table() function</code></pre>
-<p>We are now ready to specify our model:</p>
+</div>
+<div id="model-building" class="section level2">
+<h2>Model Building</h2>
+<p>We are now ready to build our first model. <code>lavaan</code> uses a specific model syntax to describe structural equation models. Use the built-in help function <code>?model.syntax</code> and consult the section “Details” for more information. <strong>Give more info on model</strong>:</p>
 <pre class="r"><code># Step 1: Specify model
-mod.sm&lt;-&#39;
+mod.stressor&lt;-&#39;
   # Regressions
   UrbanTotal2011 ~ SandContent
   AgricultureTotal2011 ~ SandContent + BasinArea
@@ -453,25 +456,26 @@ mod.sm&lt;-&#39;
   imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
   TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
   TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
-  median.of.sumconcn_triazH ~ SandContent + AgricultureTotal2011
+  triazH ~ SandContent + AgricultureTotal2011
   Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
   
   # Covariances
   UrbanTotal2011 ~~ AgricultureTotal2011
   pyrethroid_deg_sum ~~ imidacloprid
   TN_MED_42DAY ~~ TP_MED_42DAY
-&#39;
+&#39; # note that we renamed dat3$median.of.sumconcn_triazH to dat3$triazH for simplicity
 
 # Step 2: Estimate model
-mod.sm.fit &lt;- sem(mod.sm, data = dat3, estimator = &quot;MLR&quot;)
+mod.stressor.fit &lt;- sem(mod.stressor, data = dat3, fixed.x=FALSE, estimator = &quot;MLR&quot;) # sem() is used to fit model
+# note: listwise deletion of missing values is the default setting; fixed.x=FALSE is used to treat exogenous means, variances, and covariances as random; estimator=&quot;MLR&quot; to use maximum likelihood estimation with robust errors to offset any bias introduced by non-normal distribution
 
 # Step 3: Extract results
-summary(mod.sm.fit, standardized = TRUE, fit.measures = TRUE , rsquare = TRUE)</code></pre>
+summary(mod.stressor.fit, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)</code></pre>
 <pre><code>## lavaan 0.6-7 ended normally after 50 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
-##   Number of free parameters                         78
+##   Number of free parameters                         81
 ##                                                       
 ##                                                   Used       Total
 ##   Number of observations                            90          98
@@ -501,16 +505,16 @@ summary(mod.sm.fit, standardized = TRUE, fit.measures = TRUE , rsquare = TRUE)</
 ## 
 ## Loglikelihood and Information Criteria:
 ## 
-##   Loglikelihood user model (H0)              -1482.538   -1482.538
-##   Scaling correction factor                                  1.323
+##   Loglikelihood user model (H0)              -1738.864   -1738.864
+##   Scaling correction factor                                  1.342
 ##       for the MLR correction                                      
-##   Loglikelihood unrestricted model (H1)      -1453.381   -1453.381
-##   Scaling correction factor                                  1.182
+##   Loglikelihood unrestricted model (H1)      -1709.708   -1709.708
+##   Scaling correction factor                                  1.196
 ##       for the MLR correction                                      
 ##                                                                   
-##   Akaike (AIC)                                3121.075    3121.075
-##   Bayesian (BIC)                              3316.060    3316.060
-##   Sample-size adjusted Bayesian (BIC)         3069.887    3069.887
+##   Akaike (AIC)                                3639.729    3639.729
+##   Bayesian (BIC)                              3842.213    3842.213
+##   Sample-size adjusted Bayesian (BIC)         3586.571    3586.571
 ## 
 ## Root Mean Square Error of Approximation:
 ## 
@@ -534,188 +538,100 @@ summary(mod.sm.fit, standardized = TRUE, fit.measures = TRUE , rsquare = TRUE)</
 ##   Observed information based on                Hessian
 ## 
 ## Regressions:
-##                               Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
-##   UrbanTotal2011 ~                                                        
-##     SandContent                 -0.195    0.086   -2.265    0.023   -0.195
-##   AgricultureTotal2011 ~                                                  
-##     SandContent                  0.173    0.084    2.051    0.040    0.173
-##     BasinArea                    0.185    0.078    2.359    0.018    0.185
-##   Bank ~                                                                  
-##     UrbanTotal2011              -0.672    0.108   -6.238    0.000   -0.672
-##     SandContent                 -0.498    0.078   -6.368    0.000   -0.498
-##   r50_ForestTotal2011 ~                                                   
-##     UrbanTotal2011              -0.497    0.124   -4.019    0.000   -0.497
-##     AgrcltrTtl2011              -0.487    0.142   -3.430    0.001   -0.487
-##   PctCanopy ~                                                             
-##     BasinArea                   -0.315    0.083   -3.783    0.000   -0.315
-##     r50_FrstTt2011               0.459    0.083    5.508    0.000    0.459
-##   RBS ~                                                                   
-##     UrbanTotal2011               0.199    0.085    2.335    0.020    0.199
-##     Bank                        -0.301    0.078   -3.860    0.000   -0.301
-##     r50_FrstTt2011               0.445    0.093    4.790    0.000    0.445
-##   NH3_MED_42DAY ~                                                         
-##     BasinArea                   -0.207    0.119   -1.730    0.084   -0.207
-##     r50_FrstTt2011              -0.165    0.074   -2.211    0.027   -0.165
-##   Bifenthrin ~                                                            
-##     UrbanTotal2011               0.500    0.159    3.139    0.002    0.500
-##     AgrcltrTtl2011               0.404    0.143    2.820    0.005    0.404
-##     RBS                         -0.159    0.090   -1.769    0.077   -0.159
-##   pyrethroid_deg_sum ~                                                    
-##     UrbanTotal2011               0.458    0.124    3.695    0.000    0.458
-##     AgrcltrTtl2011               0.322    0.102    3.151    0.002    0.322
-##   imidacloprid ~                                                          
-##     UrbanTotal2011               0.777    0.140    5.546    0.000    0.777
-##     SandContent                 -0.130    0.067   -1.946    0.052   -0.130
-##     AgrcltrTtl2011               0.309    0.121    2.562    0.010    0.309
-##   TN_MED_42DAY ~                                                          
-##     UrbanTotal2011               0.548    0.096    5.720    0.000    0.548
-##     AgrcltrTtl2011               0.936    0.090   10.354    0.000    0.936
-##     RBS                         -0.246    0.059   -4.178    0.000   -0.246
-##   TP_MED_42DAY ~                                                          
-##     UrbanTotal2011               0.240    0.145    1.650    0.099    0.240
-##     SandContent                 -0.338    0.077   -4.379    0.000   -0.338
-##     AgrcltrTtl2011               0.247    0.143    1.725    0.085    0.247
-##     r50_FrstTt2011              -0.364    0.081   -4.472    0.000   -0.364
-##     RBS                         -0.163    0.087   -1.873    0.061   -0.163
-##   median.of.sumconcn_triazH ~                                             
-##     SandContent                 -0.233    0.064   -3.628    0.000   -0.233
-##     AgrcltrTtl2011               0.486    0.089    5.464    0.000    0.486
-##   Tmax42.C.OBSYN ~                                                        
-##     SandContent                 -0.298    0.047   -6.295    0.000   -0.298
-##     BasinArea                    0.278    0.108    2.577    0.010    0.278
-##     PctCanopy                   -0.207    0.086   -2.404    0.016   -0.207
-##   Std.all
-##          
-##    -0.206
-##          
-##     0.182
-##     0.190
-##          
-##    -0.658
-##    -0.514
-##          
-##    -0.481
-##    -0.472
-##          
-##    -0.323
-##     0.472
-##          
-##     0.193
-##    -0.298
-##     0.445
-##          
-##    -0.196
-##    -0.156
-##          
-##     0.477
-##     0.386
-##    -0.157
-##          
-##     0.439
-##     0.309
-##          
-##     0.732
-##    -0.129
-##     0.291
-##          
-##     0.532
-##     0.909
-##    -0.246
-##          
-##     0.218
-##    -0.324
-##     0.225
-##    -0.341
-##    -0.153
-##          
-##    -0.246
-##     0.487
-##          
-##    -0.313
-##     0.285
-##    -0.206
+##                          Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   UrbanTotal2011 ~                                                            
+##     SandContent            -0.195    0.086   -2.265    0.023   -0.195   -0.206
+##   AgricultureTotal2011 ~                                                      
+##     SandContent             0.173    0.084    2.051    0.040    0.173    0.182
+##     BasinArea               0.185    0.078    2.359    0.018    0.185    0.190
+##   Bank ~                                                                      
+##     UrbanTotal2011         -0.672    0.108   -6.238    0.000   -0.672   -0.658
+##     SandContent            -0.498    0.078   -6.368    0.000   -0.498   -0.514
+##   r50_ForestTotal2011 ~                                                       
+##     UrbanTotal2011         -0.497    0.124   -4.019    0.000   -0.497   -0.481
+##     AgrcltrTtl2011         -0.487    0.142   -3.430    0.001   -0.487   -0.472
+##   PctCanopy ~                                                                 
+##     BasinArea              -0.315    0.083   -3.783    0.000   -0.315   -0.323
+##     r50_FrstTt2011          0.459    0.083    5.508    0.000    0.459    0.472
+##   RBS ~                                                                       
+##     UrbanTotal2011          0.199    0.085    2.335    0.020    0.199    0.193
+##     Bank                   -0.301    0.078   -3.860    0.000   -0.301   -0.298
+##     r50_FrstTt2011          0.445    0.093    4.790    0.000    0.445    0.445
+##   NH3_MED_42DAY ~                                                             
+##     BasinArea              -0.207    0.119   -1.730    0.084   -0.207   -0.196
+##     r50_FrstTt2011         -0.165    0.074   -2.211    0.027   -0.165   -0.156
+##   Bifenthrin ~                                                                
+##     UrbanTotal2011          0.500    0.159    3.139    0.002    0.500    0.477
+##     AgrcltrTtl2011          0.404    0.143    2.820    0.005    0.404    0.386
+##     RBS                    -0.159    0.090   -1.769    0.077   -0.159   -0.157
+##   pyrethroid_deg_sum ~                                                        
+##     UrbanTotal2011          0.458    0.124    3.695    0.000    0.458    0.439
+##     AgrcltrTtl2011          0.322    0.102    3.151    0.002    0.322    0.309
+##   imidacloprid ~                                                              
+##     UrbanTotal2011          0.777    0.140    5.546    0.000    0.777    0.732
+##     SandContent            -0.130    0.067   -1.946    0.052   -0.130   -0.129
+##     AgrcltrTtl2011          0.309    0.121    2.562    0.010    0.309    0.291
+##   TN_MED_42DAY ~                                                              
+##     UrbanTotal2011          0.548    0.096    5.720    0.000    0.548    0.532
+##     AgrcltrTtl2011          0.936    0.090   10.354    0.000    0.936    0.909
+##     RBS                    -0.246    0.059   -4.178    0.000   -0.246   -0.246
+##   TP_MED_42DAY ~                                                              
+##     UrbanTotal2011          0.240    0.145    1.650    0.099    0.240    0.218
+##     SandContent            -0.338    0.077   -4.379    0.000   -0.338   -0.324
+##     AgrcltrTtl2011          0.247    0.143    1.725    0.085    0.247    0.225
+##     r50_FrstTt2011         -0.364    0.081   -4.472    0.000   -0.364   -0.341
+##     RBS                    -0.163    0.087   -1.873    0.061   -0.163   -0.153
+##   triazH ~                                                                    
+##     SandContent            -0.233    0.064   -3.628    0.000   -0.233   -0.246
+##     AgrcltrTtl2011          0.486    0.089    5.464    0.000    0.486    0.487
+##   Tmax42.C.OBSYN ~                                                            
+##     SandContent            -0.298    0.047   -6.295    0.000   -0.298   -0.313
+##     BasinArea               0.278    0.108    2.577    0.010    0.278    0.285
+##     PctCanopy              -0.207    0.086   -2.404    0.016   -0.207   -0.206
 ## 
 ## Covariances:
-##                                Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
-##  .UrbanTotal2011 ~~                                                        
-##    .AgrcltrTtl2011               -0.596    0.184   -3.246    0.001   -0.596
-##  .pyrethroid_deg_sum ~~                                                    
-##    .imidacloprid                  0.201    0.081    2.468    0.014    0.201
-##  .TN_MED_42DAY ~~                                                          
-##    .TP_MED_42DAY                  0.161    0.059    2.723    0.006    0.161
-##  .NH3_MED_42DAY ~~                                                         
-##    .Bifenthrin                   -0.021    0.053   -0.392    0.695   -0.021
-##    .pyrethrd_dg_sm                0.175    0.090    1.940    0.052    0.175
-##    .imidacloprid                  0.131    0.062    2.131    0.033    0.131
-##    .TN_MED_42DAY                  0.021    0.043    0.491    0.624    0.021
-##    .TP_MED_42DAY                  0.112    0.058    1.927    0.054    0.112
-##    .mdn.f.smcncn_H                0.222    0.128    1.732    0.083    0.222
-##    .Tmax42.C.OBSYN                0.488    0.406    1.202    0.229    0.488
-##  .Bifenthrin ~~                                                            
-##    .pyrethrd_dg_sm                0.294    0.133    2.209    0.027    0.294
-##    .imidacloprid                  0.052    0.079    0.665    0.506    0.052
-##    .TN_MED_42DAY                  0.112    0.066    1.686    0.092    0.112
-##    .TP_MED_42DAY                  0.016    0.075    0.221    0.825    0.016
-##    .mdn.f.smcncn_H                0.085    0.076    1.117    0.264    0.085
-##    .Tmax42.C.OBSYN                0.069    0.109    0.630    0.529    0.069
-##  .pyrethroid_deg_sum ~~                                                    
-##    .TN_MED_42DAY                  0.029    0.066    0.433    0.665    0.029
-##    .TP_MED_42DAY                  0.080    0.087    0.923    0.356    0.080
-##    .mdn.f.smcncn_H                0.158    0.078    2.017    0.044    0.158
-##    .Tmax42.C.OBSYN                0.016    0.083    0.194    0.847    0.016
-##  .imidacloprid ~~                                                          
-##    .TN_MED_42DAY                 -0.094    0.053   -1.764    0.078   -0.094
-##    .TP_MED_42DAY                  0.149    0.060    2.468    0.014    0.149
-##    .mdn.f.smcncn_H                0.302    0.073    4.150    0.000    0.302
-##    .Tmax42.C.OBSYN                0.079    0.056    1.408    0.159    0.079
-##  .TN_MED_42DAY ~~                                                          
-##    .mdn.f.smcncn_H               -0.099    0.057   -1.737    0.082   -0.099
-##    .Tmax42.C.OBSYN               -0.018    0.054   -0.342    0.732   -0.018
-##  .TP_MED_42DAY ~~                                                          
-##    .mdn.f.smcncn_H                0.268    0.081    3.323    0.001    0.268
-##    .Tmax42.C.OBSYN               -0.051    0.066   -0.774    0.439   -0.051
-##  .median.of.sumconcn_triazH ~~                                             
-##    .Tmax42.C.OBSYN                0.112    0.080    1.399    0.162    0.112
-##   Std.all
-##          
-##    -0.679
-##          
-##     0.259
-##          
-##     0.295
-##          
-##    -0.022
-##     0.180
-##     0.159
-##     0.031
-##     0.130
-##     0.261
-##     0.569
-##          
-##     0.330
-##     0.069
-##     0.184
-##     0.021
-##     0.109
-##     0.088
-##          
-##     0.046
-##     0.100
-##     0.199
-##     0.020
-##          
-##    -0.178
-##     0.217
-##     0.446
-##     0.116
-##          
-##    -0.182
-##    -0.034
-##          
-##     0.383
-##    -0.072
-##          
-##     0.160
+##                         Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##  .UrbanTotal2011 ~~                                                          
+##    .AgrcltrTtl2011        -0.596    0.184   -3.246    0.001   -0.596   -0.679
+##  .pyrethroid_deg_sum ~~                                                      
+##    .imidacloprid           0.201    0.081    2.468    0.014    0.201    0.259
+##  .TN_MED_42DAY ~~                                                            
+##    .TP_MED_42DAY           0.161    0.059    2.723    0.006    0.161    0.295
+##  .NH3_MED_42DAY ~~                                                           
+##    .Bifenthrin            -0.021    0.053   -0.392    0.695   -0.021   -0.022
+##    .pyrethrd_dg_sm         0.175    0.090    1.940    0.052    0.175    0.180
+##    .imidacloprid           0.131    0.062    2.131    0.033    0.131    0.159
+##    .TN_MED_42DAY           0.021    0.043    0.491    0.624    0.021    0.031
+##    .TP_MED_42DAY           0.112    0.058    1.927    0.054    0.112    0.130
+##    .triazH                 0.222    0.128    1.732    0.083    0.222    0.261
+##    .Tmax42.C.OBSYN         0.488    0.406    1.202    0.229    0.488    0.569
+##  .Bifenthrin ~~                                                              
+##    .pyrethrd_dg_sm         0.294    0.133    2.209    0.027    0.294    0.330
+##    .imidacloprid           0.052    0.079    0.665    0.506    0.052    0.069
+##    .TN_MED_42DAY           0.112    0.066    1.686    0.092    0.112    0.184
+##    .TP_MED_42DAY           0.016    0.075    0.221    0.825    0.016    0.021
+##    .triazH                 0.085    0.076    1.117    0.264    0.085    0.109
+##    .Tmax42.C.OBSYN         0.069    0.109    0.630    0.529    0.069    0.088
+##  .pyrethroid_deg_sum ~~                                                      
+##    .TN_MED_42DAY           0.029    0.066    0.433    0.665    0.029    0.046
+##    .TP_MED_42DAY           0.080    0.087    0.923    0.356    0.080    0.100
+##    .triazH                 0.158    0.078    2.017    0.044    0.158    0.199
+##    .Tmax42.C.OBSYN         0.016    0.083    0.194    0.847    0.016    0.020
+##  .imidacloprid ~~                                                            
+##    .TN_MED_42DAY          -0.094    0.053   -1.764    0.078   -0.094   -0.178
+##    .TP_MED_42DAY           0.149    0.060    2.468    0.014    0.149    0.217
+##    .triazH                 0.302    0.073    4.150    0.000    0.302    0.446
+##    .Tmax42.C.OBSYN         0.079    0.056    1.408    0.159    0.079    0.116
+##  .TN_MED_42DAY ~~                                                            
+##    .triazH                -0.099    0.057   -1.737    0.082   -0.099   -0.182
+##    .Tmax42.C.OBSYN        -0.018    0.054   -0.342    0.732   -0.018   -0.034
+##  .TP_MED_42DAY ~~                                                            
+##    .triazH                 0.268    0.081    3.323    0.001    0.268    0.383
+##    .Tmax42.C.OBSYN        -0.051    0.066   -0.774    0.439   -0.051   -0.072
+##  .triazH ~~                                                                  
+##    .Tmax42.C.OBSYN         0.112    0.080    1.399    0.162    0.112    0.160
+##   SandContent ~~                                                             
+##     BasinArea              0.069    0.093    0.737    0.461    0.069    0.068
 ## 
 ## Variances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
@@ -731,8 +647,10 @@ summary(mod.sm.fit, standardized = TRUE, fit.measures = TRUE , rsquare = TRUE)</
 ##    .imidacloprid      0.660    0.092    7.178    0.000    0.660    0.628
 ##    .TN_MED_42DAY      0.423    0.047    9.019    0.000    0.423    0.428
 ##    .TP_MED_42DAY      0.709    0.134    5.281    0.000    0.709    0.626
-##    .mdn.f.smcncn_H    0.695    0.115    6.041    0.000    0.695    0.749
+##    .triazH            0.695    0.115    6.041    0.000    0.695    0.749
 ##    .Tmax42.C.OBSYN    0.707    0.233    3.040    0.002    0.707    0.750
+##     SandContent       1.037    0.308    3.363    0.001    1.037    1.000
+##     BasinArea         0.989    0.121    8.143    0.000    0.989    1.000
 ## 
 ## R-Square:
 ##                    Estimate
@@ -748,8 +666,44 @@ summary(mod.sm.fit, standardized = TRUE, fit.measures = TRUE , rsquare = TRUE)</
 ##     imidacloprid      0.372
 ##     TN_MED_42DAY      0.572
 ##     TP_MED_42DAY      0.374
-##     mdn.f.smcncn_H    0.251
+##     triazH            0.251
 ##     Tmax42.C.OBSYN    0.250</code></pre>
+<pre class="r"><code># Request Modification Indices
+mi3 &lt;- modindices(mod.stressor.fit); print(mi3[mi3$mi &gt; 4.0,])</code></pre>
+<pre><code>##                      lhs op                rhs    mi    epc sepc.lv sepc.all
+## 105 AgricultureTotal2011 ~~     Tmax42.C.OBSYN 4.488 -0.108  -0.108   -0.138
+## 138                  RBS ~~ pyrethroid_deg_sum 4.711 -0.165  -0.165   -0.213
+## 147       UrbanTotal2011  ~          PctCanopy 4.111  0.190   0.190    0.191
+## 156       UrbanTotal2011  ~     Tmax42.C.OBSYN 5.277 -0.190  -0.190   -0.191
+## 190  r50_ForestTotal2011  ~       imidacloprid 5.229  0.270   0.270    0.278
+## 197            PctCanopy  ~     UrbanTotal2011 4.213  0.177   0.177    0.176
+## 204            PctCanopy  ~       imidacloprid 6.418  0.206   0.206    0.217
+## 250   pyrethroid_deg_sum  ~                RBS 6.438 -0.256  -0.256   -0.254
+## 252   pyrethroid_deg_sum  ~         Bifenthrin 6.438  1.613   1.613    1.620
+## 254   pyrethroid_deg_sum  ~       TN_MED_42DAY 6.438  1.043   1.043    1.030
+## 255   pyrethroid_deg_sum  ~       TP_MED_42DAY 4.827  0.370   0.370    0.391
+## 263         imidacloprid  ~                RBS 4.043  0.162   0.162    0.157
+## 264         imidacloprid  ~      NH3_MED_42DAY 4.229 -0.612  -0.612   -0.627
+## 265         imidacloprid  ~         Bifenthrin 4.043 -1.018  -1.018   -1.004
+## 267         imidacloprid  ~       TN_MED_42DAY 4.043 -0.659  -0.659   -0.638
+## 268         imidacloprid  ~       TP_MED_42DAY 4.324 -0.366  -0.366   -0.379
+##     sepc.nox
+## 105   -0.138
+## 138   -0.213
+## 147    0.191
+## 156   -0.191
+## 190    0.278
+## 197    0.176
+## 204    0.217
+## 250   -0.254
+## 252    1.620
+## 254    1.030
+## 255    0.391
+## 263    0.157
+## 264   -0.627
+## 265   -1.004
+## 267   -0.638
+## 268   -0.379</code></pre>
 </div>
 <div class="footnotes">
 <hr />
