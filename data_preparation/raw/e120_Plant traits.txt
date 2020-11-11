@@ -1,0 +1,1000 @@
+Cedar Creek Ecosystem Science Reserve Dataset: aafe120
+
+Cedar Creek Ecosystem Science Reserve
+2660 Fawn Lake Dr. NE
+Bethel, MN 55005
+Office:  763-434-5131
+Fax:  763-434-7361
+
+_________________________________________________________________________
+
+USER AGREEMENT:  As a condition for access to data provided by researchers of the Cedar Creek LTER, I agree to abide by the following code of ethics.
+
+A. I agree to notify the Cedar Creek LTER scientists who gathered data if I would like to use those data in any publication. I acknowledge that these data were gathered by Cedar Creek scientists because they had already perceived the importance of these data for a variety of scientific and societal issues. I will provide them with formal recognition that, at their discretion, may include co-authorship or acknowledgements on publications.
+
+B. I realize that the researchers who gathered these data may be using them for scientific analyses, papers or publications that are currently planned or in preparation, and that such activities have precedence over any that I might wish to prepare. In this case, my preparation of any work may be delayed, at the option of the Cedar Creek researchers involved, until their work is completed.
+
+C. Because it may be possible to misinterpret a data set if it is taken out of context, I will seek the assistance and opinion of those Cedar Creek researchers involved in the design of a study and the collection of the data as I analyze the data. Moreover, I realize that this computer data set is not complete, and it may contain errors. The complete data set includes extensive written documentation, which should be referenced to reduce the chance of errors in data and errors of interpretation.
+
+_________________________________________________________________________
+
+
+
+Biodiversity II (E120) is designed to determine how the number of plant species affects the dynamics of ecological processes at the population, community, and ecosystem levels. By experimentally manipulating the number of species and the kinds of species, the amount of plant growth and the change from year to year, that result can be examined. Plots are large (9m x 9m actively maintained) and well-replicated, allowing responses of plant pathogens, insect herbivores, seed predators, soil parameters, invasive plant species and other variables to also be studied. Plots were seeded in May 1994 to have 1, 2, 4, 8, or 16 species, with roughly 30 replicates of each diversity level. The species composition of each plot was chosen by random draw from a pool of 18 grassland perennials that included four warm-season (C4) grasses, four cool-season (C3) grasses, four legumes, four non-legume forbs, and two woody species. All species occur in monoculture allowing comparison of responses of each species in monoculture to combinations of these same species. The experiment was established in 1994 by the lead investigators David Tilman, Peter Reich, Johannes Knops, and David Wedin. Experiment 120 is similar to Experiment 123, but it uses larger plots to provide a large capacity for long-term subexperiments.
+
+_________________________________________________________________________
+
+METHODS AND PROTOCOLS FOLLOW DATA
+
+
+Experiment Investigators:
+
+Tilman, David 
+Reich, Peter 
+Knops, Johannes 
+Wedin, David 
+ 
+
+ATTRIBUTES:
+
+Field 1 | Name: Year | Definition: Year sampled 
+Field 2 | Name: Species | Definition: Species Name 
+Field 3 | Name: Area_of_leaf_blade_cm2 | Definition: Leaf laminar area (cm^2) | Unit: squareCentimeters 
+Field 4 | Name: P/A | Definition: permeter per area (cm-1) | Unit: waveNumber 
+Field 5 | Name: P_A*L | Definition: Perimeter per area times leaf laminar length (unitless) | Unit: dimensionless 
+Field 6 | Name: SLA_cm2/g | Definition: Specific leaf length (cm^2/g) | Unit: centimetersSquaredPerGram 
+Field 7 | Name: Seed_weight_(g) | Definition: Seed weight (g) | Unit: gram 
+Field 8 | Name: height_(m) | Definition: Average plant height at maturity (m) | Unit: meter 
+
+
+Data:
+
+Year	Species	Area_of_leaf_blade_cm2	P/A	P_A*L	SLA_cm2/g	Seed_weight_(g)	height_(m)2008	Achillea millefolium	9.370033333	7.625862115	1.547935759	115.5779025	0.0000625	0.91442008	Amorpha canescens	9.630133333	10.9203095	0.492759565	90.78938792	0.0023726	1.21922008	Agropyron repens	3.123133333	8.194893967	1.445975819	154.9558481	0.00182	0.792482008	Agropyron smithii	1.313266667	16.90121587	0.622391588	69.97630644	0.003333333	0.91442008	Andropogon gerardi	8.104366667	7.070340957	3.158165697	100.6045416	0.000925	2.43842008	Asclepias tuberosa	6.673888889	2.752107537	2.995940701	160.9413706	0.00717	0.60962008	Baptisia leucantha	13.33196667	2.118223517	3.439099504	107.1027548	0.0177601	1.82882008	Bouteloua curtipendula	3.743133333	18.30451264	1.484697073	75.48090755	0.0022178	0.7622008	Bouteloua gracilis	0.4065	40.53563231	0.172439461	74.82292757	0.0015857	0.487682008	Crepis tectorum	0.2778	19.83567222	0.127682976	178.0705616	0.000171533	1.005842008	Elymus canadensis	11.72182057	3.87614951	75.16128824	168.5106362	0.0047	0.91442008	Koeleria cristata	0.726533333	41.02087959	0.31820969	35.70485863	0.0002972	0.45722008	Lespedeza capitata	7.2058	3.096927118	1.7270093	109.3157053	0.003	0.792482008	Liatris aspera	1.371366667	8.039686304	0.645116148	81.534942	0.0018	1.21922008	Linaria vulgaris	0.5919	15.67866357	0.275237575	282.1726872	0.00014	0.91442008	Lupinus perennis	20.0927	2.746273588	2.774920901	148.7253784	0.029089905	0.62008	Monarda fistulosa	9.833133333	1.785515034	3.470022008	150.1920737	0.0003	1.493522008	Panicum virgatum	7.796016667	7.208762326	3.07238967	110.7149871	0.0021782	1.82882008	Petalostemum candidum	1.489047619	12.19347344	0.315254377	68.03940943	0.00149208	0.52008	Petalostemum purpureum	0.439666667	19.14934871	0.090524033	103.7185604	0.001889968	0.91442008	Petalostemum villosa	1.863333333	20.63289685	0.128476892	72.00444565	0.0020832	0.62008	Poa pratensis	1.004518519	37.61160425	0.375920452	60.30456214	0.0002161	0.45722008	Quercus ellipsoidalis	60.8349	1.133257031	13.89329722	127.3248452	1.85139	212008	Quercus macrocarpa	47.81393333	1.010360831	13.47529212	104.8451029	6.572	30.482008	Rudbeckia serotina	3.713166667	3.395216814	1.639187999	127.615259	0.0003	0.91442008	Schizachyrium scoparium	2.0316	13.49459028	0.964009131	123.8710476	0.0014	0.91442008	Solidago nemoralis	5.445533333	4.01944766	2.501365243	122.6300086	0.0001	1.005842008	Solidago rigida	25.901	1.249482888	11.27718062	97.92309288	0.007268667	12008	Sorghastrum nutans	7.168	8.086917086	2.961299419	89.82187192	0.0012943	1.21922008	Stipa spartea	7.5623	13.79889286	1.867626257	76.1817727	0.021811367	1.21922008	Anemone cylindrica	13.65126667	4.204727935	1.82040348	203.1833254	0.0011	0.91442008	Astragalus canadensis	27.5486	2.554400585	5.954583993	133.5158165	0.001667619	1.005842008	Buchloe dactyloides	0.308466667	40.10164569	0.143706905	75.94690253	0.001352553	0.30482008	Coreopsis palmata	2.692733333	7.029096347	0.765592633	126.5814302	0.00199	0.91442008	Euphorbia pubentissima	4.031733333	2.543355529	1.772409198	201.2071789	0.003544	0.32008	Sporobolus cryptandrus	1.608533333	12.57099628	0.745468088	97.96470237	0.0001	0.91442008	Symphyotrichum oolentangiense	9.116	1.647034869	3.489714696	133.3544077	0.00017	1.22008	Vicia villosa	6.058866667	6.363108732	0.926505844	240.8315602	0.022222222	1.524
+
+_________________________________________________________________________
+
+
+Methods and Protocols:
+
+
+Dataset Methods:
+
+
+Sampling
+
+Obtain 5 samples from within the biodiversity experiment and 5 samples from the out-group of not maintained plots.  Each sample should consist of 3 mature leaves of the plant.  Keep these leaves cold and dry until scanning.
+
+______________
+
+Abstract
+
+In the summers of 2007 and 2008, leaf traits were measured in the Cedar Creek biodiversity experiment [E120]. Three fully mature leaves were sampled from ten individuals of each species collected within the maintained experimental plots as well as from the unmaintained experimental plots. Each individual was identified from a randomly chosen plot to cover the range of diversity treatments. Fresh leaves were scanned on a flatbed scanner on the same day as collection with petioles and sheaths removed. Leaf area, perimeter and Feret's diameter were calculated from the scanned leaves using ImageJ software (Rasband 1997-2004). This allowed calculation of perimeter per area (P/A, cm/cm-2), which is empirically correlated with leaf hydraulic conductance across a wide range of taxa (Sack et al. 2003). Perimeter per leaf area x Feret's diameter is a unitless measure of leaf lobedness Cavender-Bares et al 2006 that influences the leaf radiation balance (Givnish 1976). After scanning, leaves were dried at 65oC for three days and weighed to calculate specific leaf area (cm2/g).
+
+Seed mass was determined by collecting seed heads for ten plants per species with fully mature seeds, air drying the seed heads, and then weighing together ten seeds (and dividing by ten) to calculate a mean seed mass per plant. For five species, seed mass was taken from online commercial databases, including the Native Seed Network, Wildflower Farm Inc., and Prairie Moon Nursury. Plant height was measured at maturity from the root collar to the apical meristem or to the top of the vegetative canopy for five to ten individuals per species. Some values were also taken from the USDA Plants Database.
+
+______________
+
+Scanning
+
+Scanning of leaf samples should ideally be done on the same day that samples are obtained.  If this is not possible, keep samples refrigerated.
+To begin scanning, cut petioles from the leaves and measure with a ruler.  Number a transparency and put leaves in appropriate area on transparency.  Scanning is easiest if transparency remains on the scanner with ruler.  Make sure scan contains all leaves and the ruler.  Make sure the scan is in true color.  Save the image as:
+	Plant AbbreviationNumber_mm_dd_yy
+Use a sharpie to number the leaves.  After the scan, the leaves should be returned to an envelope and placed in a drier at 65??C then weighed when dried
+
+Using ImageJ:
+Open the image from File / Open.  This should bring up the image in true color in another window.
+Setting scale: Click analyze / set scale.  Run a line across the ruler for 8 centimeters.  Enter known distance as =8.0 and Unit of Length as =cm.  Click global in order to make this the default for all following images.
+Measuring Parameters:  Click Process / Binary / Threshold (or Make Binary depending on version.  Click Analyze / Set Measurements.  This will bring up a window and make sure that Area Perimeter and Feret???s Diameter are the only boxes checked.   Select the wand from the toolbar and select one of the leaves.  A yellow outline should appear on the black object.  Click analyze / measure.  This will bring up a third window with the data.  Save this into an excel or spss spreadsheet.
+
+______________
+
+Experiment Methods:
+
+Biofuels and Ecosystem Services
+
+Biofuels and Ecosystem Services: Another grant (Polasky et al.) will use CDR data on
+biomass energy (Ragauskas et al. 2006) produced with prairie plantings of various compositions
+and diversities to explore use of prairie biomass for heating and electric generation (pelletized
+biomass) and for cellulose-based ethanol as a transportation biofuel. We will build on recent
+analyses (Farrell et al. 2006) to perform full-cost accounting of net energy balance and of full life
+cycle environmental benefits/costs in an approach that explicitly considers and economically
+values ecosystem services.
+______________
+
+
+Key Results
+
+Foliar fungal disease incidence decreased at higher diversity because of greater distance
+between individuals of a species, and resultant lower rates of disease spread (Mitchell et al.
+2002).
+______________
+
+
+Key Results
+
+Greater plant diversity led to greater diversity of herbivorous insects, and this effect
+continued up the food web to predator and parasitoid insects (Haddad et al. 2001).
+______________
+
+
+Key Results
+
+Fewer novel plant species invaded higher diversity treatments because of their lower soil
+NO3 levels, greater neighborhood crowding and competition, and greater chance that
+functionally similar species would occur in a given neighborhood (Figs 9 ? 13; Naeem et al.
+2000, Kennedy et al. 2002, Fargione et al. 2003, Fargione and Tilman 2005a, 2005b).
+______________
+
+
+Key Results
+
+Greater plant species numbers led to greater ecosystem stability (lower year-to-year variation
+in total plant biomass) but to lower species stability (greater year-to-year variation in abundances
+of individual species), with the stabilizing effect of diversity mainly attributable to statistical
+averaging effects and overyielding effects (Fig 5; Tilman et al, submitted).
+______________
+
+
+Key Results
+
+Data gathered this past field season shows that soil total C has now become an increasing
+function of plant species numbers.
+______________
+
+
+Summary
+
+Our results have helped resolve a debate about why plant diversity affects ecosystem
+functioning. Such resolution was accomplished by a Paris symposium in which we made CDR
+biodiversity data available so others could test their alternative hypotheses; by a paper by 12
+ecologists with divergent views that explored areas of agreement and articulated areas in need of
+further testing (Loreau et al. 2001); and by our analyses of alternative hypotheses using results of
+the CDR biodiversity experiment (Tilman et al. 2001b).
+______________
+
+
+Future Research
+
+How Generalizable are the Results of the CDR Biodiversity Experiment? We are
+collaborating with a ?sister? biodiversity experiment, the Jena Biodiversity Experiment, a largescale
+well-replicated grassland biodiversity experiment established a few years ago by the Max
+Plank Institute for Biogeochemistry in Jena, Germany. We have agreed to share data, exchange
+scholars, and, through comparative analyses, determine which of the results of biodiversity
+experiments are site-specific and which are general.
+______________
+
+
+Key Results
+
+Plant biomass production increased with diversity (Fig 1) because of complementary
+interactions among species and not because of selection (sampling) effects (Figs 2, 3; Tilman et
+al. 2001b, Pacala and Tilman 2002, Hille Ris Lambers et al. 2004; Fargione et al. in prep.).
+______________
+
+
+Soil Carbon and Nitrogen Accumulation
+
+The mechanisms controlling soil carbon (C) and nitrogen (N) accumulation are crucial for explaining why soils are major terrestrial C sinks. Such mechanisms have been mainly addressed by imposing short-term, step-changes in CO2, temperature and N fertilization rates on either monocultures or low diversity plant assemblages. In Fornara and Tilman (2008) we used measured net soil C and N accumulation to 1 m soil-depth during the 12 years of our grassland biodiversity experiment to better understand the factors influencing these accumulation rates. We found that high-diversity mixtures of perennial grassland plant species stored 500% and 600% more soil C and N than, on average, did monoculture plots of the same species (Tilman Figure 1; Fornara and Tilman 2008). Moreover, the presence of C4 grasses and legumes increased soil C accumulation by 193% and 522% respectively (Figure 2; Fornara and Tilman 2008). Higher soil C and N accrual resulted both from increased C and N inputs via (1) higher root biomass and from (2) greater root biomass accumulation to 60 cm soil depth resulting from the presence of highly complementary functional groups (i.e. C4 grasses and legumes). Our results suggest that the joint presence of C4 grass and legume species is a key cause of greater soil C and N accumulation in both high and lower diversity plant assemblages. This is because legumes have unique access to N, and C4 grasses take up and use N efficiently, increasing belowground biomass and thus soil C and N inputs. These results demonstrate that plant functional complementarity is a key reason why higher plant diversity leads to greater soil C and N accumulation on agriculturally degraded soils. We suggest that the combination of key C4 grass-legume species may greatly increase ecosystem services such as soil C accumulation and biomass (biofuel) production in both high- and low-diversity N-limited grassland systems.
+
+Fornara, DA and D Tilman. 2008. Plant functional composition influences rates of soil carbon and nitrogen accumulation.  Journal of Ecology 96:314-322.
+______________
+
+
+Biodiversity and Continuing Increases in Productivity
+
+Our analyses of the effects of plant biodiversity on productivity (Fornara and Tilman 2008, in press in Ecology) addressed two questions: what set of ecological mechanisms caused aboveground productivity to become 340% greater in high-diverse plant mixtures than in the average monoculture? Why did the effect of diversity on productivity become so much stronger through time? Because our grassland system is N-limited, we simultaneously measured critical variables associated with the storage and cycling of this element such as plant and soil N pools, soil N availability, soil N mineralization rates, plant N-use-efficiency as well as the initial soil N concentration of each diversity plot when the experiment was established in 1994. We used linear and multiple regression analyses to test for potential effects of these variables on aboveground productivity and to address whether and how such variables were in turn affected by plant species diversity and functional composition across years and also at different time intervals within the same year. We found that seven variables simultaneously controlled productivity: (1) initial total soil nitrogen (N) of each plot, (2) diversity-dependent increases in total soil N through time (Figure 3; Fornara and Tilman, in press in Ecology), (3) soil N mineralization rates, (4) soil nitrate (NO3?) utilization, (5) increases in plant N-use-efficiency at greater plant diversity, (6) legumes presence and (7) higher species numbers. The surprising continued significance of higher plant diversity may occur because of its effects on seasonal capture of soil NO3? and moisture and on the accumulation of root N pools, all of which may have also increased productivity through time at higher species numbers.
+
+Fornara, DA and D Tilman. 2008. Ecological mechanisms associated with the positive diversity productivity relationship: evidence from a long-term, N-limited grassland experiment. Ecology (in press).
+______________
+
+
+Land Clearing and the Biofuel Carbon Debt
+
+In 2006, we used results of the Biodiversity Experiment to propose that high-diversity mixtures of native prairie perennial plant species might be a superior source of biomass for biofuels than either corn (for ethanol) or monocultures of a single perennial grass species (Tilman, Hill and Lehman, 2006). A major advantage of the high-diversity plant mixtures was their greater ability to store soil carbon.  This result led us to hypothesize that methods of biofuel production that caused net releases of ecosystem carbon would have particularly disadvantageous net greenhouse gas impacts (Fargione, Hill, Tilman, Polsaky and Hawthorne, 2008). In examining global biofuel production practices, we found that biofuels can be a potential low-carbon energy source, but whether biofuels offer carbon savings depends on how they are produced (Figure 4; Fargione et al. 2008). Specifically, converting rainforests, peatlands, savannas, or grasslands to produce food-based biofuels in Brazil, Southeast Asia, and the United States creates a  ?biofuel carbon debt&rsquo; by releasing 17 to 420 times more CO2 than the annual greenhouse gas (GHG) reductions these biofuels provide by displacing fossil fuels. In contrast, biofuels made from biomass grown on abandoned agricultural lands planted with perennials (as suggested in Tilman et al. 2006) incur little or no carbon debt but rather offer immediate and sustained GHG advantages, and have the potential to be carbon-negative biofuels.
+
+Tilman, D, J Hill and C Lehman. 2006. Carbon-negative biofuels from low-input high-diversity grassland biomass. Science 314:1598-1600.
+
+Fargione, J, J Hill, D Tilman, S Polasky and P Hawthorne. 2008. Land clearing and the biofuel carbon debt. Science 319:1235-1238.
+______________
+
+
+Future Research
+
+How do arthropod communities depend on plant diversity and composition, and what
+feedback effects do arthropods have on plant communities? The arthropod communities that had
+assembled in the first years of the biodiversity experiment had diversities and compositions that
+depended on the diversity and composition of the plant community (Haddad et al. 2001).
+Preliminary analyses of subsequent arthropod dynamics (based on annual samples, sorted to
+species and counted) show increases in arthropod diversity and shifts in the ratios of herbivores
+to parasitoids and herbivores to predators, relationships that we will explore in detail. We are
+especially interested in food chain structure and stability, and possible feedback effects of
+arthropods on plant dynamics, such as via seed predation and resultant recruitment limitation of
+species abundances. These questions will also be explored by new experimental treatments
+nested within a subset of the plots.
+______________
+
+
+Fine Root Decomposition Dynamics
+
+Plant functional composition may indirectly affect fine root processes both qualitatively (e.g. by influencing root chemistry) and quantitatively (e.g. by influencing root biomass and thus soil C inputs and the soil environment). Despite the potential implications for ecosystem N cycling, few studies have addressed the linkages between plant functional composition, root decay, root detritus N dynamics and soil N mineralization rates. As reported in Fornara, Hobbie and Tilman (2008), a fine root decomposition experiment performed in our Biodiversity Experiment showed that plant functional composition affected fine root decomposition (mass loss), root detritus N dynamics and net soil N mineralization rates through its effects on root chemistry rather than on the environment of decomposition. In particular, the presence of legumes and non-leguminous forbs contributed to greater fine root decomposition which in turn enhanced root N release and net soil N mineralization rates compared with C3 and C4 grasses. We found that all fine roots released N immediately during decomposition and showed little N immobilization regardless of plant composition. As a consequence, there was no evidence of increased root or soil N immobilization rates with increased belowground plant biomass (i.e. increased soil C inputs) even though root biomass negatively affected root decay. These results suggest that fine roots represent an active soil N pool that may sustain plant uptake while other soil N forms are being immobilized in microbial biomass and/or sequestered into soil organic matter. In fact, fine roots also represent a source of recalcitrant plant detritus that is returned to the soil (i.e. fine roots of C4 and C3 grasses) and that can contribute to increase the soil organic matter pool.
+An important implication of this study is that the simultaneous presence of different plant functional groups (in plant mixtures) which have opposite effects on root mass loss, root N release and soil N mineralization rates may be crucial for sustaining multiple ecosystem services such as productivity and soil C and N sequestration in many N-limited grassland systems.
+
+
+Fornara, DA, D Tilman and SE Hobbie. 2008. Linkages between plant functional composition, fine root processes and potential soil N mineralization rates.  Journal of Ecology 97:48-56.
+
+______________
+
+
+Future Research
+
+Why Does Higher Diversity Lead to Stability? We have found strong support for the
+diversity-stability hypothesis. During the coming six years, we will gather annual data on plant
+species abundances, total plant biomass, and their relationships to climatic and arthropod
+variation to test among alternative hypotheses of why ecosystem stability depends on diversity.
+______________
+
+
+Future Research
+
+How do Biodiversity and Composition Influence Carbon Sequestration and Other Ecosystem
+Services and How Sustainable Will These Services Be? We will focus on four ecosystem services
+(Daily 1997) potentially produced at different rates in response to plant biodiversity - C
+sequestration, quality of ground water, restoration of soil fertility, and provisioning of pollinators
+and predator/parasitoids of value to agriculture - by gathering data on these and relevant
+underlying processes. For instance, preliminary analysis of results from the 10th year of this
+experiment, 2005, suggested that annual belowground C sequestration was equal to about 1/3 of
+C in annual aboveground biomass. Soil N levels, and resultant soil fertility, also increased with
+diversity (Fig 31). Soil NO3 is about 60% lower in high diversity plots than in monocultures,
+which suggests the possibility that higher plant diversity might lead to lower leaching losses and
+higher ground water quality. We propose exploring these possibilities, and potential agricultural
+impacts of arthropods, in our work on ecosystem services.
+______________
+
+
+Species Assigned to Each Plot
+
+	
+Plot	Species
+002	Lesca 
+003	Asctu Liaas Monfi Panvi Solri
+005	Andge
+006	Panvi Schsc
+009	Achmi Agrsm Amoca Andge Asctu Elyca Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri Sornu
+011	Achmi
+012	Achmi Koecr Luppe Monfi Petca Petvi Poapr Schsc Solri Sornu
+014	Asctu Liaas
+015	Agrsm Elyca Monfi Petca Petpu Petvi Poapr Queel Quema Solri
+016	Asctu
+020	Amoca
+022	Agrsm Asctu Elyca Koecr Liaas Monfi Petca Petvi Quema Solri
+024	Asctu Elyca Panvi Schsc
+026	Agrsm Elyca Petpu Sornu
+027	Achmi Agrsm Amoca Asctu Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+028	Lesca Petpu Queel Quema
+029	Lesca
+030	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Liaas Luppe Monfi Panvi Poapr Queel Quema Schsc Solri Sornu
+031	Schsc
+032	Andge Queel
+033	Agrsm Andge Liaas Petca Petvi
+034	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+035	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+044	Asctu Panvi Petca Petpu Petvi
+045	Andge Liaas Petpu Quema
+046	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri
+048	Koecr Lesca
+050	Achmi Elyca Koecr Lesca Petca Petpu Petvi Poapr Quema
+053	Lesca Poapr Quema Sornu
+056	Luppe Schsc
+057	Achmi Agrsm Koecr Lesca Monfi Petca Petvi Poapr Schsc Solri
+058	Andge Monfi Poapr Solri Sornu
+062	Elyca Lesca Petca Petvi Quema
+067	Agrsm Koecr Luppe Monfi Petca Petvi Queel Quema Solri Sornu
+068	Achmi Agrsm Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+069	Achmi
+070	Andge Asctu Luppe Schsc
+073	Monfi Queel Solri
+074	Achmi Agrsm Asctu Elyca Koecr Petca Petvi Quema Sornu
+075	Asctu Panvi
+081	Achmi Agrsm Elyca Lesca Liaas Petpu Poapr Schsc
+082	Achmi Amoca Andge Asctu Elyca Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+083	Luppe
+087	Sornu
+089	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Liaas Luppe Panvi Petpu Poapr Queel Quema Schsc Sornu
+092	Sornu
+093	Agrsm Koecr Luppe Petpu
+094	Lesca
+098	Achmi Agrsm Andge Koecr Luppe Panvi Poapr Queel
+104	Achmi Elyca Koecr Liaas Luppe Petpu Queel Schsc
+107	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri
+108	Achmi Agrsm Amoca Andge Elyca Koecr Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+109	Andge
+110	Elyca Lesca Luppe Panvi
+111	Achmi Agrsm Lesca Monfi Petca Petvi Poapr Queel Quema Solri
+115	Agrsm Andge Asctu Elyca Koecr Monfi Poapr Queel Solri
+117	Asctu Luppe
+118	Achmi Agrsm Andge Asctu Koecr Monfi Petpu Quema Solri
+125	Petpu Schsc
+126	Bargr
+127	Lesca Quema
+129	Liaas
+130	Achmi Asctu Elyca Liaas Panvi Petpu Quema Schsc
+133	Lesca Monfi Petca Petvi Schsc Solri
+135	Schsc
+136	Achmi Agrsm Amoca Andge Asctu Elyca Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+137	Amoca
+138	Achmi Elyca Koecr Liaas
+139	Agrsm Elyca Koecr Lesca
+142	Koecr
+146	Achmi Andge Lesca Monfi Panvi Poapr Queel Quema Solri
+149	Monfi Petca Petvi Quema Solri Sornu
+151	Queel
+153	Agrsm
+156	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+157	Agrsm Koecr
+160	Achmi Agrsm Amoca Andge Asctu Koecr Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+161	Quema
+163	Sornu
+164	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+165	Poapr Sornu
+166	Bargr
+167	Liaas
+168	Andge Koecr
+169	Achmi Agrsm Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Solri Sornu
+170	Achmi Asctu Elyca Koecr Monfi Petca Petpu Petvi Queel Solri
+171	Koecr Luppe
+174	Achmi Agrsm Amoca Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri Sornu
+175	Luppe Sornu
+176	Agrsm Liaas Panvi Poapr
+177	Andge Asctu Koecr Liaas Petca Petvi Quema Schsc Sornu
+178	Achmi Agrsm Elyca Koecr Liaas Monfi Panvi Schsc Solri
+185	Petpu
+186	Achmi Agrsm Amoca Asctu Elyca Koecr Lesca Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+189	Queel Schsc
+190	Lesca Liaas Petpu Quema
+193	Andge Luppe
+197	Asctu Panvi
+199	Luppe Queel Quema Schsc
+201	Lesca Petpu Queel Sornu
+202	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Schsc Solri Sornu
+205	Petpu
+206	Agrsm Andge Asctu Lesca Luppe Monfi Poapr Solri Sornu
+208	Achmi Agrsm Koecr Lesca Luppe Panvi Poapr Schsc
+210	Achmi Elyca Koecr Lesca Liaas Luppe Poapr Schsc
+211	Monfi Petca Petvi Solri
+213	Achmi Andge Koecr Lesca Petca Petvi Poapr Quema Schsc
+220	Achmi Agrsm Amoca Andge Asctu Koecr Lesca Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+221	Queel Quema
+223	Koecr Liaas Poapr Queel
+224	Achmi Sornu
+225	Elyca Petpu Queel Schsc
+227	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri Sornu
+229	Andge Petpu Poapr Schsc
+230	Panvi
+232	Koecr Luppe Monfi Panvi Petca Petvi Queel Schsc Solri Sornu
+233	Liaas Petpu Poapr Queel
+234	Elyca Luppe
+235	Achmi Agrsm Amoca Andge Asctu Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+236	Lesca Panvi
+237	Poapr
+239	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Luppe Monfi Petpu Poapr Queel Quema Schsc Solri Sornu
+242	Agrsm Amoca Andge Asctu Elyca Koecr Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+244	Bargr
+248	Bargr
+253	Achmi Agrsm Amoca Andge Asctu Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri Sornu
+255	Queel
+256	Agrsm
+257 	Achmi Agrsm Amoca Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+259	Lesca Schsc
+265	Luppe
+266	Achmi Agrsm Andge Petca Petpu Petvi Quema Schsc Sornu
+267	Liaas
+268	Koecr
+272	Petca Petvi Queel
+273	Achmi Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+278	Elyca Sornu
+280	Schsc
+282	Sornu
+283	Achmi Agrsm Andge Asctu Elyca Panvi Schsc Sornu
+286	Lesca Poapr Schsc Sornu
+287	Achmi Elyca Monfi Schsc Solri
+290	Monfi Solri
+291	Petpu
+292	Andge Elyca Koecr Lesca Luppe Petca Petvi Poapr Sornu
+293	Andge Asctu Lesca Luppe Petpu Queel Quema Schsc
+296	Quema
+299	Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri Sornu
+300	Luppe Panvi
+301	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Poapr Quema Schsc Solri Sornu
+302	Liaas Luppe Monfi Quema Solri
+303	Achmi Agrsm Koecr Liaas Luppe Monfi Petca Petvi Poapr Solri
+304	Agrsm Koecr
+307	Asctu Luppe Monfi Panvi Petpu Queel Quema Schsc Solri
+308	Asctu
+311	Koecr Panvi
+313	Achmi Koecr Lesca Liaas Luppe Petca Petpu Petvi Quema
+318	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Luppe Monfi Panvi Poapr Queel Quema Schsc Solri Sornu
+322	Queel Schsc
+324	Elyca Poapr
+325	Koecr Monfi Panvi Petpu Solri
+328	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Quema Schsc Solri
+329	Achmi Agrsm Amoca Andge Elyca Koecr Lesca Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri Sornu
+330	Andge Liaas
+331	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Queel Quema Schsc Solri
+333	Elyca
+334	Elyca Sornu
+335	Koecr Petca Petvi
+336	Achmi Agrsm Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Queel Quema Schsc Solri Sornu
+338	Monfi Solri
+339	Achmi Amoca Andge Asctu Elyca Koecr Lesca Liaas Luppe Monfi Panvi Petpu Poapr Queel Quema Schsc Solri
+342	Luppe Monfi Solri
+
+
+______________
+
+
+Treatments applied to plots
+
+A plot&#39;s group code shows which functional groups are present in the plot, with the left-most column representing C-3 grasses, the second column representing C-4 grasses, the third representing forbs other than legumes, the fourth representing legunes, and the fifty representing woody plants. Again, if a column is 1, the corresponding group is present in the plot. If 0, it is not. For example, Plot 3 has group code 01100, which means the plot has both C-4 grasses and forbs other than legumes, but nothing else.
+
+Plot 	Treatment 	Numberof Groups 	Group Code(34FLW) 	Number of species
+002 	B 	1 	00010 	01
+003 	D 	2 	01100 	04
+005 	B 	1 	01000 	01
+006 	C 	1 	01000 	02
+009 	F 	5 	11111 	16
+011 	B 	1 	00100 	01
+012 	E 	4 	11110 	08
+014 	C 	1 	00100 	02
+015 	E 	4 	10111 	08
+016 	B 	1 	00100 	01
+020 	B 	1 	00010 	01
+022 	E 	4 	10111 	08
+024 	D 	3 	11100 	04
+026 	D 	3 	11010 	04
+027 	F 	5 	11111 	16
+028 	D 	2 	00011 	04
+029 	B 	1 	00010 	01
+030 	F 	5 	11111 	16
+031 	B 	1 	01000 	01
+032 	C 	2 	01001 	02
+033 	D 	4 	11110 	04
+034 	F 	5 	11111 	16
+035 	F 	5 	11111 	16
+044 	D 	3 	01110 	04
+045 	D 	4 	01111 	04
+046 	F 	5 	11111 	16
+048 	C 	2 	10010 	02
+050 	E 	4 	10111 	08
+053 	D 	4 	11011 	04
+056 	C 	2 	01010 	02
+057 	E 	4 	11110 	08
+058 	D 	3 	11100 	04
+062 	D 	3 	10011 	04
+067 	E 	5 	11111 	08
+068 	F 	5 	11111 	16
+069 	B 	1 	00100 	01
+070 	D 	3 	01110 	04
+073 	C 	2 	00101 	02
+074 	E 	5 	11111 	08
+075 	C 	2 	01100 	02
+081 	E 	4 	11110 	08
+082 	F 	5 	11111 	16
+083 	B 	1 	00010 	01
+087 	B 	1 	01000 	01
+089 	F 	5 	11111 	16
+092 	B 	1 	01000 	01
+093 	D 	2 	10010 	04
+094 	B 	1 	00010 	01
+098 	E 	5 	11111 	08
+104 	E 	5 	11111 	08
+107 	F 	5 	11111 	16
+108 	F 	5 	11111 	16
+109 	B 	1 	01000 	01
+110 	D 	3 	11010 	04
+111 	E 	4 	10111 	08
+115 	E 	4 	11101 	08
+117 	C 	2 	00110 	02
+118 	E 	5 	11111 	08
+125 	C 	2 	01010 	02
+126 	A 	0 	00000 	00
+127 	C 	2 	00011 	02
+129 	B 	1 	00100 	01
+130 	E 	5 	11111 	08
+133 	D 	3 	01110 	04
+135 	B 	1 	01000 	01
+136 	F 	5 	11111 	16
+137 	B 	1 	00010 	01
+138 	D 	2 	10100 	04
+139 	D 	2 	10010 	04
+142 	B 	1 	10000 	01
+146 	E 	5 	11111 	08
+149 	D 	4 	01111 	04
+151 	B 	1 	00001 	01
+153 	B 	1 	10000 	01
+156 	F 	5 	11111 	16
+157 	C 	1 	10000 	02
+160 	F 	5 	11111 	16
+161 	B 	1 	00001 	01
+163 	B 	1 	01000 	01
+164 	F 	5 	11111 	16
+165 	C 	2 	11000 	02
+166 	A 	0 	00000 	00
+167 	B 	1 	00100 	01
+168 	C 	2 	11000 	02
+169 	F 	5 	11111 	16
+170 	E 	4 	10111 	08
+171 	C 	2 	10010 	02
+174 	F 	5 	11111 	16
+175 	C 	2 	01010 	02
+176 	D 	3 	11100 	04
+177 	E 	5 	11111 	08
+178 	E 	3 	11100 	08
+185 	B 	1 	00010 	01
+186 	F 	5 	11111 	16
+189 	C 	2 	01001 	02
+190 	D 	3 	00111 	04
+193 	C 	2 	01010 	02
+197 	C 	2 	01100 	02
+199 	D 	3 	01011 	04
+201 	D 	3 	01011 	04
+202 	F 	4 	11110 	16
+205 	B 	1 	00010 	01
+206 	E 	4 	11110 	08
+208 	E 	4 	11110 	08
+210 	E 	4 	11110 	08
+211 	C 	2 	00110 	02
+213 	E 	5 	11111 	08
+220 	F 	5 	11111 	16
+221 	C 	1 	00001 	02
+223 	D 	3 	10101 	04
+224 	C 	2 	01100 	02
+225 	D 	4 	11011 	04
+227 	F 	5 	11111 	16
+229 	D 	3 	11010 	04
+230 	B 	1 	01000 	01
+232 	E 	5 	11111 	08
+233 	D 	4 	10111 	04
+234 	C 	2 	10010 	02
+235 	F 	5 	11111 	16
+236 	C 	2 	01010 	02
+237 	B 	1 	10000 	01
+239 	F 	5 	11111 	16
+242 	F 	5 	11111 	16
+244 	A 	0 	00000 	00
+248 	A 	0 	00000 	00
+253 	F 	5 	11111 	16
+255 	B 	1 	00001 	01
+256 	B 	1 	10000 	01
+257 	F 	5 	11111 	16
+259 	C 	2 	01010 	02
+265 	B 	1 	00010 	01
+266 	E 	5 	11111 	08
+267 	B 	1 	00100 	01
+268 	B 	1 	10000 	01
+272 	C 	2 	00011 	02
+273 	F 	5 	11111 	16
+278 	C 	2 	11000 	02
+280 	B 	1 	01000 	01
+282 	B 	1 	01000 	01
+283 	E 	3 	11100 	08
+286 	D 	3 	11010 	04
+287 	D 	3 	11100 	04
+290 	B 	1 	00100 	01
+291 	B 	1 	00010 	01
+292 	E 	3 	11010 	08
+293 	E 	4 	01111 	08
+296 	B 	1 	00001 	01
+299 	F 	5 	11111 	16
+300 	C 	2 	01010 	02
+301 	F 	5 	11111 	16
+302 	D 	3 	00111 	04
+303 	E 	3 	10110 	08
+304 	C 	1 	10000 	02
+307 	E 	4 	01111 	08
+308 	B 	1 	00100 	01
+311 	C 	2 	11000 	02
+313 	E 	4 	10111 	08
+318 	F 	5 	11111 	16
+322 	C 	2 	01001 	02
+324 	C 	1 	10000 	02
+325 	D 	4 	11110 	04
+328 	F 	5 	11111 	16
+329 	F 	5 	11111 	16
+330 	C 	2 	01100 	02
+331 	F 	5 	11111 	16
+333 	B 	1 	10000 	01
+334 	C 	2 	11000 	02
+335 	C 	2 	10010 	02
+336 	F 	5 	11111 	16
+338 	B 	1 	00100 	01
+339 	F 	5 	11111 	16
+342 	C 	2 	00110 	02
+
+
+______________
+
+
+History of Big Biodiversity Field Plots
+
+One hundred seventy plots were planted in the block of 342 big biodiversity plots which were not included in experiment e120. The assignment of species to these plots were randomly allocated in different ways than for the E120 plots. The following includes details about the plots within this group.
+
+Plot  	Species
+001 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+004 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+007 	Amoca Elyca Lesca Luppe Petpu Poapr Queel Quema
+008 	Achmi Amoca Asctu Liaas Luppe Monfi Petpu Solri Vicvi
+010 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+013 	Achmi Amoca Liaas Petpu
+017 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+018 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+019 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+021 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+023 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+036 	Panvi Schsc
+038 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+039 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+040 	Amoca Astca Baple Lesca Luppe Petca Petpu Petvi Vicvi
+041 	Andge Boucu Bougr Bucda Panvi Schsc Sornu Spocr
+042 	Agrre Agrsm Calca Elyca Koecr Leeor Poapr Stisp
+043 	Andge Koecr Panvi Poapr
+047 	Achmi Amoca
+049 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+051 	Achmi Liaas
+052 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+054 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+055 	Boucu Bougr Bucda Panvi Queel Quema Sornu Spocr
+059 	Asctu Lesca
+060 	Agrsm Luppe Poapr Quema
+061 	Agrre Agrsm Calca Elyca Koecr Leeor Poapr Stisp
+063 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+064 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+065 	Schsc Sornu
+066 	Elyca Koecr Poapr Stisp
+071 	Lesca Petpu
+072 	Achmi Andge Asctu Monfi Panvi Schsc Solri Sornu Spocr
+076 	Andge Panvi Quema Schsc
+077 	Achmi Asctu Corpa Liaas Monfi Rudse Solne Zizau
+078 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+079 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+080 	Andge Luppe Petpu Sornu
+084 	Agrsm Amoca Lesca Luppe Petpu Queel Schsc Sornu
+085 	Amoca Lesca Liaas Monfi
+086 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+088 	Agrsm Andge Elyca Koecr Panvi Poapr Schsc Sornu
+090 	Amoca Astca Baple Lesca Luppe Petca Petpu Petvi Vicvi
+091 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+095 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+096 	Andge Boucu Bougr Bucda Panvi Schsc Sornu Spocr
+097 	Achmi Amoca Asctu Astca Baple Corpa Lesca Liaas Luppe Monfi Petca Petpu Rudse Solne Vicvi Zizau
+099 	Monfi Petpu Poapr Solri Sornu
+100 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+101 	Amoca Elyca Koecr Lesca Panvi Petpu Queel Schsc
+102 	Andge Schsc
+103 	Agrsm Andge Koecr Panvi
+105 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+112 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+114 	Achmi Agrsm Amoca Monfi Solri
+116 	Achmi Amoca Asctu Astca Baple Corpa Lesca Liaas Luppe Monfi Petca Petpu Rudse Solne Vicvi Zizau
+120 	Achmi Amoca Asctu Lesca Liaas Luppe Monfi Petpu Solri
+121 	Andge Sornu
+122 	Achmi Asctu Corpa Liaas Monfi Rudse Solne Zizau
+123 	Luppe Panvi Petpu Sornu
+124 	Elyca
+128 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+131 	Andge Boucu Bougr Bucda Panvi Schsc Sornu Spocr
+132 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+134 	Achmi Amoca Asctu Lesca Liaas Luppe Monfi Petpu
+140 	Achmi Andge Asctu Liaas Monfi Panvi Schsc Solri Sornu
+141 	Achmi Amoca Asctu Astca Baple Corpa Lesca Liaas Luppe Monfi Petca Petpu Rudse Solne Vicvi Zizau
+143 	Andge Panvi Schsc Sornu
+144 	Achmi Amoca Liaas Luppe Monfi Petpu Schsc Solri Sornu
+145 	Achmi Andge Asctu Monfi Queel Quema Schsc Solri Sornu
+147 	Achmi Elyca Petpu Schsc
+148 	Agrsm Amoca Andge Elyca Koecr Luppe Poapr Sornu
+150 	Achmi Amoca Asctu Astca Baple Corpa Lesca Liaas Luppe Monfi Petca Petpu Rudse Solne Vicvi Zizau
+152 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+154 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+155 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+158 	Achmi Asctu Liaas Monfi Queel Rudse Solne Solri Zizau
+159 	Agrsm Amoca Elyca Koecr Petpu Poapr Queel Quema
+162 	Andge Boucu Bougr Bucda Panvi Schsc Sornu Spocr
+172 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+173 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+179 	Luppe Monfi Petpu Quema Solri
+180 	Lesca Luppe Petpu Vicvi
+181 	Achmi Asctu Monfi Panvi Queel Quema Schsc Solri Sornu
+183 	Andge Boucu Bougr Bucda Panvi Schsc Sornu Spocr
+184 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+187 	Amoca Lesca Luppe Panvi Petpu Queel Quema Schsc
+188 	Agrsm Elyca Koecr Panvi Poapr Queel Quema Schsc
+191 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+192 	Astca Lesca Luppe Petca Petpu Petvi Queel Quema Vicvi
+194 	Achmi Andge Asctu Liaas Monfi Panvi Rudse Solri Sornu
+195 	Andge Panvi Schsc Sornu
+196 	Agrsm Elyca Koecr Poapr
+198 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+200 	Andge Panvi Schsc Sornu
+203 	Achmi Asctu Liaas Solne
+204 	Agrsm Elyca Koecr Leeor Poapr Queel Quema Stisp
+207 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+209 	Achmi Amoca Asctu Astca Baple Corpa Lesca Liaas Luppe Monfi Petca Petpu Rudse Solne Vicvi Zizau
+212 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+214 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+216 	Achmi Amoca Asctu Lesca
+217 	Agrsm Andge Elyca Koecr Panvi Poapr Schsc Sornu
+218 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+219 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+222 	Koecr Petpu Queel Schsc
+226 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+228 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+238 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+240 	Achmi Amoca Asctu Astca Baple Corpa Lesca Liaas Luppe Monfi Petca Petpu Rudse Solne Vicvi Zizau
+241 	Achmi Asctu Corpa Liaas
+243 	Poapr Queel
+245 	Bucda Panvi Schsc Sornu
+246 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+247 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+249 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+250 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+251 	Asctu Monfi Solri
+252 	Amoca Liaas Monfi Petpu
+254 	Achmi Amoca Andge Lesca Luppe Monfi Panvi Petpu Solri
+258 	Agrre Agrsm Andge Boucu Bougr Bucda Calca Elyca Koecr Leeor Panvi Poapr Schsc Sornu Spocr
+260 	Panvi Queel Quema Sornu
+261 	Achmi Amoca Asctu Lesca Liaas Luppe Monfi Petpu
+262 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+263 	Liaas Quema
+264 	Amoca Astca Baple Lesca Luppe Petca Petpu Petvi Vicvi
+269 	Achmi Asctu Corpa Liaas Monfi Rudse Solne Solri Zizau
+270 	Agrsm Koecr Schsc Sornu
+271 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+274 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+275 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+276 	Agrre Agrsm Calca Elyca Koecr Leeor Poapr Stisp
+277 	Achmi Amoca Asctu Lesca Liaas Luppe Monfi Petpu
+279 	Koecr Monfi
+281 	Andge Boucu Bougr Bucda Panvi Schsc Sornu Spocr
+284 	Andge Panvi Schsc Sornu
+285 	Andge Panvi Schsc Sornu
+288 	Agrsm Andge Elyca Koecr Panvi Poapr Schsc Sornu
+289 	Amoca Lesca Luppe Petpu
+294 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+295 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+297 	Agrsm Koecr Panvi Schsc
+298 	Luppe Petpu
+305 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+306 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+309 	Achmi Agrsm Amoca Andge Asctu Astca Baple Boucu Bougr Broin Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+310 	Andge Schsc
+312 	Rudse
+314 	Agrsm Asctu
+315 	Achmi Asctu Liaas Queel
+316 	Achmi Amoca Asctu Monfi
+317 	Agrsm Andge Elyca Koecr Panvi Poapr Schsc Sornu
+320 	Amoca Elyca Koecr Liaas Luppe Monfi Petpu Poapr Solri
+323 	Achmi Asctu Liaas Monfi
+326 	Poapr Quema
+327 	Amoca Andge Lesca Luppe Panvi Petpu Schsc Sornu
+332 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+337 	Agrsm Amoca Andge Elyca Poapr Queel Quema Sornu
+340 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+341 	Achmi Agrsm Amoca Andge Asctu Baple Boucu Bougr Bucda Calca Corpa Elyca Koecr Leeor Lesca Liaas Luppe Monfi Panvi Petca Petpu Petvi Poapr Queel Quema Rudse Schsc Solne Solri Sornu Spocr Stisp Vicvi Zizau
+
+
+______________
+
+
+Numbering of the plots for E120
+
+Plots are numbered starting from the northeast corner, incrementing left to right in odd rows and right to left in even rows. Walking paths separate every row and driving paths divide the plots into 6x6 groups in the following arrangement.  There are 18 Rows with 19plots each.
+______________
+
+
+Species abbreviations
+
+Species codes of five characters are assigned from the first three characters of the genus name and the first two of the species. These abbreviations are used in other files to shorten documentation of the experiment.
+
+Abbreviation  	Species  	Functional Group
+Achmi  	Achillea millefolium  	Forb
+Agrsm  	Agropyron smithii  	C-3
+Amoca  	Amorpha canescens  	Legume
+Andge  	Andropogon gerardi  	C-4
+Asctu  	Asclepias tuberosa  	Forb
+Bargr  	Bare ground  	-
+Elyca  	Elymus canadensis  	C-3
+Koecr  	Koeleria cristata  	C-3
+Lesca  	Lespedeza capitata  	Legume
+Liaas  	Liatris aspera  	Forb
+Luppe  	Lupinus perennis  	Legume
+Monfi  	Monarda fistulosa  	Forb
+Panvi  	Panicum virgatum  	C-4
+Petca  	Petalostemum candidum  	Legume
+Petpu  	Petalostemum purpureum  	Legume
+Petvi  	Petalostemum villosum  	Legume
+Poapr  	Poa pratensis  	C-3
+Queel  	Quercus ellipsoidalis  	Woody
+Quema  	Quercus macrocarpa  	Woody
+Schsc  	Schizachyrium scoparium  	C-4
+Solri  	Solidago rigida  	Forb
+Sornu  	Sorghastrum nutans  	C-4
+
+
+______________
+
+
+Seeding rates
+
+To assure adequate establishment, plots were seeded both in 1994 and 1995. Rates for 1995 are related to those of 1994 by an adjustment factor, with one factor for plots that retained their identities and another factor for plots in which species were changed or added. Factors for plots that were changed are marked with asterisks (*) below. Columns labelled B, C, D, etc. contain the grams of seed applied per plot for the corresponding treatment. The table describes the species planted within any of the 342 plots in the block of plots containing the plots for E120.
+
+
+Code  	Species Name  	Year 	Factor 	B  	C  	D  	E  	F  	H
+Achmi  	Achillea millefolium  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.716 	243 	122 	61 	30 	15.2 	7.6
+Agrre  	Agropyron repens  	1994  	1  	1100 	550 	275 	138 	69.0 	35.0
+		1995*  	.716 	706 	353 	177 	88 	44.0 	22.0
+		1995  	.5  	493 	247 	123 	62 	31.0 	15.4
+Agrsm  	Agropyron smithii  	1994  	1  	1250 	626 	313 	156 	78.0 	39.0
+		1995*  	.716 	895 	448 	224 	112 	56.0 	28.0
+		1995  	.716 	895 	448 	224 	112 	56.0 	28.0
+Amoca  	Amorpha canescens  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.25  	85 	43 	21 	10 	6 5.3 	2.7
+Andge  	Andropogon gerardi  	1994  	1  	1650 	825 	412 	206 	103.0 	52.0
+		1995*  	.716 	1181 	591 	295 	148 	74.0 	37.0
+		1995  	.1  	165 	83 	41 	21 	10.3 	5.2
+Asctu  	Asclepias tuberosa  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.716 	243 	122 	61 	30 	15.2 	7.6
+Astca  	Astragalus canadensis  	1994  	1  	220 	110 	55 	28 	14.0 	7.0
+		1995*  	.716 	158 	79 	39 	19 	7 9.9 	4.9
+		1995  	.5  	110 	55 	28 	13 	8 6.9 	3.4
+Baple  	Baptisia leucantha  	1994  	1  	190 	95 	48 	24 	12.0 	6.0
+		1995*  	.716 	136 	68 	34 	17 	0 8.5 	4.3
+		1995  	.5  	95 	48 	24 	11 	9 5.9 	3.0
+Boucu  	Bouteloua curtipendula  	1994  	1  	1100 	550 	275 	138 	69.0 	35.0
+		1995*  	.716 	788 	394 	197 	99 	49.0 	25.0
+		1995  	.5  	550 	275 	138 	69 	34.0 	17.2
+Bougr  	Bouteloua gracilis  	1994  	1  	1540 	770 	385 	192 	96.0 	48.0
+		1995*  	.716 	1654 	827 	414 	207 	103.0 	52.0
+		1995  	.5  	1155 	578 	289 	144 	72.0 	36.0
+Broin  	Bromus inermis  	1994  	1  	1000 	500 	250 	125 	63.0 	31.0
+		1995*  	.716 	695 	348 	174 	87 	43.0 	21.7
+		1995  	.716 	695 	348 	174 	87 	43.0 	21.7
+Bucda  	Buchloe dactyloides  	1994  	1  	970 	485 	240 	120 	60.0 	30.0
+		1995*  	.716 	729 	365 	182 	91 	46.0 	22.8
+		1995  	.716 	729 	365 	182 	91 	46.0 	22.8
+Calca  	Calamagrostis canadensis 	1994  	1  	1000 	500 	250 	125 	63.0 	31.0
+		1995*  	.716 	652 	326 	163 	82 	41.0 	20.4
+		1995  	.5  	456 	228 	114 	57 	29.0 	14.3
+Corpa  	Coreopsis palmata  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.5  	170 	85 	43 	21 	10.6 	5.3
+Elyca  	Elymus canadensis  	1994  	1  	2000 	1000 	500 	250 	125.0 	62.0
+		1995*  	.716 	1432 	716 	358 	179 	90.0 	45.0
+		1995  	.25  	500 	250 	125 	63 	31.0 	15.6
+Koecr  	Koeleria cristata  	1994  	1  	1100 	550 	275 	138 	69.0 	35.0
+		1995*  	.716 	764 	382 	191 	96 	48.0 	23.9
+		1995  	.716 	764 	382 	191 	96 	48.0 	23.9
+Leeor  	Leersia oryzoides  	1994  	1  	1000 	500 	250 	125 	63.0 	31.0
+		1995*  	.716 	695 	348 	174 	87 	43.0 	21.7
+		1995  	.716 	695 	348 	174 	87 	43.0 	21.7
+Lesca  	Lespedeza capitata  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.25  	85 	43 	21 	10 	6 5.3 	2.7
+Liaas  	Liatris aspera  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.716 	243 	122 	61 	30 	15.2 	7.6
+Luppe  	Lupinus perennis  	1994  	1  	250 	125 	62 	31 	15.0 	7.0
+		1995*  	.716 	179 	90 	45 	22 	11.2 	5.6
+		1995  	.5  	125 	63 	31 	15 	6 7.8 	3.9
+Monfi  	Monarda fistulosa  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	207 	104 	52 	26 	13.0 	6.5
+		1995  	.716 	207 	104 	52 	26 	13.0 	6.5
+Panvi  	Panicum virgatum  	1994  	1  	1800 	900 	450 	225 	112.0 	56.0
+		1995*  	.716 	1933 	967 	483 	242 	121.0 	60.0
+		1995  	.5  	1350 	675 	338 	169 	84.0 	42.0
+Petca  	Petalostemum candidum  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.5  	170 	85 	43 	21 	10.6 	5.3
+Petpu  	Petalostemum purpureum  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	236 	118 	59 	30 	15.0 	7.4
+		1995  	.716 	236 	118 	59 	30 	15.0 	7.4
+Poapr  	Poa pratensis  	1994  	1  	1650 	825 	412 	206 	103.0 	51.0
+		1995*  	.716 	1375 	688 	344 	172 	86.0 	43.0
+		1995  	.333 	640 	320 	160 	80 	40.0 	20.0
+Rudhi  	Rudbeckia hirta  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.5  	170 	85 	43 	21 	10.6 	5.3
+Schsc  	Schizachyrium scoparium  	1994  	1  	3000 	1500 	750 	375 	187.0 	94.0
+		1995*  	.716 	2148 	1074 	537 	269 	134.0 	67.0
+		1995  	.1  	300 	150 	75 	38 	18.8 	9.4
+Solne  	Solidago nemoralis  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.716 	243 	122 	61 	30 	15.2 	7.6
+Sornu  	Sorghastrum nutans  	1994  	1  	2200 	1100 	550 	275 	138.0 	69.0
+		1995*  	.716 	1575 	788 	394 	197 	99.0 	49.0
+		1995  	.1  	220 	110 	55 	28 	13.8 	6.9
+Spocr  	Sporobolus cryptandrus  	1994  	1  	420 	210 	105 	53 	27.0 	14.0
+		1995*  	.716 	601 	301 	150 	75 	38.0 	18.8
+		1995  	.5  	420 	210 	105 	53 	26.0 	13.1
+Stico  	Stipa comata  	1994  	1  	1000 	500 	250 	125 	63.0 	31.0
+		1995*  	.716 	644 	322 	161 	81 	40.0 	20.0
+		1995  	.716 	644 	322 	161 	81 	40.0 	20.0
+Vicvi  	Vicia villosa  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.5  	170 	85 	43 	21 	10.6 	5.3
+Zizau  	Zizia aurea  	1994  	1  	340 	170 	85 	43 	22.0 	11.0
+		1995*  	.716 	243 	122 	61 	30 	15.2 	7.6
+		1995  	.716 	243 	122 	61 	30 	15.2 	7.6
+Queel  	Quercus ellipsoidalis  	1994  	1  	0 	0 	0 	0 	.0 	.0
+		1995*  	.716 	238 	119 	60 	29 	15.4 	7.0
+		1995  	.716 	238 	119 	60 	29 	15.4 	7.0
+Quema  	Quercus macrocarpa  	1994  	1  	0 	0 	0 	0 	0  	.0
+		1995*  	.716 	357 	179 	90 	44 	23  	10.5
+		1995  	.716 	357 	179 	90 	44 	23  	10.5
+
+
+
+
+
+______________
+
+
+Goals and Additional Design Details for E120
+
+Goals
+To control plant species diversity in a well-replicated, long-term field experiment so as to determine the potential effects of plant species richness and plant functional-group richness on
+
+(1) stability of primary productivity in response to natural and experimentally induced climatic variation and in response to herbivores, pathogens, seed predators, and disease;
+(2) the species composition, abundances, stability and diversity of herbivorous insects, seed predators, predaceous insects, and parasitoids;
+(3) the densities, dynamics, stability and habitat choice of small mammals;
+(4) the dynamics of soil C and N, including rates of accretion, leaching losses, rates of mineralization, rates of fixation, and turnover of pools; and
+(5) the dynamics, species composition and biodiversity of soil micro- and macro-organisms, including soil mycorrhizal fungi, nitrifying bacteria, other bacteria, other fungi, soil micro-arthropods, earthworms, and soil arthropods.
+
+Additional Design Details
+Biodiversity II is contained within a block of 342 plots laid out in a grid adjacent to Biodiversity I. Each plot was laid out as a 13 m x 13 m square, but only the central 9 m x 9 m is actively maintained to contain the specified species and level of plant diversity. This is the only portion sampled. Plots were planted with grassland perennial herbaceous and savanna woody species. These plant species were in either the C4 grass, C3 grass, legume, other forb, or woody functional groups. The species composition of the plots was chosen by separate random draws of the appropriate number of species (1, 2, 4, 8, or 16 plant species) from a pool of 18 species. For diversity levels 1, 2, 4, 8, and 16 species, there are 39, 35, 29, 30, and 35 replicates, respectively. 
+
+To initiate the experiment, a field at Cedar Creek Natural History Area, Minnesota, was treated with herbicide and burned in August, 1993, had 6-8 cm of soil removed to reduce the seed bank, was plowed and harrowed, then divided into plots of which 168 form this experiment. Plots for Biodiversity II were manually seeded in May 1994 using seed addition rates and methods like those of Biodiversity I. All plots received, in total, 10g/m2 of pure live seed in May 1994 with seed mass divided equally among species. Due to insufficient water resources, the plots were not irrigated in 1994. Because a dry and windy spring led to some soil and seed erosion and to poor germination, plots were re-seeded in May 1995, at half the 1994 rate, and watered once or twice weekly with an irrigation system. Two species that did not germinate in 1994 were replaced with different species in the same functional groups in the 1995, with their seeding proportionate to 10g/m2 or pure live seed. Three species (Elymus canadensis, Poa pratensis, Panicum virgatum) did not establish in one of their two original monocultures, even after reseeding, and these three plots were abandoned after 1996.
+
+All plots were mown in July 1994 to help control weeds, and manually weeded in August 1994. They were manually weeded twice in 1995, four times in 1996, and three or four times from 1997 onward. Selective herbicides were also used through 1997. Plots that were designated to contain only legumes and/or other forbs were sprayed with Assure (Quizalofop P-ethyl (Ethyl(R)-2-[4-(6-chloroquinoxalin-2-yl oxy)-phenoxy]propionate)), a selective herbicide against grasses, twice each growing season from 1994 through 1997. The plots designated to contain just grasses were sprayed twice a year through 1997 with 2,4-dichlorophenoxyacetic acid, a selective herbicide against forbs. All plots in Biodiversity II were burned each spring in late April or early May before plant growth had begun.
+
+There were two problems in implementing Biodiversity II. The first concerned the legume Petalostemum villosum. It had, as a seed contaminant, a congener P. candidum, causing both species to be planted, but at approximately half the desired density for each species, in plots designated for P. villosum. Moreover, seed of the legume Amorpha canescens was inadvertently substituted the legume P. villosum in 16-species plots. Second, because virtually no Solidago rigida, a non-legume forb, germinated during 1994, we reseeded all plots planted originally to Solidago rigida with the non-legume forb Monarda fistulosa. Some Solidago rigida did germinate in 1995 and occurs in plots where originally planted.
+
+Location
+The experiment occupies a 10 hectare block of land in a former "brome field" on the land that formerly was part of the Peterson farm.
+
+Other Plots Within the Experimental Block
+Plots within the experimental zone which are not used in E120 are 76 additional plots that had functional group compositions drawn from an augmented species pool, 46 plots planted to 32 species, and 48 plots designated for other uses.
+
+
+
+______________
+
+
+E120 Construction
+
+Photos from the construction of Experiment 120
+______________
+
+
+Summary
+
+This experiment (often called the ?Big? Biodiversity Experiment; the ?small? experiment
+is no longer maintained) determines effects of plant species numbers and functional traits on
+community and ecosystem dynamics and functioning. It manipulates the number of plant species
+in 168 plots, each 9 m x 9 m, by imposing plant species numbers of 1, 2, 4, 8, or 16 perennial
+grassland species. The species planted in a plot were randomly chosen from a pool of 18 species
+(4 species, each, of C4 grasses, C3 grasses, legumes, non-legume forbs; 2 species of woody
+plants). Its high replication (about 35 plots at each level of diversity) and large plots allow
+observation of responses of herbivorous, parasitoid and predator insects and allow additional
+treatments to be nested within plots. Planted in 1994, it has been annually sampled since 1996
+for plant aboveground biomass and plant species abundances and for insect diversity and species
+abundances. Root mass, soil nitrate, light interception, biomass of invading plant species, and C
+and N levels in soils, roots, and aboveground biomass have been determined periodically. In
+addition, soil microbial processes and abundances of mycorrhizal fungi, soil bacteria and other
+fungi, N mineralization rates, patterns of N uptake by various species, and invading plant
+species, have been periodically measured in subprojects in the Biodiversity Experiment.
+______________
+
+
