@@ -9,17 +9,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## What dataset to use, properties of data?
 
-## LM visualisation
+## LM 
+- visualisation as DAG
+- residuals
+- variance/covariance matrix
 
-## SEM visualisation (very simple)
+## SEM, very simple example (same variables as in LM) 
+- visualisation as DAG
+- explain model output
+- assessment of fit
 
+## model comparison
+- add an additional variable or path, then compare the two SEM
 
-## latent and composite variables
+## SEM pruning (deleting paths)
 
+## SEM with latent and composite variables
+- difference between latent and composite variable
+- SEM with latent variable(s)
+- SEM with composite variable(s)
 
-model comparison, evaluation (GOF etc.), interpretation and pruning
-autocorrelation (temporal, spatial)
-visualize LM and SEM as DAGs to highlight their conceptual difference and the benefit  of SEM
+## SEM with autocorrelation (temporal, spatial) --> advanced?
+
 
 
 ```{r cars}
