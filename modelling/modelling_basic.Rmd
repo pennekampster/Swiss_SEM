@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Metamodel
-![Image Title](../figures/Seabloom_Metamodel.svg){width=65%}
+![](../figures/Seabloom_Metamodel.svg){width=70%}
 
 
 ## LM 
@@ -23,26 +23,39 @@ knitr::opts_chunk$set(echo = TRUE)
 - residuals
 - variance/covariance matrix
 
+![](../figures/LMvsSEM.svg){width=70%}
+
+
 ## SEM, very simple example (same variables as in LM) 
 - visualisation as DAG
 - explain model output
 - assessment of fit
 
-## model comparison
+![](../figures/SimpleSEM.svg){width=70%}
+
+
+## Model comparison
 - add an additional variable or path, then compare the two SEM
 
+
 ## SEM pruning (deleting paths)
+![](../figures/FullSEM.svg){width=70%}
+
 
 ## SEM with latent and composite variables
 - difference between latent and composite variable
 - SEM with latent variable(s)
 - SEM with composite variable(s)
 
+![](../figures/LatentCompositeSEM.svg){width=70%}
+
+
+## SEM with interaction
+![](../figures/InteractionSEM.svg){width=70%}
+
+
 ## SEM with autocorrelation (temporal, spatial) --> advanced?
 
 
 
-```{r cars}
-summary(cars)
-```
 
