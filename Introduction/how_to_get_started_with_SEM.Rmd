@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## What is a SEM?
-
+(https://www.r-bloggers.com/2011/05/ecological-sems-and-composite-variables-what-why-and-how/)
 Comments:
 Each slide represents a concept/topic to teach. Can be expanded to more slides.
 Content must be revisited to be consistent in wording, concepts etc.
@@ -22,20 +22,20 @@ Concepts for technical part that could be introduced also here: global vs local,
 Here we ask students about what is a SEM, why they want to learn them etc.
 
 Examine relative influences and responses
-In SEM specification of a model is based on theory and research.
+In SEM specification of a model, to determine and validify a proposed causal process and/or model, is based on theory and research.
 Two goals in SEM are
 1) to understand the patterns of correlation/covariance among a set of variables and
 2) to explain as much of their variance as possible with the model specified (Kline, 1998).
 
-**Why do we need to use SEM in Ecology
+
+## Why do we need to use SEM in Ecology
 
 To better understand the relationship among variables in complex ecosystems:
-Can use multiple observed variables 
+We use multiple observed variables 
 Test and evaluate multivariate causal relationships
 Test direct and indirect effects on pre-assumed causal relationships
-Incorporates both latent and observed variables
+Incorporate both latent and observed variables
 Including interaction terms can test main effects and interaction effects
-
 
 ## Research questions
 
@@ -117,14 +117,16 @@ Make clear that this is the same as an interaction in traditional regression mod
 
 Present another question involving a new variable (X1 -> Y -> Z).
 Show the graphical representation.
-Explanation of indirect effects.
+Direct effect is a directional relation between two variables, e.g., independent and dependent variables
+Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or
+mediating variables.
 Include partial plots for both to illustrate the indirect effect. 
 
 ## Types of variables
 
 Until now everything was about paths but modelling also involves variables.
-Definition of composite variables + examples.
-Definition of latent variables + examples.
+Composite variables specify the influences of collections of other variables (examples)
+A variable that is not directly measured is a latent variable (examples)
 Make clear the difference between both.
 
 ## System level approach
