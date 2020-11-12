@@ -45,5 +45,25 @@ We log~10~ transformed all response variables prior to analysis to stabilise the
 
 
 ## Variables
+- exp:	Cedar Creek LTER Experimental Code (int,	1=E001, 2=E002)
+- field: Experimental Field (char)
+- plot: Experimental Plot	(int)
+- disk: Disking Treatment (int, 0=Intact at start of experiment, 1=Disked at start of experiment)
+- yr.plowed: Last year field was plowed for agriculture	(int)
+- ntrt: Nutrient treatment code (See Table S1 in publication)	(int)
+- nadd: Nitrogen additon rate (g/m^2/yr) (float)
+- other.add: Other nutrient treatment (int, 0=Control, 1=Other nutrients added)
+- year: Sampling year	(int)
+- dur: Duration of experiment	(int)
+- precip.mm: Annual precipitation (mm) (float)
+- precip.gs: Growing season (April-August) precipitation (mm)	(float)
+- mass.above: Aboveground biomass (g/m^2) (float)
+- rich: Species richness (species/0.3 m^2) (float)	
+- even: Simpson's Evennes	(float)
+- ens.pie: Effective Number of Species, Probability of Interspecific Encounter	Decimal	Equivalent to Inverse Simpson's Diversity
+- origin: Species origin (Native or Introduced)	(char)
+- duration: Species lifespan (Annual, Bienniel, Perennial) (char)
+- functional.group: Species functional group (C3 Grass, C4 Grass, Forb, Legume, Sedge) (char)	C3=C3 Grass, C4=C4 Grass, F=Forb, L=Legume, S=Sedge
+
 
 
