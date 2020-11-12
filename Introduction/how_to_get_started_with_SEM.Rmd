@@ -22,9 +22,10 @@ Concepts for technical part that could be introduced also here: global vs local,
 Here we ask students about what is a SEM, why they want to learn them etc.
 
 Examine relative influences and responses
-
-What is a causal relationship?
-Correlation does not imply causation, causation indicates a relation between two variables in which one variable is affected by another.
+In SEM specification of a model is based on theory and research.
+Two goals in SEM are
+1) to understand the patterns of correlation/covariance among a set of variables and
+2) to explain as much of their variance as possible with the model specified (Kline, 1998).
 
 **Why do we need to use SEM in Ecology
 
@@ -38,8 +39,10 @@ Including interaction terms can test main effects and interaction effects
 
 ## Research questions
 
-The importance of questions in science -> We are scientist and we try to explain the reality surrounding us.
+The importance of questions in science -> 
+We are scientist and we try to explain the reality surrounding us.
 In this course, the focus is in ecology and evolution.
+.
 
 ## Example of the working system
 
@@ -54,21 +57,35 @@ ecosystem responses to:
   Exotic species invasions
 Add some nice pictures.
 
+## SEM Steps
+
+• review the relevant theory and research literature to support model specification
+• specify a model (e.g., diagram, equations)
+• determine model identification (e.g., if unique values can be found for parameter estimation; the number of degrees of
+freedom, df, for model testing is positive)
+• select measures for the variables represented in the model
+• collect data
+• conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)
+• estimate parameters in the model
+• assess model fit
+• respecify the model if meaningful
+• interpret and present results## Graphical representation
+
 ## Question of interest
 
 Present one research question based on the data.
 This question only NEEDS to include 2 variables.
 Ask students about how they would address this question.
 
-## Graphical representation
-
-Introduce the graphical model representation (X -> Y):
+## Introduce the graphical model representation (X -> Y):
 - Variables are nodes.
 - Arrows are causal relationships.
 Use the question in the previous part as example.
 
 ## Causality
 
+What is a causal relationship?
+Correlation does not imply causation, causation indicates a relation between two variables in which one variable is affected by another.
 The arrow mean causality.
 Is it the case in science?
 Explain the concept and discuss with students the topic.
