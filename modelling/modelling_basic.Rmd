@@ -1,13 +1,22 @@
 ---
 title: "modelling_basic"
 output: html_document
+header-includes:
+   - \usepackage{svg}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+# SEM basics
 ## What dataset to use, properties of data?
+
+
+## Metamodel
+![Image Title](../figures/Seabloom_Metamodel.svg){width=65%}
+
 
 ## LM 
 - visualisation as DAG
