@@ -6,8 +6,12 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+# SEM basics
 ## What dataset to use, properties of data?
+
+## Metamodel
+![Image Title](./path/to/image.pdf){width=65%}
+
 
 ## LM 
 - visualisation as DAG
