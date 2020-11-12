@@ -20,7 +20,21 @@ Concepts for technical part that could be introduced also here: global vs local,
 ## What is a SEM?
 
 Here we ask students about what is a SEM, why they want to learn them etc.
-Will set the baseline for the concepts will be later introduced and to measure the level of the students.
+
+Examine relative influences and responses
+
+What is a causal relationship?
+Correlation does not imply causation, causation indicates a relation between two variables in which one variable is affected by another.
+
+**Why do we need to use SEM in Ecology
+
+To better understand the relationship among variables in complex ecosystems:
+Can use multiple observed variables 
+Test and evaluate multivariate causal relationships
+Test direct and indirect effects on pre-assumed causal relationships
+Incorporates both latent and observed variables
+Including interaction terms can test main effects and interaction effects
+
 
 ## Research questions
 
@@ -29,7 +43,15 @@ In this course, the focus is in ecology and evolution.
 
 ## Example of the working system
 
-Description of the study system where data come from.
+Cedar Creek Ecosystem Science Reserve is a University of Minnesota biological field station 
+Includes ecosystems and species in North American forests and grasslands 
+Experiments examine long-term consequences of human-driven environmental changes
+ecosystem responses to:
+  Biodiversity loss
+  Nitrogen deposition
+  Elevated carbon dioxide
+  Warming and changes in precipitation
+  Exotic species invasions
 Add some nice pictures.
 
 ## Question of interest
