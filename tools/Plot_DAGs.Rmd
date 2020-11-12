@@ -1,0 +1,177 @@
+---
+title: "Plot_DAGs"
+author: "FP"
+date: "11/12/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Drawing simple DAGs with DiagrammR
+
+### Linear model
+
+```{r lm}
+library(DiagrammeR)
+
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10, layout = dot,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  X; Y;
+
+  # several 'edge' statements
+  X -> Y
+}
+")
+```
+
+
+## Multiple regression
+
+```{r lm2}
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10, layout = dot,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  X_1; X_2; Y
+
+  # several 'edge' statements
+  X_1 -> Y
+  X_2 -> Y
+}
+")
+```
+
+## Regression with interaction efefct
+
+```{r interact}
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10, layout = dot,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  X_1; X_2; Y, middleman
+
+  # several 'edge' statements
+    X_1->middleman[arrowhead=none];
+    middleman->Y;
+    middleman[shape=none width=0 height=0 label='' style=invis]
+    X_2->middleman [constraint=false];
+
+}
+")
+```
+
+## More than one response (indirect effects)
+
+```{r indirect}
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10, layout = dot,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  X; Y, Z
+
+  # several 'edge' statements
+    X->Y[label='TEST'];
+    Y->Z;
+}
+")
+```
+
+## More than one response (direct and indirect effects)
+
+```{r direct}
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10, layout = dot,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  X; Y, Z
+
+  # several 'edge' statements
+    X->Y;
+    Y->Z;
+    X->Z;
+}
+")
+```
+
+## Latent variables (circles)
+
+```{r latent}
+grViz("
+digraph boxes_and_circles {
+   
+   node [shape=box]
+   X1;X2;X3;Z;
+
+   
+   node [shape=circle]
+   Y
+    
+      X1 -> Y;
+    X2 -> Y;
+    X3 -> Y;
+    Y -> Z;
+    Z;
+    
+  X1->X2->X3 [style='invis']
+  {rank = 'max'; Z}
+  {rank = 'same'; X1;X2;X3}
+}
+")
+```
+
+## labelled edges
+
+```{r labelled}
+grViz('
+digraph boxes_and_circles {
+   
+      graph[layout=dot]
+      
+    a -> b[label="0.2",weight="0.2"];
+    a -> c[label="0.4",weight="0.4"];
+    c -> b[label="0.6",weight="0.6"];
+    c -> e[label="0.6",weight="0.6"];
+    e -> e[label="0.1",weight="0.1"];
+    e -> b[label="0.7",weight="0.7"];
+}
+')
+```
+
+
+
