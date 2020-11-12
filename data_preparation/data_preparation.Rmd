@@ -12,15 +12,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 # load data
-f1 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/18_4_data_Welk_etal_PlosOne.csv", sep=";", header=TRUE)
-f2 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Plant species percent cover data.csv", sep="\t", header=TRUE)
-f3 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Plant aboveground biomass carbon and nitrogen.csv", sep="\t", header=TRUE)
-f4 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Plant aboveground biomass data.csv", sep="\t", header=TRUE)
-f5 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Plant traits.csv", sep="\t", header=TRUE)
-f6 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Percent light penetration.csv", sep="\t", header=TRUE)
-f7 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Soil carbon.csv", sep="\t", header=TRUE)
-f8 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Soil nitrate and ammonium.csv", sep="\t", header=TRUE)
-f9 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/e120_Soil nitrogen.csv", sep="\t", header=TRUE)
+f1 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/18_4_data_Welk_etal_PlosOne.csv", sep=";", header=TRUE)
+f2 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/e120_Plant species percent cover data.csv", sep="\t", header=TRUE)
+f3 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/e120_Plant aboveground biomass carbon and nitrogen.csv", sep="\t", header=TRUE)
+f4 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/e120_Plant aboveground biomass data.csv", sep="\t", header=TRUE)
+f5 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/e120_Plant traits.csv", sep="\t", header=TRUE)
+f6 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/e120_Percent light penetration.csv", sep="\t", header=TRUE)
+f7 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/e120_Soil carbon.csv", sep="\t", header=TRUE)
+f8 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/e120_Soil nitrate and ammonium.csv", sep="\t", header=TRUE)
+f9 <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek/e120_Soil nitrogen.csv", sep="\t", header=TRUE)
 
 f_1 <- merge(f1, f2, by=c("Plot"), all=T)
 f_2 <- merge(f_1, f3, by=c("Plot","Year"), all=T)
@@ -39,7 +39,7 @@ We downloaded the data from https://idata.idiv.de/ddm/Data/ShowData/18
 knitr::opts_chunk$set(echo = TRUE)
 
 # load data
-raw_data <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/18_4_data_Welk_etal_PlosOne.csv", sep=";", header=TRUE)
+raw_data <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/Welk/18_4_data_Welk_etal_PlosOne.csv", sep=";", header=TRUE)
 
 
 
@@ -47,6 +47,25 @@ raw_data <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation
 ```
 
 
+## Data from Seabloom et al. (2020) 
+
+# Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate (Ecology Letters, 2020, 23: 1756–1765)
+
+Recovery of a grassland for two decades following an intensive agricultural disturbance under ambient and elevated nutrient conditions:
+- Productivity returned to pre-disturbance levels quickly under ambient nutrient conditions, but nutrient addition slowed this recovery
+- Diversity did not change for 15 years, afterwards diversity began to increase under ambient conditions 
+
+
+```{r,  include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# load data
+raw_data <- read.table("/Users/eliane/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv", sep=",", header=TRUE)
+
+
+
+
+```
 
 
 
