@@ -53,7 +53,7 @@ Draw your idea
 # What can you expect to see out in nature?
 ![Domeignoz -- manuscript head](images/Domeignoz-Horta_title.jpg){height=30%}
 ![Domeignoz -- figure](images/Domeignoz-Horta_sem.jpg){height=60%}
-<!-- lots of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are -->
+<!-- there is a lot of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are -->
 
 # What can you expect to see out in nature?
 ![Zhang -- manuscript head](images/Zhang_title.jpg){height=30%}
