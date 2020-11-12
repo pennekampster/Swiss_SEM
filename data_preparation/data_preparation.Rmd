@@ -61,7 +61,10 @@ raw_data <- read.table("~/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek_
 
 raw_data2 <- read.table("~/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data-origin-group.csv", sep=",", header=TRUE) #"disk.trt","trt","origin"
 
-test <- merge(raw_data, raw_data2, by=c("field"  ,    "exp"   ,     "plot"   ,    "year"   ,    "disk"     ,   "ntrt"     ,  "nadd"     ,  "other.add" ,"dur"), all=T)
+library(tidyr)
+raw_data2_2 <- unique(spread(raw_data2, "origin", "mass.above"))
+
+test <- merge(raw_data, raw_data2_2, by=c("field"  ,    "exp"   ,     "plot"   ,    "year"   ,    "disk"     ,   "ntrt"     ,  "nadd"     ,  "other.add" ,"dur"), all=T)
 
 raw_data3 <- read.table("~/Desktop/SEM_UZH/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data-life-group.csv", sep=",", header=TRUE) #"disk.trt", "trt", 
 
