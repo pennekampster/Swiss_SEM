@@ -102,6 +102,47 @@ summary(fit.sem1.up, rsq = TRUE)
 
 
 
+
+### Simple model: Random terms with piecewiseSEM
+
+We can do the same in piecewiseSEM. The advantage is that we can include some random structure in the model. Let's take a look first at the model without random terms.
+
+```{r}
+library(piecewiseSEM)
+library(nlme)
+
+Psem1List <- list(
+  lm(mass.above ~ rich + even + nadd + disk, data),
+  lm(rich ~ nadd, data),
+  lm(even ~ nadd, data),
+  even %~~% rich
+)
+
+
+Psem1 <- as.psem(Psem1List)
+summary(Psem1, .progressBar = F)
+```
+
+We see that the model fit is good (because we included the correlation between richness and evenness' errors).
+The data was collected in plots within fields, whch adds a block effect to our structure. Let's try out with the random term.
+
+```{r}
+
+Psem1RandomList <- list(
+  lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, data),
+  lme(rich ~ nadd, random = ~ 1|field, data),
+  lme(even ~ nadd, random = ~ 1|field, data),
+  even %~~% rich
+)
+
+
+Psem1Random <- as.psem(Psem1RandomList)
+summary(Psem1Random, .progressBar = F)
+```
+
+We see here that the richness effect on biomass became non-significant.
+
+
 ## Saturated model
 ![](../figures/FullSEM.svg){width=70%}
 
@@ -124,6 +165,26 @@ modindices(fit.sem2, minimum.value = 3)
 The modification indices shows that the model is saturated and thus, no further paths can be added to improve the model fit.
 
 
+### Saturated model: Random terms with piecewiseSEM
+
+Let's try again to add the random structure an compare lavaan and piecewise outputs.
+
+```{r}
+
+Psem2RandomList <- list(
+  lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, data),
+  lme(rich ~ nadd + disk, random = ~ 1|field, data),
+  lme(even ~ nadd + disk, random = ~ 1|field, data),
+  even %~~% rich
+)
+
+Psem2Random <- as.psem(Psem2RandomList)
+summary(Psem2Random, .progressBar = F)
+
+```
+
+
+
 ### Pruning
 ```{r}
 sem.prune <-
@@ -136,6 +197,7 @@ rich ~~ even"
 fit.sem.prune <- sem(sem.prune, data = data)
 summary(fit.sem.prune)
 ```
+
 
 
 ## Model comparison
