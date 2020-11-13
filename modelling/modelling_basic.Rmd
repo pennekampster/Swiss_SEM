@@ -194,7 +194,7 @@ The modification indices shows that the model is saturated and thus, no further 
 
 ### Saturated model: Random terms with piecewiseSEM
 
-Let's try again to add the random structure an compare lavaan and piecewise outputs.
+Let's try again to add the random structure and compare lavaan and piecewise outputs.
 
 ```{r}
 
@@ -228,7 +228,7 @@ summary(fit.sem.prune)
 
 
 ## Model comparison
-- add an additional variable or path, then compare the two SEM
+- add an additional variable or path, then compare the two SEMs
 
 
 

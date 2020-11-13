@@ -10,6 +10,12 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '~/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/')
+```
+
+
 # Data source
 Data stem from [*Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate*](https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13591).
 
@@ -22,11 +28,10 @@ Within each of the 6 large plots, the 54 small plots were arrayed in 6 × 9 grid
 
 ## The nutrient treatments
 The **nutrient treatments** were replicated six times in a completely randomised design in each of the 35 × 55 m plots (54 4 × 4 m small plots) yielding `r 6 * 54` (6 x 54) plots.
-
 The analyses focuses on two nutrient treatments:
+
 1) Control (no nutrients; Treatment I) and
 2) Other Nutrients and 9.5 g of N (Treatment F) (Table S1)
-
 
 (We present analyses of the full N gradient in Figures S7 to S10 and Table S4. In brief, choosing a higher or lower N addition rate would change the strength of the N effect, but would not change the direction of the effects or change the strength of the interactions with the disking.)
 
@@ -54,40 +59,39 @@ We log~10~ transformed all response variables prior to analysis to stabilise the
 - disk: Disking Treatment (int, 0=Intact at start of experiment, 1=Disked at start of experiment)
 - yr.plowed: Last year field was plowed for agriculture	(int)
 - ntrt: Nutrient treatment code (See Table S1 in publication)	(int)
-- nadd: Nitrogen additon rate (g/m^2/yr) (float)
+- nadd: Nitrogen additon rate (g/m^2^/yr) (float)
 - other.add: Other nutrient treatment (int, 0=Control, 1=Other nutrients added)
 - year: Sampling year	(int)
 - dur: Duration of experiment	(int)
 - precip.mm: Annual precipitation (mm) (float)
 - precip.gs: Growing season (April-August) precipitation (mm)	(float)
-- mass.above: Aboveground biomass (g/m^2) (float)
-- rich: Species richness (species/0.3 m^2) (float)	
+- mass.above: Aboveground biomass (g/m^2^) (float)
+- rich: Species richness (species/0.3 m^2^) (float)	
 - even: Simpson's Evennes	(float)
 - ens.pie: Effective Number of Species, Probability of Interspecific Encounter	Decimal	Equivalent to Inverse Simpson's Diversity
 - origin: Species origin (Native or Introduced)	(char)
 - duration: Species lifespan (Annual, Bienniel, Perennial) (char)
-- functional.group: Species functional group (C3 Grass, C4 Grass, Forb, Legume, Sedge) (char)	C3=C3 Grass, C4=C4 Grass, F=Forb, L=Legume, S=Sedge
+- functional.group: Species functional group (C3 Grass, C4 Grass, Forb, Legume, Sedge) (char)
+  + C3=C3 Grass
+  + C4=C4 Grass
+  + F=Forb
+  + L=Legume
+  + S=Sedge
 
 
 ## Assemble data
-### Clean workspace and set working directory
-```{r}
-rm(list = ls())
-setwd("~/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/")
-```
-
 ### Read the csv files
 First, read the csv files into a list and then, release them to the global environment. Omit the file with the description of the variables.
 ```{r}
-seabloom <- lapply(list.files(pattern = "csv")[-4], read.table, sep = ",", 
-                   header = TRUE)
+seabloom <- lapply(list.files(pattern = glob2rx("cdr*.csv"))[-4],
+                   read.table, sep = ",", header = TRUE)
 names(seabloom) <- c("functional", "life", "origin", "data")
 list2env(seabloom, .GlobalEnv)
 rm(seabloom)
 ```
 
 ### Merge the single files
-First, rename the `mass.above` according to their group.
+First, rename the above-ground biomass variables (`mass.above`) according to the group.
 ```{r}
 ## Total biomass
 names(data)[13] <- "mass.above.total"
@@ -107,17 +111,30 @@ names(origin)[13] <- "mass.above.origin"
 Merge the files by identifier fields.
 
 ```{r}
-comb <- merge(data, functional, by = c("field", "exp", "year", "plot", "disk",
+data.funct <- merge(data, functional, by = c("field", "exp", "year", "plot",
+                                             "disk", "ntrt", "nadd",
+                                             "other.add", "dur"))
+
+
+data.life <- merge(data, life, by = c("field", "exp", "year", "plot", "disk",
                                        "ntrt", "nadd", "other.add", "dur"))
 
+data.orig <- merge(data, life, by = c("field", "exp", "year", "plot", "disk",
+                                       "ntrt", "nadd", "other.add", "dur"))
 
-comb <- merge(comb, life, by = c("field", "exp", "year", "plot", "disk"))
-
-
+life.orig <- merge(data.life, data.orig, by = c("field", "exp", "year", "plot",
+                                                "disk", "ntrt", "nadd",
+                                                "other.add", "dur", "yr.plowed",
+                                                "precip.mm", "precip.gs",
+                                                "mass.above.total", "rich",
+                                                "even", "ens.pie", "disk.trt",
+                                                "trt", "duration",
+                                                "mass.above.life"))
+rm(data.life, data.orig)
 ```
 
 ### Export to file
 ```{r}
-write.table(comb, )
+# write.table(comb, file = "Seabloom.csv", sep = "\t")
 ```
 
