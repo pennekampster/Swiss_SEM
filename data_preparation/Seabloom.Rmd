@@ -6,14 +6,16 @@ author:
   - Rachel
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Data source
-Data from [*Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate*](https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13591).
+Data stem from [*Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate*](https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13591).
 
 
 ## Disturbance treatment
-The **Disturbance treatment** was replicated in the three old-fields (A, B, C) in a completely randomised block design (two treatments in each of three fields for a total of 6 35 × 55 m large plots).
+The **disturbance treatment** was replicated in the three old-fields (A, B, C) in a completely randomised block design (two treatments in each of three fields for a total of 6 35 × 55 m large plots).
 In April 1982, in each of the fields, one of these two 35 × 55 m areas was selected to be disturbed with a 45 cm diameter disk harrow pulled by a tractor 20 times in one direction, 20 times perpendicularly and 5 times diagonally to the first passes. Following the disking, the soil was hand raked to smooth the soil and remove any remaining vegetation, so that subsequent colonisation was solely from seeds or small rhizome fragments.
 Within each of the 6 large plots, the 54 small plots were arrayed in 6 × 9 grid with 1 m buffers between each plot. Aluminium flashing was buried to depth of 30 cm around each plot to prevent horizontal movement of nutrients and spreading of plants through vegetative growth.
 
@@ -21,9 +23,10 @@ Within each of the 6 large plots, the 54 small plots were arrayed in 6 × 9 grid
 ## The nutrient treatments
 The **nutrient treatments** were replicated six times in a completely randomised design in each of the 35 × 55 m plots (54 4 × 4 m small plots) yielding `r 6 * 54` (6 x 54) plots.
 
-In our analyses, we focus on two nutrient treatments:
-1. Control (no nutrients; Treatment I) and
-2. Other Nutrients and 9.5 g of N (Treatment F) (Table S1).
+The analyses focuses on two nutrient treatments:
+1) Control (no nutrients; Treatment I) and
+2) Other Nutrients and 9.5 g of N (Treatment F) (Table S1)
+
 
 (We present analyses of the full N gradient in Figures S7 to S10 and Table S4. In brief, choosing a higher or lower N addition rate would change the strength of the N effect, but would not change the direction of the effects or change the strength of the interactions with the disking.)
 
@@ -36,7 +39,7 @@ Species richness is the number of species in each 0.3 m^2^ sample.
 We quantified plant diversity as the Effective Number of Species based on the Probability of Interspecific Encounter (ENS~PIE~), a measure of diversity that is more robust to the effects of sampling scale and less sensitive to the presence of
 rare species than species richness (Jost, 2006, 2007; Chase and Knight, 2013).
 ENS~PIE~ is equivalent to the Inverse Simpson’s index of diversity which is calculated as $1 / \sum_{i=1}^{S} p_i^2$  where S is the total number of species (i.e. species richness) and p~i~ is the proportion of the community biomass reesented by species i (Jost, 2006, 2007; Chase and Knight, 2013).
-Simpson’s evenness (E) satisfies the main requirements of an evenness index (Smith and Wilson, 1996). In addition, it is directly related to ENS~PIE~ through the relationship E = ENS~PIE~/S (Smith and Wilson, 1996), thus we can factor diversity directly into its richness and evenness components through the relationship: ENS~PIE~ = S*E.
+Simpson’s evenness (E) satisfies the main requirements of an evenness index (Smith and Wilson, 1996). In addition, it is directly related to ENS~PIE~ through the relationship E = ENS~PIE~/S (Smith and Wilson, 1996), thus we can factor diversity directly into its richness and evenness components through the relationship: $ENS~PIE~ = S*E$.
 
 Across all data, ENS~PIE~ was positively correlated with richness (r = 0.63) but uncorrelated with evenness (r = 0.03).
 Richness and evenness were negatively correlated (r = -0.60).
@@ -66,4 +69,55 @@ We log~10~ transformed all response variables prior to analysis to stabilise the
 - functional.group: Species functional group (C3 Grass, C4 Grass, Forb, Legume, Sedge) (char)	C3=C3 Grass, C4=C4 Grass, F=Forb, L=Legume, S=Sedge
 
 
+## Assemble data
+### Clean workspace and set working directory
+```{r}
+rm(list = ls())
+setwd("~/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/")
+```
+
+### Read the csv files
+First, read the csv files into a list and then, release them to the global environment. Omit the file with the description of the variables.
+```{r}
+seabloom <- lapply(list.files(pattern = "csv")[-4], read.table, sep = ",", 
+                   header = TRUE)
+names(seabloom) <- c("functional", "life", "origin", "data")
+list2env(seabloom, .GlobalEnv)
+rm(seabloom)
+```
+
+### Merge the single files
+First, rename the `mass.above` according to their group.
+```{r}
+## Total biomass
+names(data)[13] <- "mass.above.total"
+
+## Biomass by functional group
+names(functional)[13] <- "mass.above.functional"
+
+## Biomass by life strategy group
+names(life)[13] <- "mass.above.life"
+
+## Biomass by origin
+names(origin)[13] <- "mass.above.origin"
+```
+
+
+
+Merge the files by identifier fields.
+
+```{r}
+comb <- merge(data, functional, by = c("field", "exp", "year", "plot", "disk",
+                                       "ntrt", "nadd", "other.add", "dur"))
+
+
+comb <- merge(comb, life, by = c("field", "exp", "year", "plot", "disk"))
+
+
+```
+
+### Export to file
+```{r}
+write.table(comb, )
+```
 

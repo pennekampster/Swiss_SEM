@@ -28,6 +28,9 @@ data <- read.table("~/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-20
 ```
 
 
+## Explore data
+....
+
 ## Subset to one year
 ```{r}
 data <- data[data$year == 2000, ]
@@ -41,6 +44,7 @@ data <- data[data$year == 2000, ]
 
 ![](../figures/LMvsSEM.svg){width=70%}
 
+Split up into several lms.
 ```{r}
 lm1 <- lm(mass.above ~ nadd + rich + even + disk,  data = data)
 summary(lm1)
