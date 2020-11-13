@@ -98,6 +98,9 @@ Highest values are between `rich` and `even` and therefore, we include a correla
 ```{r}
 fit.sem1.up <- update(fit.sem1, add = "rich ~~ even")
 summary(fit.sem1.up, rsq = TRUE)
+
+library(lavaanPlot)
+lavaanPlot(model = fit.sem1.up, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coefs = T, stand = FALSE, sig = 1.00)
 ```
 
 
