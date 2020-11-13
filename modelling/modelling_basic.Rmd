@@ -28,7 +28,12 @@ data <- read.table("~/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-20
 ```
 
 
+## Explore data
+Add overview of data.
+
+
 ## Subset to one year
+First, we focus only of the data of one year.
 ```{r}
 data <- data[data$year == 2000, ]
 ```
@@ -41,6 +46,7 @@ data <- data[data$year == 2000, ]
 
 ![](../figures/LMvsSEM.svg){width=70%}
 
+Split up into several lms.
 ```{r}
 lm1 <- lm(mass.above ~ nadd + rich + even + disk,  data = data)
 summary(lm1)
@@ -48,7 +54,10 @@ plot(lm1)
 ```
 
 
-## SEM, very simple example (same variables as in LM) 
+## Simple SEM
+This simple model shall illustrate the logic of SEM.
+Comparability is eased as it contains the same variables as the linear model before.
+
 - visualisation as DAG
 - explain model output
 - assessment of fit
@@ -81,6 +90,7 @@ summary(fit.sem1, rsq = TRUE)
 
 
 The model converged with poor fit:
+
 - The ratio of the test statistic and the degrees of freedem should be **smaller than 2** (this ratio gives an indication how far away the model is from a decent fit)
 - p-value should be larger than 0.05
 
@@ -97,16 +107,25 @@ Highest values are between `rich` and `even` and therefore, we include a correla
 
 ```{r}
 fit.sem1.up <- update(fit.sem1, add = "rich ~~ even")
-summary(fit.sem1.up, rsq = TRUE)
+summary(fit.sem1.up, rsq = TRUE, fit.measures=T)
 
+# standardizedsolution(fit.sem1.up)
+# inspect(fit.sem1.up, "r2")
+```
+
+### Plot the model
+```{r}
 library(lavaanPlot)
-lavaanPlot(model = fit.sem1.up, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coefs = T, stand = FALSE, sig = 0.05)
+
+lavaanPlot(model = fit.sem1.up, node_options = list(shape = "box",
+                                                    fontname = "Helvetica"),
+           edge_options = list(color = "grey"), coefs = TRUE, stand = FALSE, 
+           sig = 0.05)
 ```
 
 
 
-
-### Simple model: Random terms with piecewiseSEM
+### Random terms with piecewiseSEM
 
 We can do the same in piecewiseSEM. The advantage is that we can include some random structure in the model. Let's take a look first at the model without random terms.
 
@@ -127,10 +146,9 @@ summary(Psem1, .progressBar = F)
 ```
 
 We see that the model fit is good (because we included the correlation between richness and evenness' errors).
-The data was collected in plots within fields, whch adds a block effect to our structure. Let's try out with the random term.
+The data was collected in plots within fields, which adds a block effect to our structure. Let's try out with the random term.
 
 ```{r}
-
 Psem1RandomList <- list(
   lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, data),
   lme(rich ~ nadd, random = ~ 1|field, data),
@@ -148,7 +166,6 @@ We see here that the richness effect on biomass became non-significant.
 ### Simple model: Random terms with lavaan
 
 ```{r}
-
 # modfit<-sem(model, data=dat, estimator = "mlm")
 # survey.design <- svydesign(ids=~1, strata = ~ spatial_block, prob =~1, data=dat)
 # fit_with_blocks <- lavaan.survey(modfit, survey.design)
@@ -158,11 +175,11 @@ We see here that the richness effect on biomass became non-significant.
 library(survey)
 library(lavaan.survey)
 
-modfit<-sem(model=fit.sem1.up, data=data, estimator = "mlm")
-survey.design <- svydesign(ids=~1, strata = ~ field, prob =~1, data=data)
-fit_with_blocks <- lavaan.survey(modfit, survey.design)
-summary(fit_with_blocks, rsquare=T, standardized = T, fit.measures = T)
-
+modfit <- sem(model = fit.sem1.up, data = data, estimator = "mlm")
+survey.design <- svydesign(ids = ~1, strata = ~ field, prob = ~1, data = data)
+# fit_with_blocks <- lavaan.survey(modfit, survey.design)
+# summary(fit_with_blocks, rsquare = TRUE, standardized = TRUE,
+#         fit.measures = TRUE)
 ```
 
 
@@ -182,18 +199,18 @@ summary(fit.sem2, rsq = TRUE)
 ```
 
 
+Let's have another look at the modification indices.
 ```{r}
 modindices(fit.sem2, minimum.value = 3)
 ```
 The modification indices shows that the model is saturated and thus, no further paths can be added to improve the model fit.
 
 
-### Saturated model: Random terms with piecewiseSEM
+### Random terms with piecewiseSEM
 
-Let's try again to add the random structure an compare lavaan and piecewise outputs.
+Let's try again to add the random structure and compare lavaan and piecewise outputs.
 
 ```{r}
-
 Psem2RandomList <- list(
   lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, data),
   lme(rich ~ nadd + disk, random = ~ 1|field, data),
@@ -203,12 +220,12 @@ Psem2RandomList <- list(
 
 Psem2Random <- as.psem(Psem2RandomList)
 summary(Psem2Random, .progressBar = F)
-
 ```
 
 
 
-### Pruning
+### Model pruning
+Now, let's delete all non-significant paths from the model.
 ```{r}
 sem.prune <-
 "mass.above ~ nadd + rich
@@ -224,7 +241,7 @@ summary(fit.sem.prune)
 
 
 ## Model comparison
-- add an additional variable or path, then compare the two SEM
+- add an additional variable or path, then compare the two SEMs
 
 
 
@@ -248,37 +265,37 @@ diversity ~ nadd
 
 fit.sem2 <- sem(sem2, data = data)
 summary(fit.sem2)
-
 ```
+
 
 # SEM with composite variable "land use intensity"
 
-```{r}
-compositeModel<-'
-    #1) define the composite, scale to logN
-    Nitrogen ~ 1*logN + logNcen2 #loading on the significant path!
- 
-    #2) Specify 0 error variance
-    Nitrogen ~~ 0*Nitrogen
- 
-      #3) now, because we need to represent this as a latent variable
-      #show how species richness is an _indicator_ of nitrogen
-      Nitrogen =~ SA
- 
-    #4) BUT, make sure the variance of SA is estimated
-      SA ~~ SA
- 
-    #Regional Richness also has an effect
-    SA ~ SR
- 
-    #And account for the derivation of the square term from the linear term
-    logNcen2 ~ logN
-      '
- 
- # we specify std.lv=T so that the Nitrogen-SA relationship isn't fixed to 1
- compositeFit <- sem(compositeModel, data=cards, std.lv=T)
-
-``` 
+# ```{r}
+# compositeModel <- '
+#     #1) define the composite, scale to logN
+#     Nitrogen ~ 1*logN + logNcen2 #loading on the significant path!
+#  
+#     #2) Specify 0 error variance
+#     Nitrogen ~~ 0*Nitrogen
+#  
+#       #3) now, because we need to represent this as a latent variable
+#       #show how species richness is an _indicator_ of nitrogen
+#       Nitrogen =~ SA
+#  
+#     #4) BUT, make sure the variance of SA is estimated
+#       SA ~~ SA
+#  
+#     #Regional Richness also has an effect
+#     SA ~ SR
+#  
+#     #And account for the derivation of the square term from the linear term
+#     logNcen2 ~ logN
+#       '
+#  
+#  # we specify std.lv=T so that the Nitrogen-SA relationship isn't fixed to 1
+#  compositeFit <- sem(compositeModel, data = data, std.lv = TRUE)
+# 
+# ``` 
  
 
 ## SEM with interaction
