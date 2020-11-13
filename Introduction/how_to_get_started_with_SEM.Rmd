@@ -27,7 +27,6 @@ Two goals in SEM are
 1) to understand the patterns of correlation/covariance among a set of variables and
 2) to explain as much of their variance as possible with the model specified (Kline, 1998).
 
-
 ## Why do we need to use SEM in Ecology
 
 To better understand the relationship among variables in complex ecosystems:
@@ -43,7 +42,8 @@ The importance of questions in science ->
 We are scientists and we try to explain the reality surrounding us.
 Idea of hainvg the hypothesis behind the paths
 In this course, the focus is in ecology and evolution
-Add the research queston from the example data.
+Add the research queston from the example data Seabloom cedar creek
+
 Ask students about their research questions
 
 ## Example of the working system
@@ -69,6 +69,7 @@ Draw a model by hand
 
 Present one research question based on the data.
 This question only NEEDS to include 2 variables.
+Biomass ->  richness and evenness 
 Ask students about how they would address this question.
 
 ## Introduce the graphical model representation (X -> Y):
@@ -94,7 +95,8 @@ It is important that students understand that all they know can be defined with 
 ## Multivariate questions
 
 Discuss with students other variables that may affect B.
-Introduce a new variable and the question that it answers.
+Introduce a new variable and the question that it answers
+Add nutrient variable
 Show the graphical model (X1 -> Y, X2 -> Y).
 Include the equation and the two partial plots.
 Be clear this is a multiple regression model.
