@@ -1,6 +1,6 @@
 ---
-title: "Plot_DAGs"
-author: "FP"
+title: "Plotting directed acyclic graphs with the DiagrammR pacge"
+author: "Frank Pennekamp"
 date: "11/12/2020"
 output: html_document
 editor_options: 
@@ -13,7 +13,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Drawing simple DAGs with DiagrammR
 
-### Linear model
+* This document contains code and illustrations how to draw directed acyclic graphs with the DiagrammR package in R
+* The DiagrammR package uses the dot language of the GraphViz package
+* GraphViz pocket reference: https://graphs.grevian.org/
+* Official GraphViz page: https://graphviz.org/about/
+
+## Linear model
 
 ```{r lm}
 library(DiagrammeR)
@@ -25,12 +30,12 @@ digraph boxes_and_circles {
   graph [overlap = true, fontsize = 10, layout = dot,
        rankdir = LR]
 
-  # several 'node' statements
+  # 'node' statements
   node [shape = box,
         fontname = Helvetica]
   X; Y;
 
-  # several 'edge' statements
+  # 'edge' statements
   X -> Y
 }
 ")
@@ -100,8 +105,8 @@ digraph boxes_and_circles {
   X; Y, Z
 
   # several 'edge' statements
-    X->Y[label='TEST'];
-    Y->Z;
+    X->Y[label='0.2'];
+    Y->Z[label='0.2'];
 }
 ")
 ```
@@ -129,7 +134,7 @@ digraph boxes_and_circles {
 ")
 ```
 
-## Latent variables (circles)
+## Latent variable (circle)
 
 ```{r latent}
 grViz("
@@ -140,6 +145,34 @@ digraph boxes_and_circles {
 
    
    node [shape=circle]
+   Y
+    
+    Y -> X1;
+    Y -> X2;
+    Y -> X3;
+    Y -> Z;
+    Z;
+    
+  X1->X2->X3 [style='invis']
+  {rank = 'max'; Z}
+  {rank = 'min'; X1}
+  {rank = 'same'; X1;X2;X3}
+}
+")
+```
+
+
+## Composite variable (hexagon)
+
+```{r composite}
+grViz("
+digraph boxes_and_circles {
+   
+   node [shape=box]
+   X1;X2;X3;Z;
+
+   
+   node [shape=hexagon]
    Y
     
       X1 -> Y;
@@ -155,23 +188,86 @@ digraph boxes_and_circles {
 ")
 ```
 
-## labelled edges
 
+## Put it all together and make it prettier
+
+
+### Example 1
 ```{r labelled}
 grViz('
 digraph boxes_and_circles {
    
       graph[layout=dot]
       
-    a -> b[label="0.2",weight="0.2"];
-    a -> c[label="0.4",weight="0.4"];
-    c -> b[label="0.6",weight="0.6"];
-    c -> e[label="0.6",weight="0.6"];
-    e -> e[label="0.1",weight="0.1"];
-    e -> b[label="0.7",weight="0.7"];
+    subgraph {
+    
+    node[shape=box]
+    a -> b[color=black, penwidth=3.0, label="0.5"]
+    a -> c[color=black, penwidth=3.0, label="0.5"]
+    c -> b[color=red, penwidth=1.5, label="-0.25"]
+    c -> e[color=red, penwidth=1.5, label="-0.25"]
+      }
+      
+      
+    subgraph {
+           
+    node[shape=box]
+
+    e -> e[color=black, penwidth=3.0, label="0.5"]
+    e -> b[color=red, penwidth=1.5, label="-0.25"]
+
+      }
+       
+      
+{rank = "same"; c;e}
+
+
 }
 ')
 ```
 
+### Example 2
+
+```{r}
+grViz("
+digraph {
+
+  graph [ranksep = 1]
+  'i' [shape = 'circle']
+  's' [shape = 'circle']
+  't1' [shape = 'square']
+  't2' [shape = 'square']
+  't3' [shape = 'square']
+  't4' [shape = 'square']
+  'x1' [shape = 'square']
+  'x2' [shape = 'square']
+  'c1' [shape = 'square']
+  'c2' [shape = 'square']
+  'c3' [shape = 'square']
+  'c4' [shape = 'square']
+  'i'->'t1' [style = 'dashed', label = '1']
+  'i'->'t2' [style = 'dashed', label = '1']
+  'i'->'t3' [style = 'dashed', label = '1']
+  'i'->'t4' [style = 'dashed', label = '1']
+  's'->'t1' [style = 'dashed', label = '0']
+  's'->'t2' [style = 'dashed', label = '1']
+  's'->'t3' [style = 'dashed', label = '2']
+  's'->'t4' [style = 'dashed', label = '3']
+  'x1'->'i' [style = 'solid', label = '0.61']
+  'x2'->'i' [style = 'solid', label = '0.6']
+  'x1'->'s' [style = 'solid', label = '0.26']
+  'x2'->'s' [style = 'solid', label = '0.52']
+  'c1'->'t1' [style = 'solid', label = '0.14']
+  'c2'->'t2' [style = 'solid', label = '0.29']
+  'c3'->'t3' [style = 'solid', label = '0.33']
+  'c4'->'t4' [style = 'solid', label = '0.33']
+
+  # Additional constraints on the graph
+  t1->t2->t3->t4 [style='invis']
+  {rank = 'max'; c1; c2; c3; c4;}
+  {rank = 'same'; t1; t2; t3; t4;}
+}
+")
+```
 
 
