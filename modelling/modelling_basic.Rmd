@@ -28,6 +28,9 @@ data <- read.table("~/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-20
 ```
 
 
+## Explore data
+....
+
 ## Subset to one year
 ```{r}
 data <- data[data$year == 2000, ]
@@ -41,6 +44,7 @@ data <- data[data$year == 2000, ]
 
 ![](../figures/LMvsSEM.svg){width=70%}
 
+Split up into several lms.
 ```{r}
 lm1 <- lm(mass.above ~ nadd + rich + even + disk,  data = data)
 summary(lm1)
@@ -193,7 +197,7 @@ The modification indices shows that the model is saturated and thus, no further 
 
 ### Saturated model: Random terms with piecewiseSEM
 
-Let's try again to add the random structure an compare lavaan and piecewise outputs.
+Let's try again to add the random structure and compare lavaan and piecewise outputs.
 
 ```{r}
 
@@ -227,7 +231,7 @@ summary(fit.sem.prune)
 
 
 ## Model comparison
-- add an additional variable or path, then compare the two SEM
+- add an additional variable or path, then compare the two SEMs
 
 
 
