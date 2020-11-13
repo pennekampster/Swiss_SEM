@@ -40,7 +40,7 @@ Including interaction terms can test main effects and interaction effects
 ## Research questions
 
 The importance of questions in science -> 
-We are scientist and we try to explain the reality surrounding us.
+We are scientists and we try to explain the reality surrounding us.
 In this course, the focus is in ecology and evolution.
 .
 
@@ -55,6 +55,7 @@ ecosystem responses to:
   Elevated carbon dioxide
   Warming and changes in precipitation
   Exotic species invasions
+ Add experiment of data we will use.
 Add some nice pictures.
 
 ## SEM Steps
