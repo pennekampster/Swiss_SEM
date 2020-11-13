@@ -66,10 +66,11 @@ After transformation, the data need to be centred and standardised "by subtracti
 ```{r}
 # Centre and standardise data
 dat3 <- data.table(scale(dat2[,-1])) # scale() function returns matrix, thus we apply data.table() function
+dat3$TSTAID<-dat2$TSTAID # column TSTAID is non-numeric, thus we have to exclude it for scaling our data and append it afterwards
 ```
 
 ## Model Building
-We are now ready to build our first model. `lavaan` uses a specific model syntax to describe structural equation models. Use the built-in help function `?model.syntax` and consult the section "Details" for more information. In their first model, the authors evaluated how land-use and natural landscape features, riparian and instream habitat variables, nutrients, and chemicals were inter-related. They spent weeks going through an exhaustive yet realistic set of model scenarios to come up with a final stressor model. For the sake of time, we will sneak a peek at this final model. This is not cheating, exactly, since SEM is an explanatory framework for developing and evaluating complex hypotheses about systems---let us assume we did a very thorough literature search and came up with this model: ![](Stressor-Model.jpeg)
+We are now ready to build our first model. `lavaan` uses a specific model syntax to describe structural equation models. Use the built-in help function `?model.syntax` and consult the section "Details" for more information. In their first model, the authors evaluated how land-use and natural landscape features, riparian and instream habitat variables, nutrients, and chemicals were inter-related. They spent weeks going through an exhaustive yet realistic set of model scenarios to come up with a final stressor model. For the sake of time, we will sneak a peek at this final model. This is not cheating, exactly, since SEM is an explanatory framework for developing and evaluating complex hypotheses about systems---let us assume we did a very thorough literature search and came up with this hypothesised model: ![](Stressor-Model.jpeg)
 In `lavaan`, there are three steps we need to take:
 
 |         Step 1: Specify model
@@ -77,7 +78,11 @@ In `lavaan`, there are three steps we need to take:
 |         Step 3: Extract results (both estimates and assessment of fit)
 |   
 |  
-Specifying a model simply involves an equation for each response variable in the model:
+A model is specified by simply adding an equation for each response variable. A regression is specified by the "~" operator, whereby the dependent variable is on the left of a "~" operator and the independent variables, separated by "+" operators, are on the right. Covariances between variables are specified with the "~~" operator. If we go back to the paper, we find:
+
+>	&#171;Structural equation models were fit in lavaan, using listwise deletion of missing values, with exogenous (causally independent variables) means, variances, and covariances treated as random. Model fit and parameter estimation was done using maximum likelihood estimation with robust errors.&#187;
+
+Try to find the correct arguments to fit the described model using `?sem`. Once we specified and fitted the model, we can extract the results:
 
 ```{r}
 # Step 1: Specify model
@@ -106,7 +111,7 @@ mod.stressor<-'
 
 # Step 2: Estimate model
 fit.mod.stressor <- sem(mod.stressor, data = dat3, fixed.x = FALSE, estimator = "MLM") # sem() is used to fit model
-# note: listwise deletion of missing values is the default setting; fixed.x=FALSE is used to treat exogenous means, variances, and covariances as random; estimator="MLM" to use maximum likelihood estimation with robust errors to offset any bias introduced by non-normal distribution
+# note: listwise deletion of missing values is the default setting; fixed.x = FALSE is used to treat exogenous means, variances, and covariances as random; estimator = "MLM" to use maximum likelihood estimation with robust errors to offset any bias introduced by non-normal distribution
 
 # Step 3: Extract results
 summary(fit.mod.stressor, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)
@@ -121,7 +126,7 @@ m.i <- modindices(fit.mod.stressor, standardized = FALSE); print(m.i[m.i$mi > 4,
 
 ```
 
-Could there exist a path between 'Urban Land Use' and 'Percent Canopy', or between 'Urban Land Use' and 'Max Temperature'? We add these two paths to two separate models and run them both.
+Could there exist a path between "Urban Land Use" and "Percent Canopy", or between "Urban Land Use" and "Max Temperature"? We add these two paths to two separate models and run them both.
 
 ```{r, include=FALSE}
 mod.stressor.2<-'
@@ -186,5 +191,5 @@ This approach selects our first model. Once the authors were happy with their mo
 ```{r}
 # Bollen-Stine bootstrap
 mod.stressor.bs<-sem(mod.stressor, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
-standardizedSolution(mod.stressor.bs)
+head(standardizedSolution(mod.stressor.bs)) # we use head() to only display the first few rows
 ```
