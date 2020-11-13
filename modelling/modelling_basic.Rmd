@@ -100,7 +100,7 @@ fit.sem1.up <- update(fit.sem1, add = "rich ~~ even")
 summary(fit.sem1.up, rsq = TRUE)
 
 library(lavaanPlot)
-lavaanPlot(model = fit.sem1.up, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coefs = T, stand = FALSE, sig = 1.00)
+lavaanPlot(model = fit.sem1.up, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coefs = T, stand = FALSE, sig = 0.05)
 ```
 
 
@@ -144,6 +144,26 @@ summary(Psem1Random, .progressBar = F)
 ```
 
 We see here that the richness effect on biomass became non-significant.
+
+### Simple model: Random terms with lavaan
+
+```{r}
+
+# modfit<-sem(model, data=dat, estimator = "mlm")
+# survey.design <- svydesign(ids=~1, strata = ~ spatial_block, prob =~1, data=dat)
+# fit_with_blocks <- lavaan.survey(modfit, survey.design)
+# summary(fit_with_blocks, rsquare=T, standardized = T, fit.measures = T)
+
+
+library(survey)
+library(lavaan.survey)
+
+modfit<-sem(model=fit.sem1.up, data=data, estimator = "mlm")
+survey.design <- svydesign(ids=~1, strata = ~ field, prob =~1, data=data)
+fit_with_blocks <- lavaan.survey(modfit, survey.design)
+summary(fit_with_blocks, rsquare=T, standardized = T, fit.measures = T)
+
+```
 
 
 ## Saturated model
