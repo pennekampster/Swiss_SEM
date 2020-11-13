@@ -44,7 +44,7 @@ data <- data[data$year == 2000, ]
 - residuals
 - variance/covariance matrix
 
-![](../figures/LMvsSEM.svg){width=70%}
+![](../figures/LMvsSEM.svg){width=45%}
 
 Split up into several lms.
 ```{r}
