@@ -235,6 +235,7 @@ summary(fit.sem.prune)
 
 ![](../figures/LatentCompositeSEM.svg){width=70%}
 
+# SEM with latent variable "diversity"
 
 ```{r}
 sem2 <-"
@@ -249,6 +250,36 @@ fit.sem2 <- sem(sem2, data = data)
 summary(fit.sem2)
 
 ```
+
+# SEM with composite variable "land use intensity"
+
+```{r}
+compositeModel<-'
+    #1) define the composite, scale to logN
+    Nitrogen ~ 1*logN + logNcen2 #loading on the significant path!
+ 
+    #2) Specify 0 error variance
+    Nitrogen ~~ 0*Nitrogen
+ 
+      #3) now, because we need to represent this as a latent variable
+      #show how species richness is an _indicator_ of nitrogen
+      Nitrogen =~ SA
+ 
+    #4) BUT, make sure the variance of SA is estimated
+      SA ~~ SA
+ 
+    #Regional Richness also has an effect
+    SA ~ SR
+ 
+    #And account for the derivation of the square term from the linear term
+    logNcen2 ~ logN
+      '
+ 
+ # we specify std.lv=T so that the Nitrogen-SA relationship isn't fixed to 1
+ compositeFit <- sem(compositeModel, data=cards, std.lv=T)
+
+``` 
+ 
 
 ## SEM with interaction
 ![](../figures/InteractionSEM.svg){width=70%}
