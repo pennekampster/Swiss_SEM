@@ -12,13 +12,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction^[Schmidt, T.S., Van Metre, P.C., Carlisle, D.M. (2019). Linking the Agricultural Landscape of the Midwest to Stream Health with Structural Equation Modeling. _Environmental Science Technology_, _53_, 452-462. https://doi.org/10.1021/acs.est.8b04381]
 
-The expanding human population as well as their actions on the landscape (e.g. developments in infrastructure, agriculture, and industry) threaten the ecological integrity of stream ecosystems. Understanding how these landscape modifications affect the stream habitat, water quality, and ultimately stream biology, is a primary goal of stream ecology and crucial for the development of effective management strategies that maintain our freshwater resources.
+The expanding human population as well as their actions on the landscape (e.g. developments in infrastructure, agriculture, and industry) threaten the ecological integrity of stream ecosystems. Understanding how these landscape modifications affect the stream habitat, water quality, and ultimately stream biology, is a primary goal of stream ecology and crucial for the development of effective management strategies that maintain our freshwater resources. Various studies have identified the physical and chemical alterations that likely influence biological communities, and how they relate to land-use and in-stream stressors. However, these studies did not test conceptual models of how physico-chemical and natural-landscape factors together with different types of land use interactively influence the integrity of biological communities. This is why Schmidt et al. (2019): &#171;investigated hypothesised causal linkages between human development, physical and chemical stressors in streams, and stream ecological health using SEM&#187;.
 
 For background, we here provide the abstract from their paper. Please refer to the study for more details. ![](Schmidt-et-al_2019_Abstract.jpeg)
 
 ## Data Exploration
 
-Schmidt et al. (2019) performed all modelling in R using the packages `psych`, `data.table`, `lavaan`, and `semPlot`, thus we, too, will (install and) load them. If you are not yet familiar with these packages, use the built-in help function (e.g. `?lavaan`) to find out more about them. The authors provide their data and metadata [here](https://www.sciencebase.gov/catalog/item/5b463148e4b060350a15a836)^[https://www.sciencebase.gov/catalog/item/5b463148e4b060350a15a836], and the supplementary material [here](https://pubs.acs.org/doi/suppl/10.1021/acs.est.8b04381/suppl_file/es8b04381_si_001.pdf)^[https://pubs.acs.org/doi/suppl/10.1021/acs.est.8b04381/suppl_file/es8b04381_si_001.pdf]. We will download the data and get started in R:
+Schmidt et al. (2019) performed all modelling in R using the packages `psych`, `data.table`, `lavaan`, and `semPlot`, thus we, too, will (install and) load them. If you are not yet familiar with these packages, use the built-in help function (e.g. `?lavaan`) to find out more about them. The authors provide their data and metadata [here](https://www.sciencebase.gov/catalog/item/5b463148e4b060350a15a836)^[https://www.sciencebase.gov/catalog/item/5b463148e4b060350a15a836], and the supplementary material [here](https://pubs.acs.org/doi/suppl/10.1021/acs.est.8b04381/suppl_file/es8b04381_si_001.pdf)^[https://pubs.acs.org/doi/suppl/10.1021/acs.est.8b04381/suppl_file/es8b04381_si_001.pdf] (take a moment to look through the metadata and supplementary material, this study sets an excellent example in thorough documentation). We will download the data and get started in R:
 
 ```{r, include=FALSE}
 # Load packages
@@ -35,7 +35,7 @@ setwd("~/Git_Projects/Swiss_SEM/Case_Studies/Schmidt-et-al_2019")
 dat <- read.csv("Schmidt-et-al_2019.csv", sep = ";")
 ```
 
-First, we need to inspect and transform the data to meet the assumptions of normality and heterogeneity of variance. Data scales impact the internal matrix manipulations. `lavaan` is fussy about data scales, since they impact the internal matrix manipulations. Although it will let us know if it has a problem with our data, it is good practice to inspect the data beforehands. The authors of this study list the specific transformations for predictor variables in Table S1, and those for the ecology variables in the main text. We transform the data accordingly:
+First, we need to acquaint ourselves with the data (e.g. which variables are continuous, which categorical? do we have missing values? what is the spread of the data?). We need to inspect and transform the data to meet the assumptions of normality and heterogeneity of variance. Data scales impact the internal matrix manipulations. `lavaan` is fussy about data scales, since they impact the internal matrix manipulations. Although it will let us know if it has a problem with our data, it is good practice to inspect the data beforehands. The authors of this study list the specific transformations for predictor variables in Table S1, and those for the ecology variables in the main text. We transform the data accordingly:
 
 ```{r}
 # Transform data
@@ -79,8 +79,7 @@ In `lavaan`, there are three steps we need to take:
 |   
 |  
 A model is specified by simply adding an equation for each response variable. A regression is specified by the "~" operator, whereby the dependent variable is on the left of a "~" operator and the independent variables, separated by "+" operators, are on the right. Covariances between variables are specified with the "~~" operator. If we go back to the paper, we find:
-
->	&#171;Structural equation models were fit in lavaan, using listwise deletion of missing values, with exogenous (causally independent variables) means, variances, and covariances treated as random. Model fit and parameter estimation was done using maximum likelihood estimation with robust errors.&#187;
+&#171;Structural equation models were fit in lavaan, using listwise deletion of missing values, with exogenous (causally independent variables) means, variances, and covariances treated as random. Model fit and parameter estimation was done using maximum likelihood estimation with robust errors.&#187;
 
 Try to find the correct arguments to fit the described model using `?sem`. Once we specified and fitted the model, we can extract the results:
 
@@ -115,7 +114,6 @@ fit.mod.stressor <- sem(mod.stressor, data = dat3, fixed.x = FALSE, estimator = 
 
 # Step 3: Extract results
 summary(fit.mod.stressor, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)
-fitMeasures(fit.mod.stressor, c("cfi", "rni", "rmsea", "srmr", "ifi"))
 ```
 
 Great, the fit of our hypothesised model is good in general terms. But are we missing any important links? Modification indices measure the distance between fitted and implied covariance matrices and suggest additional paths that could improve model fit. Here, we are interested in modification indices > 4:
@@ -183,13 +181,25 @@ fit.mod.stressor.3 <- sem(mod.stressor.3, data = dat3, fixed.x = FALSE, estimato
 We compare the three models using AIC~C~. For this, we (install and) load the package `AICcmodavg` and use the function `aictab()`:
 
 ```{r}
+# Compare stressor models
 aictab(list(fit.mod.stressor,fit.mod.stressor.2,fit.mod.stressor.3),c("Model 1","Model 2","Model 3"))
 ```
 
-This approach selects our first model. Once the authors were happy with their model, they went over to a robust fit approach using Bollen-Stine bootstrap (_n_ = 1000). Since the data set is relatively small (only 98 observations) compared to how complicated the model is, they were concerned that the MLM approach might find significant path coefficients not supported by the robust approach. Thus, they only included paths that were significant using the MLM and robust fits. We can run a Bollen-Stine bootstrap SEM by adding the term `test = "bollen.stine, se = "boot", bootstrap = 1000`. This may take a while:
+This approach selects our first model. Once the authors were happy with their model, they went over to a robust fit approach using Bollen-Stine bootstrap (_n_ = 1000). Since the data set is relatively small (only 98 observations) compared to how complicated the model is, they were concerned that the MLM approach might find significant path coefficients not supported by the robust approach. Thus, they only included paths that were significant using the MLM and robust fits. Note that bootstrapping uses random sampling with replacement, thus our results will differ slightly from run to run. To prevent this, we can set the seed of R's random number generator: `set.seed(123)`. We can run a Bollen-Stine bootstrap SEM in R by adding the term: `test = "bollen.stine", se = "boot", bootstrap = 1000`. This may take a while:
 
 ```{r}
+# Ensure reproducibility of results
+set.seed(123)
+
 # Bollen-Stine bootstrap
-mod.stressor.bs<-sem(mod.stressor, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
-head(standardizedSolution(mod.stressor.bs)) # we use head() to only display the first few rows
+fit.mod.stressor.bs<-sem(mod.stressor, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
+head(standardizedSolution(fit.mod.stressor.bs)) # we use head() to only display the first few rows
 ```
+
+It is good practice to report the covariance matrix in the supplementary material:
+
+```{r echo = T, results = 'hide'}
+# Request covariance matrix
+lavInspect(fit.mod.stressor.bs, what = "sampstat")
+```
+
