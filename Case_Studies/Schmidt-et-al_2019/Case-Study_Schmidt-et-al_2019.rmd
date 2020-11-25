@@ -70,7 +70,8 @@ dat3$TSTAID<-dat2$TSTAID # column TSTAID is non-numeric, thus we have to exclude
 ```
 
 ## Model Building
-We are now ready to build our first model. `lavaan` uses a specific model syntax to describe structural equation models. Use the built-in help function `?model.syntax` and consult the section "Details" for more information. In their first model, the authors evaluated how land-use and natural landscape features, riparian and instream habitat variables, nutrients, and chemicals were inter-related. They spent weeks going through an exhaustive yet realistic set of model scenarios to come up with a final stressor model. For the sake of time, we will sneak a peek at this final model. This is not cheating, exactly, since SEM is an explanatory framework for developing and evaluating complex hypotheses about systems---let us assume we did a very thorough literature search and came up with this hypothesised model: ![](Stressor-Model.jpeg)
+### Stressor Model
+We are now ready to build our first model. `lavaan` uses a specific model syntax to describe structural equation models. Use the built-in help function `?model.syntax` and consult the section "Details" for more information. In their first model, the authors evaluated how land-use and natural-landscape features, riparian and instream habitat variables, nutrients, and chemicals were inter-related. They spent weeks going through an exhaustive yet realistic set of model scenarios to come up with a final stressor model. For the sake of time, we will sneak a peek at this final model. This is not cheating, exactly, since SEM is an explanatory framework for developing and evaluating complex hypotheses about systems---let us assume we did a very thorough literature search and came up with this hypothesised model: ![](Stressor-Model.jpeg)
 In `lavaan`, there are three steps we need to take:
 
 |         Step 1: Specify model
@@ -198,8 +199,52 @@ head(standardizedSolution(fit.mod.stressor.bs)) # we use head() to only display 
 
 It is good practice to report the covariance matrix in the supplementary material:
 
-```{r echo = T, results = 'hide'}
+```{r results = 'hide'}
 # Request covariance matrix
 lavInspect(fit.mod.stressor.bs, what = "sampstat")
 ```
 
+### Algal Model
+Once the stressor model was optimised, Schmidt et al. (2019) applied it to their indicator for the integrity of algal communities. Due to the lack of a commonly-used multi-metric algal index, the authors: &#171;developed a latent variable comprising three metrics that represent the tolerance/sensitivity of three diatom taxon groups to a wide range of disturbances&#187;. For more details on how Schmidt et al. (2019) derived the measures of the latent construct "Algal Community Health" BC2-4, please refer to the methods section of the study. To specify the model, we add all regressions and covariances identified in the optimised stressor model:
+
+```{r results = 'hide'}
+# Step 1: Specify model
+mod.algae <- '
+  # Latent Construct
+  Algae =~ BC_2.RelAbun + BC_3.RelAbun + BC_4.RelAbun
+
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  PctCanopy ~ BasinArea + r50_ForestTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  NH3_MED_42DAY ~ BasinArea + r50_ForestTotal2011
+  Bifenthrin ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  pyrethroid_deg_sum ~ UrbanTotal2011 + AgricultureTotal2011 + Bifenthrin
+  imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
+  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
+  median.of.sumconcn_triazH ~ SandContent + AgricultureTotal2011
+  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
+  Algae ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + BasinArea + Bank + r50_ForestTotal2011
+          + PctCanopy + RBS + NH3_MED_42DAY + Bifenthrin + pyrethroid_deg_sum + imidacloprid + TN_MED_42DAY
+          + TP_MED_42DAY + median.of.sumconcn_triazH + Tmax42.C.OBSYN
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+  pyrethroid_deg_sum ~~ imidacloprid
+  TN_MED_42DAY ~~ TP_MED_42DAY
+'
+
+# Step 2: Estimate model
+fit.mod.algae <- sem(mod.algae, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
+
+# Step 3: Extract results
+summary(fit.mod.algae, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)
+```
+
+### Invertebrate Model
+
+### Fish Model
