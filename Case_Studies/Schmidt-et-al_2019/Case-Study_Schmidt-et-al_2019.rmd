@@ -66,7 +66,7 @@ After transformation, the data need to be centred and standardised "by subtracti
 ```{r}
 # Centre and standardise data
 dat3 <- data.table(scale(dat2[,-1])) # scale() function returns matrix, thus we apply data.table() function
-dat3$TSTAID<-dat2$TSTAID # column TSTAID is non-numeric, thus we have to exclude it for scaling our data and append it afterwards
+dat3$TSTAID <- dat2$TSTAID # column TSTAID is non-numeric, thus we have to exclude it for scaling our data and append it afterwards
 ```
 
 ## Model Building
@@ -86,7 +86,7 @@ Try to find the correct arguments to fit the described model using `?sem`. Once 
 
 ```{r}
 # Step 1: Specify model
-mod.stressor<-'
+mod.stressor <- '
   # Regressions
   UrbanTotal2011 ~ SandContent
   AgricultureTotal2011 ~ SandContent + BasinArea
@@ -117,83 +117,14 @@ fit.mod.stressor <- sem(mod.stressor, data = dat3, fixed.x = FALSE, estimator = 
 summary(fit.mod.stressor, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)
 ```
 
-Great, the fit of our hypothesised model is good in general terms. But are we missing any important links? Modification indices measure the distance between fitted and implied covariance matrices and suggest additional paths that could improve model fit. Here, we are interested in modification indices > 4:
-
-```{r}
-# Request modification indices
-m.i <- modindices(fit.mod.stressor, standardized = FALSE); print(m.i[m.i$mi > 4,])
-
-```
-
-Could there exist a path between "Urban Land Use" and "Percent Canopy", or between "Urban Land Use" and "Max Temperature"? We add these two paths to two separate models and run them both.
-
-```{r, include=FALSE}
-mod.stressor.2<-'
-  # Regressions
-  UrbanTotal2011 ~ SandContent
-  AgricultureTotal2011 ~ SandContent + BasinArea
-  Bank ~ UrbanTotal2011 + SandContent
-  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
-  PctCanopy ~ BasinArea + r50_ForestTotal2011 + UrbanTotal2011
-  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
-  NH3_MED_42DAY ~ BasinArea + r50_ForestTotal2011
-  Bifenthrin ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
-  pyrethroid_deg_sum ~ UrbanTotal2011 + AgricultureTotal2011 + Bifenthrin
-  imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
-  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
-  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
-  triazH ~ SandContent + AgricultureTotal2011
-  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
-  
-  # Covariances
-  UrbanTotal2011 ~~ AgricultureTotal2011
-  pyrethroid_deg_sum ~~ imidacloprid
-  TN_MED_42DAY ~~ TP_MED_42DAY
-' # note that we renamed dat3$median.of.sumconcn_triazH to dat3$triazH for simplicity
-
-fit.mod.stressor.2 <- sem(mod.stressor.2, data = dat3, fixed.x = FALSE, estimator = "MLM")
-
-mod.stressor.3<-'
-  # Regressions
-  UrbanTotal2011 ~ SandContent
-  AgricultureTotal2011 ~ SandContent + BasinArea
-  Bank ~ UrbanTotal2011 + SandContent
-  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
-  PctCanopy ~ BasinArea + r50_ForestTotal2011
-  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
-  NH3_MED_42DAY ~ BasinArea + r50_ForestTotal2011
-  Bifenthrin ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
-  pyrethroid_deg_sum ~ UrbanTotal2011 + AgricultureTotal2011 + Bifenthrin
-  imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
-  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
-  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
-  triazH ~ SandContent + AgricultureTotal2011
-  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy + UrbanTotal2011
-  
-  # Covariances
-  UrbanTotal2011 ~~ AgricultureTotal2011
-  pyrethroid_deg_sum ~~ imidacloprid
-  TN_MED_42DAY ~~ TP_MED_42DAY
-' # note that we renamed dat3$median.of.sumconcn_triazH to dat3$triazH for simplicity
-
-fit.mod.stressor.3 <- sem(mod.stressor.3, data = dat3, fixed.x = FALSE, estimator = "MLM")
-```
-
-We compare the three models using AIC~C~. For this, we (install and) load the package `AICcmodavg` and use the function `aictab()`:
-
-```{r}
-# Compare stressor models
-aictab(list(fit.mod.stressor,fit.mod.stressor.2,fit.mod.stressor.3),c("Model 1","Model 2","Model 3"))
-```
-
-This approach selects our first model. Once the authors were happy with their model, they went over to a robust fit approach using Bollen-Stine bootstrap (_n_ = 1000). Since the data set is relatively small (only 98 observations) compared to how complicated the model is, they were concerned that the MLM approach might find significant path coefficients not supported by the robust approach. Thus, they only included paths that were significant using the MLM and robust fits. Note that bootstrapping uses random sampling with replacement, thus our results will differ slightly from run to run. To prevent this, we can set the seed of R's random number generator: `set.seed(123)`. We can run a Bollen-Stine bootstrap SEM in R by adding the term: `test = "bollen.stine", se = "boot", bootstrap = 1000`. This may take a while:
+Once the authors were happy with their model, they went over to a robust fit approach using Bollen-Stine bootstrap (_n_ = 1000). Since the data set is relatively small (only 98 observations) compared to how complicated the model is, they were concerned that the MLM approach might find significant path coefficients not supported by the robust approach. Thus, they only included paths that were significant using the MLM and robust fits. Note that bootstrapping uses random sampling with replacement, thus our results will differ slightly from run to run. To prevent this, we can set the seed of R's random number generator: `set.seed(123)`. We can run a Bollen-Stine bootstrap SEM in R by adding the term: `test = "bollen.stine", se = "boot", bootstrap = 1000`. This may take a while:
 
 ```{r}
 # Ensure reproducibility of results
 set.seed(123)
 
 # Bollen-Stine bootstrap
-fit.mod.stressor.bs<-sem(mod.stressor, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
+fit.mod.stressor.bs <- sem(mod.stressor, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
 head(standardizedSolution(fit.mod.stressor.bs)) # we use head() to only display the first few rows
 ```
 
@@ -205,7 +136,7 @@ lavInspect(fit.mod.stressor.bs, what = "sampstat")
 ```
 
 ### Algal Model
-Once the stressor model was optimised, Schmidt et al. (2019) applied it to their indicator for the integrity of algal communities. Due to the lack of a commonly-used multi-metric algal index, the authors: &#171;developed a latent variable comprising three metrics that represent the tolerance/sensitivity of three diatom taxon groups to a wide range of disturbances&#187;. For more details on how Schmidt et al. (2019) derived the measures of the latent construct "Algal Community Health" BC2-4, please refer to the methods section of the study. To specify the model, we add all regressions and covariances identified in the optimised stressor model:
+Schmidt et al. (2019) applied the optimised stressor model to their ecological indicators. To start with, we will examine the effects of the various stressors on the integrity of algal communities. Due to the lack of a commonly-used multi-metric algal index, the authors: &#171;developed a latent variable comprising three metrics that represent the tolerance/sensitivity of three diatom taxon groups to a wide range of disturbances&#187;. For more details on how Schmidt et al. (2019) derived the measures of the latent construct "Algal Community Health" BC2-4, please refer to the methods section of the study. To specify the model, we add all regressions and covariances identified in the optimised stressor model:
 
 ```{r results = 'hide'}
 # Step 1: Specify model
@@ -244,6 +175,137 @@ fit.mod.algae <- sem(mod.algae, data = dat3, missing = "listwise", fixed.x = FAL
 # Step 3: Extract results
 summary(fit.mod.algae, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)
 ```
+
+Unsurprisingly, this initial model performs really badly. We look at the model summary, identify those path coefficients that are non-significant (_p_ > 0.10), and trim the model accordingly:
+
+```{r results = 'hide'}
+# Trim non-significant paths (p > 0.10)
+mod.algae.2 <- '
+  # Latent
+  Algae =~ BC_2.RelAbun + BC_3.RelAbun + BC_4.RelAbun
+
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  PctCanopy ~ BasinArea + r50_ForestTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
+  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
+  Algae ~ PctCanopy + NH3_MED_42DAY + TN_MED_42DAY + TP_MED_42DAY + Tmax42.C.OBSYN
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+  TN_MED_42DAY ~~ TP_MED_42DAY
+'
+
+# Step 2: Estimate model
+fit.mod.algae.2 <- sem(mod.algae.2, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
+
+# Step 3: Extract results
+summary(fit.mod.algae.2, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)
+```
+
+This model performs a lot better already. But are we missing any important links? Modification indices measure the distance between fitted and implied covariance matrices and suggest additional paths that could improve model fit. Here, we are interested in modification indices > 4:
+
+```{r}
+m.i <- modindices(fit.mod.algae.2, standardized = FALSE); print(m.i[m.i$mi > 4.0,])
+```
+
+Most suggestions do not make sense biologically. Could there exist a path between "Agriculture Land Use" and "Algae"? We add this path and compare the two models using AIC~C~. For this, we (install and) load the package `AICcmodavg` and use the function `aictab()`:
+
+```{r echo = FALSE, results = 'hide'}
+# Add potential missing link
+mod.algae.3 <- '
+  # Latent
+  Algae =~ BC_2.RelAbun + BC_3.RelAbun + BC_4.RelAbun
+
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  PctCanopy ~ BasinArea + r50_ForestTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
+  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
+  Algae ~ AgricultureTotal2011 + PctCanopy + NH3_MED_42DAY + TN_MED_42DAY + TP_MED_42DAY + Tmax42.C.OBSYN
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+  TN_MED_42DAY ~~ TP_MED_42DAY
+'
+
+# Step 2: Estimate model
+fit.mod.algae.3<-sem(mod.algae.3,data=dat3, missing="listwise", fixed.x=FALSE,estimator="MLM")
+
+# Step 3: Extract results
+summary(fit.mod.algae.3,standardized=TRUE,fit.measures=TRUE,rsquare=TRUE)
+```
+
+```{r}
+# Compare algal models
+aictab(list(fit.mod.algae.2, fit.mod.algae.3), c("Model 2", "Model 3"))
+```
+
+This link does not improve our model, and so we ignore it. Let us inspect whether any further path coefficients are deemed non-significant in our second algal model. We trim `Algae ~ PctCanopy` and `Algae ~ TN_MED_42DAY` and compare the models again:
+
+```{r echo = FALSE, results = 'hide'}
+# Trim non-significant paths (p > 0.10)
+mod.algae.4 <- '
+  # Latent
+  Algae =~ BC_2.RelAbun + BC_3.RelAbun + BC_4.RelAbun
+
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  PctCanopy ~ BasinArea + r50_ForestTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
+  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
+  Algae ~ NH3_MED_42DAY + TP_MED_42DAY + Tmax42.C.OBSYN
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+  TN_MED_42DAY ~~ TP_MED_42DAY
+'
+
+# Step 2: Estimate model
+fit.mod.algae.4 <- sem(mod.algae.4, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
+
+# Step 3: Extract results
+summary(fit.mod.algae.4, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)
+```
+
+```{r}
+# Compare algal models
+aictab(list(fit.mod.algae.2, fit.mod.algae.4), c("Model 2", "Model 4"))
+```
+
+Indeed, removing these two links further improved our model. Again, let us use a robust fit approach using Bollen-Stine bootstrap (_n_ = 1000):
+
+```{r}
+# Ensure reproducibility of results
+set.seed(123)
+
+# Bollen-Stine bootstrap
+fit.mod.algae.4.bs <- sem(mod.algae.4, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
+head(standardizedSolution(fit.mod.algae.4.bs)) # we use head() to only display the first few rows
+```
+
+And report the covariance matrix in the supplementary material:
+
+```{r results = 'hide'}
+# Request covariance matrix
+lavInspect(fit.mod.stressor.bs, what = "sampstat")
+```
+
 
 ### Invertebrate Model
 

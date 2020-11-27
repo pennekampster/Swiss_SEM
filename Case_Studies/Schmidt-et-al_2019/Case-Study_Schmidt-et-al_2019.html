@@ -437,7 +437,7 @@ dat2$BasinArea &lt;- log10(dat$BasinArea) # example for how to log10-transform v
 <p>After transformation, the data need to be centred and standardised “by subtracting the mean value for each variable from each observation and then dividing by the standard deviation of all observations for that variable”. Luckily, this is just what the function <code>scale()</code> does:</p>
 <pre class="r"><code># Centre and standardise data
 dat3 &lt;- data.table(scale(dat2[,-1])) # scale() function returns matrix, thus we apply data.table() function
-dat3$TSTAID&lt;-dat2$TSTAID # column TSTAID is non-numeric, thus we have to exclude it for scaling our data and append it afterwards</code></pre>
+dat3$TSTAID &lt;- dat2$TSTAID # column TSTAID is non-numeric, thus we have to exclude it for scaling our data and append it afterwards</code></pre>
 </div>
 <div id="model-building" class="section level2">
 <h2>Model Building</h2>
@@ -452,7 +452,7 @@ dat3$TSTAID&lt;-dat2$TSTAID # column TSTAID is non-numeric, thus we have to excl
 <p>A model is specified by simply adding an equation for each response variable. A regression is specified by the “~” operator, whereby the dependent variable is on the left of a “~” operator and the independent variables, separated by “+” operators, are on the right. Covariances between variables are specified with the “~~” operator. If we go back to the paper, we find: «Structural equation models were fit in lavaan, using listwise deletion of missing values, with exogenous (causally independent variables) means, variances, and covariances treated as random. Model fit and parameter estimation was done using maximum likelihood estimation with robust errors.»</p>
 <p>Try to find the correct arguments to fit the described model using <code>?sem</code>. Once we specified and fitted the model, we can extract the results:</p>
 <pre class="r"><code># Step 1: Specify model
-mod.stressor&lt;-&#39;
+mod.stressor &lt;- &#39;
   # Regressions
   UrbanTotal2011 ~ SandContent
   AgricultureTotal2011 ~ SandContent + BasinArea
@@ -667,37 +667,12 @@ summary(fit.mod.stressor, standardized = TRUE, fit.measures = TRUE, rsquare = TR
 ##     TP_MED_42DAY      0.373
 ##     triazH            0.251
 ##     Tmax42.C.OBSYN    0.248</code></pre>
-<p>Great, the fit of our hypothesised model is good in general terms. But are we missing any important links? Modification indices measure the distance between fitted and implied covariance matrices and suggest additional paths that could improve model fit. Here, we are interested in modification indices &gt; 4:</p>
-<pre class="r"><code># Request modification indices
-m.i &lt;- modindices(fit.mod.stressor, standardized = FALSE); print(m.i[m.i$mi &gt; 4,])</code></pre>
-<pre><code>##                      lhs op                rhs    mi    epc
-## 99  AgricultureTotal2011 ~~     Tmax42.C.OBSYN 4.462 -0.107
-## 141           Bifenthrin ~~       TN_MED_42DAY 5.307  0.130
-## 148       UrbanTotal2011  ~          PctCanopy 4.111  0.190
-## 157       UrbanTotal2011  ~     Tmax42.C.OBSYN 5.222 -0.189
-## 191  r50_ForestTotal2011  ~       imidacloprid 5.231  0.270
-## 198            PctCanopy  ~     UrbanTotal2011 4.213  0.177
-## 205            PctCanopy  ~       imidacloprid 6.420  0.206
-## 264         imidacloprid  ~      NH3_MED_42DAY 4.045 -0.613
-## 276         TN_MED_42DAY  ~         Bifenthrin 5.307  0.150
-## 277         TN_MED_42DAY  ~ pyrethroid_deg_sum 5.307  0.419</code></pre>
-<p>Could there exist a path between “Urban Land Use” and “Percent Canopy”, or between “Urban Land Use” and “Max Temperature”? We add these two paths to two separate models and run them both.</p>
-<p>We compare the three models using AIC<sub>C</sub>. For this, we (install and) load the package <code>AICcmodavg</code> and use the function <code>aictab()</code>:</p>
-<pre class="r"><code># Compare stressor models
-aictab(list(fit.mod.stressor,fit.mod.stressor.2,fit.mod.stressor.3),c(&quot;Model 1&quot;,&quot;Model 2&quot;,&quot;Model 3&quot;))</code></pre>
-<pre><code>## 
-## Model selection based on AICc:
-## 
-##          K    AICc Delta_AICc AICcWt Cum.Wt       LL
-## Model 1 75 4447.12       0.00      1      1 -1741.42
-## Model 2 76 4530.76      83.64      0      1 -1739.23
-## Model 3 76 4534.62      87.50      0      1 -1741.16</code></pre>
-<p>This approach selects our first model. Once the authors were happy with their model, they went over to a robust fit approach using Bollen-Stine bootstrap (<em>n</em> = 1000). Since the data set is relatively small (only 98 observations) compared to how complicated the model is, they were concerned that the MLM approach might find significant path coefficients not supported by the robust approach. Thus, they only included paths that were significant using the MLM and robust fits. Note that bootstrapping uses random sampling with replacement, thus our results will differ slightly from run to run. To prevent this, we can set the seed of R’s random number generator: <code>set.seed(123)</code>. We can run a Bollen-Stine bootstrap SEM in R by adding the term: <code>test = &quot;bollen.stine&quot;, se = &quot;boot&quot;, bootstrap = 1000</code>. This may take a while:</p>
+<p>Once the authors were happy with their model, they went over to a robust fit approach using Bollen-Stine bootstrap (<em>n</em> = 1000). Since the data set is relatively small (only 98 observations) compared to how complicated the model is, they were concerned that the MLM approach might find significant path coefficients not supported by the robust approach. Thus, they only included paths that were significant using the MLM and robust fits. Note that bootstrapping uses random sampling with replacement, thus our results will differ slightly from run to run. To prevent this, we can set the seed of R’s random number generator: <code>set.seed(123)</code>. We can run a Bollen-Stine bootstrap SEM in R by adding the term: <code>test = &quot;bollen.stine&quot;, se = &quot;boot&quot;, bootstrap = 1000</code>. This may take a while:</p>
 <pre class="r"><code># Ensure reproducibility of results
 set.seed(123)
 
 # Bollen-Stine bootstrap
-fit.mod.stressor.bs&lt;-sem(mod.stressor, data = dat3, test = &quot;bollen.stine&quot;, se = &quot;boot&quot;, bootstrap = 1000, fixed.x = FALSE)
+fit.mod.stressor.bs &lt;- sem(mod.stressor, data = dat3, test = &quot;bollen.stine&quot;, se = &quot;boot&quot;, bootstrap = 1000, fixed.x = FALSE)
 head(standardizedSolution(fit.mod.stressor.bs)) # we use head() to only display the first few rows</code></pre>
 <pre><code>##                    lhs op            rhs est.std    se      z pvalue ci.lower
 ## 1       UrbanTotal2011  ~    SandContent  -0.206 0.075 -2.749  0.006   -0.352
@@ -719,7 +694,7 @@ lavInspect(fit.mod.stressor.bs, what = &quot;sampstat&quot;)</code></pre>
 </div>
 <div id="algal-model" class="section level3">
 <h3>Algal Model</h3>
-<p>Once the stressor model was optimised, Schmidt et al. (2019) applied it to their indicator for the integrity of algal communities. Due to the lack of a commonly-used multi-metric algal index, the authors: «developed a latent variable comprising three metrics that represent the tolerance/sensitivity of three diatom taxon groups to a wide range of disturbances». For more details on how Schmidt et al. (2019) derived the measures of the latent construct “Algal Community Health” BC2-4, please refer to the methods section of the study. To specify the model, we add all regressions and covariances identified in the optimised stressor model:</p>
+<p>Schmidt et al. (2019) applied the optimised stressor model to their ecological indicators. To start with, we will examine the effects of the various stressors on the integrity of algal communities. Due to the lack of a commonly-used multi-metric algal index, the authors: «developed a latent variable comprising three metrics that represent the tolerance/sensitivity of three diatom taxon groups to a wide range of disturbances». For more details on how Schmidt et al. (2019) derived the measures of the latent construct “Algal Community Health” BC2-4, please refer to the methods section of the study. To specify the model, we add all regressions and covariances identified in the optimised stressor model:</p>
 <pre class="r"><code># Step 1: Specify model
 mod.algae &lt;- &#39;
   # Latent Construct
@@ -755,6 +730,93 @@ fit.mod.algae &lt;- sem(mod.algae, data = dat3, missing = &quot;listwise&quot;, 
 
 # Step 3: Extract results
 summary(fit.mod.algae, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)</code></pre>
+<p>Unsurprisingly, this initial model performs really badly. We look at the model summary, identify those path coefficients that are non-significant (<em>p</em> &gt; 0.10), and trim the model accordingly:</p>
+<pre class="r"><code># Trim non-significant paths (p &gt; 0.10)
+mod.algae.2 &lt;- &#39;
+  # Latent
+  Algae =~ BC_2.RelAbun + BC_3.RelAbun + BC_4.RelAbun
+
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  PctCanopy ~ BasinArea + r50_ForestTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
+  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
+  Algae ~ PctCanopy + NH3_MED_42DAY + TN_MED_42DAY + TP_MED_42DAY + Tmax42.C.OBSYN
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+  TN_MED_42DAY ~~ TP_MED_42DAY
+&#39;
+
+# Step 2: Estimate model
+fit.mod.algae.2 &lt;- sem(mod.algae.2, data = dat3, missing = &quot;listwise&quot;, fixed.x = FALSE, estimator = &quot;MLM&quot;)
+
+# Step 3: Extract results
+summary(fit.mod.algae.2, standardized = TRUE, fit.measures = TRUE, rsquare = TRUE)</code></pre>
+<p>This model performs a lot better already. But are we missing any important links? Modification indices measure the distance between fitted and implied covariance matrices and suggest additional paths that could improve model fit. Here, we are interested in modification indices &gt; 4:</p>
+<pre class="r"><code>m.i &lt;- modindices(fit.mod.algae.2, standardized = FALSE); print(m.i[m.i$mi &gt; 4.0,])</code></pre>
+<pre><code>##                      lhs op                  rhs     mi    epc
+## 61          BC_2.RelAbun ~~         TN_MED_42DAY  4.311  0.116
+## 109            PctCanopy ~~         TN_MED_42DAY  4.387 -0.106
+## 123       UrbanTotal2011  ~         TP_MED_42DAY  4.573 -0.768
+## 124       UrbanTotal2011  ~       Tmax42.C.OBSYN  5.216 -0.193
+## 125       UrbanTotal2011  ~                Algae  5.383  0.378
+## 134 AgricultureTotal2011  ~         TP_MED_42DAY  5.440 -0.595
+## 200       Tmax42.C.OBSYN  ~                Algae  9.585  0.835
+## 201       Tmax42.C.OBSYN  ~        NH3_MED_42DAY 28.099  0.454
+## 203                Algae  ~ AgricultureTotal2011  5.760 -0.198
+## 204                Algae  ~                 Bank  6.953 -0.167
+## 229            BasinArea  ~       Tmax42.C.OBSYN 22.557  3.003
+## 230            BasinArea  ~                Algae  4.427 -0.505
+## 241        NH3_MED_42DAY  ~       Tmax42.C.OBSYN 28.886  0.655
+## 242        NH3_MED_42DAY  ~                Algae 17.897 -1.028</code></pre>
+<p>Most suggestions do not make sense biologically. Could there exist a path between “Agriculture Land Use” and “Algae”? We add this path and compare the two models using AIC<sub>C</sub>. For this, we (install and) load the package <code>AICcmodavg</code> and use the function <code>aictab()</code>:</p>
+<pre class="r"><code># Compare algal models
+aictab(list(fit.mod.algae.2, fit.mod.algae.3), c(&quot;Model 2&quot;, &quot;Model 3&quot;))</code></pre>
+<pre><code>## 
+## Model selection based on AICc:
+## 
+##          K    AICc Delta_AICc AICcWt Cum.Wt       LL
+## Model 2 51 3702.79       0.00   0.86   0.86 -1735.71
+## Model 3 52 3706.45       3.66   0.14   1.00 -1732.32</code></pre>
+<p>This link does not improve our model, and so we ignore it. Let us inspect whether any further path coefficients are deemed non-significant in our second algal model. We trim <code>Algae ~ PctCanopy</code> and <code>Algae ~ TN_MED_42DAY</code> and compare the models again:</p>
+<pre class="r"><code># Compare algal models
+aictab(list(fit.mod.algae.2, fit.mod.algae.4), c(&quot;Model 2&quot;, &quot;Model 4&quot;))</code></pre>
+<pre><code>## 
+## Model selection based on AICc:
+## 
+##          K    AICc Delta_AICc AICcWt Cum.Wt       LL
+## Model 4 50 3690.05       0.00      1      1 -1734.31
+## Model 2 51 3702.79      12.74      0      1 -1735.71</code></pre>
+<p>Indeed, removing these two links further improved our model. Again, let us use a robust fit approach using Bollen-Stine bootstrap (<em>n</em> = 1000):</p>
+<pre class="r"><code># Ensure reproducibility of results
+set.seed(123)
+
+# Bollen-Stine bootstrap
+fit.mod.algae.4.bs &lt;- sem(mod.algae.4, data = dat3, test = &quot;bollen.stine&quot;, se = &quot;boot&quot;, bootstrap = 1000, fixed.x = FALSE)
+head(standardizedSolution(fit.mod.algae.4.bs)) # we use head() to only display the first few rows</code></pre>
+<pre><code>##                    lhs op          rhs est.std    se      z pvalue ci.lower
+## 1                Algae =~ BC_2.RelAbun   0.711 0.079  9.007  0.000    0.556
+## 2                Algae =~ BC_3.RelAbun   0.751 0.082  9.110  0.000    0.589
+## 3                Algae =~ BC_4.RelAbun  -0.495 0.114 -4.361  0.000   -0.718
+## 4       UrbanTotal2011  ~  SandContent  -0.221 0.070 -3.140  0.002   -0.359
+## 5 AgricultureTotal2011  ~  SandContent   0.203 0.080  2.550  0.011    0.047
+## 6 AgricultureTotal2011  ~    BasinArea   0.188 0.067  2.796  0.005    0.056
+##   ci.upper
+## 1    0.865
+## 2    0.913
+## 3   -0.273
+## 4   -0.083
+## 5    0.360
+## 6    0.320</code></pre>
+<p>And report the covariance matrix in the supplementary material:</p>
+<pre class="r"><code># Request covariance matrix
+lavInspect(fit.mod.stressor.bs, what = &quot;sampstat&quot;)</code></pre>
 </div>
 <div id="invertebrate-model" class="section level3">
 <h3>Invertebrate Model</h3>
