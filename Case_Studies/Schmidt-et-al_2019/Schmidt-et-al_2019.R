@@ -80,59 +80,6 @@ standardizedSolution(fit.mod.stressor.bs)
 # Derive covariance matrix
 lavInspect(mod.stressor.bs, what="sampstat")
 
-## Structural Equation Model ####
-mod.stressor.2<-'
-  # Regressions
-  UrbanTotal2011 ~ SandContent
-  AgricultureTotal2011 ~ SandContent + BasinArea
-  Bank ~ UrbanTotal2011 + SandContent
-  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
-  PctCanopy ~ BasinArea + r50_ForestTotal2011 + UrbanTotal2011
-  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
-  NH3_MED_42DAY ~ BasinArea + r50_ForestTotal2011
-  Bifenthrin ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
-  pyrethroid_deg_sum ~ UrbanTotal2011 + AgricultureTotal2011 + Bifenthrin
-  imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
-  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
-  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
-  median.of.sumconcn_triazH ~ SandContent + AgricultureTotal2011
-  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
-  
-  # Covariances
-  UrbanTotal2011 ~~ AgricultureTotal2011
-  pyrethroid_deg_sum ~~ imidacloprid
-  TN_MED_42DAY ~~ TP_MED_42DAY
-'
-
-fit.mod.stressor.2<-sem(mod.stressor.2,data=dat3, missing="listwise", fixed.x=FALSE,estimator="MLM")
-
-mod.stressor.3<-'
-  # Regressions
-  UrbanTotal2011 ~ SandContent
-  AgricultureTotal2011 ~ SandContent + BasinArea
-  Bank ~ UrbanTotal2011 + SandContent
-  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
-  PctCanopy ~ BasinArea + r50_ForestTotal2011
-  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
-  NH3_MED_42DAY ~ BasinArea + r50_ForestTotal2011
-  Bifenthrin ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
-  pyrethroid_deg_sum ~ UrbanTotal2011 + AgricultureTotal2011 + Bifenthrin
-  imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
-  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
-  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
-  median.of.sumconcn_triazH ~ SandContent + AgricultureTotal2011
-  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy + UrbanTotal2011
-  
-  # Covariances
-  UrbanTotal2011 ~~ AgricultureTotal2011
-  pyrethroid_deg_sum ~~ imidacloprid
-  TN_MED_42DAY ~~ TP_MED_42DAY
-' # note that we renamed dat3$median.of.sumconcn_triazH to dat3$triazH for simplicity
-
-fit.mod.stressor.3 <- sem(mod.stressor.3, data = dat3, fixed.x = FALSE, estimator = "MLM")
-aictab(list(fit.mod.stressor,fit.mod.stressor.2,fit.mod.stressor.3),c("Model 1","Model 2","Model 3"))
-
-
 # Plot
 semPaths(fit.mod.stressor,whatLabels="std",layout="tree",residuals = FALSE, sizeMan=9, sizeMan2=4)
 semPaths(fit.mod.stressor,whatLabels="std",layout="circle",residuals = FALSE, sizeMan=9, sizeMan2=4)
@@ -150,7 +97,6 @@ semPaths(fit.mod.stressor,whatLabels="std",layout=layout,nodeLabels=labels,resid
 semPaths(fit.mod.stressor,whatLabels="std",layout=layout,nodeLabels=labels,residuals = FALSE, sizeMan=9, sizeMan2=4, label.scale=FALSE, label.cex=0.8, edge.label.cex = 0.4)
 
 ## Algal Model ####
-# Step 1: Specify model
 mod.algae <- '
   # Latent Construct
   Algae =~ BC_2.RelAbun + BC_3.RelAbun + BC_4.RelAbun
@@ -178,11 +124,7 @@ mod.algae <- '
   pyrethroid_deg_sum ~~ imidacloprid
   TN_MED_42DAY ~~ TP_MED_42DAY
 '
-
-# Step 2: Estimate model
 fit.mod.algae <- sem(mod.algae, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
-
-# Step 3: Extract results
 standardizedSolution(fit.mod.algae)
 
 # Trim Algae ~ SandContent
@@ -549,7 +491,7 @@ mod.algae.14 <- '
 fit.mod.algae.14 <- sem(mod.algae.14, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
 standardizedSolution(fit.mod.algae.14)
 
-# Compare stressor models
+# Compare algal models
 aictab(list(fit.mod.algae.13, fit.mod.algae.14), c("Model 13", "Model 14"))
 
 # Bootstrap
@@ -607,7 +549,7 @@ mod.algae.16 <- '
 fit.mod.algae.16 <- sem(mod.algae.16, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
 standardizedSolution(fit.mod.algae.16)
 
-# Compare stressor models
+# Compare algal models
 fitMeasures(fit.mod.algae.15, c("chisq.scaled", "df.scaled", "pvalue.scaled", "cfi.scaled", "ifi"))
 fitMeasures(fit.mod.algae.16, c("chisq.scaled", "df.scaled", "pvalue.scaled", "cfi.scaled", "ifi"))
 
@@ -617,4 +559,4 @@ fit.mod.algae.16.bs<-sem(fit.mod.algae.16, data=dat3, test="bollen.stine", se="b
 standardizedSolution(fit.mod.algae.16.bs)
 
 # Derive covariance matrix
-lavInspect(mod.stressor.bs, what="sampstat")
+lavInspect(mod.algae.14.bs, what="sampstat")
