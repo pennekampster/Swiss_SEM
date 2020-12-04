@@ -918,7 +918,7 @@ standardizedSolution(fit.mod.fish.14)
 mi.fish.14 <- modindices(fit.mod.fish.14); print(mi.fish.14[mi.fish.14$mi > 4.0,])
 
 # Bootstrap
-set.seed(301)
+set.seed(123)
 fit.mod.fish.14.bs <- sem(fit.mod.fish.14, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
 standardizedSolution(fit.mod.fish.14.bs)
 
@@ -984,7 +984,7 @@ standardizedSolution(fit.mod.fish.17)
 mi.fish.17 <- modindices(fit.mod.fish.17); print(mi.fish.17[mi.fish.17$mi > 4.0,])
 
 # Bootstrap
-set.seed(500) #result depends on seed, with seed 301 for example, we would chose this model
+set.seed(123) #result depends on seed, with seed 301 for example, we would chose this model
 fit.mod.fish.17.bs <- sem(fit.mod.fish.17, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
 standardizedSolution(fit.mod.fish.17.bs)
 
@@ -1025,7 +1025,7 @@ standardizedSolution(fit.mod.fish.19)
 mi.fish.19 <- modindices(fit.mod.fish.19); print(mi.fish.19[mi.fish.19$mi > 4.0,])
 
 # Bootstrap
-set.seed(301)
+set.seed(123)
 fit.mod.fish.19.bs <- sem(fit.mod.fish.19, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
 standardizedSolution(fit.mod.fish.19.bs)
 

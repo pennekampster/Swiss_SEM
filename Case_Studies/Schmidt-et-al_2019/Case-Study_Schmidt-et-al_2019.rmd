@@ -367,7 +367,108 @@ This time, the Bollen-Stine bootstrap does not find any further non-significant 
 lavInspect(fit.mod.algae.14.bs, what = "sampstat")
 ```
 
-
 ### Invertebrate Model
+Let us now apply the optimised stressor model to the multi-metric invertebrate index:
+
+```{r results = 'hide'}
+# Step 1: Specify model
+mod.invert <- '
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  PctCanopy ~ BasinArea + r50_ForestTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  NH3_MED_42DAY ~ BasinArea + r50_ForestTotal2011
+  Bifenthrin ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  pyrethroid_deg_sum ~ UrbanTotal2011 + AgricultureTotal2011 + Bifenthrin
+  imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
+  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
+  median.of.sumconcn_triazH ~ SandContent + AgricultureTotal2011
+  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
+  MMI_BENT ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + BasinArea + Bank + r50_ForestTotal2011 + PctCanopy + RBS + NH3_MED_42DAY + Bifenthrin
+             + pyrethroid_deg_sum + imidacloprid + TN_MED_42DAY + TP_MED_42DAY + median.of.sumconcn_triazH + Tmax42.C.OBSYN
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+  pyrethroid_deg_sum ~~ imidacloprid
+  TN_MED_42DAY ~~ TP_MED_42DAY
+'
+
+# Step 2: Estimate model
+fit.mod.invert <- sem(mod.invert, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
+
+# Step 3: Extract results
+standardizedSolution(fit.mod.invert)
+```
+
+We iteratively evaluate candidate models trimming non-significant path coefficients:
+
+```{r results = 'hide'}
+# Trim MMI_BENT ~ UrbanTotal2011
+# Step 1: Specify model
+mod.invert.2 <- '
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  PctCanopy ~ BasinArea + r50_ForestTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  NH3_MED_42DAY ~ BasinArea + r50_ForestTotal2011
+  Bifenthrin ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  pyrethroid_deg_sum ~ UrbanTotal2011 + AgricultureTotal2011 + Bifenthrin
+  imidacloprid ~ UrbanTotal2011 + SandContent + AgricultureTotal2011
+  TN_MED_42DAY ~ UrbanTotal2011 + AgricultureTotal2011 + RBS
+  TP_MED_42DAY ~ UrbanTotal2011 + SandContent + AgricultureTotal2011 + r50_ForestTotal2011 + RBS
+  median.of.sumconcn_triazH ~ SandContent + AgricultureTotal2011
+  Tmax42.C.OBSYN ~ SandContent + BasinArea + PctCanopy
+  MMI_BENT ~ SandContent + AgricultureTotal2011 + BasinArea + Bank + r50_ForestTotal2011 + PctCanopy + RBS + NH3_MED_42DAY + Bifenthrin
+          + pyrethroid_deg_sum + imidacloprid + TN_MED_42DAY + TP_MED_42DAY + median.of.sumconcn_triazH + Tmax42.C.OBSYN
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+  pyrethroid_deg_sum ~~ imidacloprid
+  TN_MED_42DAY ~~ TP_MED_42DAY
+'
+
+# Step 2: Estimate model
+fit.mod.invert.2 <- sem(mod.invert.2, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
+
+# Step 3: Extract results
+standardizedSolution(fit.mod.invert.2)
+```
 
 ### Fish Model
+Do it yourself! Choose `set.seed(123)` before each bootstrap to obtain the results reported here:
+
+```{r}
+# Trim MMI_NRSA ~ median.of.sumconcn_triazH
+mod.fish.19 <- '
+  # Regressions
+  UrbanTotal2011 ~ SandContent
+  AgricultureTotal2011 ~ SandContent + BasinArea
+  Bank ~ UrbanTotal2011 + SandContent
+  r50_ForestTotal2011 ~ UrbanTotal2011 + AgricultureTotal2011
+  RBS ~ UrbanTotal2011 + Bank + r50_ForestTotal2011
+  MMI_NRSA ~ SandContent + r50_ForestTotal2011 + RBS
+  
+  # Covariances
+  UrbanTotal2011 ~~ AgricultureTotal2011
+'
+fit.mod.fish.19 <- sem(mod.fish.19, data = dat3, missing = "listwise", fixed.x = FALSE, estimator = "MLM")
+standardizedSolution(fit.mod.fish.19)
+
+# Request modification indices
+mi.fish.19 <- modindices(fit.mod.fish.19); print(mi.fish.19[mi.fish.19$mi > 4.0,])
+
+# Bootstrap
+set.seed(123)
+fit.mod.fish.19.bs <- sem(fit.mod.fish.19, data = dat3, test = "bollen.stine", se = "boot", bootstrap = 1000, fixed.x = FALSE)
+head(standardizedSolution(fit.mod.fish.19.bs))
+
+# Derive covariance matrix
+lavInspect(fit.mod.fish.19.bs, what = "sampstat")
+```
