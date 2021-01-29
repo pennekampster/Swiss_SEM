@@ -1,5 +1,5 @@
 ---
-title: "modelling_basic"
+title: "Basic structural equation modelling"
 output: html_document
 header-includes:
    - \usepackage{svg}
@@ -7,24 +7,30 @@ editor_options:
   chunk_output_type: console
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# SEM basics
-## What dataset to use, properties of data?
+# Dataset
+The data for following exercises stem from the publication [*Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate*](https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13591) and are publicly available at [Dryad](https://datadryad.org/stash/dataset/doi:10.5061/dryad.83bk3j9pc).
+The data were obtained during the long-term field experiment [Cedar Creek LTER](https://www.cedarcreek.umn.edu/) and target the effects of human disturbances on grassland ecosystem functioning and biodiversity.
 
 
-## Metamodel
-![](../figures/Seabloom_Metamodel.svg){width=70%}
+## Overview
 
 
+# Metamodel
+![](Figures/Seabloom_Metamodel.svg){width=70%}
+
+
+# Modelling
 ## Load data
 ```{r}
 rm(list = ls())
-data <- read.table("~/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
-                       sep=",", header=TRUE)
+data <- read.table("/home/r/Swiss_SEM/2_Modelling/Data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+                       sep = ",", header = TRUE)
 ```
 
 
@@ -44,7 +50,7 @@ data <- data[data$year == 2000, ]
 - residuals
 - variance/covariance matrix
 
-![](../figures/LMvsSEM.svg){width=45%}
+![](Figures/LMvsSEM.svg){width=45%}
 
 Split up into several lms.
 ```{r}
@@ -62,7 +68,7 @@ Comparability is eased as it contains the same variables as the linear model bef
 - explain model output
 - assessment of fit
 
-![](../figures/SimpleSEM.svg){width=70%}
+![](Figures/SimpleSEM.svg){width=70%}
 
 
 ```{r}
@@ -184,7 +190,7 @@ survey.design <- svydesign(ids = ~1, strata = ~ field, prob = ~1, data = data)
 
 
 ## Saturated model
-![](../figures/FullSEM.svg){width=70%}
+![](Figures/FullSEM.svg){width=70%}
 
 ```{r}
 sem2 <-
@@ -250,7 +256,7 @@ summary(fit.sem.prune)
 - SEM with latent variable(s)
 - SEM with composite variable(s)
 
-![](../figures/LatentCompositeSEM.svg){width=70%}
+![](Figures/LatentCompositeSEM.svg){width=70%}
 
 # SEM with latent variable "diversity"
 
@@ -299,7 +305,7 @@ summary(fit.sem2)
  
 
 ## SEM with interaction
-![](../figures/InteractionSEM.svg){width=70%}
+![](Figures/InteractionSEM.svg){width=70%}
 
 
 ## SEM with autocorrelation (temporal, spatial) --> advanced?
