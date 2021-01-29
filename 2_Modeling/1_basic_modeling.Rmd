@@ -1,6 +1,9 @@
 ---
 title: "Basic structural equation modeling"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
 header-includes:
    - \usepackage{svg}
 editor_options: 
@@ -51,14 +54,14 @@ Exploring the data reveals 16 variables with each 5040 data points:
 - `rich`: species richness (species/0.3 m^2^)
 - `even`: Simpson's evenness
 - `ens.pie`: effective number of species, (= probability of interspecific encounter	decimal	equivalent to inverse Simpson's diversity)
-<!-- - `origin`: species origin (native or introduced) -->
-<!-- - `duration`: species lifespan (annual, bienniel, perennial) -->
-<!-- - `functional.group`: species functional group: -->
-<!--   + `C3` = C3 grass -->
-<!--   + `C4` = C4 grass -->
-<!--   + `F` = forb -->
-<!--   + `L` = legume -->
-<!--   + `S` = sedge -->
+- `origin`: species origin (native or introduced)
+- `duration`: species lifespan (annual, bienniel, perennial)
+- `functional.group`: species functional group:
+  + `C3` = C3 grass
+  + `C4` = C4 grass
+  + `F` = forb
+  + `L` = legume
+  + `S` = sedge
 
 
 
@@ -88,6 +91,7 @@ Simpson’s evenness (E) satisfies the main requirements of an evenness index (S
 
 <!-- Across all data, ENS~PIE~ was positively correlated with richness (r = 0.63) but uncorrelated with evenness (r = 0.03). Richness and evenness were negatively correlated (r = -0.60). -->
 
+
 ## Overview
 The `pairs` function yields an overview over the numerical data. Beforehand, define a function to manipulate point size in the plot.
 
@@ -103,12 +107,12 @@ pairs(seabloom[, -c(1:3, 9)], lower.panel = NULL, upper.panel = panel.points)
 
 # Metamodel
 The [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind the model.
-Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) and reads as:
+Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
 biomass is directly influenced by the environmental parameters nutrients, disturbance and precipitation on the one hand and richness and evenness on the other hand.
 The three environmental parameters also influence richness and evenness and thus, also have an indirect effect on biomass via richness and evenness.
-**Add this interaction thingy!**
+**Describe this interaction thingy!**
 
-![](Figures/Seabloom_Metamodel.svg){width=70%}
+![](Figures/Metamodel.svg){width=70%}
 
 
 # Modeling
@@ -121,104 +125,174 @@ dim(seabloom)
 ```
 
 
-## Linear model
+## Linear models
 First, implement the metamodel into a [linear model (LM)](https://en.wikipedia.org/wiki/Linear_model).
 For this, three models are necessary: one that accounts for the direct- and two for the indirect effects. 
 
-- visualisation as DAG
 - residuals
 - variance/covariance matrix
-- Split up into several lms
 
 
 ### Direct effects
 ![](Figures/LMdir.svg){width=45%}
 
 ```{r}
-lm.dir <- lm(mass.above ~ nadd + disk + precip.mm + rich + even,
+lm.dir <- lm(mass.above ~ nadd + precip.mm + rich + even,
              data = seabloom)
 summary(lm.dir)
 ```
 
 
-### Indirect effects
-Herein, two LMs are necessary: one for richness and one for evenness.
-
-![](Figures/LMind.svg){width=90%}
+Problem: the estimates for `precip.mm` are all `NA`s.
+Reason is the focus on a single year (i.e. the year 2000) what fixes the value for `precipitation.mm` to 599.7 mm (i.e. the precipitation in 2000) and as it is impossible to predict anything from a single value, `NA` is returned.
 
 ```{r}
-lm.rich <- lm(rich ~ nadd + disk + precip.mm, data = seabloom)
-summary(lm.rich)
-
-lm.even <- lm(even ~ nadd + disk + precip.mm, data = seabloom)
-summary(lm.even)
+summary(seabloom$precip.mm)
 ```
 
 
-## Simple SEM
-This simple model shall illustrate the logic of SEM.
-Comparability is eased as it contains the same variables as the linear model before.
+Thus, `precipitation.mm` is excluded from the model from now on.
+
+```{r}
+lm.dir <- lm(mass.above ~ nadd + rich + even, data = seabloom)
+summary(lm.dir)
+```
+
+
+
+### Indirect effects
+To account for the indirect effects, two separate LMs are necessary: one with richness and one with evenness as response.
+
+![](Figures/LMind.svg){width=45%}
+
+
+```{r}
+lm.rich <- lm(rich ~ nadd, data = seabloom)
+summary(lm.rich)
+
+lm.even <- lm(even ~ nadd, data = seabloom)
+summary(lm.even)
+```
+
+### Conclusion
+The direct effect model showed that in the year 2000 biomass was statistically significantly positively related to the nitrogen additon rate (`nadd`) and species richness (`rich`).
+Additionally, nitrogen addition rate had a statistically significantly negative influence on species richness and to a lesser extent, also on evenness.
+
+
+
+## Structural equation modeling
+To evaluate the SEMs, load the package [`lavaan`](https://lavaan.ugent.be/).
+This is a powerful piece of software that relies on **covariance matrices rather than ... as ...**
+
+```{r}
+library("lavaan")
+```
+
 
 - visualisation as DAG
 - explain model output
 - assessment of fit
 
+
+### A simple SEM
+<!-- This simple model shall illustrate the logic of SEM. Comparability is eased as it contains the same variables as the LM before. -->
+With SEM, we can evaluate direct and indirect effects in one go.
+
 ![](Figures/SimpleSEM.svg){width=70%}
 
 
+In the syntax of `lavaan`, an arrow in a DAG is represented by a tilde and the metamodel reads as:
 ```{r}
-library("lavaan")
-
-sem1 <-
-"mass.above ~ nadd + rich + even + disk
+simple <-
+"mass.above ~ nadd + rich + even
 rich ~ nadd
 even ~ nadd"
 
-fit.sem1 <- sem(sem1, data = seabloom)
+fit.simple <- sem(simple, data = seabloom)
+```
+
+
+Oups, the algorithm converges with a warning: `some observed variances are (at least) a factor 1000 times larger than others; use varTable(fit) to investigate`.
+Kindly, it informs us how to fix is. So, let's obey the software and run `varTable(fit.simple)`:
+
+```{r}
+varTable(fit.simple)
+```
+
+This reveals an enormous difference between the magnitude of biomass (`mass.above`) and the other variables.
+
+```{r}
+boxplot(seabloom[, c(4, 7, 13:15)])
 ```
 
 
 ### Scale variables
-To reduce the difference in variances between the variables, we rescale them setting the mean to zero and the variance to one.
+To remove this difference in magnitude between the variables, we scale them by setting their mean to zero and their variance to one.
+To do so for several columns in a dataframe, call `apply` on the columns of interest and specify the desired function (here, `scale`):
+
+
 ```{r}
 seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)], 2, scale)
 
+boxplot(seabloom[, c(4, 7, 13:15)])
+```
 
-fit.sem1 <- sem(sem1, data = seabloom)
-summary(fit.sem1, rsq = TRUE)
+Then, run the SEM again:
+
+```{r}
+fit.simple <- sem(simple, data = seabloom)
+summary(fit.simple, rsq = TRUE)
 ```
 
 
+This time, the model converged, however, with poor fit:
 
-The model converged with poor fit:
-
-- The ratio of the test statistic and the degrees of freedem should be **smaller than 2** (this ratio gives an indication how far away the model is from a decent fit)
-- p-value should be larger than 0.05
+- The ratio of the test statistic and the degrees of freedom should be smaller than 2 (this ratio gives an indication how far away the model is from a decent fit)
+- The $p$-value should be larger than 0.05
 
 
 ### Modification indices
-To improve the model we look for missing paths.
+To improve the model we look for missing paths via modification indices:
 
 ```{r}
-modindices(fit.sem1, minimum.value = 3)
+modindices(fit.simple, minimum.value = 3)
 ```
 
-In the column `mi` (modification index) we look for high values...
-Highest values are between `rich` and `even` and therefore, we include a correlation between them.
+In the column `mi` (modification index) we look for high values.
+Note, however, that the modification indices are often meaningless and further adaptations of the model based on their information needs to be based on theory.
+
+In this example, the modification indices indicate a missing relation between richness and evenness.
+Including this relation into the model would improve its fit by **84.811 ??**.
+
+So, let's decide to include a correlation between `rich` and `even`.
+Note: in SEM, a correlation between two variables points to an omitted common cause/variable that drives the correlation.
+With `update` it is possible to directly incorporate the missing path into the specified model:
+
 
 ```{r}
-fit.sem1.up <- update(fit.sem1, add = "rich ~~ even")
-summary(fit.sem1.up, rsq = TRUE, fit.measures=T)
-
-# standardizedsolution(fit.sem1.up)
-# inspect(fit.sem1.up, "r2")
+fit.simple.up <- update(fit.simple, add = "rich ~~ even")
+summary(fit.simple.up, rsq = TRUE, fit.measures = TRUE)
+# standardizedsolution(fit.simple.up)
+# inspect(fit.simple.up, "r2")
 ```
+
+Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two and a $p$-value close to 1.
+
+A closer look on the result shows that 
+
+
+
+```{r}
+modindices(fit.simple.up, minimum.value = 3)
+```
+
+
 
 ### Plot the model
 ```{r}
 library(lavaanPlot)
 
-lavaanPlot(model = fit.sem1.up, node_options = list(shape = "box",
+lavaanPlot(model = fit.simple.up, node_options = list(shape = "box",
                                                     fontname = "Helvetica"),
            edge_options = list(color = "grey"), coefs = TRUE, stand = FALSE, 
            sig = 0.05)
@@ -264,8 +338,8 @@ summary(Psem1Random, .progressBar = F)
 
 We see here that the richness effect on biomass became non-significant.
 
-### Simple model: Random terms with lavaan
 
+### Simple model: Random terms with lavaan
 ```{r}
 # modfit<-sem(model, data=dat, estimator = "mlm")
 # survey.design <- svydesign(ids=~1, strata = ~ spatial_block, prob =~1, data=dat)
@@ -273,11 +347,12 @@ We see here that the richness effect on biomass became non-significant.
 # summary(fit_with_blocks, rsquare=T, standardized = T, fit.measures = T)
 
 
-library(survey)
-library(lavaan.survey)
+# library("survey")
+library("lavaan.survey")
 
-modfit <- sem(model = fit.sem1.up, data = seabloom, estimator = "mlm")
-survey.design <- svydesign(ids = ~1, strata = ~ field, prob = ~1, data = seabloom)
+modfit <- sem(model = fit.simple.up, data = seabloom, estimator = "mlm")
+survey.design <- svydesign(ids = ~ 1, strata = ~ field, prob = ~ 1, 
+                           data = seabloom)
 # fit_with_blocks <- lavaan.survey(modfit, survey.design)
 # summary(fit_with_blocks, rsquare = TRUE, standardized = TRUE,
 #         fit.measures = TRUE)
@@ -304,12 +379,14 @@ Let's have another look at the modification indices.
 ```{r}
 modindices(fit.sem2, minimum.value = 3)
 ```
-The modification indices shows that the model is saturated and thus, no further paths can be added to improve the model fit.
+
+The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.
 
 
 ### Random terms with piecewiseSEM
 
 Let's try again to add the random structure and compare lavaan and piecewise outputs.
+
 
 ```{r}
 Psem2RandomList <- list(
@@ -320,7 +397,7 @@ Psem2RandomList <- list(
 )
 
 Psem2Random <- as.psem(Psem2RandomList)
-summary(Psem2Random, .progressBar = F)
+summary(Psem2Random, .progressBar = FALSE)
 ```
 
 
@@ -343,68 +420,6 @@ summary(fit.sem.prune)
 
 ## Model comparison
 - add an additional variable or path, then compare the two SEMs
-
-
-
-## SEM with latent and composite variables
-- difference between latent and composite variable
-- SEM with latent variable(s)
-- SEM with composite variable(s)
-
-![](Figures/LatentCompositeSEM.svg){width=70%}
-
-# SEM with latent variable "diversity"
-
-```{r}
-sem2 <-"
-# Latent variable definition
-diversity =~ rich + even
-
-mass.above ~ nadd + diversity + disk
-diversity ~ nadd
-"
-
-fit.sem2 <- sem(sem2, data = seabloom)
-summary(fit.sem2)
-```
-
-
-# SEM with composite variable "land use intensity"
-
-<!-- ```{r} -->
-<!-- compositeModel <- ' -->
-<!--     #1) define the composite, scale to logN -->
-<!--     Nitrogen ~ 1*logN + logNcen2 #loading on the significant path! -->
-<!--   -->
-<!--     #2) Specify 0 error variance -->
-<!--     Nitrogen ~~ 0*Nitrogen -->
-<!--  -->
-<!--       #3) now, because we need to represent this as a latent variable -->
-<!--       #show how species richness is an _indicator_ of nitrogen -->
-<!--       Nitrogen =~ SA -->
-<!--   -->
-<!--     #4) BUT, make sure the variance of SA is estimated -->
-<!--       SA ~~ SA -->
-<!--   -->
-<!--    #Regional Richness also has an effect -->
-<!--     SA ~ SR -->
-<!--   -->
-<!--     #And account for the derivation of the square term from the linear term -->
-<!--     logNcen2 ~ logN -->
-<!--       ' -->
-<!--   -->
-<!--  # we specify std.lv=T so that the Nitrogen-SA relationship isn't fixed to 1 -->
-<!--  compositeFit <- sem(compositeModel, data = seabloom, std.lv = TRUE) -->
-<!--  -->
-<!-- ```  -->
- 
-
-## SEM with interaction
-![](Figures/InteractionSEM.svg){width=70%}
-
-
-## SEM with autocorrelation (temporal, spatial) --> advanced?
-
 
 
 

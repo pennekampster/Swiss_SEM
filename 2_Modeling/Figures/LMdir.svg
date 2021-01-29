@@ -10,13 +10,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="142.47299mm"
-   height="107.95522mm"
-   viewBox="0 0 142.473 107.95521"
+   width="142.66197mm"
+   height="86.268639mm"
+   viewBox="0 0 142.66198 86.268624"
    version="1.1"
    id="svg11954"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="LMdirs.svg">
+   sodipodi:docname="LMdir.svg">
   <defs
      id="defs11948">
     <marker
@@ -62,22 +62,6 @@
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
          d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
          transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
-         inkscape:connector-curvature="0" />
-    </marker>
-    <marker
-       inkscape:isstock="true"
-       style="overflow:visible"
-       id="marker4379"
-       refX="0"
-       refY="0"
-       orient="auto"
-       inkscape:stockid="Arrow2Lend"
-       inkscape:collect="always">
-      <path
-         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
-         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
-         id="path4377"
          inkscape:connector-curvature="0" />
     </marker>
     <marker
@@ -165,8 +149,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="296.367"
-     inkscape:cy="194.76297"
+     inkscape:cx="359.11918"
+     inkscape:cy="181.49984"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -192,14 +176,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(69.897782,-191.50578)">
+     transform="translate(69.897782,-213.19236)">
     <rect
        style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
        id="rect2098"
        width="46.917786"
        height="18.558205"
-       x="25.254808"
-       y="235.52219" />
+       x="25.443798"
+       y="246.33231" />
     <rect
        style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
        id="rect821"
@@ -207,13 +191,6 @@
        height="18.558205"
        x="-69.488029"
        y="213.59497" />
-    <rect
-       y="191.90524"
-       x="-69.491188"
-       height="18.47677"
-       width="46.389549"
-       id="rect2934"
-       style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.79891878;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <flowRoot
        transform="matrix(14.284829,0,0,14.284829,-693.62771,-698.95581)"
        xml:space="preserve"
@@ -228,21 +205,7 @@
            width="100%"
            height="100%"
            transform="matrix(0.07000434,0,0,0.07000434,48.556949,48.929939)" /></flowRegion><flowPara
-         id="flowPara2974">above-ground biomass</flowPara></flowRoot>    <flowRoot
-       transform="matrix(14.284829,0,0,14.284829,-693.62771,-698.95581)"
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       id="flowRoot4166"><flowRegion
-         id="flowRegion4168"
-         style="text-align:center;text-anchor:middle"><use
-           x="0"
-           y="0"
-           xlink:href="#rect2934"
-           id="use4170"
-           width="100%"
-           height="100%"
-           transform="matrix(0.07000434,0,0,0.07000434,48.556949,48.929939)" /></flowRegion><flowPara
-         id="flowPara4172">functional group</flowPara></flowRoot>    <text
+         id="flowPara2974">above-ground biomass</flowPara></flowRoot>    <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-46.646412"
@@ -252,27 +215,16 @@
          id="tspan2080"
          x="-46.646412"
          y="225.2793"
-         style="stroke-width:0.26458332">disturbance</tspan></text>
-    <text
-       id="text2086"
-       y="203.64464"
-       x="-45.170185"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       xml:space="preserve"><tspan
-         style="stroke-width:0.26458332"
-         y="203.64464"
-         x="-45.170185"
-         id="tspan2084"
-         sodipodi:role="line">nutrients</tspan></text>
+         style="stroke-width:0.26458332">nutrients</tspan></text>
     <text
        id="text2090"
-       y="247.657"
-       x="47.462738"
+       y="258.4671"
+       x="47.651749"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        xml:space="preserve"><tspan
          style="stroke-width:0.26458332"
-         y="247.657"
-         x="47.462738"
+         y="258.4671"
+         x="47.651749"
          id="tspan2088"
          sodipodi:role="line">biomass</tspan></text>
     <rect
@@ -313,26 +265,20 @@
          sodipodi:role="line">richness</tspan></text>
     <path
        inkscape:connector-curvature="0"
-       id="path4375"
-       d="m -22.984839,201.96879 47.116563,41.93662"
-       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker4379)"
-       sodipodi:nodetypes="cc" />
-    <path
-       inkscape:connector-curvature="0"
        id="path12632"
-       d="m -22.583932,223.3804 46.607324,20.86958"
+       d="m -22.583932,223.3804 46.843559,31.45291"
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker12636)"
        sodipodi:nodetypes="cc" />
     <path
        sodipodi:nodetypes="cc"
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker7136)"
-       d="M -22.316665,244.62801 H 24.014302"
+       d="m -22.316665,244.62801 46.189226,10.20536"
        id="path7132"
        inkscape:connector-curvature="0" />
     <path
        sodipodi:nodetypes="cc"
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker15010)"
-       d="m -22.316663,268.18159 46.425459,-23.2701"
+       d="M -22.316663,268.18159 24.014302,255.49482"
        id="path14156"
        inkscape:connector-curvature="0" />
     <rect
@@ -356,7 +302,7 @@
     <path
        inkscape:connector-curvature="0"
        id="path58"
-       d="M -22.316663,290.9359 24.245788,244.98998"
+       d="M -22.316663,290.9359 24.293035,255.62056"
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker15010)"
        sodipodi:nodetypes="cc" />
   </g>
