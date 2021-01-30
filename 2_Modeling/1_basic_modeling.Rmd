@@ -64,14 +64,26 @@ Exploring the data reveals 16 variables with each 5040 data points:
   + `S` = sedge
 
 
+### Overview
+The `pairs` function yields an overview over the numerical data. Beforehand, define a function to manipulate point size in the plot.
 
-## Disturbance treatment
+```{r}
+panel.points <- function(x, y) {
+  points(x, y, cex = 0.1)
+  }
+
+pairs(seabloom[, -c(1:3, 9)], lower.panel = NULL, upper.panel = panel.points)
+```
+
+
+## Materials and methods
+### Disturbance treatment
 The **disturbance treatment** was replicated in the three old-fields (A, B and C) in a completely randomised block design (two treatments in each of three fields for a total of 6 35 × 55 m large plots).
 In April 1982, in each of the fields, one of these two 35 × 55 m areas was selected to be disturbed with a 45 cm diameter disk harrow pulled by a tractor 20 times in one direction, 20 times perpendicularly and 5 times diagonally to the first passes. Following the disking, the soil was hand raked to smooth the soil and remove any remaining vegetation, so that subsequent colonisation was solely from seeds or small rhizome fragments.
 Within each of the 6 large plots, the 54 small plots were arrayed in 6 × 9 grid with 1 m buffers between each plot. Aluminium flashing was buried to depth of 30 cm around each plot to prevent horizontal movement of nutrients and spreading of plants through vegetative growth.
 
 
-## Nutrient treatments
+### Nutrient treatments
 The **nutrient treatments** were replicated six times in a completely randomised design in each of the 35 × 55 m plots (54 4 × 4 m small plots) yielding `r 6 * 54` (6 x 54) plots.
 The analyses focuses on two nutrient treatments:
 
@@ -79,7 +91,7 @@ The analyses focuses on two nutrient treatments:
 2) Other Nutrients and 9.5 g of N (Treatment F)
 
 
-## Sampling and analysis
+### Sampling and analysis
 At peak biomass (mid-July to late August), all aboveground biomass was clipped in a 3 m by 10 cm strip (0.3 m^2^) in each plot. Note that there were 4 years when the disturbed plots were not sampled or only sampled in a single field. The biomass was sorted into dead, previous year’s growth (litter) and live, current year’s growth (live biomass). Live biomass was sorted to species, dried to constant mass at 40°C, and weighed to the nearest 0.01 g.
 We estimated total aboveground biomass as the summed biomass of all non-woody species in each 0.3 m^2^ sample, converted to g m^-2^. We excluded woody biomass, because our goal was to estimate annual productivity and most of the woody biomass is from previous year’s growth. Woody plant biomass composed less than 1% of total biomass across the data set.
 
@@ -92,20 +104,8 @@ Simpson’s evenness (E) satisfies the main requirements of an evenness index (S
 <!-- Across all data, ENS~PIE~ was positively correlated with richness (r = 0.63) but uncorrelated with evenness (r = 0.03). Richness and evenness were negatively correlated (r = -0.60). -->
 
 
-## Overview
-The `pairs` function yields an overview over the numerical data. Beforehand, define a function to manipulate point size in the plot.
-
-```{r}
-panel.points <- function(x, y) {
-  points(x, y, cex = 0.1)
-  }
-
-pairs(seabloom[, -c(1:3, 9)], lower.panel = NULL, upper.panel = panel.points)
-```
-
-
-
-# Metamodel
+# Modeling
+## Metamodel
 The [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind the model.
 Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
 biomass is directly influenced by the environmental parameters nutrients, disturbance and precipitation on the one hand and richness and evenness on the other hand.
@@ -115,13 +115,12 @@ The three environmental parameters also influence richness and evenness and thus
 ![](Figures/Metamodel.svg){width=70%}
 
 
-# Modeling
 ## Subset to one year
 For simplicity, set the focus on only one year.
 
 ```{r}
-seabloom <- seabloom[seabloom$year == 2000, ]
-dim(seabloom)
+# seabloom <- seabloom[seabloom$year == 2000, ]
+# dim(seabloom)
 ```
 
 
@@ -205,8 +204,8 @@ In the syntax of `lavaan`, an arrow in a DAG is represented by a tilde and the m
 ```{r}
 simple <-
 "mass.above ~ nadd + rich + even
-rich ~ nadd
-even ~ nadd"
+rich ~ nadd + disk
+even ~ nadd + disk"
 
 fit.simple <- sem(simple, data = seabloom)
 ```
@@ -274,6 +273,10 @@ fit.simple.up <- update(fit.simple, add = "rich ~~ even")
 summary(fit.simple.up, rsq = TRUE, fit.measures = TRUE)
 # standardizedsolution(fit.simple.up)
 # inspect(fit.simple.up, "r2")
+
+modindices(fit.simple.up, minimum.value = 3)
+fit.simple.up2 <- update(fit.simple.up, add = "rich ~~ even")
+summary(fit.simple.up2, rsq = TRUE, fit.measures = TRUE)
 ```
 
 Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two and a $p$-value close to 1.
