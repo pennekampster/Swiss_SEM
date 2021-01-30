@@ -203,9 +203,9 @@ With SEM, we can evaluate direct and indirect effects in one go.
 In the syntax of `lavaan`, an arrow in a DAG is represented by a tilde and the metamodel reads as:
 ```{r}
 simple <-
-"mass.above ~ nadd + rich + even
-rich ~ nadd + disk
-even ~ nadd + disk"
+"mass.above ~ nadd + disk + rich + even + precip.mm
+rich ~ nadd + disk + precip.mm
+even ~ nadd + disk + precip.mm"
 
 fit.simple <- sem(simple, data = seabloom)
 ```
@@ -221,7 +221,7 @@ varTable(fit.simple)
 This reveals an enormous difference between the magnitude of biomass (`mass.above`) and the other variables.
 
 ```{r}
-boxplot(seabloom[, c(4, 7, 13:15)])
+boxplot(seabloom[, c(4, 7, 11, 13:15)])
 ```
 
 
@@ -231,9 +231,10 @@ To do so for several columns in a dataframe, call `apply` on the columns of inte
 
 
 ```{r}
-seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)], 2, scale)
+seabloom[, c(4, 7, 11, 13:15)] <- apply(seabloom[, c(4, 7, 11, 13:15)], 
+                                        2, scale)
 
-boxplot(seabloom[, c(4, 7, 13:15)])
+boxplot(seabloom[, c(4, 7, 11, 13:15)])
 ```
 
 Then, run the SEM again:
@@ -270,6 +271,8 @@ With `update` it is possible to directly incorporate the missing path into the s
 
 ```{r}
 fit.simple.up <- update(fit.simple, add = "rich ~~ even")
+fit.simple.up <- update(fit.simple, add = "rich ~ mass.above")
+
 summary(fit.simple.up, rsq = TRUE, fit.measures = TRUE)
 # standardizedsolution(fit.simple.up)
 # inspect(fit.simple.up, "r2")
