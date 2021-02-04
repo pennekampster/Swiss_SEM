@@ -308,9 +308,14 @@ lavaanPlot(model = fit.simple.up,
 
 
 
-### Random terms
+### Complex sampling structure
+Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups such as sexes or lifestages.
+As a result, the data violate the principle of being [*i.i.d.*](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) (independent and identically distributed).
+Thus, it is necessary to account for this structure in the data in the model.
+
+
 #### With piecewiseSEM
-Let's do now the very same with the package [`piecewiseSEM`](https://cran.r-project.org/web/packages/piecewiseSEM/vignettes/piecewiseSEM.html). It has the advantage that we can include some random structure into the model.
+Let's encode the same model with the package [`piecewiseSEM`](https://cran.r-project.org/web/packages/piecewiseSEM/vignettes/piecewiseSEM.html) with which it is possible to include random factors into the model.
 First, take a look at the model without random terms.
 
 
@@ -349,39 +354,40 @@ Now, the effect of richness on biomass lost its statistical significance.
 
 
 #### With `lavaan.survey`
-However, also the add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows analysing stratified, clustered and weighted data. Like this, `lavaan` objects can be processed further with random terms:
-first, we initialize the design, then, post-process the `lavaan` object and compute the adjusted results.
+
+Also the add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data.
+With this, `lavaan` objects can be processed further with the specific data structure:
+first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
 
 
 ```{r}
+library("lavaan.survey")
+
 # modfit<-sem(model, data=dat, estimator = "mlm")
 # survey.design <- svydesign(ids=~1, strata = ~ spatial_block, prob =~1, data=dat)
 # fit_with_blocks <- lavaan.survey(modfit, survey.design)
 # summary(fit_with_blocks, rsquare=T, standardized = T, fit.measures = T)
 
 
-# library("survey")
-library("lavaan.survey")
+# modfit <- sem(model = fit.simple.up, data = seabloom, estimator = "mlr")
+# survey.design <- svydesign(ids = ~ 1, strata = ~ field, probs = ~ 1, 
+#                            data = seabloom)
 
-modfit <- sem(model = fit.simple.up, data = seabloom, estimator = "mlr")
-survey.design <- svydesign(ids = ~ 1, strata = ~ field, probs = ~ 1, 
-                           data = seabloom)
-
-fit_with_blocks <- lavaan.survey(modfit, survey.design)
-summary(fit_with_blocks, rsquare = TRUE, standardized = TRUE,
-        fit.measures = TRUE)
+# fit_with_blocks <- lavaan.survey(modfit, survey.design)
+# summary(fit_with_blocks, rsquare = TRUE, standardized = TRUE,
+#         fit.measures = TRUE)
 
 
-design <- svydesign(ids = ~ field, nest = TRUE, #probs = ~ 1, 
-                    data = seabloom)
-
-fit.simple.up.strat <- lavaan.survey(lavaan.fit = fit.simple.up,
+design <- svydesign(ids = ~ field, nest = TRUE, data = seabloom)
+fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple.up,
                                      survey.design = design)
-summary(fit.simple.up.strat, standardized = TRUE)
+summary(fit.simple.up.nest, rsq = TRUE)
 ```
 
 
-## Saturated model
+### Saturated model
+A saturated model includes all possible paths. As a result, there are no degrees of freedom left and it is impossible to estimate the model fit...
+
 ![](Figures/FullSEM.svg){width=70%}
 
 ```{r}
@@ -405,27 +411,27 @@ modindices(fit.sem2, minimum.value = 3)
 The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.
 
 
-### Random terms with piecewiseSEM
 
-Let's try again to add the random structure and compare lavaan and piecewise outputs.
+#### With `piecewiseSEM` 
+Let's go again to with the package `piecewiseSEM` structure and compare its result to those of `lavaan`.
 
 
 ```{r}
-Psem2RandomList <- list(
+PsaturList <- list(
   lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, seabloom),
   lme(rich ~ nadd + disk, random = ~ 1|field, seabloom),
   lme(even ~ nadd + disk, random = ~ 1|field, seabloom),
   even %~~% rich
 )
 
-Psem2Random <- as.psem(Psem2RandomList)
-summary(Psem2Random, .progressBar = FALSE)
+Psatur <- as.psem(PsaturList)
+summary(Psatur, .progressBar = FALSE)
 ```
 
 
-
 ### Model pruning
-Now, let's delete all non-significant paths from the model.
+Now, let's delete all non-significant paths from the model to obtain the most parsimonous model.
+
 ```{r}
 sem.prune <-
 "mass.above ~ nadd + rich
@@ -440,7 +446,7 @@ summary(fit.sem.prune)
 
 
 
-## Model comparison
+### Model comparison
 - add an additional variable or path, then compare the two SEMs
 
 
