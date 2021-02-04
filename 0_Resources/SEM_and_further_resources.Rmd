@@ -1,5 +1,6 @@
 ---
-title: "Tutorials and resources"
+title: "Tutorials & other resources"
+subtitle: "A collection of links to further SEM-specific tutorials and resources"
 output:
   html_document:
     toc: true
@@ -14,24 +15,22 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-A collection of links to further SEM-specific tutorials and resources.
 
 
-# Tutorials & teaching material
+# SEM tutorials & teaching material
 
-* [This is the webpage for the SEM course](http://jarrettbyrnes.info/ubc_sem/) of Jarrett Byrnes. It has the complete course online to download and use and a preclass tutorial to learn the very basics of R (run R, load data and libraries) and `lavaan` (define models and show results).
+* Jarrett Byrnes' [webpage for a SEM course](http://jarrettbyrnes.info/ubc_sem/) contains the complete course to download and use and a preclass tutorial to learn the very basics of R (run R, load data and libraries) and `lavaan` (define models and show results).
 
-* This is [another webpage](https://jebyrnes.github.io/semclass/index.html) by Byrnes about one intensive course. It has a  [github repo](https://github.com/jebyrnes/semclass) with all content accesible and free to use as a teaching resource. Content is quite similar as the one from (1).
+* Jarrett Byrnes hosts also [another one-week intensive SEM workshop](https://jebyrnes.github.io/semclass/index.html) that comes with a  [github repo](https://github.com/jebyrnes/semclass) with all content accesible and free to use as a teaching resource (the content is quite similar as the [first one](http://jarrettbyrnes.info/ubc_sem/)).
 
-* This is James Grace's [webpage with tutorials and exercises](https://www.usgs.gov/centers/wetland-and-aquatic-research-center/science/quantitative-analysis-using-structural-equation?qt-science_center_objects=0#qt-science_center_objects) for learning SEMs. Goes from the basics to quite advance topics.
+* James B Grace provides a webpage with [with plenty of tutorials and exercises](https://www.usgs.gov/centers/wetland-and-aquatic-research-center/science/quantitative-analysis-using-structural-equation?qt-science_center_objects=0#qt-science_center_objects) covering the very basics to quite advanced topics.
 
-* This is a [webpage](http://davidakenny.net/cm/mediate.htm) by David Kenny where he explains mediation with graphical models. Not ecology specific but useful for modelling.
+* David Kenny hosts a [webpage](http://davidakenny.net/cm/mediate.htm) that explains mediation with graphical models. Not ecology specific but useful for modelling.
+
+* Ian Ruginski's [webpage](https://www.ianruginski.com/post/) contains multiple tutorials covering a wide range of topics and `lavaan`. Not ecology specific.
 
 
-* This is a [webpage](https://www.ianruginski.com/post/) by Ian Ruginski with multiple tutroials on SEMs. Covers a wide range of topics and lavaan. Not ecology specific.
-
-
-## Literature
+## Literature (a non-exhaustive list)
 Eisenhauer, N., Bowker, M. A., Grace, J. B., & Powell, J. R. (2015). From patterns to causal understanding: structural equation modeling (SEM) in soil ecology. Pedobiologia, 58(2-3), 65-72.
 
 Grace, J. B. (2008). Structural equation modeling for observational studies. The Journal of Wildlife Management, 72(1), 14-22.
@@ -46,30 +45,27 @@ Suhr, D. (2006). The basics of structural equation modeling. Presented: Irvine, 
 
 
 # R resources
+## Programming tutorials
+General tutorials about the R programming language. Focus is on the language, rather than data analysis, although common statistical methods are introduced.
+
+* [R Tutorial by datacamp](https://www.statmethods.net/r-tutorial/index.html)
+* [R Tutorial by tutorialspoint](https://www.tutorialspoint.com/r/index.htm)
+* [Data Analysis and Visualization in R for Ecologists by Michonneau & Fournier](https://datacarpentry.org/R-ecology-lesson/index.html)
+* [R Base Graphics: An Idiot's Guide](https://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html)
+* [A Comprehensive Guide to Data Visualisation in R for Beginners by Pandey](https://towardsdatascience.com/a-guide-to-data-visualisation-in-r-for-beginners-ef6d41a34174)
+
+
 ## Books
 Some books covering wide topics including learning R and statistics (ecology or not ecology focused).
 
-* [Danielle Navarro : "Learning statistics with R: A tutorial for psychology students and other beginners (Version 0.6)"](https://learningstatisticswithr.com/lsr-0.6.pdf)
-* https://www.cs.upc.edu/~robert/teaching/estadistica/TheRBook.pdf
-* https://ms.mcmaster.ca/~bolker/emdbook/book.pdf
-* Alain Zuur has a lot of books on statistical analyses for ecology and R resources to replicate the analyses. Nothing is open but many content can be found searching online. https://highstat.com/index.php
+* [Navarro : "Learning statistics with R: A tutorial for psychology students and other beginners (Version 0.6)"](https://learningstatisticswithr.com/lsr-0.6.pdf)
+* [Crawley 2013: "The R Book. Second Edition"](https://www.cs.upc.edu/~robert/teaching/estadistica/TheRBook.pdf)
+* [Bolker 2007: "Ecological Models and Data in R"](https://ms.mcmaster.ca/~bolker/emdbook/book.pdf)
+* Alain Zuur has [multiple books on statistical analyses for ecology and R resources to replicate the analyses](https://highstat.com/index.php). All is closed-source.
 
 
-## R programming tutorials
-General tutorials about the R programming language. Focus is in the language, rather than data analysis, although common statistical methods are introduced.
 
-* https://www.statmethods.net/r-tutorial/index.html
-* https://www.tutorialspoint.com/r/index.htm
-* https://datacarpentry.org/R-ecology-lesson/index.html
-
-
-### Plotting in R
-
-* https://rstudio-pubs-static.s3.amazonaws.com/7953_4e3efd5b9415444ca065b1167862c349.html
-* https://towardsdatascience.com/a-guide-to-data-visualisation-in-r-for-beginners-ef6d41a34174
-
-
-## Literature
+## Literature (a non-exhaustive list)
 
 Qian, S. S. (2016). Environmental and ecological statistics with R. CRC press.
 
@@ -77,24 +73,24 @@ Zuur, A., Ieno, E. N., Walker, N., Saveliev, A. A., & Smith, G. M. (2009). Mixed
 
 
 # Experimental design
-
-1. Simple guides for traditional experimental design.
-  * https://www.scribbr.com/category/methodology/
-  * https://www.moresteam.com/toolbox/design-of-experiments.cfm
-
-2. Book with a indeep guide on how to settle experiments including sample size, sources of variations, error control, unbalanced designs etc. Covers all traditional designs.
-http://users.stat.umn.edu/~gary/book/fcdae.pdf
-
-3. Resources for experimental design in ecology.
-
-  * http://ordination.okstate.edu/sampling.htm
-  * https://www.zoology.ubc.ca/~krebs/downloads/krebs_chapter_01_2017.pdf
-  * http://www.umass.edu/landeco/teaching/ecodata/schedule/ecological.data.pdf
-  * https://training.fws.gov/courses/CSP/CSP3200/resources/ecological-sampling-design-14.pdf
-  * http://www.ecologyandevolution.org/fieldresearch.html#5
+## Online resources
+* [An introduction to research methods by Scibbr](https://www.scribbr.com/category/methodology/)
+* [Design of Experiments by MoreSteam](https://www.moresteam.com/toolbox/design-of-experiments.cfm)
+* [Sampling and Experimental Design in Community Ecology](http://ordination.okstate.edu/sampling.htm)
+* [Ecological Sampling
+Design](https://training.fws.gov/courses/CSP/CSP3200/resources/ecological-sampling-design-14.pdf)
+* [Fundamentals of Field Sampling by Singler](http://www.ecologyandevolution.org/fieldresearch.html)
 
 
-## Literature
+## Books
+* [Oehlert 2010: "A First Course in Design and Analysis of Experiments"](http://users.stat.umn.edu/~gary/book/fcdae.pdf)
+--a book with an indepth guide on how to set up experiments including sample size, sources of variations, error control, unbalanced designs etc. Covers all traditional designs.
+* [Krebs 2017: Ecological data for field studies](https://www.zoology.ubc.ca/~krebs/downloads/krebs_chapter_01_2017.pdf)
+* [Design and Analysis of Ecological Data Conceptual Foundations](http://www.umass.edu/landeco/teaching/ecodata/schedule/ecological.data.pdf)
+
+
+
+## Literature (a non-exhaustive list)
 Albert, C. H., Yoccoz, N. G., Edwards Jr, T. C., Graham, C. H., Zimmermann, N. E., & Thuiller, W. (2010). Sampling in ecology and evolution–bridging the gap between theory and practice. Ecography, 33(6), 1028-1037.
 
 Gotelli, N. J., & Ellison, A. M. (2004). A primer of ecological statistics (Vol. 1). Sunderland: Sinauer Associates.
