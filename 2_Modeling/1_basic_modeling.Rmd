@@ -6,7 +6,7 @@ output:
     toc_float: true
 header-includes:
    - \usepackage{svg}
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -119,8 +119,8 @@ The three environmental parameters also influence richness and evenness and thus
 For simplicity, set the focus on only one year.
 
 ```{r}
-# seabloom <- seabloom[seabloom$year == 2000, ]
-# dim(seabloom)
+seabloom <- seabloom[seabloom$year == 2000, ]
+dim(seabloom)
 ```
 
 
@@ -197,15 +197,15 @@ library("lavaan")
 <!-- This simple model shall illustrate the logic of SEM. Comparability is eased as it contains the same variables as the LM before. -->
 With SEM, we can evaluate direct and indirect effects in one go.
 
-![](Figures/SimpleSEM.svg){width=70%}
+![](Figures/SimpleSEM_workshop.svg){width=70%}
 
 
 In the syntax of `lavaan`, an arrow in a DAG is represented by a tilde and the metamodel reads as:
 ```{r}
 simple <-
-"mass.above ~ nadd + disk + rich + even + precip.mm
-rich ~ nadd + disk + precip.mm
-even ~ nadd + disk + precip.mm"
+"mass.above ~ nadd + disk + rich + even
+rich ~ nadd
+even ~ nadd"
 
 fit.simple <- sem(simple, data = seabloom)
 ```
@@ -233,7 +233,6 @@ To do so for several columns in a dataframe, call `apply` on the columns of inte
 ```{r}
 seabloom[, c(4, 7, 11, 13:15)] <- apply(seabloom[, c(4, 7, 11, 13:15)], 
                                         2, scale)
-
 boxplot(seabloom[, c(4, 7, 11, 13:15)])
 ```
 
@@ -271,15 +270,13 @@ With `update` it is possible to directly incorporate the missing path into the s
 
 ```{r}
 fit.simple.up <- update(fit.simple, add = "rich ~~ even")
-fit.simple.up <- update(fit.simple, add = "rich ~ mass.above")
+# fit.simple.up <- update(fit.simple, add = "rich ~ mass.above")
 
 summary(fit.simple.up, rsq = TRUE, fit.measures = TRUE)
 # standardizedsolution(fit.simple.up)
 # inspect(fit.simple.up, "r2")
 
 modindices(fit.simple.up, minimum.value = 3)
-fit.simple.up2 <- update(fit.simple.up, add = "rich ~~ even")
-summary(fit.simple.up2, rsq = TRUE, fit.measures = TRUE)
 ```
 
 Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two and a $p$-value close to 1.
@@ -294,43 +291,49 @@ modindices(fit.simple.up, minimum.value = 3)
 
 
 
-### Plot the model
-```{r}
-library(lavaanPlot)
+### Visualize the results
+The library [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot/vignettes/Intro_to_lavaanPlot.html) allows to simply and straight-forwardly visualize diagrams from `lavaan` objects.
+Here, we select to display significance levels with the asterisks.
 
-lavaanPlot(model = fit.simple.up, node_options = list(shape = "box",
-                                                    fontname = "Helvetica"),
-           edge_options = list(color = "grey"), coefs = TRUE, stand = FALSE, 
-           sig = 0.05)
+
+```{r}
+library("lavaanPlot")
+
+lavaanPlot(model = fit.simple.up,
+           node_options = list(shape = "box", color = "gray",
+                               fontname = "Helvetica"),
+           edge_options = list(color = "black"),
+           coefs = TRUE, covs = TRUE, stars = c("covs", "regress"))
 ```
 
 
 
-### Random terms with piecewiseSEM
+### Random terms
+#### With piecewiseSEM
+Let's do now the very same with the package [`piecewiseSEM`](https://cran.r-project.org/web/packages/piecewiseSEM/vignettes/piecewiseSEM.html). It has the advantage that we can include some random structure into the model.
+First, take a look at the model without random terms.
 
-We can do the same in piecewiseSEM. The advantage is that we can include some random structure in the model. Let's take a look first at the model without random terms.
 
 ```{r}
-library(piecewiseSEM)
-library(nlme)
+library("piecewiseSEM")
+library("nlme")
 
-Psem1List <- list(
+PsimpleList <- list(
   lm(mass.above ~ rich + even + nadd + disk, seabloom),
   lm(rich ~ nadd, seabloom),
   lm(even ~ nadd, seabloom),
-  even %~~% rich
-)
+  even %~~% rich)
 
-
-Psem1 <- as.psem(Psem1List)
-summary(Psem1, .progressBar = F)
+Psimple <- as.psem(PsimpleList)
+summary(Psimple, .progressBar = FALSE)
 ```
 
 We see that the model fit is good (because we included the correlation between richness and evenness' errors).
-The data was collected in plots within fields, which adds a block effect to our structure. Let's try out with the random term.
+
+The data was collected in plots within fields, which adds a block effect to our structure. We will include this block effect now as a random term.
 
 ```{r}
-Psem1RandomList <- list(
+PsimpleRandomList <- list(
   lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, seabloom),
   lme(rich ~ nadd, random = ~ 1|field, seabloom),
   lme(even ~ nadd, random = ~ 1|field, seabloom),
@@ -338,14 +341,18 @@ Psem1RandomList <- list(
 )
 
 
-Psem1Random <- as.psem(Psem1RandomList)
-summary(Psem1Random, .progressBar = F)
+PsimpleRandom <- as.psem(PsimpleRandomList)
+summary(PsimpleRandom, .progressBar = FALSE)
 ```
 
-We see here that the richness effect on biomass became non-significant.
+Now, the effect of richness on biomass lost its statistical significance.
 
 
-### Simple model: Random terms with lavaan
+#### With `lavaan.survey`
+However, also the add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows analysing stratified, clustered and weighted data. Like this, `lavaan` objects can be processed further with random terms:
+first, we initialize the design, then, post-process the `lavaan` object and compute the adjusted results.
+
+
 ```{r}
 # modfit<-sem(model, data=dat, estimator = "mlm")
 # survey.design <- svydesign(ids=~1, strata = ~ spatial_block, prob =~1, data=dat)
@@ -356,12 +363,21 @@ We see here that the richness effect on biomass became non-significant.
 # library("survey")
 library("lavaan.survey")
 
-modfit <- sem(model = fit.simple.up, data = seabloom, estimator = "mlm")
-survey.design <- svydesign(ids = ~ 1, strata = ~ field, prob = ~ 1, 
+modfit <- sem(model = fit.simple.up, data = seabloom, estimator = "mlr")
+survey.design <- svydesign(ids = ~ 1, strata = ~ field, probs = ~ 1, 
                            data = seabloom)
-# fit_with_blocks <- lavaan.survey(modfit, survey.design)
-# summary(fit_with_blocks, rsquare = TRUE, standardized = TRUE,
-#         fit.measures = TRUE)
+
+fit_with_blocks <- lavaan.survey(modfit, survey.design)
+summary(fit_with_blocks, rsquare = TRUE, standardized = TRUE,
+        fit.measures = TRUE)
+
+
+design <- svydesign(ids = ~ field, nest = TRUE, #probs = ~ 1, 
+                    data = seabloom)
+
+fit.simple.up.strat <- lavaan.survey(lavaan.fit = fit.simple.up,
+                                     survey.design = design)
+summary(fit.simple.up.strat, standardized = TRUE)
 ```
 
 
