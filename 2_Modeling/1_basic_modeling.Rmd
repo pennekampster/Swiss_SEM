@@ -4,6 +4,7 @@ output:
   html_document:
     toc: true
     toc_float: true
+    toc_depth: 4
 header-includes:
    - \usepackage{svg}
 editor_options:
@@ -16,6 +17,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+# To do
+
+* Because it gets a bit crowded, create a parallel version for `piecewiseSEM`
+
+
 # Dataset
 The data for following exercises stem from the publication [*Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate*](https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13591) and are publicly available at [Dryad](https://datadryad.org/stash/dataset/doi:10.5061/dryad.83bk3j9pc).
 The data were obtained during the long-term field experiment [Cedar Creek LTER](https://www.cedarcreek.umn.edu/) and target the effects of human disturbances on grassland ecosystem functioning and biodiversity.
@@ -25,7 +31,7 @@ The data were obtained during the long-term field experiment [Cedar Creek LTER](
 ## Load data
 ```{r}
 rm(list = ls())
-seabloom <- read.table("/home/r/Swiss_SEM/2_Modeling/Data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+seabloom <- read.table("~/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
                        sep = ",", header = TRUE)
 ```
 
@@ -48,8 +54,8 @@ Exploring the data reveals 16 variables with each 5040 data points:
 - `other.add`: other nutrient treatment (0 = control, 1 = other nutrients added)
 - `year`: sampling year
 - `dur`: duration of experiment
-* `precip.mm`: annual precipitation (mm)
-* `precip.gs`: growing season precipitation (mm)
+- `precip.mm`: annual precipitation (mm)
+- `precip.gs`: growing season precipitation (mm)
 - `mass.above`: aboveground biomass (g/m^2^)
 - `rich`: species richness (species/0.3 m^2^)
 - `even`: Simpson's evenness
@@ -70,6 +76,7 @@ The `pairs` function yields an overview over the numerical data. Beforehand, def
 ```{r}
 panel.points <- function(x, y) {
   points(x, y, cex = 0.1)
+  abline(lm(y ~ x), lty = 2, col = "red")
   }
 
 pairs(seabloom[, -c(1:3, 9)], lower.panel = NULL, upper.panel = panel.points)
@@ -104,9 +111,8 @@ Simpson’s evenness (E) satisfies the main requirements of an evenness index (S
 <!-- Across all data, ENS~PIE~ was positively correlated with richness (r = 0.63) but uncorrelated with evenness (r = 0.03). Richness and evenness were negatively correlated (r = -0.60). -->
 
 
-# Modeling
-## Metamodel
-The [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind the model.
+# Metamodel
+A [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind a model.
 Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
 biomass is directly influenced by the environmental parameters nutrients, disturbance and precipitation on the one hand and richness and evenness on the other hand.
 The three environmental parameters also influence richness and evenness and thus, also have an indirect effect on biomass via richness and evenness.
@@ -124,7 +130,7 @@ dim(seabloom)
 ```
 
 
-## Linear models
+# Linear models
 First, implement the metamodel into a [linear model (LM)](https://en.wikipedia.org/wiki/Linear_model).
 For this, three models are necessary: one that accounts for the direct- and two for the indirect effects. 
 
@@ -132,7 +138,7 @@ For this, three models are necessary: one that accounts for the direct- and two 
 - variance/covariance matrix
 
 
-### Direct effects
+## Direct effects
 ![](Figures/LMdir.svg){width=45%}
 
 ```{r}
@@ -159,7 +165,7 @@ summary(lm.dir)
 
 
 
-### Indirect effects
+## Indirect effects
 To account for the indirect effects, two separate LMs are necessary: one with richness and one with evenness as response.
 
 ![](Figures/LMind.svg){width=45%}
@@ -173,13 +179,14 @@ lm.even <- lm(even ~ nadd, data = seabloom)
 summary(lm.even)
 ```
 
-### Conclusion
+
+## Conclusion
 The direct effect model showed that in the year 2000 biomass was statistically significantly positively related to the nitrogen additon rate (`nadd`) and species richness (`rich`).
 Additionally, nitrogen addition rate had a statistically significantly negative influence on species richness and to a lesser extent, also on evenness.
 
 
 
-## Structural equation modeling
+# Structural equation modeling
 To evaluate the SEMs, load the package [`lavaan`](https://lavaan.ugent.be/).
 This is a powerful piece of software that relies on **covariance matrices rather than ... as ...**
 
@@ -192,8 +199,15 @@ library("lavaan")
 - explain model output
 - assessment of fit
 
+## Collinearity
+... 
 
-### A simple SEM
+```{r}
+round(cor(seabloom[, c(4, 7, 13:15)]), digits = 2)
+```
+
+
+## A simple SEM
 <!-- This simple model shall illustrate the logic of SEM. Comparability is eased as it contains the same variables as the LM before. -->
 With SEM, we can evaluate direct and indirect effects in one go.
 
@@ -221,19 +235,18 @@ varTable(fit.simple)
 This reveals an enormous difference between the magnitude of biomass (`mass.above`) and the other variables.
 
 ```{r}
-boxplot(seabloom[, c(4, 7, 11, 13:15)])
+boxplot(seabloom[, c(4, 7, 13:15)])
 ```
 
 
-### Scale variables
+## Scale variables
 To remove this difference in magnitude between the variables, we scale them by setting their mean to zero and their variance to one.
 To do so for several columns in a dataframe, call `apply` on the columns of interest and specify the desired function (here, `scale`):
 
 
 ```{r}
-seabloom[, c(4, 7, 11, 13:15)] <- apply(seabloom[, c(4, 7, 11, 13:15)], 
-                                        2, scale)
-boxplot(seabloom[, c(4, 7, 11, 13:15)])
+seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],  2, scale)
+boxplot(seabloom[, c(4, 7, 13:15)])
 ```
 
 Then, run the SEM again:
@@ -250,7 +263,7 @@ This time, the model converged, however, with poor fit:
 - The $p$-value should be larger than 0.05
 
 
-### Modification indices
+## Modification indices
 To improve the model we look for missing paths via modification indices:
 
 ```{r}
@@ -291,7 +304,7 @@ modindices(fit.simple.up, minimum.value = 3)
 
 
 
-### Visualize the results
+## Visualize the results
 The library [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot/vignettes/Intro_to_lavaanPlot.html) allows to simply and straight-forwardly visualize diagrams from `lavaan` objects.
 Here, we select to display significance levels with the asterisks.
 
@@ -308,43 +321,42 @@ lavaanPlot(model = fit.simple.up,
 
 
 
-### Complex sampling structure
+## Complex sampling structure
 Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups such as sexes or lifestages.
 As a result, the data violate the principle of being [*i.i.d.*](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) (independent and identically distributed).
 Thus, it is necessary to account for this structure in the data in the model.
 
 
-#### With piecewiseSEM
+### With piecewiseSEM
 Let's encode the same model with the package [`piecewiseSEM`](https://cran.r-project.org/web/packages/piecewiseSEM/vignettes/piecewiseSEM.html) with which it is possible to include random factors into the model.
 First, take a look at the model without random terms.
+In `piecewiseSEM`, a model is specified as a list of linear models (`lm`) that each represent one response variables with its incoming paths. 
 
 
 ```{r}
 library("piecewiseSEM")
 library("nlme")
 
-PsimpleList <- list(
-  lm(mass.above ~ rich + even + nadd + disk, seabloom),
-  lm(rich ~ nadd, seabloom),
-  lm(even ~ nadd, seabloom),
-  even %~~% rich)
+PsimpleList <- list(lm(mass.above ~ rich + even + nadd + disk, seabloom),
+                    lm(rich ~ nadd, seabloom),
+                    lm(even ~ nadd, seabloom),
+                    even %~~% rich)
 
 Psimple <- as.psem(PsimpleList)
 summary(Psimple, .progressBar = FALSE)
 ```
 
-We see that the model fit is good (because we included the correlation between richness and evenness' errors).
+Evaluating the same SEM as before, we gain a decent model fit as **????**.
 
-The data was collected in plots within fields, which adds a block effect to our structure. We will include this block effect now as a random term.
+
+The data was collected in plots nested within fields, which adds a block effect to its structure. We will include this block effect now as a random term.
 
 ```{r}
-PsimpleRandomList <- list(
-  lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, seabloom),
-  lme(rich ~ nadd, random = ~ 1|field, seabloom),
-  lme(even ~ nadd, random = ~ 1|field, seabloom),
-  even %~~% rich
-)
-
+PsimpleRandomList <- list(lme(mass.above ~ rich + even + nadd + disk,
+                              random = ~ 1|field, seabloom),
+                          lme(rich ~ nadd, random = ~ 1|field, seabloom),
+                          lme(even ~ nadd, random = ~ 1|field, seabloom),
+                          even %~~% rich)
 
 PsimpleRandom <- as.psem(PsimpleRandomList)
 summary(PsimpleRandom, .progressBar = FALSE)
@@ -353,11 +365,11 @@ summary(PsimpleRandom, .progressBar = FALSE)
 Now, the effect of richness on biomass lost its statistical significance.
 
 
-#### With `lavaan.survey`
-
-Also the add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data.
+### With `lavaan.survey`
+The add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data with the help of the package [`survey`](https://r-survey.r-forge.r-project.org/survey/).
 With this, `lavaan` objects can be processed further with the specific data structure:
 first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
+The result is a corrected `lavaan` object.
 
 
 ```{r}
@@ -384,8 +396,13 @@ fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple.up,
 summary(fit.simple.up.nest, rsq = TRUE)
 ```
 
+Two warnings pop up:
 
-### Saturated model
+* The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero and may be due to  machine-precision.
+* The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)` observations in these three fields, respectively. **That's not much for sure, but also not pretty scarce neither...**
+
+
+## Saturated model
 A saturated model includes all possible paths. As a result, there are no degrees of freedom left and it is impossible to estimate the model fit...
 
 ![](Figures/FullSEM.svg){width=70%}
@@ -411,25 +428,23 @@ modindices(fit.sem2, minimum.value = 3)
 The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.
 
 
-
-#### With `piecewiseSEM` 
+### With `piecewiseSEM` 
 Let's go again to with the package `piecewiseSEM` structure and compare its result to those of `lavaan`.
 
 
 ```{r}
-PsaturList <- list(
-  lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, seabloom),
-  lme(rich ~ nadd + disk, random = ~ 1|field, seabloom),
-  lme(even ~ nadd + disk, random = ~ 1|field, seabloom),
-  even %~~% rich
-)
+PsaturList <- list(lme(mass.above ~ rich + even + nadd + disk,
+                       random = ~ 1|field, seabloom),
+                   lme(rich ~ nadd + disk, random = ~ 1|field, seabloom),
+                   lme(even ~ nadd + disk, random = ~ 1|field, seabloom),
+                   even %~~% rich)
 
 Psatur <- as.psem(PsaturList)
 summary(Psatur, .progressBar = FALSE)
 ```
 
 
-### Model pruning
+## Model pruning
 Now, let's delete all non-significant paths from the model to obtain the most parsimonous model.
 
 ```{r}
@@ -446,7 +461,7 @@ summary(fit.sem.prune)
 
 
 
-### Model comparison
+## Model comparison
 - add an additional variable or path, then compare the two SEMs
 
 
