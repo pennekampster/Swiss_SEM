@@ -1,27 +1,55 @@
 ---
 title: "Avanced structural equation modeling"
-output: html_document
+date: "`r format(Sys.time(), '%d.%m.%Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 4
+header-includes:
+   - \usepackage{svg}
+editor_options:
+  chunk_output_type: console
 ---
-
-
-* non-linear relationships
-* interactions
-* multigroup fitting
-
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## SEM with latent and composite variables
+
+# To do
+* non-linear relationships
+* interactions
+* multigroup fitting
+
+
+# Load libraries
+```{r}
+library("lavaan")
+```
+
+
+# Load data
+Load the data and scale them to a mean of zero and a standard deviation of one.
+
+```{r}
+rm(list = ls())
+seabloom <- read.table("~/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+                       sep = ",", header = TRUE)
+
+seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],  2, scale)
+```
+
+
+# Latent and composite variables
 - difference between latent and composite variable
 - SEM with latent variable(s)
 - SEM with composite variable(s)
 
 ![](Figures/LatentCompositeSEM.svg){width=70%}
 
-# SEM with latent variable "diversity"
+## Latent variable "diversity"
 
 ```{r}
 sem2 <-"
@@ -37,7 +65,7 @@ summary(fit.sem2)
 ```
 
 
-# SEM with composite variable "land use intensity"
+## Composite variable "land use intensity"
 
 <!-- ```{r} -->
 <!-- compositeModel <- ' -->
@@ -67,11 +95,11 @@ summary(fit.sem2)
 <!-- ```  -->
  
 
-## SEM with interaction
+# Interactions
 ![](Figures/InteractionSEM.svg){width=70%}
 
 
-## SEM with autocorrelation (temporal, spatial) --> advanced?
+# Autocorrelation (temporal, spatial)
 
 
 
