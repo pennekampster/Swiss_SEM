@@ -1,5 +1,6 @@
 ---
 title: "Basic structural equation modeling"
+date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output:
   html_document:
     toc: true
@@ -9,6 +10,7 @@ header-includes:
    - \usepackage{svg}
 editor_options:
   chunk_output_type: console
+bibliography: /home/r/Swiss_SEM/references.bib
 ---
 
 
@@ -20,6 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # To do
 
 * Because it gets a bit crowded, create a parallel version for `piecewiseSEM`
+* Present only variables that are actually used in the SEM
 
 
 # Dataset
@@ -79,7 +82,8 @@ panel.points <- function(x, y) {
   abline(lm(y ~ x), lty = 2, col = "red")
   }
 
-pairs(seabloom[, -c(1:3, 9)], lower.panel = NULL, upper.panel = panel.points)
+pairs(seabloom[, -c(1:3, 5:6, 8:10, 12, 16)],
+      lower.panel = NULL, upper.panel = panel.points)
 ```
 
 
@@ -123,6 +127,7 @@ The three environmental parameters also influence richness and evenness and thus
 
 ## Subset to one year
 For simplicity, set the focus on only one year.
+Then, `r dim(seabloom[seabloom$year == 2000, ])[1]` observations remain.
 
 ```{r}
 seabloom <- seabloom[seabloom$year == 2000, ]
@@ -188,7 +193,10 @@ Additionally, nitrogen addition rate had a statistically significantly negative 
 
 # Structural equation modeling
 To evaluate the SEMs, load the package [`lavaan`](https://lavaan.ugent.be/).
-This is a powerful piece of software that relies on **covariance matrices rather than ... as ...**
+This is a powerful piece of software that relies on the computation of covariance matrices to fit the structural equations.
+It comes with full support for categorical data (any mixture of binary, ordinal and continuous observed variables), can handle both latent and composite variables, performs mediation analysis and calculates the magnitude of indirect effects [@rosseel12 + website].
+
+
 
 ```{r}
 library("lavaan")
@@ -199,8 +207,12 @@ library("lavaan")
 - explain model output
 - assessment of fit
 
+
 ## Collinearity
-... 
+If variables are highly correlated with $r > 0.85$, these variables become redundant. Then, one of them can be dropped or they can be modeled as a latent variable [@grace06].
+
+Inspecting our set of variables show that correlations between all variables are fairly low.
+
 
 ```{r}
 round(cor(seabloom[, c(4, 7, 13:15)]), digits = 2)
@@ -208,13 +220,14 @@ round(cor(seabloom[, c(4, 7, 13:15)]), digits = 2)
 
 
 ## A simple SEM
-<!-- This simple model shall illustrate the logic of SEM. Comparability is eased as it contains the same variables as the LM before. -->
-With SEM, we can evaluate direct and indirect effects in one go.
+This toy model shall illustrate the logic of SEM. Comparability is eased as it contains the same variables as the LM before.
+A huge benefit of SEM is that variables can appear as both predictors and responses what allows the evaluation of direct and indirect effects in one go (as shown in the [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) below).
+
 
 ![](Figures/SimpleSEM_workshop.svg){width=70%}
 
 
-In the syntax of `lavaan`, an arrow in a DAG is represented by a tilde and the metamodel reads as:
+In the syntax of `lavaan`, an arrow in a DAG is represented by a tilde and the model reads as:
 ```{r}
 simple <-
 "mass.above ~ nadd + disk + rich + even
@@ -225,23 +238,16 @@ fit.simple <- sem(simple, data = seabloom)
 ```
 
 
-Oups, the algorithm converges with a warning: `some observed variances are (at least) a factor 1000 times larger than others; use varTable(fit) to investigate`.
-Kindly, it informs us how to fix is. So, let's obey the software and run `varTable(fit.simple)`:
+Oups, the algorithm converges with a warning. Kindly, it informs us how to fix this. So, let's obey the software and run `varTable(fit.simple)` what reveals an enormous difference in magnitude between the variance of biomass (`mass.above`) and the other variables:
 
 ```{r}
 varTable(fit.simple)
 ```
 
-This reveals an enormous difference between the magnitude of biomass (`mass.above`) and the other variables.
-
-```{r}
-boxplot(seabloom[, c(4, 7, 13:15)])
-```
-
-
 ## Scale variables
-To remove this difference in magnitude between the variables, we scale them by setting their mean to zero and their variance to one.
-To do so for several columns in a dataframe, call `apply` on the columns of interest and specify the desired function (here, `scale`):
+To remove this difference in magnitude between the variables, we scale them by setting their mean to zero and their variance to one (aka the [standard- or $z$-score)](https://en.wikipedia.org/wiki/Standard_score).
+To do so for several columns in a dataframe, call `apply()` on the columns of interest with the desired function (here, `scale`).
+In the boxplots we see that the variables are now centered around zero.
 
 
 ```{r}
@@ -253,18 +259,22 @@ Then, run the SEM again:
 
 ```{r}
 fit.simple <- sem(simple, data = seabloom)
-summary(fit.simple, rsq = TRUE)
+summary(fit.simple, fit.measures = TRUE, rsq = TRUE)
 ```
 
-
+## Goodness of fit
 This time, the model converged, however, with poor fit:
 
-- The ratio of the test statistic and the degrees of freedom should be smaller than 2 (this ratio gives an indication how far away the model is from a decent fit)
+- The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3], digits = 1)` / `r summary(fit.simple, fit.measures = TRUE)[[1]][4]` = `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3] / summary(fit.simple, fit.measures = TRUE)[[1]][4], digits = 1)`, what means we are quite far away from a decent model fit.
 - The $p$-value should be larger than 0.05
+- The [comparative fit index (CFI)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99]. Our CFI of `r round(summary(fit.simple, fit.measures = TRUE)[[1]][9], digits = 1)` is fairly below this threshold.
+
+
+`lavaan` uses a [$\chi^2$ test](https://en.wikipedia.org/wiki/Chi-squared_test) to compare the estimated to the observed covariance matrix to compute a goodness-of-fit for the SEM under the assumption that all observations are independent and all variables follow a (multivariate) normal distribution (Grace 2006).
 
 
 ## Modification indices
-To improve the model we look for missing paths via modification indices:
+To improve the model fit, we look for missing paths via modification indices. They indicate a change in $\chi^2$ as a result from freeing fixed parameters via including a missing path.
 
 ```{r}
 modindices(fit.simple, minimum.value = 3)
@@ -273,12 +283,12 @@ modindices(fit.simple, minimum.value = 3)
 In the column `mi` (modification index) we look for high values.
 Note, however, that the modification indices are often meaningless and further adaptations of the model based on their information needs to be based on theory.
 
-In this example, the modification indices indicate a missing relation between richness and evenness.
-Including this relation into the model would improve its fit by **84.811 ??**.
+In this example, the modification indices indicate--amongst other--a missing relation between richness and evenness.
+Including this relation into the model would improve its fit by the change in $\chi^2$ by `r round(modindices(fit.simple, minimum.value = 3)[1, 4], digits = 3)`.
 
-So, let's decide to include a correlation between `rich` and `even`.
-Note: in SEM, a correlation between two variables points to an omitted common cause/variable that drives the correlation.
-With `update` it is possible to directly incorporate the missing path into the specified model:
+
+So, let's include a correlation between `rich` and `even`. This path is theoretically justified **as...** (*Note*: in SEM, a correlation between two variables points to an omitted common cause/variable that drives this correlation).
+With `update()` it is possible to directly incorporate the missing path into the specified model without rewriting it:
 
 
 ```{r}
@@ -465,4 +475,5 @@ summary(fit.sem.prune)
 - add an additional variable or path, then compare the two SEMs
 
 
+# References
 
