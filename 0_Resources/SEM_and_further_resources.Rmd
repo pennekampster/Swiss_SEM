@@ -1,6 +1,7 @@
 ---
-title: "Tutorials & other resources"
-subtitle: "A collection of links to further SEM-specific tutorials and resources"
+title: "SEM resources"
+subtitle: "A collection of links to SEM-specific resources and tutorials"
+date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output:
   html_document:
     toc: true
@@ -15,9 +16,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+# Books
+* Randall E Schumacker et al. 2016: [A Beginner's Guide to Structural Equation Modeling](https://www.routledge.com/A-Beginners-Guide-to-Structural-Equation-Modeling-Fourth-Edition/Schumacker-Lomax-Schumacker-Lomax/p/book/9781138811935)
 
 
-# SEM tutorials & teaching material
+# Tutorials & teaching material
 
 * Jarrett Byrnes' [webpage for a SEM course](http://jarrettbyrnes.info/ubc_sem/) contains the complete course to download and use and a preclass tutorial to learn the very basics of R (run R, load data and libraries) and `lavaan` (define models and show results).
 
