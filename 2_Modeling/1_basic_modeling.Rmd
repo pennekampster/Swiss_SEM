@@ -192,6 +192,11 @@ Additionally, nitrogen addition rate had a statistically significantly negative 
 
 
 # Structural equation modeling
+Structural equations aspire to represent cause-effect relationships and thus, they can be used to represent scientific, causal hypotheses. **A key feature of structural equation models is the ability to investigate the networks of connections among system components** [@grace12].
+
+
+
+
 To evaluate the SEMs, load the package [`lavaan`](https://lavaan.ugent.be/).
 This is a powerful piece of software that relies on the computation of covariance matrices to fit the structural equations.
 It comes with full support for categorical data (any mixture of binary, ordinal and continuous observed variables), can handle both latent and composite variables, performs mediation analysis and calculates the magnitude of indirect effects [@rosseel12 + website].
@@ -336,7 +341,6 @@ As a result, the data violate the principle of being [*i.i.d.*](https://en.wikip
 Thus, it is necessary to account for this structure in the data in the model.
 
 
-### With `lavaan.survey`
 The add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data with the help of the package [`survey`](https://r-survey.r-forge.r-project.org/survey/).
 With this, `lavaan` objects can be processed further with the specific data structure:
 first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
@@ -362,8 +366,8 @@ library("lavaan.survey")
 
 
 design <- svydesign(ids = ~ field, nest = TRUE, data = seabloom)
-fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple.up,
-                                     survey.design = design)
+fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple.up, 
+                                    survey.design = design)
 summary(fit.simple.up.nest, rsq = TRUE)
 ```
 

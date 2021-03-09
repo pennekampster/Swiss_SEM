@@ -2968,6 +2968,7 @@ summary(lm.even)</code></pre>
 </div>
 <div id="structural-equation-modeling" class="section level1">
 <h1>Structural equation modeling</h1>
+<p>Structural equations aspire to represent cause-effect relationships and thus, they can be used to represent scientific, causal hypotheses. <strong>A key feature of structural equation models is the ability to investigate the networks of connections among system components</strong> <span class="citation">(Grace et al. 2012)</span>.</p>
 <p>To evaluate the SEMs, load the package <a href="https://lavaan.ugent.be/"><code>lavaan</code></a>. This is a powerful piece of software that relies on the computation of covariance matrices to fit the structural equations. It comes with full support for categorical data (any mixture of binary, ordinal and continuous observed variables), can handle both latent and composite variables, performs mediation analysis and calculates the magnitude of indirect effects <span class="citation">(Rosseel 2012 + website)</span>.</p>
 <pre class="r"><code>library(&quot;lavaan&quot;)</code></pre>
 <pre><code>## This is lavaan 0.6-7</code></pre>
@@ -3234,14 +3235,12 @@ lavaanPlot(model = fit.simple.up,
                                fontname = &quot;Helvetica&quot;),
            edge_options = list(color = &quot;black&quot;),
            coefs = TRUE, covs = TRUE, stars = c(&quot;covs&quot;, &quot;regress&quot;))</code></pre>
-<div id="htmlwidget-97e57206387e9b81bb96" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-97e57206387e9b81bb96">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3f1cb8c2de50a40f3288" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3f1cb8c2de50a40f3288">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="complex-sampling-structure" class="section level2">
 <h2>Complex sampling structure</h2>
 <p>Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups such as sexes or lifestages. As a result, the data violate the principle of being <a href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables"><em>i.i.d.</em></a> (independent and identically distributed). Thus, it is necessary to account for this structure in the data in the model.</p>
-<div id="with-lavaan.survey" class="section level3">
-<h3>With <code>lavaan.survey</code></h3>
 <p>The add-on package <a href="https://cran.r-project.org/web/packages/lavaan.survey/index.html"><code>lavaan.survey</code></a> allows the analysis of stratified, clustered or weighted data with the help of the package <a href="https://r-survey.r-forge.r-project.org/survey/"><code>survey</code></a>. With this, <code>lavaan</code> objects can be processed further with the specific data structure: first, we initialize the design and then, post-process the <code>lavaan</code> object and compute the adjusted results. The result is a corrected <code>lavaan</code> object.</p>
 <pre class="r"><code>library(&quot;lavaan.survey&quot;)</code></pre>
 <pre><code>## Loading required package: survey</code></pre>
@@ -3271,8 +3270,8 @@ lavaanPlot(model = fit.simple.up,
 design &lt;- svydesign(ids = ~ field, nest = TRUE, data = seabloom)</code></pre>
 <pre><code>## Warning in svydesign.default(ids = ~field, nest = TRUE, data = seabloom): No
 ## weights or probabilities supplied, assuming equal probability</code></pre>
-<pre class="r"><code>fit.simple.up.nest &lt;- lavaan.survey(lavaan.fit = fit.simple.up,
-                                     survey.design = design)</code></pre>
+<pre class="r"><code>fit.simple.up.nest &lt;- lavaan.survey(lavaan.fit = fit.simple.up, 
+                                    survey.design = design)</code></pre>
 <pre><code>## Warning in lav_model_vcov(lavmodel = lavmodel, lavsamplestats = lavsamplestats, : lavaan WARNING:
 ##     The variance-covariance matrix of the estimated parameters (vcov)
 ##     does not appear to be positive definite! The smallest eigenvalue
@@ -3346,7 +3345,6 @@ design &lt;- svydesign(ids = ~ field, nest = TRUE, data = seabloom)</code></pre>
 <li>The first one indicates that the <code>variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!</code>. However, the smallest eigenvalue of -5.215416e-17 is very close to zero and may be due to machine-precision.</li>
 <li>The second one might point to a sample size issue: for the year 2000 we have 240 observations. Split into the three fields <code>A</code>, <code>B</code> and <code>C</code>, there are 72, 96, 72 observations in these three fields, respectively. <strong>That’s not much for sure, but also not pretty scarce neither…</strong></li>
 </ul>
-</div>
 </div>
 <div id="saturated-model" class="section level2">
 <h2>Saturated model</h2>
@@ -3482,6 +3480,9 @@ summary(fit.sem.prune)</code></pre>
 <div id="refs" class="references">
 <div id="ref-grace06">
 <p>Grace, James B. 2006. <em>Structural Equation Modeling and Natural Systems</em>. Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511617799">https://doi.org/10.1017/CBO9780511617799</a>.</p>
+</div>
+<div id="ref-grace12">
+<p>Grace, James B., Donald R. Schoolmaster Jr., Glenn R. Guntenspergen, Amanda M. Little, Brian R. Mitchell, Kathryn M. Miller, and E. William Schweiger. 2012. “Guidelines for a Graph-Theoretic Implementation of Structural Equation Modeling.” <em>Ecosphere</em> 3 (8): art73. <a href="https://doi.org/https://doi.org/10.1890/ES12-00048.1">https://doi.org/https://doi.org/10.1890/ES12-00048.1</a>.</p>
 </div>
 <div id="ref-hu99">
 <p>Hu, Li‐tze, and Peter M. Bentler. 1999. “Cutoff Criteria for Fit Indexes in Covariance Structure Analysis: Conventional Criteria Versus New Alternatives.” <em>Structural Equation Modeling: A Multidisciplinary Journal</em> 6 (1): 1–55. <a href="https://doi.org/10.1080/10705519909540118">https://doi.org/10.1080/10705519909540118</a>.</p>
