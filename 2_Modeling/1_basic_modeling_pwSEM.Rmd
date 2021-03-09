@@ -1,0 +1,155 @@
+---
+title: "Basic structural equation modeling"
+date: "`r format(Sys.time(), '%d.%m.%Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 4
+header-includes:
+   - \usepackage{svg}
+editor_options:
+  chunk_output_type: console
+bibliography: /home/r/Swiss_SEM/references.bib
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Load data
+```{r}
+rm(list = ls())
+seabloom <- read.table("~/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+                       sep = ",", header = TRUE)
+```
+
+
+## Explore data
+```{r}
+dim(seabloom)
+str(seabloom)
+```
+
+Exploring the data reveals 16 variables with each 5040 data points:
+
+* `exp`: treatments in split-plot design: 1 = disturbance (Control or Disked, 35 × 55 m plots) and 2 = nutrient addition (9 levels, 4 × 4 m plots)
+* `field`: three experimental fields A, B and C
+* `plot`: 54 plots within fields
+* `disk`: disking treatment (0 = intact at start of experiment, 1 = disked at start of experiment)
+* `yr.plowed`: last year field was plowed for agriculture (A: 1968, B: 1957 and C: 1934)
+* `ntrt`: nine levels representing different combinations of nitrogen (0 to 27.2 g N year^-1^ added as NH~4~NO~3~) and other nutrients (20 g m^−2^ year^−1^ P~2~0~5~; 20 g m^−2^ year^−1^ K~2~0; 40 g m^−2^ year^−1^ CaCO~3~; 30.0 g m^−2^ year^−1^ MgSO~4~; 18 μg m^−2^ year^−1^ CuSO~4~; 37.7 μg m^−2^ year^−1^ ZnSO~4~; 15.3 μg m^−2^ year^−1^ CoCO~2~; 322 μg m^−2^ year^−1^ MnCl~2~ and 15.1 μg m^−2^ year^−1^ NaMoO~4~; details see Table S1 in publication). Nutrients were applied twice per year in mid-May and mid-June.
+- `nadd`: nitrogen additon rate (g/m^2^/yr)
+- `other.add`: other nutrient treatment (0 = control, 1 = other nutrients added)
+- `year`: sampling year
+- `dur`: duration of experiment
+- `precip.mm`: annual precipitation (mm)
+- `precip.gs`: growing season precipitation (mm)
+- `mass.above`: aboveground biomass (g/m^2^)
+- `rich`: species richness (species/0.3 m^2^)
+- `even`: Simpson's evenness
+- `ens.pie`: effective number of species, (= probability of interspecific encounter	decimal	equivalent to inverse Simpson's diversity)
+- `origin`: species origin (native or introduced)
+- `duration`: species lifespan (annual, bienniel, perennial)
+- `functional.group`: species functional group:
+  + `C3` = C3 grass
+  + `C4` = C4 grass
+  + `F` = forb
+  + `L` = legume
+  + `S` = sedge
+
+
+
+## Subset to one year
+For simplicity, set the focus on only one year.
+Then, `r dim(seabloom[seabloom$year == 2000, ])[1]` observations remain.
+
+```{r}
+seabloom <- seabloom[seabloom$year == 2000, ]
+dim(seabloom)
+```
+
+
+
+
+# Structural equation modeling
+```{r}
+library("piecewiseSEM")
+library("nlme")
+```
+
+
+## A simple SEM
+This toy model shall illustrate the logic of SEM. Comparability is eased as it contains the same variables as the LM before.
+A huge benefit of SEM is that variables can appear as both predictors and responses what allows the evaluation of direct and indirect effects in one go (as shown in the [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) below).
+
+
+![](Figures/SimpleSEM_workshop.svg){width=70%}
+
+
+Let's encode the same model with the package [`piecewiseSEM`](https://cran.r-project.org/web/packages/piecewiseSEM/vignettes/piecewiseSEM.html) with which it is possible to include random factors into the model.
+First, take a look at the model without random terms.
+In `piecewiseSEM`, a model is specified as a list of linear models (`lm`) that each represent one response variables with its incoming paths. 
+
+
+```{r}
+PsimpleList <- list(lm(mass.above ~ rich + even + nadd + disk, seabloom),
+                    lm(rich ~ nadd, seabloom),
+                    lm(even ~ nadd, seabloom),
+                    even %~~% rich)
+
+Psimple <- as.psem(PsimpleList)
+summary(Psimple, .progressBar = FALSE)
+```
+
+Evaluating the same SEM as before, we gain a decent model fit as **????**.
+
+
+
+## Complex sampling structure
+Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups such as sexes or lifestages.
+As a result, the data violate the principle of being [*i.i.d.*](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) (independent and identically distributed).
+Thus, it is necessary to account for this structure in the data in the model.
+
+
+The data was collected in plots nested within fields, which adds a block effect to its structure. We will include this block effect now as a random term.
+
+```{r}
+PsimpleRandomList <- list(lme(mass.above ~ rich + even + nadd + disk,
+                              random = ~ 1|field, seabloom),
+                          lme(rich ~ nadd, random = ~ 1|field, seabloom),
+                          lme(even ~ nadd, random = ~ 1|field, seabloom),
+                          even %~~% rich)
+
+PsimpleRandom <- as.psem(PsimpleRandomList)
+summary(PsimpleRandom, .progressBar = FALSE)
+```
+
+Now, the effect of richness on biomass lost its statistical significance.
+
+
+
+## Saturated model
+A saturated model includes all possible paths. As a result, there are no degrees of freedom left and it is impossible to estimate the model fit...
+
+![](Figures/FullSEM.svg){width=70%}
+
+
+```{r}
+PsaturList <- list(lme(mass.above ~ rich + even + nadd + disk,
+                       random = ~ 1|field, seabloom),
+                   lme(rich ~ nadd + disk, random = ~ 1|field, seabloom),
+                   lme(even ~ nadd + disk, random = ~ 1|field, seabloom),
+                   even %~~% rich)
+
+Psatur <- as.psem(PsaturList)
+summary(Psatur, .progressBar = FALSE)
+```
+
+
+
+
+# References
+

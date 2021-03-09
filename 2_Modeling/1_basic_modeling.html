@@ -2735,7 +2735,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Basic structural equation modeling</h1>
-<h4 class="date">04.03.2021</h4>
+<h4 class="date">09.03.2021</h4>
 
 </div>
 
@@ -3100,11 +3100,11 @@ summary(fit.simple, fit.measures = TRUE, rsq = TRUE)</code></pre>
 <h2>Goodness of fit</h2>
 <p>This time, the model converged, however, with poor fit:</p>
 <ul>
-<li>The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is 104.8 / 3 = 34.9, what means we are quite far away from a decent model fit.</li>
-<li>The <span class="math inline">\(p\)</span>-value should be larger than 0.05</li>
+<li>The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is 104.8 / 3 = 34.9, what indicates that we are quite far away from a decent model fit.</li>
+<li>The <span class="math inline">\(p\)</span>-value should be larger than 0.05.</li>
 <li>The <a href="https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index">comparative fit index (CFI)</a> ranges between zero and one, whereas a value <span class="math inline">\(&gt; .95\)</span> is considered as a good fit indicator <span class="citation">(Hu and Bentler 1999)</span>. Our CFI of 0.5 is fairly below this threshold.</li>
 </ul>
-<p><code>lavaan</code> uses a <a href="https://en.wikipedia.org/wiki/Chi-squared_test"><span class="math inline">\(\chi^2\)</span> test</a> to compare the estimated to the observed covariance matrix to compute a goodness-of-fit for the SEM under the assumption that all observations are independent and all variables follow a (multivariate) normal distribution (Grace 2006).</p>
+<p><code>lavaan</code> uses a <a href="https://en.wikipedia.org/wiki/Chi-squared_test"><span class="math inline">\(\chi^2\)</span> test</a> to compare the estimated to the observed covariance matrix to compute a goodness of fit for the SEM under the assumption that all observations are independent and all variables follow a (multivariate) normal distribution (Grace 2006).</p>
 </div>
 <div id="modification-indices" class="section level2">
 <h2>Modification indices</h2>
@@ -3116,9 +3116,9 @@ summary(fit.simple, fit.measures = TRUE, rsq = TRUE)</code></pre>
 ## 17 rich  ~       even 84.811 -0.534  -0.534   -0.534   -0.534
 ## 19 even  ~ mass.above 79.659 -2.227  -2.227   -2.248   -2.248
 ## 20 even  ~       rich 84.811 -0.661  -0.661   -0.661   -0.661</code></pre>
-<p>In the column <code>mi</code> (modification index) we look for high values. Note, however, that the modification indices are often meaningless and further adaptations of the model based on their information needs to be based on theory.</p>
+<p>In the column <code>mi</code> (for modification index) we look for high values. Note, however, that the modification indices are often meaningless and further adaptations of the model based on their information needs to be based on theory.</p>
 <p>In this example, the modification indices indicate–amongst other–a missing relation between richness and evenness. Including this relation into the model would improve its fit by the change in <span class="math inline">\(\chi^2\)</span> by 84.811.</p>
-<p>So, let’s decide to include a correlation between <code>rich</code> and <code>even</code>. This path is theoretically justified <strong>as…</strong> (<em>Note</em>: in SEM, a correlation between two variables points to an omitted common cause/variable that drives this correlation). With <code>update()</code> it is possible to directly incorporate the missing path into the specified model without rewriting it:</p>
+<p>So, let’s include a correlation between <code>rich</code> and <code>even</code>. This path is theoretically justified <strong>as richness and evenness can be assumed to have a common driver</strong> (<em>Note</em>: in SEM, a correlation between two variables points to an omitted common cause/variable that drives this correlation). With <code>update()</code> it is possible to directly incorporate the missing path into the specified model without rewriting it:</p>
 <pre class="r"><code>fit.simple.up &lt;- update(fit.simple, add = &quot;rich ~~ even&quot;)
 # fit.simple.up &lt;- update(fit.simple, add = &quot;rich ~ mass.above&quot;)
 
@@ -3208,15 +3208,25 @@ summary(fit.simple.up, rsq = TRUE, fit.measures = TRUE)</code></pre>
 modindices(fit.simple.up, minimum.value = 3)</code></pre>
 <pre><code>## [1] lhs      op       rhs      mi       epc      sepc.lv  sepc.all sepc.nox
 ## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
-<p>Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two and a <span class="math inline">\(p\)</span>-value close to 1.</p>
-<p>A closer look on the result shows that</p>
-<pre class="r"><code>modindices(fit.simple.up, minimum.value = 3)</code></pre>
-<pre><code>## [1] lhs      op       rhs      mi       epc      sepc.lv  sepc.all sepc.nox
-## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<p>Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two (i.e. 0.07) and a <span class="math inline">\(p\)</span>-value close to 1. Further, the comparative fit index (CFI) is now equal to 1 (i.e. 0.931091).</p>
+<p>Another look at the modificatin indices shows that further modifications would yield only smallest improvements to the model fit:</p>
+<pre class="r"><code>modindices(fit.simple.up, minimum.value = 0)</code></pre>
+<pre><code>##     lhs op        rhs    mi    epc sepc.lv sepc.all sepc.nox
+## 12 nadd ~~       disk 0.000  0.000   0.000       NA    0.000
+## 16 rich  ~ mass.above 0.003  0.046   0.046    0.046    0.046
+## 18 rich  ~       disk 0.003  0.002   0.002    0.002    0.002
+## 19 even  ~ mass.above 0.111  0.318   0.318    0.318    0.318
+## 21 even  ~       disk 0.111  0.017   0.017    0.017    0.017
+## 22 nadd  ~ mass.above 0.000  0.000   0.000    0.000    0.000
+## 25 nadd  ~       disk 0.000  0.000   0.000    0.000    0.000
+## 26 disk  ~ mass.above 0.585 -1.809  -1.809   -1.809   -1.809
+## 27 disk  ~       rich 0.020 -0.008  -0.008   -0.008   -0.008
+## 28 disk  ~       even 0.133  0.023   0.023    0.023    0.023
+## 29 disk  ~       nadd 0.000  0.000   0.000    0.000    0.000</code></pre>
 </div>
 <div id="visualize-the-results" class="section level2">
 <h2>Visualize the results</h2>
-<p>The library <a href="https://cran.r-project.org/web/packages/lavaanPlot/vignettes/Intro_to_lavaanPlot.html"><code>lavaanPlot</code></a> allows to simply and straight-forwardly visualize diagrams from <code>lavaan</code> objects. Here, we select to display significance levels with the asterisks.</p>
+<p>The library <a href="https://cran.r-project.org/web/packages/lavaanPlot/vignettes/Intro_to_lavaanPlot.html"><code>lavaanPlot</code></a> allows to simply and straight-forwardly visualize diagrams from <code>lavaan</code> objects. Here, we select to display significance levels with asterisks.</p>
 <pre class="r"><code>library(&quot;lavaanPlot&quot;)
 
 lavaanPlot(model = fit.simple.up,
@@ -3224,152 +3234,12 @@ lavaanPlot(model = fit.simple.up,
                                fontname = &quot;Helvetica&quot;),
            edge_options = list(color = &quot;black&quot;),
            coefs = TRUE, covs = TRUE, stars = c(&quot;covs&quot;, &quot;regress&quot;))</code></pre>
-<div id="htmlwidget-064d07ce743181e8ac3b" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-064d07ce743181e8ac3b">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-97e57206387e9b81bb96" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-97e57206387e9b81bb96">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="complex-sampling-structure" class="section level2">
 <h2>Complex sampling structure</h2>
 <p>Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups such as sexes or lifestages. As a result, the data violate the principle of being <a href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables"><em>i.i.d.</em></a> (independent and identically distributed). Thus, it is necessary to account for this structure in the data in the model.</p>
-<div id="with-piecewisesem" class="section level3">
-<h3>With piecewiseSEM</h3>
-<p>Let’s encode the same model with the package <a href="https://cran.r-project.org/web/packages/piecewiseSEM/vignettes/piecewiseSEM.html"><code>piecewiseSEM</code></a> with which it is possible to include random factors into the model. First, take a look at the model without random terms. In <code>piecewiseSEM</code>, a model is specified as a list of linear models (<code>lm</code>) that each represent one response variables with its incoming paths.</p>
-<pre class="r"><code>library(&quot;piecewiseSEM&quot;)</code></pre>
-<pre><code>## Registered S3 methods overwritten by &#39;lme4&#39;:
-##   method                          from
-##   cooks.distance.influence.merMod car 
-##   influence.merMod                car 
-##   dfbeta.influence.merMod         car 
-##   dfbetas.influence.merMod        car</code></pre>
-<pre><code>## 
-##   This is piecewiseSEM version 2.1.0.
-## 
-## 
-##   Questions or bugs can be addressed to &lt;LefcheckJ@si.edu&gt;.</code></pre>
-<pre class="r"><code>library(&quot;nlme&quot;)
-
-PsimpleList &lt;- list(lm(mass.above ~ rich + even + nadd + disk, seabloom),
-                    lm(rich ~ nadd, seabloom),
-                    lm(even ~ nadd, seabloom),
-                    even %~~% rich)
-
-Psimple &lt;- as.psem(PsimpleList)
-summary(Psimple, .progressBar = FALSE)</code></pre>
-<pre><code>## 
-## Structural Equation Model of Psimple 
-## 
-## Call:
-##   mass.above ~ rich + even + nadd + disk
-##   rich ~ nadd
-##   even ~ nadd
-##   even ~~ rich
-## 
-##     AIC      BIC
-##  24.988   66.756
-## 
-## ---
-## Tests of directed separation:
-## 
-##      Independ.Claim Test.Type  DF Crit.Value P.Value 
-##   rich ~ disk + ...      coef 237    -0.1780  0.8589 
-##   even ~ disk + ...      coef 237     0.3717  0.7104 
-## 
-## Global goodness-of-fit:
-## 
-##   Fisher&#39;s C = 0.988 with P-value = 0.912 and on 4 degrees of freedom
-## 
-## ---
-## Coefficients:
-## 
-##     Response Predictor Estimate Std.Error  DF Crit.Value P.Value Std.Estimate
-##   mass.above      rich   0.2814    0.0807 235     3.4859  0.0006       0.2814
-##   mass.above      even   0.0646    0.0726 235     0.8902  0.3742       0.0646
-##   mass.above      nadd   0.5290    0.0659 235     8.0330  0.0000       0.5290
-##   mass.above      disk   0.0537    0.0577 235     0.9313  0.3526       0.0537
-##         rich      nadd  -0.4588    0.0576 238    -7.9648  0.0000      -0.4588
-##         even      nadd   0.1507    0.0641 238     2.3525  0.0195       0.1507
-##       ~~even    ~~rich  -0.5945         - 240   -11.3808  0.0000      -0.5945
-##      
-##   ***
-##      
-##   ***
-##      
-##   ***
-##     *
-##   ***
-## 
-##   Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05
-## 
-## ---
-## Individual R-squared:
-## 
-##     Response method R.squared
-##   mass.above   none      0.22
-##         rich   none      0.21
-##         even   none      0.02</code></pre>
-<p>Evaluating the same SEM as before, we gain a decent model fit as <strong>????</strong>.</p>
-<p>The data was collected in plots nested within fields, which adds a block effect to its structure. We will include this block effect now as a random term.</p>
-<pre class="r"><code>PsimpleRandomList &lt;- list(lme(mass.above ~ rich + even + nadd + disk,
-                              random = ~ 1|field, seabloom),
-                          lme(rich ~ nadd, random = ~ 1|field, seabloom),
-                          lme(even ~ nadd, random = ~ 1|field, seabloom),
-                          even %~~% rich)
-
-PsimpleRandom &lt;- as.psem(PsimpleRandomList)
-summary(PsimpleRandom, .progressBar = FALSE)</code></pre>
-<pre><code>## 
-## Structural Equation Model of PsimpleRandom 
-## 
-## Call:
-##   mass.above ~ rich + even + nadd + disk
-##   rich ~ nadd
-##   even ~ nadd
-##   even ~~ rich
-## 
-##     AIC      BIC
-##  31.728   83.938
-## 
-## ---
-## Tests of directed separation:
-## 
-##      Independ.Claim Test.Type  DF Crit.Value P.Value 
-##   rich ~ disk + ...      coef 235     0.7858  0.4328 
-##   even ~ disk + ...      coef 235    -0.0327  0.9739 
-## 
-## Global goodness-of-fit:
-## 
-##   Fisher&#39;s C = 1.728 with P-value = 0.786 and on 4 degrees of freedom
-## 
-## ---
-## Coefficients:
-## 
-##     Response Predictor Estimate Std.Error  DF Crit.Value P.Value Std.Estimate
-##   mass.above      rich   0.0625    0.0977 233     0.6391  0.5234       0.0625
-##   mass.above      even  -0.0144    0.0733 233    -0.1972  0.8439      -0.0144
-##   mass.above      nadd   0.4405    0.0682 233     6.4587  0.0000       0.4405
-##   mass.above      disk   0.0640    0.0567 233     1.1281  0.2604       0.0640
-##         rich      nadd  -0.4588    0.0463 236    -9.9084  0.0000      -0.4588
-##         even      nadd   0.1507    0.0628 236     2.3987  0.0172       0.1507
-##       ~~even    ~~rich  -0.6174         - 240   -12.0818  0.0000      -0.6174
-##      
-##      
-##      
-##   ***
-##      
-##   ***
-##     *
-##   ***
-## 
-##   Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05
-## 
-## ---
-## Individual R-squared:
-## 
-##     Response method Marginal Conditional
-##   mass.above   none     0.17        0.29
-##         rich   none     0.18        0.56
-##         even   none     0.02        0.08</code></pre>
-<p>Now, the effect of richness on biomass lost its statistical significance.</p>
-</div>
 <div id="with-lavaan.survey" class="section level3">
 <h3>With <code>lavaan.survey</code></h3>
 <p>The add-on package <a href="https://cran.r-project.org/web/packages/lavaan.survey/index.html"><code>lavaan.survey</code></a> allows the analysis of stratified, clustered or weighted data with the help of the package <a href="https://r-survey.r-forge.r-project.org/survey/"><code>survey</code></a>. With this, <code>lavaan</code> objects can be processed further with the specific data structure: first, we initialize the design and then, post-process the <code>lavaan</code> object and compute the adjusted results. The result is a corrected <code>lavaan</code> object.</p>
@@ -3545,72 +3415,6 @@ summary(fit.sem2, rsq = TRUE)</code></pre>
 <pre><code>## [1] lhs      op       rhs      mi       epc      sepc.lv  sepc.all sepc.nox
 ## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 <p>The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.</p>
-<div id="with-piecewisesem-1" class="section level3">
-<h3>With <code>piecewiseSEM</code></h3>
-<p>Let’s go again to with the package <code>piecewiseSEM</code> structure and compare its result to those of <code>lavaan</code>.</p>
-<pre class="r"><code>PsaturList &lt;- list(lme(mass.above ~ rich + even + nadd + disk,
-                       random = ~ 1|field, seabloom),
-                   lme(rich ~ nadd + disk, random = ~ 1|field, seabloom),
-                   lme(even ~ nadd + disk, random = ~ 1|field, seabloom),
-                   even %~~% rich)
-
-Psatur &lt;- as.psem(PsaturList)
-summary(Psatur, .progressBar = FALSE)</code></pre>
-<pre><code>## 
-## Structural Equation Model of Psatur 
-## 
-## Call:
-##   mass.above ~ rich + even + nadd + disk
-##   rich ~ nadd + disk
-##   even ~ nadd + disk
-##   even ~~ rich
-## 
-##     AIC      BIC
-##  34.000   93.171
-## 
-## ---
-## Tests of directed separation:
-## 
-##  No independence claims present. Tests of directed separation not possible.
-## 
-## Global goodness-of-fit:
-## 
-##   Fisher&#39;s C = 0 with P-value = 1 and on 0 degrees of freedom
-## 
-## ---
-## Coefficients:
-## 
-##     Response Predictor Estimate Std.Error  DF Crit.Value P.Value Std.Estimate
-##   mass.above      rich   0.0625    0.0977 233     0.6391  0.5234       0.0625
-##   mass.above      even  -0.0144    0.0733 233    -0.1972  0.8439      -0.0144
-##   mass.above      nadd   0.4405    0.0682 233     6.4587  0.0000       0.4405
-##   mass.above      disk   0.0640    0.0567 233     1.1281  0.2604       0.0640
-##         rich      nadd  -0.4588    0.0463 235    -9.9009  0.0000      -0.4588
-##         rich      disk   0.0369     0.047 235     0.7858  0.4328       0.0369
-##         even      nadd   0.1507     0.063 235     2.3936  0.0175       0.1507
-##         even      disk  -0.0021    0.0637 235    -0.0327  0.9739      -0.0021
-##       ~~even    ~~rich  -0.6178         - 240   -12.0962  0.0000      -0.6178
-##      
-##      
-##      
-##   ***
-##      
-##   ***
-##      
-##     *
-##      
-##   ***
-## 
-##   Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05
-## 
-## ---
-## Individual R-squared:
-## 
-##     Response method Marginal Conditional
-##   mass.above   none     0.17        0.29
-##         rich   none     0.18        0.56
-##         even   none     0.02        0.08</code></pre>
-</div>
 </div>
 <div id="model-pruning" class="section level2">
 <h2>Model pruning</h2>
