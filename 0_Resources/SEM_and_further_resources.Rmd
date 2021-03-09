@@ -20,6 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * James B Grace 2006: [Structural Equation Modeling and Natural Systems](https://www.cambridge.org/core/books/structural-equation-modeling-and-natural-systems/D05B2328107F91AF772182F3AF88EB12)
 * Randall E Schumacker et al. 2016: [A Beginner's Guide to Structural Equation Modeling](https://www.routledge.com/A-Beginners-Guide-to-Structural-Equation-Modeling-Fourth-Edition/Schumacker-Lomax-Schumacker-Lomax/p/book/9781138811935)
+* Jonathan Lefcheck's bookdown book [Structural Equation Modeling in R for Ecology and Evolution](https://jslefche.github.io/sem_book/index.html)
 
 
 # Tutorials & teaching material
