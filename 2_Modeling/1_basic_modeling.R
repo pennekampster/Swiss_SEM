@@ -1,4 +1,5 @@
 ## ----setup, include=FALSE----------------------------------------------------------
+knitr::opts_chunk$set(echo = TRUE)
 
 
 ## ----------------------------------------------------------------------------------
@@ -11,19 +12,23 @@ seabloom <- read.table("~/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-el
 dim(seabloom)
 str(seabloom)
 
+table(seabloom$nadd)
+table(seabloom$disk)
+
 
 ## ----------------------------------------------------------------------------------
 panel.points <- function(x, y) {
   points(x, y, cex = 0.1)
+  abline(lm(y ~ x), lty = 2, col = "red")
   }
 
-pairs(seabloom[, -c(1:3, 9)], lower.panel = NULL, upper.panel = panel.points)
+pairs(seabloom[, -c(1:3, 5:6, 8:10, 12, 16)],
+      lower.panel = NULL, upper.panel = panel.points)
 
 
 ## ----------------------------------------------------------------------------------
 seabloom <- seabloom[seabloom$year == 2000, ]
 dim(seabloom)
-str(seabloom)
 
 
 ## ----------------------------------------------------------------------------------
@@ -54,7 +59,7 @@ library("lavaan")
 
 
 ## ----------------------------------------------------------------------------------
-cor(seabloom[, c(4, 7, 11, 13:15)])
+round(cor(seabloom[, c(4, 7, 13:15)]), digits = 2)
 
 
 ## ----------------------------------------------------------------------------------
@@ -71,18 +76,13 @@ varTable(fit.simple)
 
 
 ## ----------------------------------------------------------------------------------
-boxplot(seabloom[, c(4, 7, 13:15)])
-
-
-## ----------------------------------------------------------------------------------
-seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],
-                                        2, scale)
+seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],  2, scale)
 boxplot(seabloom[, c(4, 7, 13:15)])
 
 
 ## ----------------------------------------------------------------------------------
 fit.simple <- sem(simple, data = seabloom)
-summary(fit.simple, rsq = TRUE)
+summary(fit.simple, fit.measures = TRUE, rsq = TRUE)
 
 
 ## ----------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ modindices(fit.simple.up, minimum.value = 3)
 
 
 ## ----------------------------------------------------------------------------------
-modindices(fit.simple.up, minimum.value = 3)
+modindices(fit.simple.up, minimum.value = 0)
 
 
 ## ----------------------------------------------------------------------------------
@@ -115,50 +115,11 @@ lavaanPlot(model = fit.simple.up,
 
 
 ## ----------------------------------------------------------------------------------
-library("piecewiseSEM")
-library("nlme")
-
-PsimpleList <- list(lm(mass.above ~ rich + even + nadd + disk, seabloom),
-                    lm(rich ~ nadd, seabloom),
-                    lm(even ~ nadd, seabloom),
-                    even %~~% rich)
-
-Psimple <- as.psem(PsimpleList)
-summary(Psimple, .progressBar = FALSE)
-
-
-## ----------------------------------------------------------------------------------
-PsimpleRandomList <- list(lme(mass.above ~ rich + even + nadd + disk,
-                              random = ~ 1|field, seabloom),
-                          lme(rich ~ nadd, random = ~ 1|field, seabloom),
-                          lme(even ~ nadd, random = ~ 1|field, seabloom),
-                          even %~~% rich)
-
-PsimpleRandom <- as.psem(PsimpleRandomList)
-summary(PsimpleRandom, .progressBar = FALSE)
-
-
-## ----------------------------------------------------------------------------------
 library("lavaan.survey")
-
-# modfit<-sem(model, data=dat, estimator = "mlm")
-# survey.design <- svydesign(ids=~1, strata = ~ spatial_block, prob =~1, data=dat)
-# fit_with_blocks <- lavaan.survey(modfit, survey.design)
-# summary(fit_with_blocks, rsquare=T, standardized = T, fit.measures = T)
-
-
-# modfit <- sem(model = fit.simple.up, data = seabloom, estimator = "mlr")
-# survey.design <- svydesign(ids = ~ 1, strata = ~ field, probs = ~ 1,
-#                            data = seabloom)
-
-# fit_with_blocks <- lavaan.survey(modfit, survey.design)
-# summary(fit_with_blocks, rsquare = TRUE, standardized = TRUE,
-#         fit.measures = TRUE)
-
 
 design <- svydesign(ids = ~ field, nest = TRUE, data = seabloom)
 fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple.up,
-                                     survey.design = design)
+                                    survey.design = design)
 summary(fit.simple.up.nest, rsq = TRUE)
 
 
@@ -176,18 +137,6 @@ summary(fit.sem2, rsq = TRUE)
 
 ## ----------------------------------------------------------------------------------
 modindices(fit.sem2, minimum.value = 3)
-
-
-## ----------------------------------------------------------------------------------
-PsaturList <- list(
-  lme(mass.above ~ rich + even + nadd + disk, random = ~ 1|field, seabloom),
-  lme(rich ~ nadd + disk, random = ~ 1|field, seabloom),
-  lme(even ~ nadd + disk, random = ~ 1|field, seabloom),
-  even %~~% rich
-)
-
-Psatur <- as.psem(PsaturList)
-summary(Psatur, .progressBar = FALSE)
 
 
 ## ----------------------------------------------------------------------------------

@@ -21,7 +21,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # To do
 
-* Because it gets a bit crowded, create a parallel version for `piecewiseSEM`
 * Present only variables that are actually used in the SEM
 
 
@@ -116,10 +115,10 @@ Simpson’s evenness (E) satisfies the main requirements of an evenness index (S
 
 
 # Metamodel
-A [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind a model.
+A [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind a model and links it to theory.
 Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
-biomass is directly influenced by the environmental parameters nutrients, disturbance and precipitation on the one hand and richness and evenness on the other hand.
-The three environmental parameters also influence richness and evenness and thus, also have an indirect effect on biomass via richness and evenness.
+productivity (biomass) is directly influenced by the environment (nutrients, disturbance and precipitation) on the one hand and biodiversity (richness and evenness) on the other hand.
+The environment influences also biodiversity and thus, also has an indirect effect on productivity via biodiversity.
 **Describe this interaction thingy!**
 
 ![](Figures/Metamodel.svg){width=70%}
@@ -214,7 +213,7 @@ library("lavaan")
 
 
 ## Collinearity
-If variables are highly correlated with $r > 0.85$, these variables become redundant. Then, one of them can be dropped or they can be modeled as a latent variable [@grace06].
+Variables that are highly correlated with $r > 0.85$ become redundant. Then, one of them can be dropped or they can be modeled as a latent variable [@grace06].
 
 Inspecting our set of variables show that correlations between all variables are fairly low.
 
@@ -279,17 +278,18 @@ This time, the model converged, however, with poor fit:
 
 
 ## Modification indices
-To improve the model fit, we look for missing paths via modification indices. They indicate a change in $\chi^2$ as a result from freeing fixed parameters via including a missing path.
+To improve the model fit, we look for missing paths via modification indices. They indicate a drop in the model $\chi^2$ value resulting from freeing fixed parameters via including a missing path.
+3.84 is considered as the critical threshold. 
 
 ```{r}
-modindices(fit.simple, minimum.value = 3)
+modindices(fit.simple, minimum.value = 3.84)
 ```
 
 In the column `mi` (for modification index) we look for high values.
 Note, however, that the modification indices are often meaningless and further adaptations of the model based on their information needs to be based on theory.
 
 In this example, the modification indices indicate--amongst other--a missing relation between richness and evenness.
-Including this relation into the model would improve its fit by the change in $\chi^2$ by `r round(modindices(fit.simple, minimum.value = 3)[1, 4], digits = 3)`.
+Including this relation into the model would improve its fit by the change in $\chi^2$ by `r round(modindices(fit.simple, minimum.value = 3)[1, 4], digits = 3)`. **--> still, 104.782 - 84.811 = 19.971, but the updated model says 0.143**
 
 
 So, let's include a correlation between `rich` and `even`. This path is theoretically justified **as richness and evenness can be assumed to have a common driver** (*Note*: in SEM, a correlation between two variables points to an omitted common cause/variable that drives this correlation).
@@ -319,6 +319,8 @@ modindices(fit.simple.up, minimum.value = 0)
 
 
 ## Visualize the results
+**Issue: lavaanPlot was removed from CRAN :-O**
+
 The library [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot/vignettes/Intro_to_lavaanPlot.html) allows to simply and straight-forwardly visualize diagrams from `lavaan` objects.
 Here, we select to display significance levels with asterisks.
 
@@ -346,24 +348,11 @@ With this, `lavaan` objects can be processed further with the specific data stru
 first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
 The result is a corrected `lavaan` object.
 
+As sampling was performed in three different fields (`A`, `B` and `C`), let's adjust for this structure.
+
 
 ```{r}
 library("lavaan.survey")
-
-# modfit<-sem(model, data=dat, estimator = "mlm")
-# survey.design <- svydesign(ids=~1, strata = ~ spatial_block, prob =~1, data=dat)
-# fit_with_blocks <- lavaan.survey(modfit, survey.design)
-# summary(fit_with_blocks, rsquare=T, standardized = T, fit.measures = T)
-
-
-# modfit <- sem(model = fit.simple.up, data = seabloom, estimator = "mlr")
-# survey.design <- svydesign(ids = ~ 1, strata = ~ field, probs = ~ 1, 
-#                            data = seabloom)
-
-# fit_with_blocks <- lavaan.survey(modfit, survey.design)
-# summary(fit_with_blocks, rsquare = TRUE, standardized = TRUE,
-#         fit.measures = TRUE)
-
 
 design <- svydesign(ids = ~ field, nest = TRUE, data = seabloom)
 fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple.up, 
@@ -374,13 +363,15 @@ summary(fit.simple.up.nest, rsq = TRUE)
 Two warnings pop up:
 
 * The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero and may be due to  machine-precision.
-* The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)` observations in these three fields, respectively. **That's not much for sure, but also not pretty scarce neither...**
+* The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)` observations in these three fields, respectively. With `r fit.simple.up.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field) / fit.simple.up.nest@Fit@npar, digits = 1)` samples per free parameter.
+**This is actually low and might be the reason of th failed model fitting.**
 
 
 ## Saturated model
 A saturated model includes all possible paths. As a result, there are no degrees of freedom left and it is impossible to estimate the model fit...
 
 ![](Figures/FullSEM.svg){width=70%}
+
 
 ```{r}
 sem2 <-
@@ -406,6 +397,8 @@ The modification indices show that the model is saturated and thus, no further p
 
 ## Model pruning
 Now, let's delete all non-significant paths from the model to obtain the most parsimonous model.
+This, however, leads to a poor model fit.
+
 
 ```{r}
 sem.prune <-
@@ -416,7 +409,7 @@ even ~ nadd
 rich ~~ even"
 
 fit.sem.prune <- sem(sem.prune, data = seabloom)
-summary(fit.sem.prune)
+summary(fit.sem.prune, rsq = TRUE)
 ```
 
 
