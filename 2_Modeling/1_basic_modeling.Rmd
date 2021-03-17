@@ -19,6 +19,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+# Decisions awaiting
+
+* References in text or a global summary in the end? 
+
+
 # To do
 
 * Present only variables that are actually used in the SEM
@@ -270,7 +275,7 @@ summary(fit.simple, fit.measures = TRUE, rsq = TRUE)
 This time, the model converged, however, with poor fit:
 
 - The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3], digits = 1)` / `r summary(fit.simple, fit.measures = TRUE)[[1]][4]` = `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3] / summary(fit.simple, fit.measures = TRUE)[[1]][4], digits = 1)`, what indicates that we are quite far away from a decent model fit.
-- The $p$-value should be larger than 0.05.
+- The $p$-value, which represents the probability of the data given our model [JBG], should be larger than 0.05.
 - The [comparative fit index (CFI)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99]. Our CFI of `r round(summary(fit.simple, fit.measures = TRUE)[[1]][9], digits = 1)` is fairly below this threshold.
 
 
@@ -315,6 +320,22 @@ Another look at the modificatin indices shows that further modifications would y
 ```{r}
 modindices(fit.simple.up, minimum.value = 0)
 ```
+
+
+## Model summary OR BETTER TITLE
+* `Estimates`, the raw unstandardized coefficients
+* `Std.err`, the standard error
+* `Z-value`, the analog to $t$-values derived from maximum likelihood estimation (ML)
+* `P(>|z|)`, the probability of obtaining a $z$ of the given value by chance
+* `Regressions` ...
+* `Variances` = estimates of the error variances
+
+
+### Standardized effects
+
+* significance testing of standardized estimates violates statistical principles as significance tests are based on unstandardized parameters -> use for interpretation only
+
+[JB Grace]
 
 
 
@@ -372,6 +393,13 @@ A saturated model includes all possible paths. As a result, there are no degrees
 
 ![](Figures/FullSEM.svg){width=70%}
 
+Saturated models have links between all the variables (more strictly true, we have
+no model degrees of freedom). Saturated models represent a special
+class of model because they allow for everything to add up, meaning
+we can completely recover the observed matrix of covariances when
+our model is saturated. Unsaturated models have testable implications,
+however. [JBG]
+
 
 ```{r}
 sem2 <-
@@ -412,6 +440,15 @@ fit.sem.prune <- sem(sem.prune, data = seabloom)
 summary(fit.sem.prune, rsq = TRUE)
 ```
 
+
+## Report results
+* Annotated model graph
+* Absolute GOF statistics for final model: $\chi²$ + $p$-value, comparative fit index (CFI) & degrees of freedom (df)
+* Table of raw coefficients and statistics
+* Table of total and indirect effects of interest
+* Computed queries as table or graph (ADD CALCULATION OF INDIRECT EFFECTS TO ADVANCED PART?)
+
+[JB Grace material]
 
 
 ## Model comparison
