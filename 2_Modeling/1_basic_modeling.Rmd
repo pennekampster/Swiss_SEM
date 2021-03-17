@@ -328,8 +328,10 @@ modindices(fit.simple.up, minimum.value = 0)
 * `Z-value`, the analog to $t$-values derived from maximum likelihood estimation (ML)
 * `P(>|z|)`, the probability of obtaining a $z$ of the given value by chance
 * `Regressions` ...
-* `Variances` = estimates of the error variances
+* `Variances` = explained variance for endogenous variables = estimates of the error variances
+* `R-square` =  the $1 - error$ variance in standardized terms
 
+[JBG]
 
 ### Standardized effects
 

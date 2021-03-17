@@ -3238,8 +3238,10 @@ modindices(fit.simple.up, minimum.value = 3)</code></pre>
 <li><code>Z-value</code>, the analog to <span class="math inline">\(t\)</span>-values derived from maximum likelihood estimation (ML)</li>
 <li><code>P(&gt;|z|)</code>, the probability of obtaining a <span class="math inline">\(z\)</span> of the given value by chance</li>
 <li><code>Regressions</code> …</li>
-<li><code>Variances</code> = estimates of the error variances</li>
+<li><code>Variances</code> = explained variance for endogenous variables = estimates of the error variances</li>
+<li><code>R-square</code> = the <span class="math inline">\(1 - error\)</span> variance in standardized terms</li>
 </ul>
+<p>[JBG]</p>
 <div id="standardized-effects" class="section level3">
 <h3>Standardized effects</h3>
 <ul>
@@ -3259,8 +3261,8 @@ lavaanPlot(model = fit.simple.up,
                                fontname = &quot;Helvetica&quot;),
            edge_options = list(color = &quot;black&quot;),
            coefs = TRUE, covs = TRUE, stars = c(&quot;covs&quot;, &quot;regress&quot;))</code></pre>
-<div id="htmlwidget-2ce560e6897b9f8667a8" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2ce560e6897b9f8667a8">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dfca63d3feee2b0b4127" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dfca63d3feee2b0b4127">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="complex-sampling-structure" class="section level2">
 <h2>Complex sampling structure</h2>
