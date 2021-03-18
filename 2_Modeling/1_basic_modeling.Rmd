@@ -26,6 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * Present only variables that are actually used in the SEM
 * Shorten as it is growing a bit long, candidates are: model pruning, complex sampling structure
 * My personal suggestion: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such
+* Change default branch to `further`
 
 
 # Dataset
@@ -404,15 +405,15 @@ A saturated model includes all possible paths. As a result, there are no degrees
 
 
 ```{r}
-sem2 <-
+satur <-
 "mass.above ~ nadd + rich + even + disk
 rich ~ nadd + disk
 even ~ nadd + disk
 
 rich ~~ even"
 
-fit.sem2 <- sem(sem2, data = seabloom)
-summary(fit.sem2, rsq = TRUE)
+fit.satur <- sem(satur, data = seabloom)
+summary(fit.satur, rsq = TRUE)
 ```
 
 
@@ -455,6 +456,13 @@ summary(fit.sem.prune, rsq = TRUE)
 
 ## Model comparison
 - add an additional variable or path, then compare the two SEMs
+
+
+
+```{r}
+## Only placeholder comparison
+anova(fit.simple.up, fit.satur)
+```
 
 
 # References
