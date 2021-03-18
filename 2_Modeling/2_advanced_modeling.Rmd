@@ -102,5 +102,6 @@ summary(fit.sem2)
 # Autocorrelation (temporal, spatial)
 
 
+# Test of mediation
 
 

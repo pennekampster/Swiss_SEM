@@ -1519,7 +1519,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Avanced structural equation modeling</h1>
-<h4 class="date">04.03.2021</h4>
+<h4 class="date">18.03.2021</h4>
 
 </div>
 
@@ -1535,8 +1535,8 @@ div.tocify {
 <div id="load-libraries" class="section level1">
 <h1>Load libraries</h1>
 <pre class="r"><code>library(&quot;lavaan&quot;)</code></pre>
-<pre><code>## This is lavaan 0.6-7</code></pre>
-<pre><code>## lavaan is BETA software! Please report any bugs.</code></pre>
+<pre><code>## This is lavaan 0.6-8
+## lavaan is FREE software! Please report any bugs.</code></pre>
 </div>
 <div id="load-data" class="section level1">
 <h1>Load data</h1>
@@ -1567,11 +1567,11 @@ diversity ~ nadd
 
 fit.sem2 &lt;- sem(sem2, data = seabloom)
 summary(fit.sem2)</code></pre>
-<pre><code>## lavaan 0.6-7 ended normally after 18 iterations
+<pre><code>## lavaan 0.6-8 ended normally after 18 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
-##   Number of free parameters                          9
+##   Number of model parameters                         9
 ##                                                       
 ##   Number of observations                          5040
 ##                                                       
@@ -1645,6 +1645,9 @@ summary(fit.sem2)</code></pre>
 </div>
 <div id="autocorrelation-temporal-spatial" class="section level1">
 <h1>Autocorrelation (temporal, spatial)</h1>
+</div>
+<div id="test-of-mediation" class="section level1">
+<h1>Test of mediation</h1>
 </div>
 
 
