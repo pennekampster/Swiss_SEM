@@ -419,7 +419,7 @@ summary(fit.satur, rsq = TRUE)
 
 Let's have another look at the modification indices.
 ```{r}
-modindices(fit.sem2, minimum.value = 3)
+modindices(fit.satur, minimum.value = 3)
 ```
 
 The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.

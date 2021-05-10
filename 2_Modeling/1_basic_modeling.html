@@ -2735,7 +2735,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Basic structural equation modeling</h1>
-<h4 class="date">18.03.2021</h4>
+<h4 class="date">10.05.2021</h4>
 
 </div>
 
@@ -3259,8 +3259,8 @@ lavaanPlot(model = fit.simple.up,
                                fontname = &quot;Helvetica&quot;),
            edge_options = list(color = &quot;black&quot;),
            coefs = TRUE, covs = TRUE, stars = c(&quot;covs&quot;, &quot;regress&quot;))</code></pre>
-<div id="htmlwidget-fa95938afbd6c9889b2a" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fa95938afbd6c9889b2a">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3ae0c591c61b256156ac" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3ae0c591c61b256156ac">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="complex-sampling-structure" class="section level2">
 <h2>Complex sampling structure</h2>
@@ -3366,15 +3366,15 @@ lavaanPlot(model = fit.simple.up,
 <li>A saturated model has an <span class="math inline">\(F_{ML} = 0\)</span>, and thus, <span class="math inline">\(\chi^2 = 0\)</span></li>
 </ul>
 <p>[JBG]</p>
-<pre class="r"><code>sem2 &lt;-
+<pre class="r"><code>satur &lt;-
 &quot;mass.above ~ nadd + rich + even + disk
 rich ~ nadd + disk
 even ~ nadd + disk
 
 rich ~~ even&quot;
 
-fit.sem2 &lt;- sem(sem2, data = seabloom)
-summary(fit.sem2, rsq = TRUE)</code></pre>
+fit.satur &lt;- sem(satur, data = seabloom)
+summary(fit.satur, rsq = TRUE)</code></pre>
 <pre><code>## lavaan 0.6-8 ended normally after 18 iterations
 ## 
 ##   Estimator                                         ML
@@ -3425,7 +3425,7 @@ summary(fit.sem2, rsq = TRUE)</code></pre>
 ##     rich              0.211
 ##     even              0.023</code></pre>
 <p>Let’s have another look at the modification indices.</p>
-<pre class="r"><code>modindices(fit.sem2, minimum.value = 3)</code></pre>
+<pre class="r"><code>modindices(fit.satur, minimum.value = 3)</code></pre>
 <pre><code>## [1] lhs      op       rhs      mi       epc      sepc.lv  sepc.all sepc.nox
 ## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 <p>The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.</p>
@@ -3506,6 +3506,13 @@ summary(fit.sem.prune, rsq = TRUE)</code></pre>
 <ul>
 <li>add an additional variable or path, then compare the two SEMs</li>
 </ul>
+<pre class="r"><code>## Only placeholder comparison
+anova(fit.simple.up, fit.satur)</code></pre>
+<pre><code>## Chi-Squared Difference Test
+## 
+##               Df    AIC    BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)
+## fit.satur      0 1838.2 1880.0 0.0000                              
+## fit.simple.up  2 1834.3 1869.1 0.1428     0.1428       2     0.9311</code></pre>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
