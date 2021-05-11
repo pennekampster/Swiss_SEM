@@ -2746,7 +2746,6 @@ div.tocify {
 <li>References in a global summary in the end</li>
 <li>Present only variables that are actually used in the SEM</li>
 <li>If there is time at the end: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such</li>
-<li>Change default branch to <code>further</code></li>
 </ul>
 </div>
 <div id="dataset" class="section level1">
@@ -2975,11 +2974,6 @@ summary(lm.even)</code></pre>
 <pre class="r"><code>library(&quot;lavaan&quot;)</code></pre>
 <pre><code>## This is lavaan 0.6-8
 ## lavaan is FREE software! Please report any bugs.</code></pre>
-<ul>
-<li>visualisation as DAG</li>
-<li>explain model output</li>
-<li>assessment of fit</li>
-</ul>
 <div id="collinearity" class="section level2">
 <h2>Collinearity</h2>
 <p>Variables that are highly correlated with <span class="math inline">\(r &gt; 0.85\)</span> become redundant. Then, one of them can be dropped or they can be modeled summarized as a latent variable <span class="citation">(Grace 2006)</span>.</p>
@@ -3266,8 +3260,8 @@ lavaanPlot(model = fit.simple.up,
                                fontname = &quot;Helvetica&quot;),
            edge_options = list(color = &quot;black&quot;),
            coefs = TRUE, covs = TRUE, stars = c(&quot;covs&quot;, &quot;regress&quot;))</code></pre>
-<div id="htmlwidget-d9e5c4080bdc4d487137" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d9e5c4080bdc4d487137">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e354aa33b5e5102a3052" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e354aa33b5e5102a3052">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="saturated-model" class="section level2">
 <h2>Saturated model</h2>

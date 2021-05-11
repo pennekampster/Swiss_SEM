@@ -25,7 +25,6 @@ knitr::opts_chunk$set(echo = TRUE)
 * References in a global summary in the end
 * Present only variables that are actually used in the SEM
 * If there is time at the end: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such
-* Change default branch to `further`
 
 
 
@@ -211,10 +210,6 @@ It comes with full support for categorical data (any mixture of binary, ordinal 
 library("lavaan")
 ```
 
-
-- visualisation as DAG
-- explain model output
-- assessment of fit
 
 
 ## Collinearity
