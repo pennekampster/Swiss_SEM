@@ -1,5 +1,5 @@
 ---
-title: "Basic structural equation modeling"
+title: "Basics of structural equation modeling"
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output:
   html_document:
