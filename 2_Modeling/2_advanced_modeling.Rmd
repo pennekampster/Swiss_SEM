@@ -49,6 +49,54 @@ seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],  2, scale)
 
 ![](Figures/LatentCompositeSEM.svg){width=70%}
 
+
+## Complex sampling structure
+Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups such as sexes or lifestages.
+As a result, the data violate the principle of being [*i.i.d.*](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) (independent and identically distributed).
+Thus, it is necessary to account for this structure in the data in the model.
+
+
+The add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data with the help of the package [`survey`](https://r-survey.r-forge.r-project.org/survey/).
+With this, `lavaan` objects can be processed further with the specific data structure:
+first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
+The result is a corrected `lavaan` object.
+
+As sampling was performed in three different fields (`A`, `B` and `C`), let's adjust for this structure.
+
+
+### Recall the model
+```{r}
+simple <-
+"mass.above ~ nadd + disk + rich + even
+rich ~ nadd
+even ~ nadd
+
+rich ~~ even"
+
+fit.simple <- sem(simple, data = seabloom)
+```
+
+
+```{r}
+library("lavaan.survey")
+
+design <- svydesign(ids = ~ field, nest = TRUE, data = seabloom)
+fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple, 
+                                    survey.design = design)
+```
+
+Two warnings pop up:
+
+* The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision.
+* The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)[1:2]` and `r table(seabloom$field)[3]` observations in these three fields, respectively. With `r fit.simple.up.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field)[1:2] / fit.simple.up.nest@Fit@npar, digits = 1)` and `r round(table(seabloom$field)[3] / fit.simple.up.nest@Fit@npar, digits = 1)`  samples per free parameter.
+**This is actually low and might be the reason of the failed model fitting.**
+
+
+```{r}
+summary(fit.simple.up.nest, rsq = TRUE)
+```
+
+
 ## Latent variable "diversity"
 
 ```{r}
@@ -94,6 +142,25 @@ summary(fit.sem2)
 <!--  -->
 <!-- ```  -->
  
+
+
+## Model pruning
+Now, let's delete all non-significant paths from the model to obtain the most parsimonous model.
+This, however, leads to a poor model fit.
+
+
+```{r}
+sem.prune <-
+"mass.above ~ nadd + rich
+rich ~ nadd
+even ~ nadd 
+
+rich ~~ even"
+
+fit.sem.prune <- sem(sem.prune, data = seabloom)
+summary(fit.sem.prune, rsq = TRUE)
+```
+
 
 # Interactions
 ![](Figures/InteractionSEM.svg){width=70%}

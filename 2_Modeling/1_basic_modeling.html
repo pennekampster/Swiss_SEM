@@ -2735,7 +2735,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Basic structural equation modeling</h1>
-<h4 class="date">10.05.2021</h4>
+<h4 class="date">11.05.2021</h4>
 
 </div>
 
@@ -2743,10 +2743,9 @@ div.tocify {
 <div id="to-do" class="section level1">
 <h1>To do</h1>
 <ul>
-<li>References in text or a global summary in the end?</li>
+<li>References in a global summary in the end</li>
 <li>Present only variables that are actually used in the SEM</li>
-<li>Shorten as it is growing a bit long, candidates are: model pruning, complex sampling structure</li>
-<li>My personal suggestion: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such</li>
+<li>If there is time at the end: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such</li>
 <li>Change default branch to <code>further</code></li>
 </ul>
 </div>
@@ -3267,102 +3266,8 @@ lavaanPlot(model = fit.simple.up,
                                fontname = &quot;Helvetica&quot;),
            edge_options = list(color = &quot;black&quot;),
            coefs = TRUE, covs = TRUE, stars = c(&quot;covs&quot;, &quot;regress&quot;))</code></pre>
-<div id="htmlwidget-324ff0f5adac07e77dfe" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-324ff0f5adac07e77dfe">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-</div>
-<div id="complex-sampling-structure" class="section level2">
-<h2>Complex sampling structure</h2>
-<p>Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups such as sexes or lifestages. As a result, the data violate the principle of being <a href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables"><em>i.i.d.</em></a> (independent and identically distributed). Thus, it is necessary to account for this structure in the data in the model.</p>
-<p>The add-on package <a href="https://cran.r-project.org/web/packages/lavaan.survey/index.html"><code>lavaan.survey</code></a> allows the analysis of stratified, clustered or weighted data with the help of the package <a href="https://r-survey.r-forge.r-project.org/survey/"><code>survey</code></a>. With this, <code>lavaan</code> objects can be processed further with the specific data structure: first, we initialize the design and then, post-process the <code>lavaan</code> object and compute the adjusted results. The result is a corrected <code>lavaan</code> object.</p>
-<p>As sampling was performed in three different fields (<code>A</code>, <code>B</code> and <code>C</code>), let’s adjust for this structure.</p>
-<pre class="r"><code>library(&quot;lavaan.survey&quot;)</code></pre>
-<pre><code>## Loading required package: survey</code></pre>
-<pre><code>## Loading required package: grid</code></pre>
-<pre><code>## Loading required package: Matrix</code></pre>
-<pre><code>## Loading required package: survival</code></pre>
-<pre><code>## 
-## Attaching package: &#39;survey&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     dotchart</code></pre>
-<pre class="r"><code>design &lt;- svydesign(ids = ~ field, nest = TRUE, data = seabloom)</code></pre>
-<pre><code>## Warning in svydesign.default(ids = ~field, nest = TRUE, data = seabloom): No
-## weights or probabilities supplied, assuming equal probability</code></pre>
-<pre class="r"><code>fit.simple.up.nest &lt;- lavaan.survey(lavaan.fit = fit.simple.up, 
-                                    survey.design = design)</code></pre>
-<pre><code>## Warning in lav_model_vcov(lavmodel = lavmodel, lavsamplestats = lavsamplestats, : lavaan WARNING:
-##     The variance-covariance matrix of the estimated parameters (vcov)
-##     does not appear to be positive definite! The smallest eigenvalue
-##     (= -5.215416e-17) is smaller than zero. This may be a symptom that
-##     the model is not identified.</code></pre>
-<pre><code>## Warning in lavaan.survey(lavaan.fit = fit.simple.up, survey.design = design):
-## Some of the standard errors may not be trustworthy. Some of the observed
-## covariances or means are collinear, and this has generated collinearity in your
-## parameter estimates. This may be a sample size issue, missing data problem, or
-## due to having too few clusters relative to the number of parameters. Problem
-## encountered in group(s) 1</code></pre>
-<p>Two warnings pop up:</p>
-<ul>
-<li>The first one indicates that the <code>variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!</code>. However, the smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to machine-precision.</li>
-<li>The second one might point to a sample size issue: for the year 2000 we have 240 observations. Split into the three fields <code>A</code>, <code>B</code> and <code>C</code>, there are 72, 96 and 72 observations in these three fields, respectively. With 13 free parameters, this refers to 5.5, 7.4 and 5.5 samples per free parameter. <strong>This is actually low and might be the reason of the failed model fitting.</strong></li>
-</ul>
-<pre class="r"><code>summary(fit.simple.up.nest, rsq = TRUE)</code></pre>
-<pre><code>## lavaan 0.6-8 ended normally after 18 iterations
-## 
-##   Estimator                                         ML
-##   Optimization method                           NLMINB
-##   Number of model parameters                        13
-##                                                       
-##   Number of observations                           240
-##                                                       
-## Model Test User Model:
-##                                               Standard      Robust
-##   Test Statistic                                 0.143       0.101
-##   Degrees of freedom                                 2           2
-##   P-value (Chi-square)                           0.931       0.951
-##   Scaling correction factor                                  1.407
-##        Satorra-Bentler correction                                 
-## 
-## Parameter Estimates:
-## 
-##   Standard errors                           Robust.sem
-##   Information                                 Expected
-##   Information saturated (h1) model          Structured
-## 
-## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##   mass.above ~                                        
-##     nadd              0.529    0.047   11.367    0.000
-##     disk              0.054    0.011    4.727    0.000
-##     rich              0.281    0.086    3.259    0.001
-##     even              0.065    0.124    0.521    0.602
-##   rich ~                                              
-##     nadd             -0.459    0.172   -2.665    0.008
-##   even ~                                              
-##     nadd              0.151    0.132    1.140    0.254
-## 
-## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##  .rich ~~                                             
-##    .even             -0.520    0.087   -5.980    0.000
-## 
-## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##    .mass.above       -0.000    0.122   -0.000    1.000
-##    .rich             -0.000    0.366   -0.000    1.000
-##    .even             -0.000    0.153   -0.000    1.000
-## 
-## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##    .mass.above        0.779    0.241    3.237    0.001
-##    .rich              0.786    0.341    2.308    0.021
-##    .even              0.973    0.046   21.352    0.000
-## 
-## R-Square:
-##                    Estimate
-##     mass.above        0.218
-##     rich              0.210
-##     even              0.023</code></pre>
+<div id="htmlwidget-d9e5c4080bdc4d487137" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d9e5c4080bdc4d487137">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; disk; rich; even; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.53***\"] disk->massabove [label = \"0.05\"] rich->massabove [label = \"0.28***\"] even->massabove [label = \"0.06\"] nadd->rich [label = \"-0.46***\"] nadd->even [label = \"0.15*\"]  even -> rich [label = \"-0.52***\", dir = \"both\"] disk -> nadd [label = \"0***\", dir = \"both\"]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="saturated-model" class="section level2">
 <h2>Saturated model</h2>
@@ -3438,66 +3343,6 @@ summary(fit.satur, rsq = TRUE)</code></pre>
 ## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 <p>The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.</p>
 </div>
-<div id="model-pruning" class="section level2">
-<h2>Model pruning</h2>
-<p>Now, let’s delete all non-significant paths from the model to obtain the most parsimonous model. This, however, leads to a poor model fit.</p>
-<pre class="r"><code>sem.prune &lt;-
-&quot;mass.above ~ nadd + rich
-rich ~ nadd
-even ~ nadd 
-
-rich ~~ even&quot;
-
-fit.sem.prune &lt;- sem(sem.prune, data = seabloom)
-summary(fit.sem.prune, rsq = TRUE)</code></pre>
-<pre><code>## lavaan 0.6-8 ended normally after 18 iterations
-## 
-##   Estimator                                         ML
-##   Optimization method                           NLMINB
-##   Number of model parameters                         9
-##                                                       
-##   Number of observations                           240
-##                                                       
-## Model Test User Model:
-##                                                       
-##   Test statistic                                 0.000
-##   Degrees of freedom                                 0
-## 
-## Parameter Estimates:
-## 
-##   Standard errors                             Standard
-##   Information                                 Expected
-##   Information saturated (h1) model          Structured
-## 
-## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##   mass.above ~                                        
-##     nadd              0.519    0.064    8.048    0.000
-##     rich              0.238    0.064    3.691    0.000
-##   rich ~                                              
-##     nadd             -0.459    0.057   -7.998    0.000
-##   even ~                                              
-##     nadd              0.151    0.064    2.362    0.018
-## 
-## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##  .rich ~~                                             
-##    .even             -0.520    0.066   -7.916    0.000
-##  .mass.above ~~                                       
-##    .even              0.042    0.045    0.915    0.360
-## 
-## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##    .mass.above        0.784    0.072   10.954    0.000
-##    .rich              0.786    0.072   10.954    0.000
-##    .even              0.973    0.089   10.954    0.000
-## 
-## R-Square:
-##                    Estimate
-##     mass.above        0.213
-##     rich              0.210
-##     even              0.023</code></pre>
-</div>
 <div id="report-results" class="section level2">
 <h2>Report results</h2>
 <ul>
@@ -3511,7 +3356,7 @@ summary(fit.sem.prune, rsq = TRUE)</code></pre>
 </div>
 <div id="model-comparison" class="section level2">
 <h2>Model comparison</h2>
-<p>To evaluate whether the simple or the saturated model perform better globally, we can calculate the <a href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike information criterion</a> (AIC)</p>
+<p>To evaluate whether the simple or the saturated model perform better globally, we can calculate the <a href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike information criterion</a> (AIC). A difference of two is considered as informative…. [Anderson]</p>
 <pre class="r"><code>## Only placeholder comparison
 anova(fit.simple.up, fit.satur)</code></pre>
 <pre><code>## Chi-Squared Difference Test
