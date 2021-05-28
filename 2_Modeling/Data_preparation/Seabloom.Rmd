@@ -1,23 +1,29 @@
 ---
 title: "Data preparation"
 subtitle: "Cedar Creek Ecosystem Science Reserve"
-author:
-  - Eliane
-  - Rachel
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
 editor_options: 
   chunk_output_type: console
 ---
 
 
 ```{r, setup, include=FALSE}
-knitr::opts_knit$set(root.dir = '~/Swiss_SEM/data_preparation/CedarCreek_Seabloom/seabloom-2020-ele-dryad-data/')
+knitr::opts_knit$set(root.dir = '~/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/')
+rm(list = ls())
 ```
 
 
-# Data source
-Data stem from [*Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate*](https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13591).
+# Dataset
+Data stem from [*Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate*](https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13591) by Seabloom et al. 2020.
+
+Recovery of a grassland for two decades following an intensive agricultural disturbance under ambient and elevated nutrient conditions:
+
+- Productivity returned to pre-disturbance levels quickly under ambient nutrient conditions, but nutrient addition slowed this recovery
+- Diversity did not change for 15 years, afterwards diversity began to increase under ambient conditions 
 
 
 ## Disturbance treatment
@@ -52,7 +58,7 @@ All analyses were conducted in R (v. 3.5.3; R Foundation for Statistical Computi
 We log~10~ transformed all response variables prior to analysis to stabilise the variance of the residuals. In addition, the transformed data tested for proportional changes in the variables, which was the most biologically relevant given the among field and among year variability. In all models, among field and among year variability were treated as random effects. In the analyses of individual groups of species (e.g. annual or perennial plants), we analysed log~10~ (biomass + 1), because there were some plots with zero mass of certain groups. All model specifications are included with each table of results (Tables S5--S7).
 
 
-## Variables
+# Variables
 - exp:	Cedar Creek LTER Experimental Code (int,	1=E001, 2=E002)
 - field: Experimental Field (char)
 - plot: Experimental Plot	(int)
@@ -79,8 +85,43 @@ We log~10~ transformed all response variables prior to analysis to stabilise the
   + S=Sedge
 
 
-## Assemble data
-### Read the csv files
+# Assemble data I
+```{r}
+# setwd("~/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/")
+library("tidyr")
+
+# load data
+raw_data <- read.table("cdr-e001-e002-output-data.csv", 
+                       sep = ",", header = TRUE)
+
+raw_data2 <- read.table("cdr-e001-e002-output-data-origin-group.csv", 
+                        sep = ",", header = TRUE) #"disk.trt","trt","origin"
+
+
+raw_data2_2 <- unique(spread(raw_data2, "origin", "mass.above"))
+
+test <- merge(raw_data, raw_data2_2, by = c("field", "exp", "plot", "year", 
+                                            "disk", "ntrt", "nadd", "other.add",
+                                            "dur"), all = TRUE)
+
+test <- merge(raw_data2, raw_data, by = c("field", "exp", "plot", "year", 
+                                          "disk", "ntrt", "nadd", "other.add",
+                                          "dur"), all = TRUE)
+
+raw_data3 <- read.table("cdr-e001-e002-output-data-life-group.csv", 
+                        sep = ",", header = TRUE) #"disk.trt", "trt", 
+
+raw_data4 <- read.table("cdr-e001-e002-output-data-fun-group.csv", 
+                        sep = ",", header = TRUE)
+
+test <- merge(raw_data, raw_data4, by = c("field", "exp", "plot", "year", 
+                                          "disk", "ntrt", "nadd", "other.add",
+                                          "dur", "mass.above"), all = TRUE)
+```
+
+
+# Assemble data II
+## Read the csv files
 First, read the csv files into a list and then, release them to the global environment. Omit the file with the description of the variables.
 ```{r}
 seabloom <- lapply(list.files(pattern = glob2rx("cdr*.csv"))[-4],
@@ -90,7 +131,7 @@ list2env(seabloom, .GlobalEnv)
 rm(seabloom)
 ```
 
-### Merge the single files
+## Merge the single files
 First, rename the above-ground biomass variables (`mass.above`) according to the group.
 ```{r}
 ## Total biomass
@@ -133,7 +174,7 @@ life.orig <- merge(data.life, data.orig, by = c("field", "exp", "year", "plot",
 rm(data.life, data.orig)
 ```
 
-### Export to file
+## Export to file
 ```{r}
 # write.table(comb, file = "Seabloom.csv", sep = "\t")
 ```

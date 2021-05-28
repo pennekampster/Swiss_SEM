@@ -1,0 +1,86 @@
+---
+title: "Data preparation"
+date: "10 November 2020"
+author: 
+  - "Rachel"
+  - "Eliane"
+output: html_document
+---
+
+
+## Cedar Creek data 
+```{r,  include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# load data
+f1 <- read.table("~/18_4_data_Welk_etal_PlosOne.csv", 
+                 sep=";", header=TRUE)
+f2 <- read.table("~/e120_Plant species percent cover data.csv", 
+                 sep="\t", header=TRUE)
+f3 <- read.table("~/e120_Plant aboveground biomass carbon and nitrogen.csv",
+                 sep="\t", header=TRUE)
+f4 <- read.table("~/e120_Plant aboveground biomass data.csv", 
+                 sep="\t", header=TRUE)
+f5 <- read.table("~/e120_Plant traits.csv", sep="\t", header=TRUE)
+f6 <- read.table("~/e120_Percent light penetration.csv", sep="\t", header=TRUE)
+f7 <- read.table("~/e120_Soil carbon.csv", sep="\t", header=TRUE)
+f8 <- read.table("~/e120_Soil nitrate and ammonium.csv", sep="\t", header=TRUE)
+f9 <- read.table("~/e120_Soil nitrogen.csv", sep="\t", header=TRUE)
+
+f_1 <- merge(f1, f2, by=c("Plot"), all=T)
+f_2 <- merge(f_1, f3, by=c("Plot","Year"), all=T)
+```
+
+
+## Data from Welk et al. (2014) Biotic Interactions Overrule Plant Responses to Climate, Depending on the Species' Biogeography
+
+We downloaded the data from https:/idata.idiv.de/ddm/Data/ShowData/18
+
+
+
+```{r,  include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# load data
+raw_data <- read.table("~/Welk/18_4_data_Welk_etal_PlosOne.csv",
+                       sep=";", header=TRUE)
+```
+
+
+## Data from Seabloom et al. (2020): Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate (Ecology Letters, 2020, 23: 1756–1765)
+
+Recovery of a grassland for two decades following an intensive agricultural disturbance under ambient and elevated nutrient conditions:
+
+- Productivity returned to pre-disturbance levels quickly under ambient nutrient conditions, but nutrient addition slowed this recovery
+- Diversity did not change for 15 years, afterwards diversity began to increase under ambient conditions 
+
+
+```{r,  include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# load data
+raw_data <- read.table("~_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv", 
+                       sep=",", header=TRUE)
+
+raw_data2 <- read.table("~_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data-origin-group.csv", 
+                        sep=",", header=TRUE) #"disk.trt","trt","origin"
+
+
+
+library(tidyr)
+raw_data2_2 <- unique(spread(raw_data2, "origin", "mass.above"))
+
+test <- merge(raw_data, raw_data2_2, by=c("field" ,    "exp"   ,     "plot"   ,    "year"   ,    "disk"     ,   "ntrt"     ,  "nadd"     ,  "other.add" ,"dur"), all=T)
+
+test <- merge(raw_data2, raw_data, by=c("field"  ,    "exp"   ,     "plot"   ,    "year"   ,    "disk"     ,   "ntrt"     ,  "nadd"     ,  "other.add" ,"dur"), all=T)
+
+
+raw_data3 <- read.table("~_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data-life-group.csv", 
+                        sep=",", header=TRUE) #"disk.trt", "trt", 
+
+raw_data4 <- read.table("~_Seabloom/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data-fun-group.csv", 
+                        sep=",", header=TRUE)
+
+test <- merge(raw_data, raw_data4, by=c("field"  ,    "exp"   ,     "plot"   ,    "year"   ,    "disk"     ,   "ntrt"     ,  "nadd"     ,  "other.add" ,"dur","mass.above"), all=T)
+```
+
