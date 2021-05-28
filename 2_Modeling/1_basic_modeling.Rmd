@@ -10,14 +10,14 @@ header-includes:
    - \usepackage{svg}
 editor_options:
   chunk_output_type: console
-bibliography: /home/r/Swiss_SEM/references.bib
+bibliography: "/Users/frank/Documents/Git projects/Swiss_SEM/references.bib"
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(here)
 ```
-
 
 
 # To do
@@ -37,7 +37,7 @@ The data were obtained during the long-term field experiment [Cedar Creek LTER](
 ## Load data
 ```{r}
 rm(list = ls())
-seabloom <- read.table("~/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
 ```
 
