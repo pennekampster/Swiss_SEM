@@ -10,7 +10,11 @@ header-includes:
    - \usepackage{svg}
 editor_options:
   chunk_output_type: console
+<<<<<<< HEAD
 bibliography: "/Users/frank/Documents/Git projects/Swiss_SEM/references.bib"
+=======
+bibliography: /home/r/github/Swiss_SEM/references.bib
+>>>>>>> 3fc540e... Meeting notes
 ---
 
 
@@ -37,7 +41,11 @@ The data were obtained during the long-term field experiment [Cedar Creek LTER](
 ## Load data
 ```{r}
 rm(list = ls())
+<<<<<<< HEAD
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
+=======
+seabloom <- read.table("~/github/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+>>>>>>> 3fc540e... Meeting notes
                        sep = ",", header = TRUE)
 ```
 
@@ -77,7 +85,9 @@ Exploring the data reveals 16 variables with each 5040 data points:
 
 
 ### Overview
-The `pairs` function yields an overview over the numerical data. Beforehand, define a function to manipulate point size in the plot.
+The `pairs` function yields an overview over the numerical data.
+<!-- Beforehand, define a function to manipulate point size in the plot. -->
+
 
 ```{r}
 panel.points <- function(x, y) {
@@ -245,7 +255,7 @@ even ~ nadd"
 
 **Add:**
 
-- QQ-plots to control for normality
+- QQ-plots to control for normality: check if this makes sense, check for multinormal distribution, ask Jim :) 
 - estimators that deal with deviations from the normal distribution
 
 
@@ -261,7 +271,7 @@ Oups, the algorithm converges with a warning. Kindly, it informs us how to fix t
 varTable(fit.simple)
 ```
 
-## Scale variables
+## Scale variables: 
 To remove this difference in magnitude between the variables, we scale them by setting their mean to zero and their variance to one (aka the [standard- or $z$-score)](https://en.wikipedia.org/wiki/Standard_score).
 To do so for several columns in a dataframe, call `apply()` on the columns of interest with the desired function (here, `scale`).
 The boxplots show that the variables are now centered around zero:
@@ -353,6 +363,16 @@ modindices(fit.simple.up, minimum.value = 0)
 **Issue: lavaanPlot was removed from CRAN :-O**
 
 The library [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot/vignettes/Intro_to_lavaanPlot.html) allows to simply and straight-forwardly visualize diagrams from `lavaan` objects.
+Since it was removed from CRAN begin of 2021, it needs to be downloaded and installed from the archive.
+
+
+```{r}
+install.packages("https://cran.r-project.org/src/contrib/Archive/lavaanPlot/lavaanPlot_0.6.0.tar.gz", 
+                 repos = NULL, type = "source")
+```
+
+
+
 Here, we select to display significance levels with asterisks.
 
 
