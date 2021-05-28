@@ -10,25 +10,23 @@ header-includes:
    - \usepackage{svg}
 editor_options:
   chunk_output_type: console
-<<<<<<< HEAD
-bibliography: "/Users/frank/Documents/Git projects/Swiss_SEM/references.bib"
-=======
-bibliography: /home/r/github/Swiss_SEM/references.bib
->>>>>>> 3fc540e... Meeting notes
+bibliography:
+  - "`r system('kpsewhich ../references.bib', intern = TRUE)`"
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(here)
+library("here")
 ```
 
 
 # To do
 
-* References in a global summary in the end
+* References as a global summary in the end
 * Present only variables that are actually used in the SEM
 * If there is time at the end: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such
+* Look for possible exercises and a way to optimally include them
 
 
 
@@ -41,11 +39,7 @@ The data were obtained during the long-term field experiment [Cedar Creek LTER](
 ## Load data
 ```{r}
 rm(list = ls())
-<<<<<<< HEAD
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
-=======
-seabloom <- read.table("~/github/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
->>>>>>> 3fc540e... Meeting notes
                        sep = ",", header = TRUE)
 ```
 
@@ -271,7 +265,9 @@ Oups, the algorithm converges with a warning. Kindly, it informs us how to fix t
 varTable(fit.simple)
 ```
 
-## Scale variables: 
+## Scale variables
+**Change scale of only biomass to avoid ambiguity with standardized vs unstandardized variable interpretation**
+
 To remove this difference in magnitude between the variables, we scale them by setting their mean to zero and their variance to one (aka the [standard- or $z$-score)](https://en.wikipedia.org/wiki/Standard_score).
 To do so for several columns in a dataframe, call `apply()` on the columns of interest with the desired function (here, `scale`).
 The boxplots show that the variables are now centered around zero:
@@ -367,8 +363,8 @@ Since it was removed from CRAN begin of 2021, it needs to be downloaded and inst
 
 
 ```{r}
-install.packages("https://cran.r-project.org/src/contrib/Archive/lavaanPlot/lavaanPlot_0.6.0.tar.gz", 
-                 repos = NULL, type = "source")
+# install.packages("https://cran.r-project.org/src/contrib/Archive/lavaanPlot/lavaanPlot_0.6.0.tar.gz", 
+#                  repos = NULL, type = "source")
 ```
 
 
