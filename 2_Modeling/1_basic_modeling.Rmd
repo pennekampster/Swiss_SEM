@@ -80,17 +80,11 @@ Exploring the data reveals 16 variables with each 5040 data points:
 
 ### Overview
 The `pairs` function yields an overview over the numerical data.
-<!-- Beforehand, define a function to manipulate point size in the plot. -->
 
 
 ```{r}
-panel.points <- function(x, y) {
-  points(x, y, cex = 0.1)
-  abline(lm(y ~ x), lty = 2, col = "red")
-  }
-
 pairs(seabloom[, -c(1:3, 5:6, 8:10, 12, 16)],
-      lower.panel = NULL, upper.panel = panel.points)
+      lower.panel = NULL)
 ```
 
 
@@ -274,7 +268,8 @@ The boxplots show that the variables are now centered around zero:
 
 
 ```{r}
-seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],  2, scale)
+seabloom$mass.above <- seabloom$mass.above / 100
+# seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],  2, scale)
 boxplot(seabloom[, c(4, 7, 13:15)])
 ```
 
@@ -326,9 +321,9 @@ modindices(fit.simple.up, minimum.value = 3)
 ```
 
 Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two (i.e. `r round(summary(fit.simple.up, fit.measures = TRUE)[[1]][3] / summary(fit.simple.up, fit.measures = TRUE)[[1]][4], digits = 2)`) and a $p$-value close to 1.
-Further, the comparative fit index (CFI) is now equal to 1 (i.e. `r summary(fit.simple.up, fit.measures = TRUE)[[1]][5]`).
+Further, also the comparative fit index (CFI) is now almost 1 (i.e. `r summary(fit.simple.up, fit.measures = TRUE)[[1]][5]`).
 
-Another look at the modificatin indices shows that further modifications would yield only smallest improvements to the model fit:
+Another look at the modification indices shows that further modifications would yield only smallest improvements to the model fit, so that we can ignore them confidently:
 
 ```{r}
 modindices(fit.simple.up, minimum.value = 0)
@@ -356,20 +351,23 @@ modindices(fit.simple.up, minimum.value = 0)
 
 
 ## Visualize the results
-**Issue: lavaanPlot was removed from CRAN :-O**
 
-The library [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot/vignettes/Intro_to_lavaanPlot.html) allows to simply and straight-forwardly visualize diagrams from `lavaan` objects.
-Since it was removed from CRAN begin of 2021, it needs to be downloaded and installed from the archive.
+The library [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot) allows to simply and straight-forwardly visualize diagrams from `lavaan` objects.
+Since it was removed from [CRAN](https://cran.r-project.org/) begin of 2021, it needs to be downloaded and installed from the archive.
+The code below first tests, if `lavaanPlot` is missing in the local library and if so, installs it from the latest archived repository on CRAN.
+
+Another library that handles `lavaan` objects would be [`semPlot`](https://cran.r-project.org/web/packages/semPlot/index.html). 
 
 
 ```{r}
-# install.packages("https://cran.r-project.org/src/contrib/Archive/lavaanPlot/lavaanPlot_0.6.0.tar.gz", 
-#                  repos = NULL, type = "source")
+if(length(setdiff("lavaanPlot", rownames(installed.packages()))) == 1)
+  {
+  install.packages("https://cran.r-project.org/src/contrib/Archive/lavaanPlot/lavaanPlot_0.6.0.tar.gz",
+                   repos = NULL, type = "source")
+  }
 ```
 
-
-
-Here, we select to display significance levels with asterisks.
+Then, we can plot the results with significance levels displayed as asterisks.
 
 
 ```{r}
