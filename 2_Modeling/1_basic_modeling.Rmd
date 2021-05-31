@@ -6,6 +6,7 @@ output:
     toc: true
     toc_float: true
     toc_depth: 4
+    code_folding: show
 header-includes:
    - \usepackage{svg}
 editor_options:
@@ -213,7 +214,7 @@ library("lavaan")
 ## Collinearity
 Variables that are highly correlated with $r > 0.85$ become redundant. Then, one of them can be dropped or they can be modeled summarized as a latent variable [@grace06].
 
-Inspecting our set of variables show that correlations between all variables are fairly low.
+Inspecting our set of variables shows that correlations between all variables are fairly low.
 
 
 ```{r}
@@ -229,8 +230,27 @@ A huge benefit of SEM is that variables can appear as both predictors and respon
 ![](Figures/SimpleSEM_workshop.svg){width=70%}
 
 
-In the syntax of `lavaan`, an arrow in a DAG is represented by a tilde and the model reads as:
-```{r}
+
+The table below summarizes the operators of `lavaan` syntax. 
+For example, an arrow in a DAG is represented by a tilde.
+
+
+| Formula type | Operator | Mnemonic |
+| ----- | ----- | ----- |
+| regression | ~ | is regressed on |
+| latent variable | =~ | is measured by |
+| (residual) (co)variance | ~~ | is correlated with |
+| intercept | ~ 1 | intercept |
+
+
+
+<div class="alert alert-info">
+  <strong>Exercise:</strong> translate the DAG above into `lavaan` syntax with the help of this table.
+</div>
+
+
+
+```{r class.source = 'fold-hide'}
 simple <-
 "mass.above ~ nadd + disk + rich + even
 rich ~ nadd
