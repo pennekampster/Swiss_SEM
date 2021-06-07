@@ -16,6 +16,12 @@ bibliography:
 ---
 
 
+<style>
+body {
+text-align: justify}
+</style>
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library("here")
@@ -27,7 +33,7 @@ library("here")
 * References as a global summary in the end
 * Present only variables that are actually used in the SEM
 * If there is time at the end: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such
-* Look for possible exercises and a way to optimally include them
+* Look for possible exercises
 
 
 
@@ -39,9 +45,10 @@ The data were obtained during the long-term field experiment [Cedar Creek LTER](
 
 ## Load data
 ```{r}
-rm(list = ls())
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
+# seabloom <- read.table("~/github/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+#                        sep = ",", header = TRUE)
 ```
 
 
@@ -236,7 +243,7 @@ For example, an arrow in a DAG is represented by a tilde.
 
 
 | Formula type | Operator | Mnemonic |
-| ----- | ----- | ----- |
+| :----- | :----- | :----- |
 | regression | ~ | is regressed on |
 | latent variable | =~ | is measured by |
 | (residual) (co)variance | ~~ | is correlated with |
@@ -245,7 +252,7 @@ For example, an arrow in a DAG is represented by a tilde.
 
 
 <div class="alert alert-info">
-  <strong>Exercise:</strong> translate the DAG above into `lavaan` syntax with the help of this table.
+  <strong>Exercise:</strong> translate the model in the DAG above into `lavaan` syntax with the help of this table.
 </div>
 
 
@@ -258,45 +265,66 @@ even ~ nadd"
 ```
 
 ## Normal distribution
-`lavaan` uses a [$\chi^2$ test](https://en.wikipedia.org/wiki/Chi-squared_test) to compare the estimated to the observed covariance matrix to compute a goodness of fit for the SEM under the assumption that all observations are independent and all variables follow a (multivariate) normal distribution (Grace 2006).
+`lavaan` uses a [$\chi^2$ test](https://en.wikipedia.org/wiki/Chi-squared_test) to compare the estimated- to the observed covariance matrix to compute the goodness of fit for the SE model under the assumption that all observations are independent and all variables follow a (multivariate) normal distribution (Grace 2006).
 
 
-**Add:**
+We use a graphical method to assess the fit of the data to a normal distribution, the [quantile-quantile plots (Q-Q plots)](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot). Hereby, the quantiles of the data are compared to those of a theoretical distribution (i.e., the normal distribution).
+If the data would be normally distributed, the points would match one to one and thus, align diagonally. In the Q-Q plot, this match is indicated by the black line.
 
-- QQ-plots to control for normality: check if this makes sense, check for multinormal distribution, ask Jim :) 
-- estimators that deal with deviations from the normal distribution
+The package [`MVN`](https://cran.r-project.org/web/packages/MVN/index.html) allows to plot several Q-Q plots at once and also offers several tests to [multivariate normal distribution (MVN)](https://en.wikipedia.org/wiki/Multivariate_normal_distribution). Here, we employ the Henze-Zirkler's test that has been recommended as a formal test of MVN [@mecklin05].
+
+
+```{r}
+library("MVN")
+
+seabloom.num <- seabloom[, -c(1:3, 5:6, 8:10, 11, 12, 16)]
+
+mvn(data = seabloom.num, mvnTest = "hz", univariatePlot = "qqplot")
+```
+
+
+<div class="alert alert-info">
+  <strong>Exercise:</strong> would you infer that the data meet the assumption of being normally distributed from the Q-Q plots? And why (not)?
+</div>
+
+
 
 
 ## Fit the model
+Now, let's fit the model with `lavaan`'s `sem` function.
+As the data clearly deviates from a MVN, we use the `MLM` estimator that provides standard errors and a $\chi^2$ test statistic robust to non-normality.
+Hereby, the Satorra-Bentler correction is used to correct the value of the ML-based $\chi^2$ test statistic by an amount that reflects the degree of [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) [@rosseel12].
+
+
+
 ```{r}
-fit.simple <- sem(simple, data = seabloom)
+fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 ```
 
 
 Oups, the algorithm converges with a warning. Kindly, it informs us how to fix this. So, let's obey the software and run `varTable(fit.simple)`. This reveals an enormous difference in magnitude between the variance of biomass (`mass.above`) and the other variables:
 
+
 ```{r}
 varTable(fit.simple)
 ```
 
-## Scale variables
-**Change scale of only biomass to avoid ambiguity with standardized vs unstandardized variable interpretation**
+## Rescale variables
+<!-- **Change scale of only biomass to avoid ambiguity with standardized vs unstandardized variable interpretation** -->
 
-To remove this difference in magnitude between the variables, we scale them by setting their mean to zero and their variance to one (aka the [standard- or $z$-score)](https://en.wikipedia.org/wiki/Standard_score).
-To do so for several columns in a dataframe, call `apply()` on the columns of interest with the desired function (here, `scale`).
-The boxplots show that the variables are now centered around zero:
+To remove this difference in magnitude between the variables, we divide `mass.above` by 100 what changes the unit from g/m^2^ to 10 mg/m^2^.
+The boxplots show that the range of the variables is now more similar.
 
 
 ```{r}
 seabloom$mass.above <- seabloom$mass.above / 100
-# seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],  2, scale)
 boxplot(seabloom[, c(4, 7, 13:15)])
 ```
 
-Then, run the SEM again:
+Then, run `sem` again:
 
 ```{r}
-fit.simple <- sem(simple, data = seabloom)
+fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple, fit.measures = TRUE, rsq = TRUE)
 ```
 
@@ -457,7 +485,7 @@ A difference of two is considered as informative.... [Anderson]
 
 ```{r}
 ## Only placeholder comparison
-anova(fit.simple.up, fit.satur)
+# anova(fit.simple.up, fit.satur)
 ```
 
 
