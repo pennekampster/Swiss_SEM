@@ -284,7 +284,7 @@ mvn(data = seabloom.num, mvnTest = "hz", univariatePlot = "qqplot")
 
 
 <div class="alert alert-info">
-  <strong>Exercise:</strong> would you infer that the data meet the assumption of being normally distributed from the Q-Q plots? And why (not)?
+  <strong>Exercise:</strong> would you infer that the data meet the assumption of being normally distributed from the results of the Henze-Zirkler test and the Q-Q plots? And why (not)?
 </div>
 
 
@@ -293,7 +293,9 @@ mvn(data = seabloom.num, mvnTest = "hz", univariatePlot = "qqplot")
 ## Fit the model
 Now, let's fit the model with `lavaan`'s `sem` function.
 As the data clearly deviates from a MVN, we use the `MLM` estimator that provides standard errors and a $\chi^2$ test statistic robust to non-normality.
-Hereby, the Satorra-Bentler correction is used to correct the value of the ML-based $\chi^2$ test statistic by an amount that reflects the degree of [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) [@rosseel12].
+Hereby, the Satorra-Bentler correction is used to correct the value of the ML-based $\chi^2$ test statistic by an amount that reflects the degree of [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) [@rosseel12].^[More background on robust corrections to standard errors and test statistics in SEM can be found in @savalei14.]
+
+
 
 
 
@@ -302,12 +304,20 @@ fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 ```
 
 
-Oups, the algorithm converges with a warning. Kindly, it informs us how to fix this. So, let's obey the software and run `varTable(fit.simple)`. This reveals an enormous difference in magnitude between the variance of biomass (`mass.above`) and the other variables:
+Oups, the algorithm converges with a warning. Kindly, it informs us how to fix this.
 
 
-```{r}
+<div class="alert alert-info">
+  <strong>Exercise:</strong> let's obey the software and execute the code from the hint.
+</div>
+
+```{r class.source = 'fold-hide'}
 varTable(fit.simple)
 ```
+
+This reveals an enormous difference in magnitude between the variance of biomass (`mass.above`) and the other variables.
+
+
 
 ## Rescale variables
 <!-- **Change scale of only biomass to avoid ambiguity with standardized vs unstandardized variable interpretation** -->
@@ -334,7 +344,7 @@ This time, the model converged, however, with poor fit:
 
 - The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3], digits = 1)` / `r summary(fit.simple, fit.measures = TRUE)[[1]][4]` = `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3] / summary(fit.simple, fit.measures = TRUE)[[1]][4], digits = 1)`, what indicates that the model is quite far away from a decent fit.
 - The $p$-value, which represents the probability of the data given our model (or no significant discrepancy between model and data) [JBG], should be larger than 0.05.
-- The [comparative fit index](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) (CFI) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99]. Our CFI of `r round(summary(fit.simple, fit.measures = TRUE)[[1]][9], digits = 1)` is fairly below this threshold.
+- The [comparative fit index](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) (CFI) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99]. Our CFI of `r round(summary(fit.simple, fit.measures = TRUE)[[1]][17], digits = 1)` is fairly below this threshold.
 
 
 
@@ -451,19 +461,17 @@ even ~ nadd + disk
 
 rich ~~ even"
 
-fit.satur <- sem(satur, data = seabloom)
+fit.satur <- sem(satur, data = seabloom, estimator = "MLM")
 summary(fit.satur, rsq = TRUE)
 ```
 
 
 Let's have another look at the modification indices.
 ```{r}
-modindices(fit.satur, minimum.value = 3)
+modindices(fit.satur, minimum.value = 0)
 ```
 
 The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.
-
-
 
 
 
@@ -484,8 +492,7 @@ A difference of two is considered as informative.... [Anderson]
 
 
 ```{r}
-## Only placeholder comparison
-# anova(fit.simple.up, fit.satur)
+anova(fit.simple.up, fit.satur)
 ```
 
 
