@@ -266,9 +266,10 @@ even ~ nadd"
 
 ## Normal distribution
 `lavaan` uses a [$\chi^2$ test](https://en.wikipedia.org/wiki/Chi-squared_test) to compare the estimated- to the observed covariance matrix to compute the goodness of fit for the SE model under the assumption that all observations are independent and all variables follow a (multivariate) normal distribution (Grace 2006).
+Note, that these distributional assumptions only apply to endogenous variables, whereas the distribution of exogenous variables has no bearing on assumptions.
 
 
-We use a graphical method to assess the fit of the data to a normal distribution, the [quantile-quantile plots (Q-Q plots)](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot). Hereby, the quantiles of the data are compared to those of a theoretical distribution (i.e., the normal distribution).
+We use a graphical method to assess the fit of the endogeneous variables to a normal distribution, the [quantile-quantile plots (Q-Q plots)](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot). Hereby, the quantiles of the data are compared to those of a theoretical distribution (i.e., the normal distribution).
 If the data would be normally distributed, the points would match one to one and thus, align diagonally. In the Q-Q plot, this match is indicated by the black line.
 
 The package [`MVN`](https://cran.r-project.org/web/packages/MVN/index.html) allows to plot several Q-Q plots at once and also offers several tests to [multivariate normal distribution (MVN)](https://en.wikipedia.org/wiki/Multivariate_normal_distribution). Here, we employ the Henze-Zirkler's test that has been recommended as a formal test of MVN [@mecklin05].
@@ -277,16 +278,42 @@ The package [`MVN`](https://cran.r-project.org/web/packages/MVN/index.html) allo
 ```{r}
 library("MVN")
 
-seabloom.num <- seabloom[, -c(1:3, 5:6, 8:10, 11, 12, 16)]
+seabloom.num <- seabloom[, -c(1:10, 11, 12, 16)]
 
 mvn(data = seabloom.num, mvnTest = "hz", univariatePlot = "qqplot")
 ```
 
 
+Alternatively, also histograms in comparison overlaid with a normal distribution allows to gain insight into the distribution:
+```{r}
+par(mfrow = c(1, 3))
+hist(seabloom$mass.above, prob = TRUE, main = "")
+x <- seq(min(seabloom$mass.above), max(seabloom$mass.above), length = 400)
+f <- dnorm(x, mean = mean(seabloom$mass.above), sd = sd(seabloom$mass.above))
+lines(x, f, col = "red", lwd = 2)
+
+
+hist(seabloom$rich, prob = TRUE, main = "")
+x <- seq(min(seabloom$rich), max(seabloom$rich), length = 400)
+f <- dnorm(x, mean = mean(seabloom$rich), sd = sd(seabloom$rich))
+lines(x, f, col = "red", lwd = 2)
+
+
+hist(seabloom$even, prob = TRUE, main = "")
+x <- seq(min(seabloom$even), max(seabloom$even), length = 400)
+f <- dnorm(x, mean = mean(seabloom$even), sd = sd(seabloom$even))
+lines(x, f, col = "red", lwd = 2)
+```
+
+
+
 <div class="alert alert-info">
-  <strong>Exercise:</strong> would you infer that the data meet the assumption of being normally distributed from the results of the Henze-Zirkler test and the Q-Q plots? And why (not)?
+  <strong>Exercise:</strong> would you infer that the endogenous variables meet the assumption of being (multivariate) normally distributed from the results of the the Q-Q plots, the Henze-Zirkler test and the histograms? And why (not)?
 </div>
 
+
+
+## Data transformation??
 
 
 
@@ -331,7 +358,7 @@ seabloom$mass.above <- seabloom$mass.above / 100
 boxplot(seabloom[, c(4, 7, 13:15)])
 ```
 
-Then, run `sem` again:
+Then, run `sem` again with the rescaled `biomass`:
 
 ```{r}
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
@@ -359,14 +386,16 @@ modindices(fit.simple, minimum.value = 3.84)
 ```
 
 In the column `mi` (for modification index) we look for high values.
-Note, however, that the modification indices are often meaningless and further adaptations of the model based on their information needs to be based on theory.
+Note, however, that the modification indices are uninformed suggestions and further adaptations of the model based on their information needs to be based on theory.
 
 In this example, the modification indices indicate--amongst other--a missing relation between richness and evenness.
 Including this relation into the model would improve its fit by the change in $\chi^2$ by `r round(modindices(fit.simple, minimum.value = 3)[1, 4], digits = 3)`. **--> still, 104.782 - 84.811 = 19.971, but the updated model says 0.143**
 
 
-So, let's include a correlation between `rich` and `even`. This path is theoretically justified **as richness and evenness can be assumed to have a common driver** (*Note*: in SEM, a correlation between two variables points to an omitted common cause/variable that drives this correlation).
-With `update()` it is possible to directly incorporate the missing path into the specified model without rewriting it from scratch:
+
+This path is necessary as richness and evenness are computationally related to each other (they are not independent quantities).
+Thus, let's include a correlation between `rich` and `even` (*Note*: in SEM, a correlation between two variables points to an omitted common cause/variable that drives this correlation).
+With the function `update()` it is possible to directly incorporate the missing path into the specified model without rewriting it from scratch:
 
 
 ```{r}
@@ -378,8 +407,8 @@ summary(fit.simple.up, rsq = TRUE, fit.measures = TRUE)
 modindices(fit.simple.up, minimum.value = 3)
 ```
 
-Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two (i.e. `r round(summary(fit.simple.up, fit.measures = TRUE)[[1]][3] / summary(fit.simple.up, fit.measures = TRUE)[[1]][4], digits = 2)`) and a $p$-value close to 1.
-Further, also the comparative fit index (CFI) is now almost 1 (i.e. `r summary(fit.simple.up, fit.measures = TRUE)[[1]][5]`).
+Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two (i.e. `r round(summary(fit.simple.up, fit.measures = TRUE)[[1]][3] / summary(fit.simple.up, fit.measures = TRUE)[[1]][4], digits = 2)`) and a $p$-value of `r round(summary(fit.simple.up, fit.measures = TRUE)[[1]][8], digits = 2)`.
+Further, also the CFI is now `r round(summary(fit.simple.up, fit.measures = TRUE)[[1]][17], digits = 2)`.
 
 Another look at the modification indices shows that further modifications would yield only smallest improvements to the model fit, so that we can ignore them confidently:
 
@@ -417,13 +446,16 @@ The code below first tests, if `lavaanPlot` is missing in the local library and 
 Another library that handles `lavaan` objects would be [`semPlot`](https://cran.r-project.org/web/packages/semPlot/index.html). 
 
 
+
 ```{r}
-if(length(setdiff("lavaanPlot", rownames(installed.packages()))) == 1)
-  {
+suppressMessages(lavaanPlot_installed <- require(lavaanPlot))
+if (!lavaanPlot_installed) {
   install.packages("https://cran.r-project.org/src/contrib/Archive/lavaanPlot/lavaanPlot_0.6.0.tar.gz",
                    repos = NULL, type = "source")
-  }
+    }
 ```
+
+
 
 Then, we can plot the results with significance levels displayed as asterisks.
 
@@ -453,9 +485,12 @@ A saturated model includes all possible paths. As a result, there are no degrees
 [JBG]
 
 
+
+Adding each a path from `disk` to richness (`rich`) and evenness (`even`) creates a satured model from our simple one.
+
 ```{r}
 satur <-
-"mass.above ~ nadd + rich + even + disk
+"mass.above ~ nadd + disk + rich + even
 rich ~ nadd + disk
 even ~ nadd + disk
 
@@ -466,13 +501,14 @@ summary(fit.satur, rsq = TRUE)
 ```
 
 
-Let's have another look at the modification indices.
-```{r}
-modindices(fit.satur, minimum.value = 0)
+<div class="alert alert-info">
+  <strong>Exercise:</strong> What modification indices do you expect from a saturated model?
+</div>
+
+
+```{r class.source = 'fold-hide'}
+# modindices(fit.satur, minimum.value = 0)
 ```
-
-The modification indices show that the model is saturated and thus, no further paths can be added to improve the model fit.
-
 
 
 
@@ -487,14 +523,17 @@ The modification indices show that the model is saturated and thus, no further p
 
 
 ## Model comparison
-To evaluate whether the simple or the saturated model perform better globally, we can calculate the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC).
-A difference of two is considered as informative.... [Anderson]
+To evaluate whether the simple or the saturated model perform better globally, we can calculate the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) for both.
+A difference in the AIC of two is considered as informative [@burnham02].
 
 
 ```{r}
 anova(fit.simple.up, fit.satur)
 ```
 
+From the ANOVA table we can see the difference in AIC = `r anova(fit.simple.up, fit.satur)[1, 2] - anova(fit.simple.up, fit.satur)[2, 2]` is in the favor for the `simple` model.
+That said, the AIC penalizes for model complexity by including the number of parameters of a model in the computation [@burnham02].
+Consequently, the saturated model is expected to have an higher AIC because it includes two additional paths.
 
 
 
