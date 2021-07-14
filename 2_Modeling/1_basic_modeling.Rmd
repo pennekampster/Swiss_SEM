@@ -199,7 +199,7 @@ Additionally, nitrogen addition rate had a statistically significantly negative 
 
 
 # Structural equation modeling
-Structural equations aspire to represent cause-effect relationships and thus, they can be used to represent scientific, causal hypotheses. **A key feature of structural equation models is the ability to investigate the networks of connections among system components** [@grace12].
+Structural equations aspire to represent cause-effect relationships and thus, they can be used to represent scientific, causal hypotheses. A key feature of structural equation models is the ability to investigate the networks of connections among system components [@grace12].
 
 
 
@@ -240,12 +240,16 @@ The table below summarizes the operators of `lavaan` syntax.
 For example, an arrow in a DAG is represented by a tilde.
 
 
-| Formula type | Operator | Mnemonic |
-| :----- | :----- | :----- |
-| regression | ~ | is regressed on |
-| latent variable | =~ | is measured by |
-| (residual) (co)variance | ~~ | is correlated with |
-| intercept | ~ 1 | intercept |
+| Formula type | Operator | Meaning | Example |
+| :----- | :----- | :----- | :----- |
+| regression  | `~` | is regressed on | `y ~ x` |
+| correlation | `~~` | correlate errors for | `y1 ~~ y2` |
+| latent variable | `=~` | set reflective indicators | `Height =~ y1 + y2 + y3` |
+| latent variable | `<~` | set formative indicators | `Comp1 <~ 1*x1 + x2 + x3` |
+| mean/intercept | `~ 1` | estimate mean for `y` without `x`s | `y ~ 1` |
+| label parameter | `*` | name coefficients | `y ~ b1*x1 + b2*x2` |
+| define quantity | `:=` |  | `TotalEffect := b1*b3 + b2` |
+| define thresholds | `|` | for ordered categorial variable | `u | t1 + t2` |
 
 
 
@@ -261,6 +265,7 @@ simple <-
 rich ~ nadd
 even ~ nadd"
 ```
+
 
 ## Normal distribution
 `lavaan` uses a [$\chi^2$ test](https://en.wikipedia.org/wiki/Chi-squared_test) to compare the estimated- to the observed covariance matrix to compute the goodness of fit for the SE model under the assumption that all observations are independent and all variables follow a (multivariate) normal distribution (Grace 2006).
@@ -367,9 +372,9 @@ summary(fit.simple, fit.measures = TRUE, rsq = TRUE)
 ## Goodness of fit
 This time, the model converged, however, with poor fit:
 
-- The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3], digits = 1)` / `r summary(fit.simple, fit.measures = TRUE)[[1]][4]` = `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3] / summary(fit.simple, fit.measures = TRUE)[[1]][4], digits = 1)`, what indicates that the model is quite far away from a decent fit.
+- The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(fitmeasures(fit.simple)[3], digits = 2)` / `r fitmeasures(fit.simple)[4]` = `r round(fitmeasures(fit.simple)[3] / fitmeasures(fit.simple)[4], digits = 2)`, what indicates that the model is quite far away from a decent fit.
 - The $p$-value, which represents the probability of the data given our model (or no significant discrepancy between model and data) [@grace21], should be larger than 0.05.
-- The [comparative fit index](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) (CFI) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99]. Our CFI of `r round(summary(fit.simple, fit.measures = TRUE)[[1]][17], digits = 1)` is fairly below this threshold.
+- The [comparative fit index](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) (CFI) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99]. Our robust CFI of `r round(fitmeasures(fit.simple)[17], digits = 2)` is fairly below this threshold.
 
 
 
@@ -405,8 +410,8 @@ summary(fit.simple.up, rsq = TRUE, fit.measures = TRUE)
 modindices(fit.simple.up, minimum.value = 3)
 ```
 
-Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two (i.e. `r round(summary(fit.simple.up, fit.measures = TRUE)[[1]][3] / summary(fit.simple.up, fit.measures = TRUE)[[1]][4], digits = 2)`) and a $p$-value of `r round(summary(fit.simple.up, fit.measures = TRUE)[[1]][8], digits = 2)`.
-Further, also the CFI is now `r round(summary(fit.simple.up, fit.measures = TRUE)[[1]][17], digits = 2)`.
+Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two (i.e. `r round(fitmeasures(fit.simple.up)[3] / fitmeasures(fit.simple.up)[4], digits = 2)`) and a $p$-value of `r round(fitmeasures(fit.simple.up)[8], digits = 2)`.
+Further, also the robust CFI is now `r round(fitmeasures(fit.simple.up)[27], digits = 2)`.
 
 Another look at the modification indices shows that further modifications would yield only smallest improvements to the model fit, so that we can ignore them confidently:
 
@@ -415,23 +420,36 @@ modindices(fit.simple.up, minimum.value = 0)
 ```
 
 
-## Summary output explained
-* `Estimates`, the raw unstandardized coefficients
+## Standardized effects
+Significance testing of standardized estimates violates statistical principles as significance tests are based on unstandardized (raw) parameters.
+Thus, standardized effects are used for interpretation only [@grace21].
+
+
+
+```{r}
+standardizedsolution(fit.simple.up)
+```
+
+
+## Summary output
+Following @grace21, the meaning of the summary output is:
+
+* `Degrees of freedom` here represents the number of paths omitted from
+the model, which provide a capacity to test the architecture of the model
+* `p-value`: probability of the data given our model
 * `Std.err`, the standard error
-* `Z-value`, the analog to $t$-values derived from maximum likelihood estimation (ML)
-* `P(>|z|)`, the probability of obtaining a $z$ of the given value by chance
+* `Z-value`, the analogue to $t$-values derived from maximum likelihood estimation (ML)
+* `P(>|z|)`, the $p$-values, the probability of obtaining a $z$ of the given value by chance
 * `Regressions` ...
+  * `Estimates`, the raw unstandardized coefficients
 * `Variances` = explained variance for endogenous variables = estimates of the error variances
+  * `Estimates`, estimates of the error variances
 * `R-square` =  the $1 - error$ variance in standardized terms
 
-[@grace21]
 
 
-### Standardized effects
 
-* significance testing of standardized estimates violates statistical principles as significance tests are based on unstandardized parameters -> use for interpretation only
 
-[JB Grace]
 
 
 
@@ -467,6 +485,9 @@ lavaanPlot(model = fit.simple.up,
            edge_options = list(color = "black"),
            coefs = TRUE, covs = TRUE, stars = c("covs", "regress"))
 ```
+
+
+What is missing in this plot are the R^2 values for the endogenous variables.
 
 
 
