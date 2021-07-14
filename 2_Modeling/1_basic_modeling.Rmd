@@ -30,8 +30,6 @@ library("here")
 
 # To do
 
-* References as a global summary in the end
-* Present only variables that are actually used in the SEM
 * If there is time at the end: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such
 * Look for possible exercises
 
@@ -76,14 +74,14 @@ Exploring the data reveals 16 variables with each 5040 data points:
 - `rich`: species richness (species/0.3 m^2^)
 - `even`: Simpson's evenness
 - `ens.pie`: effective number of species, (= probability of interspecific encounter	decimal	equivalent to inverse Simpson's diversity)
-- `origin`: species origin (native or introduced)
-- `duration`: species lifespan (annual, bienniel, perennial)
-- `functional.group`: species functional group:
-  + `C3` = C3 grass
-  + `C4` = C4 grass
-  + `F` = forb
-  + `L` = legume
-  + `S` = sedge
+<!-- - `origin`: species origin (native or introduced) -->
+<!-- - `duration`: species lifespan (annual, bienniel, perennial) -->
+<!-- - `functional.group`: species functional group: -->
+<!--   + `C3` = C3 grass -->
+<!--   + `C4` = C4 grass -->
+<!--   + `F` = forb -->
+<!--   + `L` = legume -->
+<!--   + `S` = sedge -->
 
 
 ### Overview
@@ -207,8 +205,8 @@ Structural equations aspire to represent cause-effect relationships and thus, th
 
 
 To evaluate the SEMs, load the package [`lavaan`](https://lavaan.ugent.be/).
-This is a powerful piece of software that relies on the computation of covariance matrices to fit the structural equations.
-It comes with full support for categorical data (any mixture of binary, ordinal and continuous observed variables), can handle both latent and composite variables, performs mediation analysis and calculates the magnitude of indirect effects [@rosseel12 + website].
+This powerful piece of software relies on the computation of covariance matrices to fit the structural equations.
+It comes with full support for categorical data (any mixture of binary, ordinal and continuous observed variables), can handle both latent and composite variables, performs mediation analysis and calculates the magnitude of indirect effects [@rosseel12; @rosseel21].
 
 
 
@@ -370,7 +368,7 @@ summary(fit.simple, fit.measures = TRUE, rsq = TRUE)
 This time, the model converged, however, with poor fit:
 
 - The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3], digits = 1)` / `r summary(fit.simple, fit.measures = TRUE)[[1]][4]` = `r round(summary(fit.simple, fit.measures = TRUE)[[1]][3] / summary(fit.simple, fit.measures = TRUE)[[1]][4], digits = 1)`, what indicates that the model is quite far away from a decent fit.
-- The $p$-value, which represents the probability of the data given our model (or no significant discrepancy between model and data) [JBG], should be larger than 0.05.
+- The $p$-value, which represents the probability of the data given our model (or no significant discrepancy between model and data) [@grace21], should be larger than 0.05.
 - The [comparative fit index](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) (CFI) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99]. Our CFI of `r round(summary(fit.simple, fit.measures = TRUE)[[1]][17], digits = 1)` is fairly below this threshold.
 
 
@@ -378,7 +376,7 @@ This time, the model converged, however, with poor fit:
 
 ## Modification indices
 To improve the model fit, we look for missing paths via modification indices. They indicate a drop in the model $\chi^2$ value resulting from freeing fixed parameters via including a missing path.
-3.84 is considered as the critical threshold, the "single-degree-of-freedom $\chi^2$ criterion" [JBG]. 
+3.84 is considered as the critical threshold, the "single-degree-of-freedom $\chi^2$ criterion" [@grace21]. 
 
 
 ```{r}
@@ -426,7 +424,7 @@ modindices(fit.simple.up, minimum.value = 0)
 * `Variances` = explained variance for endogenous variables = estimates of the error variances
 * `R-square` =  the $1 - error$ variance in standardized terms
 
-[JBG]
+[@grace21]
 
 
 ### Standardized effects
@@ -481,8 +479,7 @@ A saturated model includes all possible paths. As a result, there are no degrees
 * Under global estimation, our comparison is to a saturated model. The reason is that saturated models permit every covariance to be explained, so our $F_{ML}$ fit function goes to zero
 * A saturated model has an $F_{ML} = 0$, and thus, $\chi^2 = 0$
 
-
-[JBG]
+[@grace21]
 
 
 
