@@ -45,7 +45,7 @@ The data were obtained during the long-term field experiment [Cedar Creek LTER](
 ```{r}
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
-# seabloom <- read.table("~/github/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+# seabloom <- read.table("~/repos/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
 #                        sep = ",", header = TRUE)
 ```
 
@@ -203,7 +203,6 @@ Structural equations aspire to represent cause-effect relationships and thus, th
 
 
 
-
 To evaluate the SEMs, load the package [`lavaan`](https://lavaan.ugent.be/).
 This powerful piece of software relies on the computation of covariance matrices to fit the structural equations.
 It comes with full support for categorical data (any mixture of binary, ordinal and continuous observed variables), can handle both latent and composite variables, performs mediation analysis and calculates the magnitude of indirect effects [@rosseel12; @rosseel21].
@@ -213,7 +212,6 @@ It comes with full support for categorical data (any mixture of binary, ordinal 
 ```{r}
 library("lavaan")
 ```
-
 
 
 ## Collinearity
@@ -342,7 +340,7 @@ Oups, the algorithm converges with a warning. Kindly, it informs us how to fix t
 </div>
 
 ```{r class.source = 'fold-hide'}
-varTable(fit.simple)
+# varTable(fit.simple)
 ```
 
 This reveals an enormous difference in magnitude between the variance of biomass (`mass.above`) and the other variables.
@@ -365,7 +363,7 @@ Then, run `sem` again with the rescaled `biomass`:
 
 ```{r}
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
-summary(fit.simple, fit.measures = TRUE, rsq = TRUE)
+summary(fit.simple, fit.measures = TRUE)
 ```
 
 
@@ -380,7 +378,7 @@ This time, the model converged, however, with poor fit:
 
 
 ## Modification indices
-To improve the model fit, we look for missing paths via modification indices. They indicate a drop in the model $\chi^2$ value resulting from freeing fixed parameters via including a missing path.
+To improve the model fit, we look for missing paths via modification indices. They indicate an estimated drop in the model $\chi^2$ resulting from freeing fixed parameters via including a missing path.
 3.84 is considered as the critical threshold, the "single-degree-of-freedom $\chi^2$ criterion" [@grace21]. 
 
 
@@ -403,9 +401,7 @@ With the function `update()` it is possible to directly incorporate the missing 
 
 ```{r}
 fit.simple.up <- update(fit.simple, add = "rich ~~ even")
-summary(fit.simple.up, rsq = TRUE, fit.measures = TRUE)
-# standardizedsolution(fit.simple.up)
-# inspect(fit.simple.up, "r2")
+summary(fit.simple.up, fit.measures = TRUE)
 
 modindices(fit.simple.up, minimum.value = 3)
 ```
@@ -420,7 +416,16 @@ modindices(fit.simple.up, minimum.value = 0)
 ```
 
 
-## Standardized effects
+## Standardized parameters
+Using analysis of covariances allows for estimation of both unstandardized (raw) and standardized parameters [@grace21].
+**While the analysis is based on covariances for estimating unstandardized parameters, it is based on correlations for estimating standardized parameters.**
+The computational relation between correlations and covariances is:
+
+$r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
+
+... where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$).
+
+
 Significance testing of standardized estimates violates statistical principles as significance tests are based on unstandardized (raw) parameters.
 Thus, standardized effects are used for interpretation only [@grace21].
 
@@ -431,10 +436,92 @@ standardizedsolution(fit.simple.up)
 ```
 
 
+
+
+## Model comparison
+To evaluate whether the simple or the updated model perform better, we can calculate the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) and the compute a significance test based on the $\chi^2$ test statistic with the `anova` function.
+
+
+```{r}
+anova(fit.simple, fit.simple.up)
+```
+
+From the ANOVA table we can see the difference in AIC = `r round(anova(fit.simple, fit.simple.up)[2, 2] - anova(fit.simple, fit.simple.up)[1, 2], digits = 2)` is clearly in favor for the updated `simple.up` model (*Note*: a difference in the AIC of two is considered as informative [@burnham02]).
+
+Further, the difference in the $\chi^2$ is `r round(anova(fit.simple, fit.simple.up)[2, 5], digits = 2)`--far beyond the threshold value of 3.84 that is necessary to detect a statistically significant difference on a confidence level of $\alpha = 0.05$.
+
+
+**??? Why is the $\chi^2$ difference not equal to the difference between the two values when using the MLM estimator?**
+
+
+
+
+## Saturated model
+A saturated model includes all possible paths. As a result, there are no degrees of freedom left and it thus has perfect fit.
+They represent a special class of model because they allow for everything to add up, meaning we can completely recover the observed matrix of covariances. Unsaturated models have testable implications, however.
+Under global estimation, our comparison for calculating the GOF is to a saturated model. The reason is that saturated models permit every covariance to be explained, so the model fit function value $F_{ML}$ fit function goes to zero. Thus, also $\chi^2 = 0$.
+In comparison, an unsaturated model will have a positive $F_{ML}$ [@grace21].
+
+
+
+Adding each a path from `disk` to richness (`rich`) and evenness (`even`) creates a satured model from our simple one.
+
+![](Figures/FullSEM.svg){width=70%}
+
+```{r}
+satur <-
+"mass.above ~ nadd + disk + rich + even
+rich ~ nadd + disk
+even ~ nadd + disk
+
+rich ~~ even"
+
+fit.satur <- sem(satur, data = seabloom, estimator = "MLM")
+summary(fit.satur, rsq = TRUE)
+```
+
+
+<div class="alert alert-info">
+  <strong>Exercise:</strong> What modification indices do you expect from a saturated model?
+</div>
+
+
+```{r class.source = 'fold-hide'}
+# modindices(fit.satur, minimum.value = 0)
+```
+
+
+
+## Importance of included paths
+In combination with the AIC, from the saturated model it is possible to evaluate if there are any unsupported links in the model.
+
+
+```{r}
+library("AICcmodavg")
+
+aictab(list(fit.simple, fit.simple.up, fit.satur),
+       c("simple", "simple.up", "saturated"))
+```
+
+**??? Not sure how this shall show unsupported links...**
+
+
+
+
 ## Summary output
+Now, let's have a closer look on the model via `summary` requesting the standardized estimates:
+
+```{r}
+summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE, standardized = TRUE)
+```
+
+<div class="alert alert-info">
+  <strong>Exercise:</strong> How would you interpret the meaning of the $p$-values of the single paths?
+</div>
+
 Following @grace21, the meaning of the summary output is:
 
-* `Degrees of freedom` here represents the number of paths omitted from
+* `Degrees of freedom` represents the number of paths omitted from
 the model, which provide a capacity to test the architecture of the model
 * `p-value`: probability of the data given our model
 * `Std.err`, the standard error
@@ -444,10 +531,15 @@ the model, which provide a capacity to test the architecture of the model
   * `Estimates`, the raw unstandardized coefficients
 * `Variances` = explained variance for endogenous variables = estimates of the error variances
   * `Estimates`, estimates of the error variances
-* `R-square` =  the $1 - error$ variance in standardized terms
+* `R-square` is the variance explained for endogenous variables, the $1 - error$ variance in standardized terms. Paths from error variables represent influences from un-modeled factors.
 
 
 
+The `inspect` function retrieves information from a `lavaan` object (for more options see the help):
+
+```{r}
+inspect(fit.simple.up, what = "r2")
+```
 
 
 
@@ -487,46 +579,12 @@ lavaanPlot(model = fit.simple.up,
 ```
 
 
-What is missing in this plot are the R^2 values for the endogenous variables.
+What is missing in this plot are the $R^2$ values for the endogenous variables.
+They can either be represented as the $R^2$, the variance explained for endogenous variables or as the quantity of error variances ($\zeta$) either in raw or standardized units.
+Another option, if we wish to treat error variables like true causal influences,
+then we might use path coefficients for their effects. These are the square
+roots of the error variances (e.g., $\sqrt{0.84} = 0.92$) or alternatively, $\sqrt{1 - R^2}$ [@grace21].
 
-
-
-## Saturated model
-A saturated model includes all possible paths. As a result, there are no degrees of freedom left and it is impossible to estimate the model fit...
-
-![](Figures/FullSEM.svg){width=70%}
-
-* Saturated models have links between all the variables (more strictly true, we have no model degrees of freedom). Saturated models represent a special class of model because they allow for everything to add up, meaning we can completely recover the observed matrix of covariances when our model is saturated. Unsaturated models have testable implications, however.
-* Under global estimation, our comparison is to a saturated model. The reason is that saturated models permit every covariance to be explained, so our $F_{ML}$ fit function goes to zero
-* A saturated model has an $F_{ML} = 0$, and thus, $\chi^2 = 0$
-
-[@grace21]
-
-
-
-Adding each a path from `disk` to richness (`rich`) and evenness (`even`) creates a satured model from our simple one.
-
-```{r}
-satur <-
-"mass.above ~ nadd + disk + rich + even
-rich ~ nadd + disk
-even ~ nadd + disk
-
-rich ~~ even"
-
-fit.satur <- sem(satur, data = seabloom, estimator = "MLM")
-summary(fit.satur, rsq = TRUE)
-```
-
-
-<div class="alert alert-info">
-  <strong>Exercise:</strong> What modification indices do you expect from a saturated model?
-</div>
-
-
-```{r class.source = 'fold-hide'}
-# modindices(fit.satur, minimum.value = 0)
-```
 
 
 
@@ -538,20 +596,6 @@ summary(fit.satur, rsq = TRUE)
 * Computed queries as table or graph (ADD CALCULATION OF INDIRECT EFFECTS TO ADVANCED PART?)
 
 [JBG material]
-
-
-## Model comparison
-To evaluate whether the simple or the saturated model perform better globally, we can calculate the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) for both.
-A difference in the AIC of two is considered as informative [@burnham02].
-
-
-```{r}
-anova(fit.simple.up, fit.satur)
-```
-
-From the ANOVA table we can see the difference in AIC = `r anova(fit.simple.up, fit.satur)[1, 2] - anova(fit.simple.up, fit.satur)[2, 2]` is in the favor for the `simple` model.
-That said, the AIC penalizes for model complexity by including the number of parameters of a model in the computation [@burnham02].
-Consequently, the saturated model is expected to have an higher AIC because it includes two additional paths.
 
 
 
