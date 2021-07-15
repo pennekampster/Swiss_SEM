@@ -127,7 +127,6 @@ A [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept
 Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
 productivity (biomass) is directly influenced by the environment (nutrients, disturbance and precipitation) on the one hand and biodiversity (richness and evenness) on the other hand.
 The environment influences also biodiversity and thus, also has an indirect effect on productivity via biodiversity.
-**Describe this interaction thingy!**
 
 ![](Figures/Metamodel.svg){width=70%}
 
@@ -151,12 +150,25 @@ For this, three models are necessary: one that accounts for the direct- and two 
 
 
 ## Direct effects
+If a linear model is visualized in a DAG, it becomes apparent that there is a set of permitted, but unanalyzed correlations among the predictors. 
+These correlations have a huge influence on the coefficients between the predictors $x_{1\ldots i}$ and the response $y$.
+Despite their importance, it is impossible to include any information about the reason of the correlations between the predictors.
+Further, they make it nearly impossible to create a proper causal model, since there are many possible causal relations that can create a set of "unanalyzed
+associations" what hinders interpretations [@grace21].
+
+
 ![](Figures/LMdir.svg){width=45%}
 
-```{r}
-lm.dir <- lm(mass.above ~ nadd + precip.mm + rich + even,
-             data = seabloom)
-summary(lm.dir)
+
+<div class="alert alert-info">
+  <strong>Exercise:</strong> write the linear model in the DAG above in R syntax.
+</div>
+
+
+```{r class.source = 'fold-hide'}
+# lm.dir <- lm(mass.above ~ nadd + precip.mm + rich + even,
+#              data = seabloom)
+# summary(lm.dir)
 ```
 
 
@@ -180,7 +192,7 @@ summary(lm.dir)
 ## Indirect effects
 To account for the indirect effects, two separate LMs are necessary: one with richness and one with evenness as response.
 
-![](Figures/LMind.svg){width=45%}
+![](Figures/LMind.svg){width=35%}
 
 
 ```{r}
@@ -193,8 +205,8 @@ summary(lm.even)
 
 
 ## Conclusion
-The direct effect model showed that in the year 2000 biomass was statistically significantly positively related to the nitrogen additon rate (`nadd`) and species richness (`rich`).
-Additionally, nitrogen addition rate had a statistically significantly negative influence on species richness and to a lesser extent, also on evenness.
+The direct effect model showed that in the year 2000 biomass was statistically significantly positively related to nutrient input (the nitrogen additon rate `nadd`) and species richness (`rich`), but not to evenness (`even`).
+Additionally, nutrient input had a statistically significantly negative influence on species richness and to a lesser extent, also on evenness.
 
 
 
@@ -230,7 +242,7 @@ This toy model shall illustrate the logic of SEM. Comparability is eased as it c
 A huge benefit of SEM is that variables can appear as both predictors and responses what allows the evaluation of direct and indirect effects in one go (as shown in the [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAG) below).
 
 
-![](Figures/SimpleSEM_workshop.svg){width=70%}
+![](Figures/SimpleSEM.svg){width=70%}
 
 
 
