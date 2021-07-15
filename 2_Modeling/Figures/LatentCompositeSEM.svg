@@ -10,15 +10,27 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="243.41661mm"
-   height="80.146324mm"
-   viewBox="0 0 243.41662 80.146324"
+   width="251.92961mm"
+   height="97.88726mm"
+   viewBox="0 0 251.92962 97.88726"
    version="1.1"
    id="svg18563"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="LatentCompositeSEM.svg">
   <defs
      id="defs18557">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2063">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="0"
+         id="stop2059" />
+      <stop
+         style="stop-color:#add1f6;stop-opacity:1"
+         offset="1"
+         id="stop2061" />
+    </linearGradient>
     <marker
        inkscape:stockid="Arrow2Lend"
        orient="auto"
@@ -175,6 +187,28 @@
          d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
          transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
     </marker>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2063"
+       id="radialGradient2127"
+       cx="78.129463"
+       cy="241.18661"
+       fx="78.129463"
+       fy="241.18661"
+       r="30.184185"
+       gradientTransform="matrix(1.2923871,0,0,1.2917572,140.06223,-392.65358)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2063"
+       id="radialGradient2137"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.2923871,0,0,1.2917572,92.626241,-190.37639)"
+       cx="78.129463"
+       cy="241.18661"
+       fx="78.129463"
+       fy="241.18661"
+       r="30.184185" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -184,8 +218,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="428.49301"
-     inkscape:cy="117.54348"
+     inkscape:cx="585.92708"
+     inkscape:cy="149.55959"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -202,7 +236,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -210,41 +244,39 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(51.061672,-193.09536)">
-    <ellipse
-       ry="31.805073"
-       rx="29.934185"
-       cy="241.18661"
-       cx="78.129463"
+     transform="translate(59.574681,-183.82535)">
+    <circle
+       r="38.68655"
+       style="fill:url(#radialGradient2137);fill-opacity:1;stroke:#000000;stroke-width:0.62689972;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       id="circle2135"
+       cx="193.59979"
+       cy="121.17821"
+       transform="rotate(62.434018)" />
+    <circle
+       cy="-81.099022"
+       cx="241.03572"
        id="ellipse19304"
-       style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
+       style="fill:url(#radialGradient2127);fill-opacity:1;stroke:#000000;stroke-width:0.62689972;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       r="38.68655"
+       transform="rotate(91.223503)" />
     <text
        id="text19308"
-       y="243.709"
-       x="76.122971"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       xml:space="preserve"><tspan
-         style="stroke-width:0.26458332"
-         y="243.709"
-         x="76.122971"
-         id="tspan19306"
-         sodipodi:role="line">diversity</tspan></text>
-    <ellipse
-       style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
-       id="path19296"
-       cx="-19.423912"
-       cy="225.15044"
-       rx="29.934185"
-       ry="31.805073" />
+       xml:space="preserve"><textPath
+         xlink:href="#ellipse19304"
+         startOffset="50%"
+         id="textPath2148"><tspan
+   id="tspan19306"
+   style="stroke-width:0.26458332">diversity</tspan></textPath></text>
     <rect
-       style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       style="fill:#add1f6;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
        id="rect2098"
        width="46.917789"
        height="18.558205"
        x="145.03453"
        y="231.25005" />
     <rect
-       style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       style="fill:#add1f6;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
        id="rect821"
        width="46.917789"
        height="18.558205"
@@ -256,7 +288,7 @@
        height="18.47677"
        width="46.389549"
        id="rect2934"
-       style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.79891878;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
+       style="fill:#add1f6;fill-opacity:1;stroke:#000000;stroke-width:0.79891878;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <flowRoot
        transform="matrix(53.989905,0,0,53.989905,-2271.7172,-3346.6685)"
        xml:space="preserve"
@@ -310,12 +342,12 @@
     <text
        id="text2090"
        y="243.38486"
-       x="167.24245"
+       x="168.82993"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        xml:space="preserve"><tspan
          style="stroke-width:0.26458332"
          y="243.38486"
-         x="167.24245"
+         x="168.82993"
          id="tspan2088"
          sodipodi:role="line">biomass</tspan></text>
     <rect
@@ -324,7 +356,7 @@
        height="18.558205"
        width="46.917789"
        id="rect2100"
-       style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
+       style="fill:#add1f6;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
@@ -337,7 +369,7 @@
          y="227.49792"
          style="stroke-width:0.26458332">richness</tspan></text>
     <rect
-       style="fill:#fcd088;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       style="fill:#add1f6;fill-opacity:1;stroke:#000000;stroke-width:0.80522311;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
        id="rect2106"
        width="46.917789"
        height="18.558205"
@@ -405,13 +437,11 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-21.430407"
-       y="227.67282"
-       id="text19300"><tspan
-         sodipodi:role="line"
-         id="tspan19298"
-         x="-21.430407"
-         y="227.67282"
-         style="stroke-width:0.26458332">landuse intensity</tspan></text>
+       id="text19300"><textPath
+         xlink:href="#circle2135"
+         startOffset="50%"
+         id="textPath2139"><tspan
+   style="stroke-width:0.26458332"
+   id="tspan19298">landuse intensity</tspan></textPath></text>
   </g>
 </svg>
