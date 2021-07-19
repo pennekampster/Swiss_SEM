@@ -428,9 +428,9 @@ modindices(fit.simple.up, minimum.value = 0)
 ```
 
 
-## Standardized parameters
-Using analysis of covariances allows for estimation of both unstandardized (raw) and standardized parameters [@grace21].
-**While the analysis is based on covariances for estimating unstandardized parameters, it is based on correlations for estimating standardized parameters.**
+## Standardized coefficients
+Using analysis of covariances allows for estimation of both unstandardized (raw) and standardized coefficients [@grace21].
+While the analysis is based on covariances for estimating unstandardized coefficients, it is based on correlations for estimating standardized coefficients.
 The computational relation between correlations and covariances is:
 
 $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
@@ -438,13 +438,23 @@ $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
 ... where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$).
 
 
-Significance testing of standardized estimates violates statistical principles as significance tests are based on unstandardized (raw) parameters.
-Thus, standardized effects are used for interpretation only [@grace21].
+Significance testing of standardized coefficients violates statistical principles as significance tests are based on unstandardized (raw) coefficients
+Thus, standardized coefficients are used for interpretation only [@grace21].
 
+
+For raw coefficients, the predicted effects are in raw units and have a pretty straight-forward interpretation: as in our example, e.g., the predicted change in 10 mg/m^2^ above-ground biomass associated with a certain change in added nutrients.
+
+For the standardized coefficients, however, the interpretation is more complex: they express the predicted changes in terms of standard deviation units.
+Thus, they are only interpretable within a sample what hinders generalization.
+Still, they ease comparison as they are in the same units across various
+pathways.
+
+
+There are different standardizations available in `lavaan`, whereof `std.all` is based on the standard deviation:
 
 
 ```{r}
-standardizedsolution(fit.simple.up)
+standardizedsolution(fit.simple.up, type = "std.all")
 ```
 
 
@@ -599,6 +609,19 @@ roots of the error variances (e.g., $\sqrt{0.84} = 0.92$) or alternatively, $\sq
 
 
 
+# LM vs SEM
+Common conclusions:
+
+* Evenness is of little importance for the total biomass production
+
+
+Advantages of SEM over LM are:
+
+* SEM represents a network type approach with direct and indirect effects
+* SEM allows for sequential learning
+* LM more likely to detect interactions
+
+
 
 ## Report results
 * Annotated model graph
@@ -607,7 +630,7 @@ roots of the error variances (e.g., $\sqrt{0.84} = 0.92$) or alternatively, $\sq
 * Table of total and indirect effects of interest
 * Computed queries as table or graph (ADD CALCULATION OF INDIRECT EFFECTS TO ADVANCED PART?)
 
-[JBG material]
+[@grace21]
 
 
 
