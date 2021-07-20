@@ -15,7 +15,9 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library("here")
 ```
+
 
 
 # To do
@@ -24,35 +26,29 @@ knitr::opts_chunk$set(echo = TRUE)
 * multigroup fitting
 
 
-# Load libraries
+
+# Load data and `lavaan`
+Here, we use the very same data set as in the introductory part to SEM (`1_basic_modeling.html`)
+
+
 ```{r}
 library("lavaan")
-```
 
-
-# Load data
-Load the data and scale them to a mean of zero and a standard deviation of one.
-
-```{r}
-rm(list = ls())
-seabloom <- read.table("~/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
+# seabloom <- read.table("~/repos/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
+#                        sep = ",", header = TRUE)
+# seabloom <- seabloom[seabloom$year == 2000, ]
 
-seabloom[, c(4, 7, 13:15)] <- apply(seabloom[, c(4, 7, 13:15)],  2, scale)
+seabloom$mass.above <- seabloom$mass.above / 100
 ```
 
 
-# Latent and composite variables
-- difference between latent and composite variable
-- SEM with latent variable(s)
-- SEM with composite variable(s)
-
-![](Figures/LatentCompositeSEM.svg){width=70%}
 
 
-## Complex sampling structure
-Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups such as sexes or lifestages.
-As a result, the data violate the principle of being [*i.i.d.*](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) (independent and identically distributed).
+# Complex sampling structure
+Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages.
+As a result, these data violate the principle of being [*i.i.d.*](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) (independent and identically distributed).
 Thus, it is necessary to account for this structure in the data in the model.
 
 
@@ -64,7 +60,7 @@ The result is a corrected `lavaan` object.
 As sampling was performed in three different fields (`A`, `B` and `C`), let's adjust for this structure.
 
 
-### Recall the model
+## Recall the model
 ```{r}
 simple <-
 "mass.above ~ nadd + disk + rich + even
@@ -73,7 +69,10 @@ even ~ nadd
 
 rich ~~ even"
 
-fit.simple <- sem(simple, data = seabloom)
+fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
+summary(fit.simple)
+
+modindices(fit.simple, minimum.value = 3.84)
 ```
 
 
@@ -97,23 +96,55 @@ summary(fit.simple.up.nest, rsq = TRUE)
 ```
 
 
-## Latent variable "diversity"
+
+# Latent and composite variables
+- difference between latent and composite variable
+- SEM with latent variable(s)
+- SEM with composite variable(s)
+
+![](Figures/LatentCompositeSEM.svg){width=35%}
+
+
+## Latent variable
+Let's first create a latent variable "diversity" from the two measurements of diversity (richness and evenness).
 
 ```{r}
-sem2 <-"
-# Latent variable definition
-diversity =~ rich + even
-
-mass.above ~ nadd + diversity + disk
-diversity ~ nadd
-"
-
-fit.sem2 <- sem(sem2, data = seabloom)
-summary(fit.sem2)
+lv <- "diversity =~ rich + even"
+cfa(lv, seabloom)
 ```
 
 
-## Composite variable "land use intensity"
+```{r}
+lv <-"
+# Latent variable definition
+diversity =~ rich + even
+
+mass.above ~ nadd + disk + diversity
+diversity ~ nadd"
+
+fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
+summary(fit.lv)
+```
+
+
+## Composite variable
+Now, from the landuse parameters, we can create a composite variable...
+
+```{r}
+comp <- '
+landuse <~ disk + nadd
+
+rich ~ nadd
+even ~ nadd
+
+mass.above ~ rich + even + landuse'
+
+
+fit.comp <- sem(comp, data = seabloom, std.lv = TRUE)
+
+```
+
+
 
 <!-- ```{r} -->
 <!-- compositeModel <- ' -->
@@ -141,7 +172,6 @@ summary(fit.sem2)
 <!--  compositeFit <- sem(compositeModel, data = seabloom, std.lv = TRUE) -->
 <!--  -->
 <!-- ```  -->
- 
 
 
 ## Model pruning
