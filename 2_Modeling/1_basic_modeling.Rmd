@@ -30,14 +30,6 @@ library("here")
 ```
 
 
-# To do
-
-* If there is time at the end: add some manually calculated (very simple) examples and a bit of theory behind graphs, tracing rules and such
-* Look for possible exercises
-* ? Explain residuals and variance/covariance matrix in LM section?
-
-
-
 
 # Dataset
 The data for following exercises stem from the publication [*Grassland ecosystem recovery after soil disturbance depends on nutrient supply rate*](https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13591) and are publicly available at [Dryad](https://datadryad.org/stash/dataset/doi:10.5061/dryad.83bk3j9pc).
