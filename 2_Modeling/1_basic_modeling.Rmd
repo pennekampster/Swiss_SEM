@@ -40,13 +40,40 @@ The data for following exercises stem from the publication [*Grassland ecosystem
 The data were obtained during the long-term field experiment [Cedar Creek LTER](https://www.cedarcreek.umn.edu/) and target the effects of human disturbances on grassland ecosystem functioning and biodiversity.
 
 
+## Data collection
+### Treatment
+The **disturbance treatment** was replicated in the three old-fields (A, B and C) in a completely randomised block design (two treatments in each of three fields for a total of 6 35 × 55 m large plots).
+In 1982, in each of the fields, one of these two 35 × 55 m areas was selected to be disturbed with a disk harrow. After, the soil was hand raked to smooth the soil and remove any remaining vegetation, so that subsequent colonisation was solely from seeds or small rhizome fragments.
+Within each of the 6 large plots, the 54 small plots were arrayed in 6 × 9 grid with 1 m buffers between each plot. Aluminium flashing was buried to depth of 30 cm around each plot to prevent horizontal movement of nutrients and spreading of plants through vegetative growth.
+
+
+The **nutrient treatments** were replicated six times in a completely randomised design in each of the 35 × 55 m plots (54 4 × 4 m small plots) yielding `r 6 * 54` (6 x 54) plots.
+The analyses focuses on two nutrient treatments:
+
+1) Control (no nutrients; Treatment I) and
+2) Other Nutrients and 9.5 g of N (Treatment F)
+
+
+### Sampling and analysis
+At peak biomass (mid-July to late August), all aboveground biomass was clipped in a 3 m by 10 cm strip (0.3 m^2^) in each plot. Note that there were 4 years when the disturbed plots were not sampled or only sampled in a single field.
+The biomass was sorted into dead, previous year's growth (litter) and current year's growth (live biomass). Live biomass was sorted to species, dried and weighed.
+We estimated **total aboveground biomass** as the summed biomass of all non-woody species in each 0.3 m^2^ sample, converted to g/m^2^.
+<!-- We excluded woody biomass, because our goal was to estimate annual productivity and most of the woody biomass is from previous year’s growth. Woody plant biomass composed less than 1% of total biomass across the data set. -->
+
+**Species richness** is the number of species in each 0.3 m^2^ sample.
+We quantified **plant diversity** as the Effective Number of Species based on the Probability of Interspecific Encounter (ENS~PIE~), a measure of diversity that is more robust to the effects of sampling scale and less sensitive to the presence of
+rare species than species richness.
+ENS~PIE~ is equivalent to the Inverse Simpson's index of diversity ($1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass reesented by species $i$).
+<!-- Simpson’s evenness (E) satisfies the main requirements of an evenness index (Smith and Wilson, 1996). In addition, it is directly related to ENS~PIE~ through the relationship E = ENS~PIE~/S (Smith and Wilson, 1996), thus we can factor diversity directly into its richness and evenness components through the relationship ENS~PIE~ = S*E. -->
+<!-- Across all data, ENS~PIE~ was positively correlated with richness (r = 0.63) but uncorrelated with evenness (r = 0.03). Richness and evenness were negatively correlated (r = -0.60). -->
+
+
+
 
 ## Load data
 ```{r}
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
-# seabloom <- read.table("~/repos/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
-#                        sep = ",", header = TRUE)
 ```
 
 
@@ -85,41 +112,13 @@ Exploring the data reveals 16 variables with each 5040 data points:
 
 
 ### Overview
-The `pairs` function yields an overview over the numerical data.
+The `pairs` function yields an overview over the numerical data that we will use for the following exercises.
 
 
 ```{r}
 pairs(seabloom[, -c(1:3, 5:6, 8:10, 12, 16)],
       lower.panel = NULL)
 ```
-
-
-## Materials and methods
-### Disturbance treatment
-The **disturbance treatment** was replicated in the three old-fields (A, B and C) in a completely randomised block design (two treatments in each of three fields for a total of 6 35 × 55 m large plots).
-In April 1982, in each of the fields, one of these two 35 × 55 m areas was selected to be disturbed with a 45 cm diameter disk harrow pulled by a tractor 20 times in one direction, 20 times perpendicularly and 5 times diagonally to the first passes. Following the disking, the soil was hand raked to smooth the soil and remove any remaining vegetation, so that subsequent colonisation was solely from seeds or small rhizome fragments.
-Within each of the 6 large plots, the 54 small plots were arrayed in 6 × 9 grid with 1 m buffers between each plot. Aluminium flashing was buried to depth of 30 cm around each plot to prevent horizontal movement of nutrients and spreading of plants through vegetative growth.
-
-
-### Nutrient treatments
-The **nutrient treatments** were replicated six times in a completely randomised design in each of the 35 × 55 m plots (54 4 × 4 m small plots) yielding `r 6 * 54` (6 x 54) plots.
-The analyses focuses on two nutrient treatments:
-
-1) Control (no nutrients; Treatment I) and
-2) Other Nutrients and 9.5 g of N (Treatment F)
-
-
-### Sampling and analysis
-At peak biomass (mid-July to late August), all aboveground biomass was clipped in a 3 m by 10 cm strip (0.3 m^2^) in each plot. Note that there were 4 years when the disturbed plots were not sampled or only sampled in a single field. The biomass was sorted into dead, previous year’s growth (litter) and live, current year’s growth (live biomass). Live biomass was sorted to species, dried to constant mass at 40°C, and weighed to the nearest 0.01 g.
-We estimated total aboveground biomass as the summed biomass of all non-woody species in each 0.3 m^2^ sample, converted to g m^-2^. We excluded woody biomass, because our goal was to estimate annual productivity and most of the woody biomass is from previous year’s growth. Woody plant biomass composed less than 1% of total biomass across the data set.
-
-**Shorten this:** Species richness is the number of species in each 0.3 m^2^ sample.
-We quantified plant diversity as the Effective Number of Species based on the Probability of Interspecific Encounter (ENS~PIE~), a measure of diversity that is more robust to the effects of sampling scale and less sensitive to the presence of
-rare species than species richness (Jost, 2006, 2007; Chase and Knight, 2013).
-ENS~PIE~ is equivalent to the Inverse Simpson’s index of diversity which is calculated as $1 / \sum_{i=1}^{S} p_i^2$  where S is the total number of species (i.e. species richness) and p~i~ is the proportion of the community biomass reesented by species i (Jost, 2006, 2007; Chase and Knight, 2013).
-Simpson’s evenness (E) satisfies the main requirements of an evenness index (Smith and Wilson, 1996). In addition, it is directly related to ENS~PIE~ through the relationship E = ENS~PIE~/S (Smith and Wilson, 1996), thus we can factor diversity directly into its richness and evenness components through the relationship ENS~PIE~ = S*E.
-
-<!-- Across all data, ENS~PIE~ was positively correlated with richness (r = 0.63) but uncorrelated with evenness (r = 0.03). Richness and evenness were negatively correlated (r = -0.60). -->
 
 
 # Metamodel
