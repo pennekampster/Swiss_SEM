@@ -28,7 +28,8 @@ library("here")
 
 
 # Load data and `lavaan`
-Here, we use the very same data set as in the introductory part to SEM (`1_basic_modeling.html`)
+Here, we use the very same data set as in the introductory part to SEM (`1_basic_modeling.html`).
+Also, we rescale the biomass so that it is approximately in the same range as the other variables.
 
 
 ```{r}
@@ -48,7 +49,7 @@ seabloom$mass.above <- seabloom$mass.above / 100
 
 # Complex sampling structure
 Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages.
-As a result, these data violate the principle of being [*i.i.d.*](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) (independent and identically distributed).
+As a result, these data violate the principle of being [*i.i.d.* (independent and identically distributed)](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).
 Thus, it is necessary to account for this structure in the data in the model.
 
 
@@ -60,12 +61,17 @@ The result is a corrected `lavaan` object.
 As sampling was performed in three different fields (`A`, `B` and `C`), let's adjust for this structure.
 
 
-## Recall the model
+## Rerun the model
+First, we rerun the model. But this time, we will use the full data set over all the years. This increases sample size and allows to incorporate also precipitation.
+
+![](Figures/SimplePrecSEM.svg){width=70%}
+
+
 ```{r}
 simple <-
-"mass.above ~ nadd + disk + rich + even
-rich ~ nadd
-even ~ nadd
+"mass.above ~ nadd + disk + precip.mm + rich + even
+rich ~ nadd + precip.mm
+even ~ nadd + precip.mm
 
 rich ~~ even"
 
@@ -73,6 +79,14 @@ fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
 
 modindices(fit.simple, minimum.value = 3.84)
+```
+
+
+```{r}
+fit.simple.up <- update(fit.simple, add = "rich ~ disk")
+summary(fit.simple.up, fit.measures = TRUE)
+
+modindices(fit.simple.up, minimum.value = 3)
 ```
 
 
