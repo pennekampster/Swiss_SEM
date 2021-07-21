@@ -42,6 +42,10 @@ seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad
 # seabloom <- seabloom[seabloom$year == 2000, ]
 
 seabloom$mass.above <- seabloom$mass.above / 100
+
+## mm to cm
+seabloom$precip.mm <- seabloom$precip.mm / 100
+seabloom$precip.gs <- seabloom$precip.gs / 100
 ```
 
 
@@ -53,18 +57,11 @@ As a result, these data violate the principle of being [*i.i.d.* (independent an
 Thus, it is necessary to account for this structure in the data in the model.
 
 
-The add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data with the help of the package [`survey`](https://r-survey.r-forge.r-project.org/survey/).
-With this, `lavaan` objects can be processed further with the specific data structure:
-first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
-The result is a corrected `lavaan` object.
-
-As sampling was performed in three different fields (`A`, `B` and `C`), let's adjust for this structure.
-
 
 ## Rerun the model
-First, we rerun the model. But this time, we will use the full data set over all the years. This increases sample size and allows to incorporate also precipitation.
+First, we rerun the model. But this time, we will use the full data set over all the years. This increases sample size (to $n =$ `r dim(seabloom)[1]`) and allows to incorporate also precipitation that varies among years (see DAG below).
 
-![](Figures/SimplePrecSEM.svg){width=70%}
+![](Figures/SimplePrecSEM.svg){width=60%}
 
 
 ```{r}
@@ -77,37 +74,50 @@ rich ~~ even"
 
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
-
-modindices(fit.simple, minimum.value = 3.84)
 ```
+
+The GOF is unsatisfying and a look at the modification indices suggests--among others--that richness (`rich`) is also influenced by disturbance (`disk`).
+After including this path into the model, the GOF well meets the requirements:
 
 
 ```{r}
+modindices(fit.simple, minimum.value = 3.84)
+
 fit.simple.up <- update(fit.simple, add = "rich ~ disk")
 summary(fit.simple.up, fit.measures = TRUE)
-
-modindices(fit.simple.up, minimum.value = 3)
 ```
 
+
+## Adjust for nested data
+The add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data with the help of the package [`survey`](https://r-survey.r-forge.r-project.org/survey/).
+With this, `lavaan` objects can be processed further with a specific data structure:
+first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
+The result is a corrected `lavaan` object.
+
+As sampling was performed in three different fields (`A`, `B` and `C`), let's adjust for this structure.
 
 ```{r}
 library("lavaan.survey")
 
-design <- svydesign(ids = ~ field, nest = TRUE, data = seabloom)
-fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple, 
+design <- svydesign(ids = ~ plot, 
+                    strata = ~ field,
+                    nest = TRUE, 
+                    data = seabloom)
+
+
+fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple.up, 
                                     survey.design = design)
-```
-
-Two warnings pop up:
-
-* The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision.
-* The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)[1:2]` and `r table(seabloom$field)[3]` observations in these three fields, respectively. With `r fit.simple.up.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field)[1:2] / fit.simple.up.nest@Fit@npar, digits = 1)` and `r round(table(seabloom$field)[3] / fit.simple.up.nest@Fit@npar, digits = 1)`  samples per free parameter.
-**This is actually low and might be the reason of the failed model fitting.**
-
-
-```{r}
 summary(fit.simple.up.nest, rsq = TRUE)
 ```
+
+<!-- Two warnings pop up: -->
+
+<!-- * The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision. -->
+<!-- * The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)[1:2]` and `r table(seabloom$field)[3]` observations in these three fields, respectively. With `r fit.simple.up.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field)[1:2] / fit.simple.up.nest@Fit@npar, digits = 1)` and `r round(table(seabloom$field)[3] / fit.simple.up.nest@Fit@npar, digits = 1)`  samples per free parameter. -->
+<!-- **This is actually low and might be the reason of the failed model fitting.** -->
+
+
+## Multilevel models?
 
 
 
@@ -122,9 +132,43 @@ summary(fit.simple.up.nest, rsq = TRUE)
 ## Latent variable
 Let's first create a latent variable "diversity" from the two measurements of diversity (richness and evenness).
 
+
+Indicators for a LV should be positively correlated with each other.
+It's not.
+Take the inverse of evenness ():
 ```{r}
-lv <- "diversity =~ rich + even"
-cfa(lv, seabloom)
+cor(seabloom$even, seabloom$rich)
+range(seabloom$even)
+
+seabloom$even.rev <- 1 - seabloom$even
+cor(seabloom$even.rev, seabloom$rich)
+
+```
+
+
+
+* Latent variable models with only 2 indicators are locally non-
+identified. To solve this problem, we can (a) ensure x1 and x2 have
+equal variances, in this case by standardizing the data. (2) When latent
+variables are included we must specify a fixed value for some
+parameter associated with the LV to achieve identification. The lavaan
+default is to set the loading from the LV to the first-mentioned indicator
+to 1.0. (3) For single-indicator LVs, the default measurement error is
+set to 0.0.
+
+
+```{r}
+round(cor(seabloom[, c(11:12, 14, 16:17)]), digits=2)
+
+
+lv <-
+"diversity =~ rich + even.rev # + ens.pie
+rain =~ precip.mm + precip.gs"
+
+cfa.lv <- cfa(lv, seabloom)
+summary(cfa.lv)
+
+varTable(cfa.lv)
 ```
 
 
