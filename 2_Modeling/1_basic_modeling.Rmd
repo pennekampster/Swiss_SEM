@@ -54,14 +54,11 @@ The analyses focuses on two nutrient treatments:
 At peak biomass (mid-July to late August), all aboveground biomass was clipped in a 3 m by 10 cm strip (0.3 m^2^) in each plot. Note that there were 4 years when the disturbed plots were not sampled or only sampled in a single field.
 The biomass was sorted into dead, previous year's growth (litter) and current year's growth (live biomass). Live biomass was sorted to species, dried and weighed.
 We estimated **total aboveground biomass** as the summed biomass of all non-woody species in each 0.3 m^2^ sample, converted to g/m^2^.
-<!-- We excluded woody biomass, because our goal was to estimate annual productivity and most of the woody biomass is from previous year’s growth. Woody plant biomass composed less than 1% of total biomass across the data set. -->
 
 **Species richness** is the number of species in each 0.3 m^2^ sample.
 We quantified **plant diversity** as the Effective Number of Species based on the Probability of Interspecific Encounter (ENS~PIE~), a measure of diversity that is more robust to the effects of sampling scale and less sensitive to the presence of
 rare species than species richness.
 ENS~PIE~ is equivalent to the Inverse Simpson's index of diversity ($1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass reesented by species $i$).
-<!-- Simpson’s evenness (E) satisfies the main requirements of an evenness index (Smith and Wilson, 1996). In addition, it is directly related to ENS~PIE~ through the relationship E = ENS~PIE~/S (Smith and Wilson, 1996), thus we can factor diversity directly into its richness and evenness components through the relationship ENS~PIE~ = S*E. -->
-<!-- Across all data, ENS~PIE~ was positively correlated with richness (r = 0.63) but uncorrelated with evenness (r = 0.03). Richness and evenness were negatively correlated (r = -0.60). -->
 
 
 
@@ -106,13 +103,42 @@ Exploring the data reveals 16 variables with each 5040 data points:
 <!--   + `S` = sedge -->
 
 
+### Factors as factors
+As `ntrt` is a coding scheme for different nutrients added, it is crucial to treat it as such rather than as integers.
+
+```{r}
+seabloom$ntrt <- as.factor(seabloom$ntrt)
+str(seabloom$ntrt)
+```
+
+<div class="alert alert-info">
+  <strong>Exercise:</strong> what do you think is wrong with keeping `ntrt` as integers?
+</div>
+
+
+
+### Aggregate
+```{r}
+seabloom.agg <- aggregate(list(rich = seabloom$rich, even = seabloom$even,
+                               ens.pie = seabloom$ens.pie, 
+                               mass.above = seabloom$mass.above, 
+                               precip.mm = seabloom$precip.mm,
+                               precip.gs = seabloom$precip.gs),
+                          by = list(year = seabloom$year, nadd = seabloom$nadd,
+                                    disk = seabloom$disk, 
+                                    field = seabloom$field),
+                          FUN = mean, data = seabloom)
+```
+
+
+
+
 ### Overview
 The `pairs` function yields an overview over the numerical data that we will use for the following exercises.
 
 
 ```{r}
-pairs(seabloom[, -c(1:3, 5:6, 8:10, 12, 16)],
-      lower.panel = NULL)
+pairs(seabloom.agg[, -c(1, 3:4)], lower.panel = NULL)
 ```
 
 
@@ -126,14 +152,15 @@ Also some elements of the environment influence biodiversity and thus, have an i
 ![](Figures/Metamodel.svg){width=70%}
 
 
-## Subset to one year
-For simplicity, set the focus on only one year.
-Then, `r dim(seabloom[seabloom$year == 2000, ])[1]` observations remain.
+<!-- ## Subset to one year -->
+<!-- For simplicity, set the focus on only one year. -->
+<!-- Then, `r dim(seabloom[seabloom$year == 2000, ])[1]` observations remain. -->
 
-```{r}
-seabloom <- seabloom[seabloom$year == 2000, ]
-dim(seabloom)
-```
+<!-- NOT: -->
+<!-- ```{r} -->
+<!-- # seabloom <- seabloom[seabloom$year == 2000, ] -->
+<!-- # dim(seabloom) -->
+<!-- ``` -->
 
 
 # Linear model
@@ -164,42 +191,40 @@ associations" what hinders interpretations [@grace21].
 ```
 
 
-We encounter a problem: the estimates for `precip.mm` are all `NA`s.
-Reason is the focus on a single year (i.e. the year 2000) what fixes the value for `precipitation.mm` to 599.7 mm (i.e. the precipitation in 2000) and as it is impossible to predict anything from a single value, `NA` is returned.
+<!-- We encounter a problem: the estimates for `precip.mm` are all `NA`s. -->
+<!-- Reason is the focus on a single year (i.e. the year 2000) what fixes the value for `precipitation.mm` to 599.7 mm (i.e. the precipitation in 2000) and as it is impossible to predict anything from a single value, `NA` is returned. -->
 
+<!-- ```{r} -->
+<!-- summary(seabloom$precip.mm) -->
+<!-- ``` -->
 
-```{r}
-summary(seabloom$precip.mm)
-```
+<!-- Thus, we exclude `precipitation.mm` from the model from now on. -->
 
-
-Thus, we exclude `precipitation.mm` from the model from now on.
-
-```{r}
-lm.dir <- lm(mass.above ~ nadd + rich + even, data = seabloom)
-summary(lm.dir)
-```
+<!-- ```{r} -->
+<!-- lm.dir <- lm(mass.above ~ nadd + rich + even, data = seabloom) -->
+<!-- summary(lm.dir) -->
+<!-- ``` -->
 
 
 
 ## Indirect effects
 To account for the indirect effects, two additional LMs are necessary: one with richness and one with evenness as response.
 
-![](Figures/LMind.svg){width=40%}
+![](Figures/LMind.svg){width=37%}
 
 
 ```{r}
-lm.rich <- lm(rich ~ nadd, data = seabloom)
+lm.rich <- lm(rich ~ nadd + precip.mm, data = seabloom.agg)
 summary(lm.rich)
 
-lm.even <- lm(even ~ nadd, data = seabloom)
+lm.even <- lm(even ~ nadd + precip.mm, data = seabloom.agg)
 summary(lm.even)
 ```
 
 
 ## Conclusion
-The direct effect model showed that in the year 2000 biomass was statistically significantly positively related to nutrient input (the nitrogen additon rate `nadd`) and species richness (`rich`), but not to evenness (`even`).
-Additionally, nutrient input had a statistically significantly negative influence on species richness and to a lesser extent, also on evenness.
+**UPDATE: The direct effect model showed that in the year 2000 biomass was statistically significantly positively related to nutrient input (the nitrogen additon rate `nadd`) and species richness (`rich`), but not to evenness (`even`).
+Additionally, nutrient input had a statistically significantly negative influence on species richness and to a lesser extent, also on evenness.**
 
 
 
@@ -226,7 +251,7 @@ Inspecting our set of variables shows that correlations between all variables ar
 
 
 ```{r}
-round(cor(seabloom[, c(4, 7, 13:15)]), digits = 2)
+round(cor(seabloom.agg[, c(2:3, 5:10)]), digits = 2)
 ```
 
 
@@ -266,9 +291,9 @@ For example, an arrow in a DAG is represented by a tilde.
 
 ```{r class.source = 'fold-hide'}
 simple <-
-"mass.above ~ nadd + disk + rich + even
-rich ~ nadd
-even ~ nadd"
+"mass.above ~ nadd + rich + even + precip.mm + disk
+rich ~ nadd + precip.mm
+even ~ nadd + precip.mm"
 ```
 
 
@@ -286,29 +311,28 @@ The package [`MVN`](https://cran.r-project.org/web/packages/MVN/index.html) allo
 ```{r}
 library("MVN")
 
-mvn(data = seabloom[, c(13:15)], mvnTest = "hz", univariatePlot = "qqplot")
+mvn(data = seabloom.agg[, c(5, 6, 8)], mvnTest = "hz", univariatePlot = "qqplot")
 ```
 
 
-Alternatively, also histograms in comparison overlaid with a normal distribution allows to gain insight into the distribution:
+Alternatively, also histograms overlaid with a normal distribution of the same mean and standard deviation as the data allows to gain insight into the distribution.
+First, let's define a function that plots the histogram and the density curve:
+```{r}
+histWithDensity <- function(variable){
+  hist(variable, prob = TRUE, main = "")
+  x <- seq(min(variable), max(variable), length = 400)
+  y <- dnorm(x, mean = mean(variable), sd = sd(variable))
+  lines(x, y, col = "red", lwd = 2)
+  }
+```
+
+
+Then, we can apply this function to our three endogenous variables:
 ```{r}
 par(mfrow = c(1, 3))
-hist(seabloom$mass.above, prob = TRUE, main = "")
-x <- seq(min(seabloom$mass.above), max(seabloom$mass.above), length = 400)
-f <- dnorm(x, mean = mean(seabloom$mass.above), sd = sd(seabloom$mass.above))
-lines(x, f, col = "red", lwd = 2)
-
-
-hist(seabloom$rich, prob = TRUE, main = "")
-x <- seq(min(seabloom$rich), max(seabloom$rich), length = 400)
-f <- dnorm(x, mean = mean(seabloom$rich), sd = sd(seabloom$rich))
-lines(x, f, col = "red", lwd = 2)
-
-
-hist(seabloom$even, prob = TRUE, main = "")
-x <- seq(min(seabloom$even), max(seabloom$even), length = 400)
-f <- dnorm(x, mean = mean(seabloom$even), sd = sd(seabloom$even))
-lines(x, f, col = "red", lwd = 2)
+histWithDensity(seabloom.agg$mass.above)
+histWithDensity(seabloom.agg$rich)
+histWithDensity(seabloom.agg$even)
 ```
 
 
@@ -319,72 +343,43 @@ lines(x, f, col = "red", lwd = 2)
 
 
 
-## Data transformation
-Transformation of the three endogenous variables shall make them more "normal".
-However, this works only for continuous variables.
-Count data (in our example `rich`) are discrete data and thus, only have non-zero probabilities on the natural numbers.
-
-
-```{r}
-par(mfrow = c(2, 2))
-hist(seabloom$rich)
-qqnorm(seabloom$rich)
-qqline(seabloom$rich)
-
-hist(sqrt(seabloom$rich))
-qqnorm(sqrt(seabloom$rich))
-qqline(sqrt(seabloom$rich))
-```
+<!-- ## Data transformation -->
+<!-- Transformation of the three endogenous variables shall make them more "normal". -->
+<!-- However, this works only for continuous variables. -->
+<!-- Count data (in our example `rich`) are discrete data and thus, only have non-zero probabilities on the natural numbers. -->
 
 
 
+<!-- ```{r} -->
+<!-- par(mfrow = c(1, 3)) -->
 
+<!-- # log transform for the continuous variables -->
+<!-- seabloom.agg$log.mass.above <- log1p(seabloom.agg$mass.above) -->
+<!-- seabloom.agg$log.even <- log1p(seabloom.agg$even) -->
+<!-- seabloom.agg$log.rich <- log1p(seabloom.agg$rich) -->
 
-```{r}
-par(mfrow = c(1, 3))
+<!-- mvn(data = seabloom.agg[, c(11:13)], mvnTest = "hz", univariatePlot = "qqplot") -->
 
-# log transform for the continuous variables
-seabloom$log.mass.above <- log(seabloom$mass.above)
-seabloom$log.even <- log(seabloom$even)
-seabloom$log.rich <- log(seabloom$rich)
-
-
-par(mfrow = c(1, 3))
-hist(seabloom$log.mass.above, prob = TRUE, main = "")
-x <- seq(min(seabloom$log.mass.above), max(seabloom$log.mass.above), length = 400)
-f <- dnorm(x, mean = mean(seabloom$log.mass.above),
-           sd = sd(seabloom$log.mass.above))
-lines(x, f, col = "red", lwd = 2)
-
-
-hist(seabloom$log.rich, prob = TRUE, main = "")
-x <- seq(min(seabloom$log.rich), max(seabloom$log.rich), length = 400)
-f <- dnorm(x, mean = mean(seabloom$log.rich), sd = sd(seabloom$log.rich))
-lines(x, f, col = "red", lwd = 2)
-
-
-hist(seabloom$log.even, prob = TRUE, main = "")
-x <- seq(min(seabloom$log.even), max(seabloom$log.even), length = 400)
-f <- dnorm(x, mean = mean(seabloom$log.even), sd = sd(seabloom$log.even))
-lines(x, f, col = "red", lwd = 2)
-
-mvn(data = seabloom[, c(17:19)], mvnTest = "hz", univariatePlot = "qqplot")
-```
+<!-- par(mfrow = c(1, 3)) -->
+<!-- histWithDensity(seabloom.agg$log.mass.above) -->
+<!-- histWithDensity(seabloom.agg$log.rich) -->
+<!-- histWithDensity(seabloom.agg$log.even) -->
+<!-- ``` -->
 
 
 
 
 ## Fit the model
 Now, let's fit the model with `lavaan`'s `sem` function.
-<!-- As the data clearly deviates from a MVN, we use the `MLM` estimator that provides standard errors and a $\chi^2$ test statistic robust to non-normality. -->
-<!-- Hereby, the Satorra-Bentler correction is used to correct the value of the ML-based $\chi^2$ test statistic by an amount that reflects the degree of [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) [@rosseel12].^[More background on robust corrections to standard errors and test statistics in SEM can be found in @savalei14.] -->
+As the data clearly deviates from a MVN, we use the `MLM` estimator that provides standard errors and a $\chi^2$ test statistic robust to non-normality.
+Hereby, the Satorra-Bentler correction is used to correct the value of the ML-based $\chi^2$ test statistic by an amount that reflects the degree of [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) [@rosseel12].^[More background on robust corrections to standard errors and test statistics in SEM can be found in @savalei14.]
 
 
 
 
 
 ```{r}
-fit.simple <- sem(simple, data = seabloom)
+fit.simple <- sem(simple, data = seabloom.agg, estimator = "MLM")
 ```
 
 
@@ -411,14 +406,16 @@ The boxplots show that the range of the variables is now more similar.
 
 
 ```{r}
-seabloom$mass.above <- seabloom$mass.above / 100
-boxplot(seabloom[, c(4, 7, 13:15)])
+seabloom.agg$mass.above <- seabloom.agg$mass.above / 100
+seabloom.agg$precip.mm <- seabloom.agg$precip.mm / 100
+
+boxplot(seabloom.agg[, c(2, 5:6, 8:9)])
 ```
 
-Then, run `sem` again with the rescaled `biomass` variable:
+Then, run `sem` again with the rescaled `biomass` and `precip.mm` variable:
 
 ```{r}
-fit.simple <- sem(simple, data = seabloom)
+fit.simple <- sem(simple, data = seabloom.agg, estimator = "MLM")
 summary(fit.simple, fit.measures = TRUE)
 ```
 
@@ -426,10 +423,10 @@ summary(fit.simple, fit.measures = TRUE)
 ## Goodness of fit
 This time, the model converged, however, with poor fit:
 
-- The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(fitmeasures(fit.simple)[3], digits = 2)` / `r fitmeasures(fit.simple)[4]` = `r round(fitmeasures(fit.simple)[3] / fitmeasures(fit.simple)[4], digits = 2)`, what indicates that the model is quite far away from a decent fit [@grace21].
+- The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(fitmeasures(fit.simple, "chisq"), digits = 2)` / `r fitmeasures(fit.simple, "df")` = `r round(fitmeasures(fit.simple, "chisq") / fitmeasures(fit.simple, "df"), digits = 2)`, what indicates that the model is quite far away from a decent fit [@grace21].
 - The $p$-value, which represents the probability of the data given our model (or no significant discrepancy between model and data), should be larger than 0.05 [@grace21].
 - The [comparative fit index (CFI)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99].
-Our CFI of `r round(fitmeasures(fit.simple)[13], digits = 2)` is fairly below this threshold.
+Our robust CFI of `r round(fitmeasures(fit.simple, "cfi.robust"), digits = 2)` is fairly below this threshold.
 
 
 
@@ -460,16 +457,16 @@ With the function `update()` it is possible to directly incorporate the missing 
 fit.simple.up <- update(fit.simple, add = "rich ~~ even")
 summary(fit.simple.up, fit.measures = TRUE)
 
-modindices(fit.simple.up, minimum.value = 3)
+modindices(fit.simple.up, minimum.value = 3.84)
 ```
 
-Now, the model has a decent fit with a ratio of test statistic and degrees of freedom much smaller than two (i.e. `r round(fitmeasures(fit.simple.up)[3] / fitmeasures(fit.simple.up)[4], digits = 2)`) and a $p$-value of `r round(fitmeasures(fit.simple.up)[5], digits = 2)`.
-Further, also the CFI is now `r round(fitmeasures(fit.simple.up)[9], digits = 2)`.
+Now, the model has a decent fit with a ratio of test statistic and degrees of freedom smaller than two (i.e. `r round(fitmeasures(fit.simple.up, "chisq") / fitmeasures(fit.simple.up, "df"), digits = 2)`) and a $p$-value of `r round(fitmeasures(fit.simple.up, "pvalue"), digits = 2)`.
+Further, also the robust CFI is now `r round(fitmeasures(fit.simple.up, "cfi.robust"), digits = 2)`.
 
 Another look at the modification indices shows that further modifications would yield only smallest improvements to the model fit, so that we can ignore them confidently:
 
 ```{r}
-modindices(fit.simple.up, minimum.value = 0)
+modindices(fit.simple.up, minimum.value = 0.01)
 ```
 
 
@@ -532,13 +529,13 @@ Adding each a path from `disk` to richness (`rich`) and evenness (`even`) turns 
 
 ```{r}
 satur <-
-"mass.above ~ nadd + disk + rich + even
-rich ~ nadd + disk
-even ~ nadd + disk
+"mass.above ~ nadd + rich + even + precip.mm + disk
+rich ~ nadd + precip.mm + disk
+even ~ nadd + precip.mm + disk
 
 rich ~~ even"
 
-fit.satur <- sem(satur, data = seabloom)
+fit.satur <- sem(satur, data = seabloom.agg, estimator = "MLM")
 summary(fit.satur, rsq = TRUE)
 ```
 
@@ -636,8 +633,9 @@ lavaanPlot(model = fit.simple.up,
            node_options = list(shape = "box", color = "gray",
                                fontname = "Helvetica"),
            edge_options = list(color = "black"),
-           coefs = TRUE, covs = TRUE, stars = c("covs", "regress"))
+           coefs = TRUE, covs = FALSE, stars = "regress")
 ```
+
 
 
 What is missing in this plot are the $R^2$ values for the endogenous variables.
