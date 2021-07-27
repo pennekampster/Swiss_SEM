@@ -326,6 +326,21 @@ Count data (in our example `rich`) are discrete data and thus, only have non-zer
 
 
 ```{r}
+par(mfrow = c(2, 2))
+hist(seabloom$rich)
+qqnorm(seabloom$rich)
+qqline(seabloom$rich)
+
+hist(sqrt(seabloom$rich))
+qqnorm(sqrt(seabloom$rich))
+qqline(sqrt(seabloom$rich))
+```
+
+
+
+
+
+```{r}
 par(mfrow = c(1, 3))
 
 # log transform for the continuous variables
