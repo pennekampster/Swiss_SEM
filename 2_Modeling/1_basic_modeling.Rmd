@@ -37,6 +37,9 @@ The data were obtained during the long-term field experiment [Cedar Creek LTER](
 
 
 ## Data collection
+Following description of the data collection process is taken from @seabloom20.
+
+
 ### Treatment
 The **disturbance treatment** was replicated in the three old-fields (A, B and C) in a completely randomised block design (two treatments in each of three fields for a total of 6 35 × 55 m large plots).
 In 1982, in each of the fields, one of these two 35 × 55 m areas was selected to be disturbed with a disk harrow. After, the soil was hand raked to smooth the soil and remove any remaining vegetation, so that subsequent colonisation was solely from seeds or small rhizome fragments.
@@ -92,7 +95,7 @@ Exploring the data reveals 16 variables with each 5040 data points:
 - `mass.above`: aboveground biomass (g/m^2^)
 - `rich`: species richness (species/0.3 m^2^)
 - `even`: Simpson's evenness
-- `ens.pie`: effective number of species, (= probability of interspecific encounter	decimal	equivalent to inverse Simpson's diversity)
+- `ens.pie`: effective number of species (= probability of interspecific encounter,	equivalent to inverse Simpson's diversity)
 <!-- - `origin`: species origin (native or introduced) -->
 <!-- - `duration`: species lifespan (annual, bienniel, perennial) -->
 <!-- - `functional.group`: species functional group: -->
@@ -118,6 +121,9 @@ str(seabloom$ntrt)
 
 
 ### Aggregate
+To cirumvent the dilemma with the count data, the data were averaged by year, nutrient  and disturbance treatment and field.
+
+
 ```{r}
 seabloom.agg <- aggregate(list(rich = seabloom$rich, even = seabloom$even,
                                ens.pie = seabloom$ens.pie, 
@@ -146,7 +152,7 @@ pairs(seabloom.agg[, -c(1, 3:4)], lower.panel = NULL)
 A [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind a model and links it to theory.
 Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
 productivity (biomass) is directly influenced by the environment (nutrients, disturbance and precipitation) on the one hand and biodiversity (richness and evenness) on the other hand.
-Also some elements of the environment influence biodiversity and thus, have an indirect effect on productivity via biodiversity.
+Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
 
 
 ![](Figures/Metamodel.svg){width=70%}
@@ -233,8 +239,7 @@ Structural equations aspire to represent cause-effect relationships and thus, th
 
 
 
-To evaluate the SEMs, we will use the package [`lavaan`](https://lavaan.ugent.be/).
-This powerful piece of software relies on the computation of covariance matrices to fit the structural equations.
+To evaluate the SEMs, we will use the package [`lavaan`](https://lavaan.ugent.be/) that relies on the computation of covariance matrices to fit the structural equations (this approach is known as 'global estimation').
 It comes with full support for categorical data (any mixture of binary, ordinal and continuous observed variables), can handle both latent and composite variables, performs mediation analysis and calculates the magnitude of indirect effects [@rosseel12; @rosseel21].
 
 
@@ -247,7 +252,7 @@ library("lavaan")
 ## Collinearity
 Variables that are highly correlated with $r > 0.85$ become redundant. Then, one of them can be dropped or they can be modeled summarized as a latent variable [@grace06].
 
-Inspecting our set of variables shows that correlations between all variables are fairly low.
+Inspecting our set of variables shows that correlations between all variables are rather weak except the precipitation throughout the year and those throughout the field season.
 
 
 ```{r}
@@ -257,9 +262,9 @@ round(cor(seabloom.agg[, c(2:3, 5:10)]), digits = 2)
 
 ## An example SEM
 This toy model shall illustrate the logic of SEM.
-It contains the same variables and aims at evaluating the same metamodel as the LM before to ease Comparability.
+It contains the same variables and aims at evaluating the same metamodel as the LM before to ease comparability between the two methods.
 A huge benefit of SEM is that variables can appear as both predictors and responses what allows the evaluation of direct and indirect effects in one go (as shown in the [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) below).
-In SEM jargon, predictors (nodes that have no arrows pointing at them) are colled exogenous-, while responses (nodes that have arrows pointing at them) endogeneous variables.
+In SEM jargon, predictors (nodes that have no arrows pointing at them) are called exogenous-, while responses (nodes that have arrows pointing at them) endogeneous variables.
 
 
 ![](Figures/SimpleSEM.svg){width=70%}
@@ -316,7 +321,7 @@ mvn(data = seabloom.agg[, c(5, 6, 8)], mvnTest = "hz", univariatePlot = "qqplot"
 
 
 Alternatively, also histograms overlaid with a normal distribution of the same mean and standard deviation as the data allows to gain insight into the distribution.
-First, let's define a function that plots the histogram and the density curve:
+First, let's define a function that plots the histogram and the expected density curve:
 ```{r}
 histWithDensity <- function(variable){
   hist(variable, prob = TRUE, main = "")
@@ -349,23 +354,21 @@ histWithDensity(seabloom.agg$even)
 <!-- Count data (in our example `rich`) are discrete data and thus, only have non-zero probabilities on the natural numbers. -->
 
 
+<!-- ```{r} -->
+<!-- par(mfrow = c(1, 3)) -->
 
-```{r}
-par(mfrow = c(1, 3))
+<!-- # log transform for the continuous variables -->
+<!-- seabloom.agg$log.mass.above <- log1p(seabloom.agg$mass.above) -->
+<!-- seabloom.agg$log.even <- log1p(seabloom.agg$even) -->
+<!-- seabloom.agg$log.rich <- log1p(seabloom.agg$rich) -->
 
-# log transform for the continuous variables
-seabloom.agg$log.mass.above <- log1p(seabloom.agg$mass.above)
-seabloom.agg$log.even <- log1p(seabloom.agg$even)
-seabloom.agg$log.rich <- log1p(seabloom.agg$rich)
+<!-- mvn(data = seabloom.agg[, c(11:13)], mvnTest = "hz", univariatePlot = "qqplot") -->
 
-
-mvn(data = seabloom.agg[, c(11:13)], mvnTest = "hz", univariatePlot = "qqplot")
-
-par(mfrow = c(1, 3))
-histWithDensity(seabloom.agg$log.mass.above)
-histWithDensity(seabloom.agg$log.rich)
-histWithDensity(seabloom.agg$log.even)
-```
+<!-- par(mfrow = c(1, 3)) -->
+<!-- histWithDensity(seabloom.agg$log.mass.above) -->
+<!-- histWithDensity(seabloom.agg$log.rich) -->
+<!-- histWithDensity(seabloom.agg$log.even) -->
+<!-- ``` -->
 
 
 <!-- ### Power transform -->
@@ -441,9 +444,7 @@ This reveals an enormous difference in magnitude between the variance of biomass
 
 
 ## Rescale variables
-<!-- **Change scale of only biomass to avoid ambiguity with standardized vs unstandardized variable interpretation** -->
-
-To remove this difference in magnitude between the variables, we divide `mass.above` by 100 what changes the unit from g/m^2^ to 10 mg/m^2^.
+To remove this difference in magnitude between the variables, we divide `mass.above` and `precip.mm` by 100 what changes the unit from g/m^2^ to 10 mg/m^2^ and from mm to 0.1 m respectively.
 The boxplots show that the range of the variables is now more similar.
 
 
@@ -454,7 +455,7 @@ seabloom.agg$precip.mm <- seabloom.agg$precip.mm / 100
 boxplot(seabloom.agg[, c(2, 5:6, 8:9)])
 ```
 
-Then, run `sem` again with the rescaled `biomass` and `precip.mm` variable:
+Then, run `sem` again with the rescaled `biomass` and `precip.mm` variables:
 
 ```{r}
 fit.simple <- sem(simple, data = seabloom.agg, estimator = "MLM")
@@ -474,7 +475,7 @@ Our robust CFI of `r round(fitmeasures(fit.simple, "cfi.robust"), digits = 2)` i
 
 
 ## Modification indices
-To improve the model fit, we look for missing paths via modification indices. They indicate an estimated drop in the model $\chi^2$ resulting from freeing fixed parameters via including a missing path.
+To improve the model fit, we look for missing paths via the modification indices. They indicate an estimated drop in the model $\chi^2$ resulting from freeing fixed parameters via including a missing path.
 3.84 is considered as the critical threshold, the "single-degree-of-freedom $\chi^2$ criterion" [@grace21]. 
 
 
@@ -486,7 +487,7 @@ In the column `mi` (for modification index) we look for high values.
 Note, however, that the modification indices are uninformed suggestions and further adaptations of the model based on their information needs to be based on theory.
 
 In this example, the modification indices indicate--amongst other--a missing relation between richness and evenness.
-Including this relation into the model would improve its fit by a change in the $\chi^2$ by `r round(modindices(fit.simple, minimum.value = 3)[1, 4], digits = 3)`.
+Including this relation into the model would expectedly improve its fit by a change in the $\chi^2$ by `r round(modindices(fit.simple, minimum.value = 3)[1, 4], digits = 3)`.
 
 
 
@@ -677,6 +678,24 @@ lavaanPlot(model = fit.simple.up,
            edge_options = list(color = "black"),
            coefs = TRUE, covs = FALSE, stars = "regress")
 ```
+
+
+
+```{r}
+library("semPlot")
+
+# Add p-values and R^2: https://stackoverflow.com/questions/60706206/how-do-i-include-p-value-and-r-square-for-the-estimates-in-sempaths
+# thePlot <- semPlotModel(fit.simple.up)
+
+semPaths(fit.simple.up, what = "est", whatLabels = "est",
+         residuals = FALSE, intercepts = FALSE,
+         sizeMan = 10, sizeMan2 = 7, edge.label.cex = 1,
+         fade = FALSE, layout = "tree", style = "mx", nCharNodes = 0,
+         posCol = "#009e73ff", negCol = "#d55e00ff", edge.label.color = "black",
+         layoutSplit = TRUE, curve = 1, curvature = 1, #fixedStyle = 1,
+         exoCov = FALSE, rotation = 1)
+```
+
 
 
 
