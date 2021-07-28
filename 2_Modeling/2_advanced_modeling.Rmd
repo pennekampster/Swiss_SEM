@@ -20,14 +20,12 @@ library("here")
 
 
 
-# Load data and `lavaan`
+# Load data and rerun the model
 Here, we use the very same data set as in the introductory part to SEM (`1_basic_modeling.html`).
-Also, we rescale the biomass so that it is approximately in the same range as the other variables.
+Also, we rescale the biomass and precipitation so that they are at approximately the same range as the other variables.
 
 
 ```{r}
-library("lavaan")
-
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
 # seabloom <- read.table("~/repos/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
@@ -35,12 +33,42 @@ seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad
 # seabloom <- seabloom[seabloom$year == 2000, ]
 
 seabloom$mass.above <- seabloom$mass.above / 100
-
-## mm to cm
 seabloom$precip.mm <- seabloom$precip.mm / 100
 seabloom$precip.gs <- seabloom$precip.gs / 100
+
+seabloom.agg <- aggregate(list(rich = seabloom$rich, even = seabloom$even,
+                               ens.pie = seabloom$ens.pie, 
+                               mass.above = seabloom$mass.above, 
+                               precip.mm = seabloom$precip.mm,
+                               precip.gs = seabloom$precip.gs),
+                          by = list(year = seabloom$year, nadd = seabloom$nadd,
+                                    disk = seabloom$disk, 
+                                    field = seabloom$field),
+                          FUN = mean, data = seabloom)
 ```
 
+
+
+## Rerun the model
+First, we rerun the model as before.
+
+
+![](Figures/SimplePrecSEM.svg){width=60%}
+
+
+```{r}
+library("lavaan")
+
+simple <-
+"mass.above ~ nadd + disk + rich + even + precip.mm
+rich ~ nadd + precip.mm
+even ~ nadd + precip.mm
+
+rich ~~ even"
+
+fit.simple <- sem(simple, data = seabloom.agg, estimator = "MLM")
+summary(fit.simple)
+```
 
 
 
@@ -186,34 +214,6 @@ Thus, it is necessary to account for this structure in the data in the model.
 
 
 
-## Rerun the model
-First, we rerun the model. But this time, we will use the full data set over all the years. This increases sample size (to $n =$ `r dim(seabloom)[1]`) and allows to incorporate also precipitation that varies among years (see DAG below).
-
-![](Figures/SimplePrecSEM.svg){width=60%}
-
-
-```{r}
-simple <-
-"mass.above ~ nadd + disk + precip.mm + rich + even
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm
-
-rich ~~ even"
-
-fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
-summary(fit.simple)
-```
-
-The GOF is unsatisfying and a look at the modification indices suggests--among others--that richness (`rich`) is also influenced by disturbance (`disk`).
-After including this path into the model, the GOF well meets the requirements:
-
-
-```{r}
-modindices(fit.simple, minimum.value = 3.84)
-
-fit.simple.up <- update(fit.simple, add = "rich ~ disk")
-summary(fit.simple.up, fit.measures = TRUE)
-```
 
 
 ## Adjust for nested data
@@ -233,15 +233,15 @@ design <- svydesign(ids = ~ plot,
                     data = seabloom)
 
 
-fit.simple.up.nest <- lavaan.survey(lavaan.fit = fit.simple.up, 
+fit.simple.nest <- lavaan.survey(lavaan.fit = fit.simple, 
                                     survey.design = design)
-summary(fit.simple.up.nest, rsq = TRUE)
+summary(fit.simple.nest, rsq = TRUE)
 ```
 
 <!-- Two warnings pop up: -->
 
 <!-- * The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision. -->
-<!-- * The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)[1:2]` and `r table(seabloom$field)[3]` observations in these three fields, respectively. With `r fit.simple.up.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field)[1:2] / fit.simple.up.nest@Fit@npar, digits = 1)` and `r round(table(seabloom$field)[3] / fit.simple.up.nest@Fit@npar, digits = 1)`  samples per free parameter. -->
+<!-- * The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)[1:2]` and `r table(seabloom$field)[3]` observations in these three fields, respectively. With `r fit.simple.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field)[1:2] / fit.simple.nest@Fit@npar, digits = 1)` and `r round(table(seabloom$field)[3] / fit.simple.nest@Fit@npar, digits = 1)`  samples per free parameter. -->
 <!-- **This is actually low and might be the reason of the failed model fitting.** -->
 
 
