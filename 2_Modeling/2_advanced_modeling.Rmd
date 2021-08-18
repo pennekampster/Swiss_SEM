@@ -22,7 +22,7 @@ library("here")
 
 # Load data and rerun the model
 Here, we use the very same data set as in the introductory part to SEM (`1_basic_modeling.html`).
-Also, we rescale the biomass and precipitation so that they are at approximately the same range as the other variables.
+Also, we rescale the biomass and precipitation so that they are in approximately the same range as the other variables.
 
 
 ```{r}
@@ -41,7 +41,9 @@ seabloom.agg <- aggregate(list(rich = seabloom$rich, even = seabloom$even,
                                mass.above = seabloom$mass.above, 
                                precip.mm = seabloom$precip.mm,
                                precip.gs = seabloom$precip.gs),
-                          by = list(year = seabloom$year, nadd = seabloom$nadd,
+                          by = list(year = seabloom$year,
+                                    nadd = seabloom$nadd,
+                                    ntrt = seabloom$ntrt,
                                     disk = seabloom$disk, 
                                     field = seabloom$field),
                           FUN = mean, data = seabloom)
@@ -66,7 +68,7 @@ even ~ nadd + precip.mm
 
 rich ~~ even"
 
-fit.simple <- sem(simple, data = seabloom.agg, estimator = "MLM")
+fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
 ```
 
@@ -79,7 +81,7 @@ summary(fit.simple)
 - SEM with latent variable(s)
 - SEM with composite variable(s)
 
-![](Figures/LatentCompositeSEM.svg){width=35%}
+![](Figures/LatentCompositeSEM.svg){width=50%}
 
 
 ## Latent variable
@@ -89,14 +91,57 @@ Let's first create a latent variable "diversity" from the two measurements of di
 Indicators for a LV should be positively correlated with each other.
 It's not.
 Take the inverse of evenness ():
+
 ```{r}
 cor(seabloom$even, seabloom$rich)
-range(seabloom$even)
 
-seabloom$even.rev <- 1 - seabloom$even
+seabloom$even.rev <- -1 * seabloom$even
 cor(seabloom$even.rev, seabloom$rich)
+```
+
+
+Grace et al. 2021:
+
+1. we expect the indicators to be correlated with one another. If we fail to find significant correlations (based on standard tests and null hypothesis testing, p < 0.05, then the indicators are not varying in concert and the data will not support the claim of a latent cause.
+```{r}
+# cor.test(seabloom$precip.mm, seabloom$precip.gs)
+# cor.test(seabloom$precip.mm, seabloom$nadd)
+# cor.test(seabloom$precip.gs, seabloom$nadd)
+
+cor.test(seabloom$even.rev, seabloom$rich)
+cor.test(seabloom$even.rev, seabloom$ens.pie)
+cor.test(seabloom$rich, seabloom$ens.pie)
+```
+
+
+
+2. It is customary in SEM practice to analyse latent variable models in two stages, first evaluating the fit between latent variables and indicators (Fig. 5A) and...
+```{r}
+# cfa.prec <- 'prec =~ precip.mm + precip.gs'
+
+
+var(seabloom$rich)
+var(seabloom$even)
+var(seabloom$ens.pie)
+
+seabloom$rich.var <- seabloom$rich / 10
+var(seabloom$rich.var)
+
+# cfa.prec <- 'prec =~ lambda1*rich + lambda2*even.rev + lambda3*ens.pie'
+# cfa.prec <- 'prec =~ lambda*rich + lambda*even.rev + lambda*ens.pie'
+# cfa.prec <- 'prec =~ rich + even.rev + ens.pie + nadd'
+cfa.prec <- 'prec =~ nadd + ntrt + other.add + disk'
+
+cfa.fit <- sem(cfa.prec, data = seabloom, estimator = "MLM")
+summary(cfa.fit, fit.measures = TRUE)
+
+modindices(cfa.fit)
 
 ```
+
+
+1. ...then second, evaluating the full model (e.g. Fig. 6). SE models that include only latent variables and their indicators are often referred to as confirmatory factor analysis (CFA) models
+
 
 
 
@@ -107,15 +152,15 @@ variables are included we must specify a fixed value for some
 parameter associated with the LV to achieve identification. The lavaan
 default is to set the loading from the LV to the first-mentioned indicator
 to 1.0. (3) For single-indicator LVs, the default measurement error is
-set to 0.0.
+set to 0.0. [@grace21]
 
 
 ```{r}
-round(cor(seabloom[, c(11:12, 14, 16:17)]), digits=2)
+round(cor(seabloom[, c(7, 11:17)]), digits=2)
 
 
 lv <-
-"diversity =~ rich + even.rev # + ens.pie
+"diversity =~ rich + even.rev + ens.pie
 rain =~ precip.mm + precip.gs"
 
 cfa.lv <- cfa(lv, seabloom)
@@ -143,7 +188,7 @@ Now, from the landuse parameters, we can create a composite variable...
 
 ```{r}
 comp <- '
-landuse <~ disk + nadd
+landuse <~ disk + nadd + ntrt
 
 rich ~ nadd
 even ~ nadd
@@ -151,8 +196,9 @@ even ~ nadd
 mass.above ~ rich + even + landuse'
 
 
-fit.comp <- sem(comp, data = seabloom, std.lv = TRUE)
+fit.comp <- sem(comp, data = seabloom)
 
+summary(fit.comp)
 ```
 
 
@@ -185,6 +231,56 @@ fit.comp <- sem(comp, data = seabloom, std.lv = TRUE)
 <!-- ```  -->
 
 
+
+
+# Interactions
+![](Figures/InteractionSEM.svg){width=70%}
+
+
+# Complex sampling structure
+Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages.
+As a result, these data violate the principle of being [*i.i.d.* (independent and identically distributed)](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).
+Thus, it is necessary to account for this structure in the data in the model.
+
+
+The add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data with the help of the package [`survey`](https://r-survey.r-forge.r-project.org/survey/).
+With this, `lavaan` objects can be processed further with a specific data structure:
+first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
+The result is a corrected `lavaan` object.
+
+```{r, message=FALSE}
+library("lavaan.survey")
+```
+
+
+As sampling was performed in `r length(unique(seabloom$plot))` plots nested in three  different fields (`A`, `B` and `C`), let's adjust for this structure.
+For this, we first specify the study design as plots (`ids`) to be nested within fields (`strata`).
+Next, we can refit the model with `lavaan.survey` using the specified study design as an argument.
+
+
+```{r}
+design <- svydesign(ids = ~ plot, strata = ~ field, nest = TRUE, 
+                    data = seabloom)
+
+
+fit.simple.nest <- lavaan.survey(lavaan.fit = fit.simple,
+                                 survey.design = design)
+summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)
+```
+
+
+<!-- Two warnings pop up: -->
+<!-- * The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision. -->
+<!-- * The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)[1:2]` and `r table(seabloom$field)[3]` observations in these three fields, respectively. With `r fit.simple.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field)[1:2] / fit.simple.nest@Fit@npar, digits = 1)` and `r round(table(seabloom$field)[3] / fit.simple.nest@Fit@npar, digits = 1)`  samples per free parameter. -->
+<!-- **This is actually low and might be the reason of the failed model fitting.** -->
+
+
+
+## Autocorrelation (temporal, spatial)
+See Byrnes' material
+
+
+
 # Model pruning?
 Now, let's delete all non-significant paths from the model to obtain the most parsimonous model.
 This, however, leads to a poor model fit.
@@ -201,52 +297,4 @@ rich ~~ even"
 fit.sem.prune <- sem(sem.prune, data = seabloom)
 summary(fit.sem.prune, rsq = TRUE)
 ```
-
-
-# Interactions
-![](Figures/InteractionSEM.svg){width=70%}
-
-
-# Complex sampling structure
-Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages.
-As a result, these data violate the principle of being [*i.i.d.* (independent and identically distributed)](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).
-Thus, it is necessary to account for this structure in the data in the model.
-
-
-
-
-
-## Adjust for nested data
-The add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data with the help of the package [`survey`](https://r-survey.r-forge.r-project.org/survey/).
-With this, `lavaan` objects can be processed further with a specific data structure:
-first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results.
-The result is a corrected `lavaan` object.
-
-As sampling was performed in three different fields (`A`, `B` and `C`), let's adjust for this structure.
-
-```{r}
-library("lavaan.survey")
-
-design <- svydesign(ids = ~ plot, 
-                    strata = ~ field,
-                    nest = TRUE, 
-                    data = seabloom)
-
-
-fit.simple.nest <- lavaan.survey(lavaan.fit = fit.simple, 
-                                    survey.design = design)
-summary(fit.simple.nest, rsq = TRUE)
-```
-
-<!-- Two warnings pop up: -->
-
-<!-- * The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision. -->
-<!-- * The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)[1:2]` and `r table(seabloom$field)[3]` observations in these three fields, respectively. With `r fit.simple.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field)[1:2] / fit.simple.nest@Fit@npar, digits = 1)` and `r round(table(seabloom$field)[3] / fit.simple.nest@Fit@npar, digits = 1)`  samples per free parameter. -->
-<!-- **This is actually low and might be the reason of the failed model fitting.** -->
-
-
-
-## Autocorrelation (temporal, spatial)
-See Byrnes' material
-
 
