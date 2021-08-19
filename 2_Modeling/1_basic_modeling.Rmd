@@ -197,21 +197,6 @@ associations" what hinders interpretations [@grace21].
 ```
 
 
-<!-- We encounter a problem: the estimates for `precip.mm` are all `NA`s. -->
-<!-- Reason is the focus on a single year (i.e. the year 2000) what fixes the value for `precipitation.mm` to 599.7 mm (i.e. the precipitation in 2000) and as it is impossible to predict anything from a single value, `NA` is returned. -->
-
-<!-- ```{r} -->
-<!-- summary(seabloom$precip.mm) -->
-<!-- ``` -->
-
-<!-- Thus, we exclude `precipitation.mm` from the model from now on. -->
-
-<!-- ```{r} -->
-<!-- lm.dir <- lm(mass.above ~ nadd + rich + even, data = seabloom) -->
-<!-- summary(lm.dir) -->
-<!-- ``` -->
-
-
 
 ## Indirect effects
 To account for the indirect effects, two additional LMs are necessary: one with richness and one with evenness as response.
@@ -494,7 +479,7 @@ With the function `update()` it is possible to directly incorporate the missing 
 
 ```{r}
 fit.simple.up <- update(fit.simple, add = "rich ~~ even")
-summary(fit.simple.up, fit.measures = TRUE)
+summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE)
 
 # modindices(fit.simple.up, minimum.value = 3.84)
 # fit.simple.up <- update(fit.simple.up, add = "rich ~~ even")
