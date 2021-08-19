@@ -277,15 +277,46 @@ summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)
 We see that the robust $p$-value increased substantially from `r round(fitmeasures(fit.simple, "pvalue.scaled"), digits = 2)` to `r round(fitmeasures(fit.simple.nest, "pvalue.scaled"), digits = 2)`, while the R^2^, the estimates and their standard errors remained basically the same.
 
 
-<!-- Two warnings pop up: -->
-<!-- * The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision. -->
-<!-- * The second one might point to a sample size issue: for the year 2000 we have `r dim(seabloom)[1]` observations. Split into the three fields `A`, `B` and `C`, there are `r table(seabloom$field)[1:2]` and `r table(seabloom$field)[3]` observations in these three fields, respectively. With `r fit.simple.nest@Fit@npar` free parameters, this refers to `r round(table(seabloom$field)[1:2] / fit.simple.nest@Fit@npar, digits = 1)` and `r round(table(seabloom$field)[3] / fit.simple.nest@Fit@npar, digits = 1)`  samples per free parameter. -->
-<!-- **This is actually low and might be the reason of the failed model fitting.** -->
+
+
+# Spatial autocorrelation
+We can detect spatial autocorrelation in this analysis with the help of a script developped by Jarret Byrnes...
+
+
+First, download the script if absent and load it.
+```{r}
+if(!file.exists("lavSpatialCorrect.R"))
+  {system("wget https://raw.githubusercontent.com/jebyrnes/spatial_correction_lavaan/master/lavSpatialCorrect.R")}
+
+source("lavSpatialCorrect.R")
+```
 
 
 
-## Autocorrelation (temporal, spatial)
-See Byrnes' material
+## Geographical coordinates
+To account for spatial autocorrelation, we first need the coordinates of the respective fields. As none are given in the publication, we use approximated location inferred from the map in the supplementary.
+
+```{r}
+seabloom$lat[seabloom$field == "A"] <- 45.4232
+seabloom$lat[seabloom$field == "A"] <- -93.197
+
+seabloom$lat[seabloom$field == "B"] <- 45.4258
+seabloom$lat[seabloom$field == "B"] <- -93.2102
+
+seabloom$lat[seabloom$field == "C"] <- 45.3969
+seabloom$lat[seabloom$field == "C"] <- -93.1933
+```
+
+
+## Correct for spatial autocorrelation
+"lavSpatialCorrect calculates Moran's I for the residuals of all endogenous variables, and then spatially corrects them via Moran's I. If they are spatially independent, the effective sample size = the true sample size.
+"
+
+```{r}
+# Fails because of missing function...
+# lavSpatialCorrect(fit.simple, seabloom$lon, seabloom$lat)
+```
+
 
 
 

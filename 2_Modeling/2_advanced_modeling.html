@@ -856,14 +856,33 @@ summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)</code></pre>
 ##     mass.above        0.267
 ##     rich              0.191
 ##     even              0.088</code></pre>
-<p>We see that the robust <span class="math inline">\(p\)</span>-value increased substantially from 0.04 to 0.48, while the R<sup>2</sup> estimates and their standard errors remained basically the same.</p>
-<!-- Two warnings pop up: -->
-<!-- * The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision. -->
-<!-- * The second one might point to a sample size issue: for the year 2000 we have 5040 observations. Split into the three fields `A`, `B` and `C`, there are 1608, 1824 and 1608 observations in these three fields, respectively. With 16 free parameters, this refers to 100.5, 114 and 100.5  samples per free parameter. -->
-<!-- **This is actually low and might be the reason of the failed model fitting.** -->
-<div id="autocorrelation-temporal-spatial" class="section level2">
-<h2>Autocorrelation (temporal, spatial)</h2>
-<p>See Byrnes’ material</p>
+<p>We see that the robust <span class="math inline">\(p\)</span>-value increased substantially from 0.04 to 0.48, while the R<sup>2</sup>, the estimates and their standard errors remained basically the same.</p>
+</div>
+<div id="spatial-autocorrelation" class="section level1">
+<h1>Spatial autocorrelation</h1>
+<p>We can detect spatial autocorrelation in this analysis with the help of a script developped by Jarret Byrnes…</p>
+<p>First, download the script if absent and load it.</p>
+<pre class="r"><code>if(!file.exists(&quot;lavSpatialCorrect.R&quot;))
+  {system(&quot;wget https://raw.githubusercontent.com/jebyrnes/spatial_correction_lavaan/master/lavSpatialCorrect.R&quot;)}
+
+source(&quot;lavSpatialCorrect.R&quot;)</code></pre>
+<div id="geographical-coordinates" class="section level2">
+<h2>Geographical coordinates</h2>
+<p>To account for spatial autocorrelation, we first need the coordinates of the respective fields. As none are given in the publication, we use approximated location inferred from the map in the supplementary.</p>
+<pre class="r"><code>seabloom$lat[seabloom$field == &quot;A&quot;] &lt;- 45.4232
+seabloom$lat[seabloom$field == &quot;A&quot;] &lt;- -93.197
+
+seabloom$lat[seabloom$field == &quot;B&quot;] &lt;- 45.4258
+seabloom$lat[seabloom$field == &quot;B&quot;] &lt;- -93.2102
+
+seabloom$lat[seabloom$field == &quot;C&quot;] &lt;- 45.3969
+seabloom$lat[seabloom$field == &quot;C&quot;] &lt;- -93.1933</code></pre>
+</div>
+<div id="correct-for-spatial-autocorrelation" class="section level2">
+<h2>Correct for spatial autocorrelation</h2>
+<p>“lavSpatialCorrect calculates Moran’s I for the residuals of all endogenous variables, and then spatially corrects them via Moran’s I. If they are spatially independent, the effective sample size = the true sample size.”</p>
+<pre class="r"><code># Fails because of missing function...
+# lavSpatialCorrect(fit.simple, seabloom$lon, seabloom$lat)</code></pre>
 </div>
 </div>
 <div id="model-pruning" class="section level1">
