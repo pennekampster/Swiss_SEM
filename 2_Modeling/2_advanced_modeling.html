@@ -240,7 +240,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Avanced structural equation modeling</h1>
-<h4 class="date">18.08.2021</h4>
+<h4 class="date">19.08.2021</h4>
 
 </div>
 
@@ -732,11 +732,29 @@ fit.comp &lt;- sem(comp, data = seabloom)</code></pre>
 <p>Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages. As a result, these data violate the principle of being <a href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables"><em>i.i.d.</em> (independent and identically distributed)</a>. Thus, it is necessary to account for this structure in the data in the model.</p>
 <p>The add-on package <a href="https://cran.r-project.org/web/packages/lavaan.survey/index.html"><code>lavaan.survey</code></a> allows the analysis of stratified, clustered or weighted data with the help of the package <a href="https://r-survey.r-forge.r-project.org/survey/"><code>survey</code></a>. With this, <code>lavaan</code> objects can be processed further with a specific data structure: first, we initialize the design and then, post-process the <code>lavaan</code> object and compute the adjusted results. The result is a corrected <code>lavaan</code> object.</p>
 <pre class="r"><code>library(&quot;lavaan.survey&quot;)</code></pre>
-<p>As sampling was performed in 54 plots nested in three different fields (<code>A</code>, <code>B</code> and <code>C</code>), let’s adjust for this structure. For this, we first specify the study design as plots (<code>ids</code>) to be nested within fields (<code>strata</code>). Next, we can refit the model with <code>lavaan.survey</code> using the specified study design as an argument.</p>
+<p>As sampling was performed in 54 plots nested in three different fields (<code>A</code>, <code>B</code> and <code>C</code>), let’s adjust for this structure. For this, we first specify the study design as plots (<code>ids</code>) to be nested within fields (<code>strata</code>).</p>
 <pre class="r"><code>design &lt;- svydesign(ids = ~ plot, strata = ~ field, nest = TRUE, 
                     data = seabloom)</code></pre>
 <pre><code>## Warning in svydesign.default(ids = ~plot, strata = ~field, nest = TRUE, : No
 ## weights or probabilities supplied, assuming equal probability</code></pre>
+<pre class="r"><code>summary(design)</code></pre>
+<pre><code>## Stratified 1 - level Cluster Sampling design (with replacement)
+## With (158) clusters.
+## svydesign(ids = ~plot, strata = ~field, nest = TRUE, data = seabloom)
+## Probabilities:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       1       1       1       1       1       1 
+## Stratum Sizes: 
+##               A    B    C
+## obs        1608 1824 1608
+## design.PSU   53   53   52
+## actual.PSU   53   53   52
+## Data variables:
+##  [1] &quot;exp&quot;        &quot;field&quot;      &quot;plot&quot;       &quot;disk&quot;       &quot;yr.plowed&quot; 
+##  [6] &quot;ntrt&quot;       &quot;nadd&quot;       &quot;other.add&quot;  &quot;year&quot;       &quot;dur&quot;       
+## [11] &quot;precip.mm&quot;  &quot;precip.gs&quot;  &quot;mass.above&quot; &quot;rich&quot;       &quot;even&quot;      
+## [16] &quot;ens.pie&quot;    &quot;even.rev&quot;   &quot;rich.var&quot;</code></pre>
+<p>Next, we can refit the <code>simple</code> model from before with <code>lavaan.survey</code> using the specified study design as an argument.</p>
 <pre class="r"><code>fit.simple.nest &lt;- lavaan.survey(lavaan.fit = fit.simple,
                                  survey.design = design)
 summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)</code></pre>
@@ -838,6 +856,7 @@ summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)</code></pre>
 ##     mass.above        0.267
 ##     rich              0.191
 ##     even              0.088</code></pre>
+<p>We see that the robust <span class="math inline">\(p\)</span>-value increased substantially from 0.04 to 0.48, while the R<sup>2</sup> estimates and their standard errors remained basically the same.</p>
 <!-- Two warnings pop up: -->
 <!-- * The first one indicates that the `variance-covariance matrix of the estimated parameters (vcov) does not appear to be positive definite!`. However, the  smallest eigenvalue of -5.215416e-17 is very close to zero, what is likely due to  machine-precision. -->
 <!-- * The second one might point to a sample size issue: for the year 2000 we have 5040 observations. Split into the three fields `A`, `B` and `C`, there are 1608, 1824 and 1608 observations in these three fields, respectively. With 16 free parameters, this refers to 100.5, 114 and 100.5  samples per free parameter. -->

@@ -255,18 +255,26 @@ library("lavaan.survey")
 
 As sampling was performed in `r length(unique(seabloom$plot))` plots nested in three  different fields (`A`, `B` and `C`), let's adjust for this structure.
 For this, we first specify the study design as plots (`ids`) to be nested within fields (`strata`).
-Next, we can refit the model with `lavaan.survey` using the specified study design as an argument.
 
 
 ```{r}
 design <- svydesign(ids = ~ plot, strata = ~ field, nest = TRUE, 
                     data = seabloom)
+summary(design)
+```
 
 
+Next, we can refit the `simple` model from before with `lavaan.survey` using the specified study design as an argument.
+
+
+```{r}
 fit.simple.nest <- lavaan.survey(lavaan.fit = fit.simple,
                                  survey.design = design)
 summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)
 ```
+
+
+We see that the robust $p$-value increased substantially from `r round(fitmeasures(fit.simple, "pvalue.scaled"), digits = 2)` to `r round(fitmeasures(fit.simple.nest, "pvalue.scaled"), digits = 2)`, while the R^2^, the estimates and their standard errors remained basically the same.
 
 
 <!-- Two warnings pop up: -->
