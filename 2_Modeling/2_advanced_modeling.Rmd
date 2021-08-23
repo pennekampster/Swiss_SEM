@@ -36,17 +36,17 @@ seabloom$mass.above <- seabloom$mass.above / 100
 seabloom$precip.mm <- seabloom$precip.mm / 100
 seabloom$precip.gs <- seabloom$precip.gs / 100
 
-seabloom.agg <- aggregate(list(rich = seabloom$rich, even = seabloom$even,
-                               ens.pie = seabloom$ens.pie, 
-                               mass.above = seabloom$mass.above, 
-                               precip.mm = seabloom$precip.mm,
-                               precip.gs = seabloom$precip.gs),
-                          by = list(year = seabloom$year,
-                                    nadd = seabloom$nadd,
-                                    ntrt = seabloom$ntrt,
-                                    disk = seabloom$disk, 
-                                    field = seabloom$field),
-                          FUN = mean, data = seabloom)
+# seabloom.agg <- aggregate(list(rich = seabloom$rich, even = seabloom$even,
+#                                ens.pie = seabloom$ens.pie, 
+#                                mass.above = seabloom$mass.above, 
+#                                precip.mm = seabloom$precip.mm,
+#                                precip.gs = seabloom$precip.gs),
+#                           by = list(year = seabloom$year,
+#                                     nadd = seabloom$nadd,
+#                                     ntrt = seabloom$ntrt,
+#                                     disk = seabloom$disk, 
+#                                     field = seabloom$field),
+#                           FUN = mean, data = seabloom)
 ```
 
 
@@ -234,7 +234,81 @@ summary(fit.comp)
 
 
 # Interactions
-![](Figures/InteractionSEM.svg){width=70%}
+![](Figures/Interaction.svg){width=50%}
+
+
+## Inspect the data
+First, we visually inspect the hypothesized interaction between the effect of disturbance on above-ground biomass and the amount of nutrients.
+
+
+```{r}
+library("ggplot2")
+theme_set(theme_bw())
+
+
+ggplot(aes(disk, mass.above, 
+           group = disk), data = seabloom) +
+  geom_boxplot() +
+  facet_grid( ~ nadd) +
+  scale_x_continuous(breaks = c(0, 1)) +
+  xlab("Disturbance") +
+  ylab("Above-ground biomass [g/m²]")
+```
+
+**The higher the amount of added nutrients, the higher the gap in above-ground biomass between the undisturbed and disturbed plots.**
+
+
+## Modeling the interaction
+![](Figures/Interaction_Composite.svg){width=50%}
+
+
+
+```{r}
+seabloom$diskxnadd <- seabloom$disk * seabloom$nadd
+
+int <- "mass.above ~ disk + nadd + diskxnadd"
+fit.int <- sem(int, data = seabloom)
+summary(fit.int)
+```
+
+The results show a significant effect of both variables and their interaction.
+
+
+Next, we model them as a composite:
+
+```{r}
+compint <-
+"comp.int <~ 1*disk + nadd + diskxnadd
+mass.above ~ comp.int"
+
+fit.compint <- sem(compint, data = seabloom)
+summary(fit.compint, standardized = TRUE, rsq = TRUE)
+```
+
+
+The combined effect of the predictors is the `std.all` value for the regression (`r round(lavInspect(fit.compint, what = "std.all")$beta[2, 1], digits = 3)`).
+
+
+## With the rest of the model
+```{r}
+int.full <-
+"comp.int <~ 1*disk + nadd + diskxnadd
+mass.above ~ comp.int + rich + even + precip.mm
+rich ~ nadd + precip.mm
+even ~ nadd + precip.mm
+
+rich ~~ even"
+
+fit.int.full <- sem(int.full, data = seabloom)
+summary(fit.int.full, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
+```
+
+Not the greatest fit.
+
+```{r}
+modindices(fit.int.full, minimum.value = 3.84)
+```
+
 
 
 # Complex sampling structure
@@ -321,19 +395,18 @@ seabloom$lat[seabloom$field == "C"] <- -93.1933
 
 
 # Model pruning?
-Now, let's delete all non-significant paths from the model to obtain the most parsimonous model.
-This, however, leads to a poor model fit.
+Now, let's delete all statistically non-significant paths from the model to obtain the most parsimonous model. **--> all paths are statistically significant...**
 
 
-```{r}
-sem.prune <-
-"mass.above ~ nadd + rich
-rich ~ nadd
-even ~ nadd 
+<!-- ```{r} -->
+<!-- sem.prune <- -->
+<!-- "mass.above ~ nadd + rich -->
+<!-- rich ~ nadd -->
+<!-- even ~ nadd  -->
 
-rich ~~ even"
+<!-- rich ~~ even" -->
 
-fit.sem.prune <- sem(sem.prune, data = seabloom)
-summary(fit.sem.prune, rsq = TRUE)
-```
+<!-- fit.sem.prune <- sem(sem.prune, data = seabloom) -->
+<!-- summary(fit.sem.prune, rsq = TRUE) -->
+<!-- ``` -->
 
