@@ -496,6 +496,7 @@ modindices(fit.simple.up, minimum.value = 0.01)
 ```
 
 
+
 ## Standardized coefficients
 Using analysis of covariances allows for estimation of both unstandardized (raw) and standardized coefficients.
 While the analysis is based on covariances for estimating unstandardized coefficients, it is based on correlations for estimating standardized coefficients.
