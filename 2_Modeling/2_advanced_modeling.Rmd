@@ -10,6 +10,9 @@ header-includes:
    - \usepackage{svg}
 editor_options:
   chunk_output_type: console
+bibliography:
+  - "`r system('kpsewhich ../references.bib', intern = TRUE)`"
+biblio-style: apalike
 ---
 
 
@@ -77,71 +80,69 @@ summary(fit.simple)
 
 
 # Latent and composite variables
-- difference between latent and composite variable
-- SEM with latent variable(s)
-- SEM with composite variable(s)
+Latent variables are ... They are modeled ...
+Usually, they are visualized by arrows pointing from the latent variable to the indicators.
+This symbolizes the underlying process that generated the indicators. In other words, a latent variables gives rise to the indicators.
+Often, ellipses are used to denote a latent variable.
+
+Composites are a special case of latent variables.
+In comparison to latent variables, they arise from the indicators. For this reason, they are visualized by arrows pointing from the indicators to the composite.
+Composites are often symbolized by hexangular shapes or--the same the latent variable--by ellipses.
+
+Carried over to our example, we measured instances of the general process diversity (richness, evenness etc.).
+Further, we summarize the abiotic condition (nutrient addition, precipitation etc.) of a plot in a composite variable.
+
 
 ![](Figures/LatentCompositeSEM.svg){width=50%}
 
 
 ## Latent variable
-Let's first create a latent variable "diversity" from the two measurements of diversity (richness and evenness).
-
+Let's first create a latent variable "diversity" from the three measurements of diversity (richness, evenness and ENS~PIE~).
 
 Indicators for a LV should be positively correlated with each other.
-It's not.
-Take the inverse of evenness ():
+
+
+@grace21a:
+
+1. we expect the indicators to be correlated with one another. If we fail to find significant correlations (based on standard tests and null hypothesis testing, p < 0.05, then the indicators are not varying in concert and the data will not support the claim of a latent cause).
 
 ```{r}
-cor(seabloom$even, seabloom$rich)
+cor.test(seabloom$even, seabloom$rich)
+cor.test(seabloom$even, seabloom$ens.pie)
+cor.test(seabloom$ens.pie, seabloom$rich)
+```
 
+As evenness is negatively correlated with richness, we take its inverse ():
+```{r}
 seabloom$even.rev <- -1 * seabloom$even
-cor(seabloom$even.rev, seabloom$rich)
-```
-
-
-Grace et al. 2021:
-
-1. we expect the indicators to be correlated with one another. If we fail to find significant correlations (based on standard tests and null hypothesis testing, p < 0.05, then the indicators are not varying in concert and the data will not support the claim of a latent cause.
-```{r}
-# cor.test(seabloom$precip.mm, seabloom$precip.gs)
-# cor.test(seabloom$precip.mm, seabloom$nadd)
-# cor.test(seabloom$precip.gs, seabloom$nadd)
-
 cor.test(seabloom$even.rev, seabloom$rich)
-cor.test(seabloom$even.rev, seabloom$ens.pie)
-cor.test(seabloom$rich, seabloom$ens.pie)
 ```
-
-
 
 2. It is customary in SEM practice to analyse latent variable models in two stages, first evaluating the fit between latent variables and indicators (Fig. 5A) and...
 ```{r}
 # cfa.prec <- 'prec =~ precip.mm + precip.gs'
 
 
-var(seabloom$rich)
-var(seabloom$even)
-var(seabloom$ens.pie)
-
-seabloom$rich.var <- seabloom$rich / 10
-var(seabloom$rich.var)
+# var(seabloom$rich)
+# var(seabloom$even)
+# var(seabloom$ens.pie)
+# 
+# seabloom$rich.var <- seabloom$rich / 10
+# var(seabloom$rich.var)
 
 # cfa.prec <- 'prec =~ lambda1*rich + lambda2*even.rev + lambda3*ens.pie'
 # cfa.prec <- 'prec =~ lambda*rich + lambda*even.rev + lambda*ens.pie'
 # cfa.prec <- 'prec =~ rich + even.rev + ens.pie + nadd'
-cfa.prec <- 'prec =~ nadd + ntrt + other.add + disk'
+diversity <- 'div =~ rich + even + ens.pie'
 
-cfa.fit <- sem(cfa.prec, data = seabloom, estimator = "MLM")
-summary(cfa.fit, fit.measures = TRUE)
+fit.diversity <- sem(diversity, data = seabloom, estimator = "MLM")
+summary(fit.diversity, fit.measures = TRUE)
 
 modindices(cfa.fit)
-
 ```
 
 
 1. ...then second, evaluating the full model (e.g. Fig. 6). SE models that include only latent variables and their indicators are often referred to as confirmatory factor analysis (CFA) models
-
 
 
 
