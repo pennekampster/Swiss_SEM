@@ -87,6 +87,7 @@ Often, ellipses are used to denote a latent variable.
 
 Composites are a special case of latent variables.
 In comparison to latent variables, they arise from the indicators. For this reason, they are visualized by arrows pointing from the indicators to the composite.
+In that respect, they represent a collective effect (e.g., the collective effect of the abiotic environment).
 Composites are often symbolized by hexangular shapes or--the same the latent variable--by ellipses.
 
 Carried over to our example, we measured instances of the general process diversity (richness, evenness etc.).
@@ -108,21 +109,24 @@ Indicators for a LV should be positively correlated with each other.
 
 ```{r}
 cor.test(seabloom$even, seabloom$rich)
-cor.test(seabloom$even, seabloom$ens.pie)
 cor.test(seabloom$ens.pie, seabloom$rich)
+cor.test(seabloom$even, seabloom$ens.pie)
+## Not that surprising that there is no correlation...
+plot(seabloom$ens.pie, seabloom$even)
 ```
 
-As evenness is negatively correlated with richness, we take its inverse ():
+As evenness is negatively correlated with richness, we reverse its orientation (so that absolute evenness is found at 0, while absolute unevenness is found at 1):
+
 ```{r}
-seabloom$even.rev <- -1 * seabloom$even
+seabloom$even.rev <- 1 - seabloom$even
 cor.test(seabloom$even.rev, seabloom$rich)
 ```
 
+
 2. It is customary in SEM practice to analyse latent variable models in two stages, first evaluating the fit between latent variables and indicators (Fig. 5A) and...
+
 ```{r}
-# cfa.prec <- 'prec =~ precip.mm + precip.gs'
-
-
+## Balance the variances (doesn't help)
 # var(seabloom$rich)
 # var(seabloom$even)
 # var(seabloom$ens.pie)
@@ -130,15 +134,13 @@ cor.test(seabloom$even.rev, seabloom$rich)
 # seabloom$rich.var <- seabloom$rich / 10
 # var(seabloom$rich.var)
 
-# cfa.prec <- 'prec =~ lambda1*rich + lambda2*even.rev + lambda3*ens.pie'
-# cfa.prec <- 'prec =~ lambda*rich + lambda*even.rev + lambda*ens.pie'
-# cfa.prec <- 'prec =~ rich + even.rev + ens.pie + nadd'
-diversity <- 'div =~ rich + even + ens.pie'
+# diversity <- 'div =~ lambda*rich + lambda*even.rev + lambda*ens.pie'
+diversity <- 'div =~ a * rich + a * even'
 
 fit.diversity <- sem(diversity, data = seabloom, estimator = "MLM")
 summary(fit.diversity, fit.measures = TRUE)
 
-modindices(cfa.fit)
+# modindices(diversity)
 ```
 
 
@@ -153,16 +155,14 @@ variables are included we must specify a fixed value for some
 parameter associated with the LV to achieve identification. The lavaan
 default is to set the loading from the LV to the first-mentioned indicator
 to 1.0. (3) For single-indicator LVs, the default measurement error is
-set to 0.0. [@grace21]
+set to 0.0 [@grace21a].
 
 
 ```{r}
 round(cor(seabloom[, c(7, 11:17)]), digits=2)
 
 
-lv <-
-"diversity =~ rich + even.rev + ens.pie
-rain =~ precip.mm + precip.gs"
+lv <- "diversity =~ a * rich + a * even.rev"
 
 cfa.lv <- cfa(lv, seabloom)
 summary(cfa.lv)
@@ -185,51 +185,65 @@ summary(fit.lv)
 
 
 ## Composite variable
-Now, from the landuse parameters, we can create a composite variable...
+Let's create a "landuse" composite variable.
+To save one parameter, we fix the `disk` at one--now the model is just identified.
 
 ```{r}
-comp <- '
-landuse <~ disk + nadd + ntrt
+comp <- "
+comp.landuse <~ 1 * disk + nadd
 
-rich ~ nadd
-even ~ nadd
+rich ~ precip.mm + comp.landuse
+even ~ precip.mm + comp.landuse
+mass.above ~ comp.landuse + rich + even + precip.mm
 
-mass.above ~ rich + even + landuse'
-
+rich ~~ even"
 
 fit.comp <- sem(comp, data = seabloom)
-
 summary(fit.comp)
+# modindices(fit.comp, minimum.value = 3.84)
 ```
 
 
+## Manually compute composite
+Sometimes `lavaan` struggles to fit models with composites. In such cases, the composites can be first calculated manually and then incorporated into the model as a regular variable [@grace21].
 
-<!-- ```{r} -->
-<!-- compositeModel <- ' -->
-<!--     #1) define the composite, scale to logN -->
-<!--     Nitrogen ~ 1*logN + logNcen2 #loading on the significant path! -->
-<!--   -->
-<!--     #2) Specify 0 error variance -->
-<!--     Nitrogen ~~ 0*Nitrogen -->
-<!--  -->
-<!--       #3) now, because we need to represent this as a latent variable -->
-<!--       #show how species richness is an _indicator_ of nitrogen -->
-<!--       Nitrogen =~ SA -->
-<!--   -->
-<!--     #4) BUT, make sure the variance of SA is estimated -->
-<!--       SA ~~ SA -->
-<!--   -->
-<!--    #Regional Richness also has an effect -->
-<!--     SA ~ SR -->
-<!--   -->
-<!--     #And account for the derivation of the square term from the linear term -->
-<!--     logNcen2 ~ logN -->
-<!--       ' -->
-<!--   -->
-<!--  # we specify std.lv=T so that the Nitrogen-SA relationship isn't fixed to 1 -->
-<!--  compositeFit <- sem(compositeModel, data = seabloom, std.lv = TRUE) -->
-<!--  -->
-<!-- ```  -->
+First, we specify and fit a model containing only the indicators and the response.
+```{r}
+compman <- 'mass.above ~ disk + nadd'
+fit.compman <- sem(compman, data = seabloom)
+summary(fit.compman, rsq = TRUE, standardized = TRUE)
+```
+Then, we compute the composite scores by taking the sum of all indicator variables multiplied by their estimates.
+
+```{r}
+seabloom$landuse <- lavInspect(fit.compman, what = "est")$beta[1, 2] * seabloom$disk +
+  lavInspect(fit.compman, what = "est")$beta[1, 3] * seabloom$nadd
+```
+
+Fitting this newly calculated variable `landuse` to the response `mass.above`, yields the same standardized coefficient and R^2^ for `mass.above` as above.
+
+```{r}
+compman2 <- "mass.above ~ landuse"
+fit.compman2 <- sem(compman2, data = seabloom)
+summary(fit.compman2, rsq = TRUE, standardized = TRUE)
+```
+
+
+Finally, we can integrate the composite `landuse` into the `simple` model from before.
+
+```{r}
+comp <- "
+rich ~ landuse + precip.mm
+even ~ landuse + precip.mm
+
+mass.above ~ landuse + rich + even + precip.mm
+
+rich ~~ even"
+
+
+fit.comp <- sem(comp, data = seabloom)
+summary(fit.comp)
+```
 
 
 
@@ -279,7 +293,7 @@ Next, we model them as a composite:
 
 ```{r}
 compint <-
-"comp.int <~ 1*disk + nadd + diskxnadd
+"comp.int <~ 1 * disk + nadd + diskxnadd
 mass.above ~ comp.int"
 
 fit.compint <- sem(compint, data = seabloom)
@@ -293,7 +307,8 @@ The combined effect of the predictors is the `std.all` value for the regression 
 ## With the rest of the model
 ```{r}
 int.full <-
-"comp.int <~ 1*disk + nadd + diskxnadd
+"comp.int <~ 1 * disk + nadd + diskxnadd
+
 mass.above ~ comp.int + rich + even + precip.mm
 rich ~ nadd + precip.mm
 even ~ nadd + precip.mm
@@ -304,11 +319,8 @@ fit.int.full <- sem(int.full, data = seabloom)
 summary(fit.int.full, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
 ```
 
-Not the greatest fit.
+Not the greatest fit in terms of $p$-value (`r round(fitmeasures(fit.int.full, "pvalue"), digits = 2)`), but really fine in terms of CFI (`r round(fitmeasures(fit.int.full, "cfi"), digits = 3)`).
 
-```{r}
-modindices(fit.int.full, minimum.value = 3.84)
-```
 
 
 
