@@ -570,10 +570,17 @@ summary(fit.lv)</code></pre>
 ##    .even              0.025    0.001   35.483    0.000
 ##    .mass.above        1.646    0.058   28.575    0.000
 ##    .diversity        11.274    0.480   23.468    0.000</code></pre>
+<pre class="r"><code>modindices(fit.lv, minimum.value = 3.84)</code></pre>
+<pre><code>##     lhs op        rhs     mi    epc sepc.lv sepc.all sepc.nox
+## 20 rich ~~ mass.above 14.140 -0.383  -0.383   -0.206   -0.206
+## 21 even ~~ mass.above 14.140 -0.014  -0.014   -0.069   -0.069
+## 28 disk  ~ mass.above 14.263  0.139   0.139    0.422    0.422</code></pre>
 </div>
 </div>
 <div id="composite-variable" class="section level2">
 <h2>Composite variable</h2>
+<div id="landuse-composite" class="section level3">
+<h3>Landuse composite</h3>
 <p>Let’s create a “landuse” composite variable. To save one parameter, we fix the <code>disk</code> at one–now the model is just identified.</p>
 <pre class="r"><code>comp &lt;- &quot;
 comp.landuse &lt;~ 1 * disk + nadd
@@ -585,7 +592,7 @@ mass.above ~ comp.landuse + rich + even + precip.mm
 rich ~~ even&quot;
 
 fit.comp &lt;- sem(comp, data = seabloom)
-summary(fit.comp)</code></pre>
+summary(fit.comp, fit.measures = TRUE)</code></pre>
 <pre><code>## lavaan 0.6-9 ended normally after 44 iterations
 ## 
 ##   Estimator                                         ML
@@ -599,6 +606,37 @@ summary(fit.comp)</code></pre>
 ##   Test statistic                                76.475
 ##   Degrees of freedom                                 2
 ##   P-value (Chi-square)                           0.000
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                              5111.083
+##   Degrees of freedom                                12
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.985
+##   Tucker-Lewis Index (TLI)                       0.912
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)             -20169.430
+##   Loglikelihood unrestricted model (H1)     -20131.192
+##                                                       
+##   Akaike (AIC)                               40364.859
+##   Bayesian (BIC)                             40449.687
+##   Sample-size adjusted Bayesian (BIC)        40408.377
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.086
+##   90 Percent confidence interval - lower         0.070
+##   90 Percent confidence interval - upper         0.103
+##   P-value RMSEA &lt;= 0.05                          0.000
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.028
 ## 
 ## Parameter Estimates:
 ## 
@@ -638,9 +676,8 @@ summary(fit.comp)</code></pre>
 ##    .mass.above        1.678    0.033   50.200    0.000
 ##     comp.landuse      0.000</code></pre>
 <pre class="r"><code># modindices(fit.comp, minimum.value = 3.84)</code></pre>
-</div>
-<div id="manually-compute-composite" class="section level2">
-<h2>Manually compute composite</h2>
+<div id="manually-compute-composite" class="section level4">
+<h4>Manually compute composite</h4>
 <p>Sometimes <code>lavaan</code> struggles to fit models with composites. In such cases, the composites can be first calculated manually and then incorporated into the model as a regular variable <span class="citation">(Grace 2021)</span>.</p>
 <p>First, we specify and fit a model containing only the indicators and the response.</p>
 <pre class="r"><code>compman &lt;- &#39;mass.above ~ disk + nadd&#39;
@@ -771,6 +808,118 @@ summary(fit.comp)</code></pre>
 ##    .rich             13.795    0.275   50.200    0.000
 ##    .even              0.040    0.001   50.200    0.000
 ##    .mass.above        1.674    0.033   50.200    0.000</code></pre>
+</div>
+</div>
+<div id="precipitation-composite" class="section level3">
+<h3>Precipitation composite</h3>
+<pre class="r"><code>comp &lt;- 
+&quot;comp.prec &lt;~ 1 * precip.mm + precip.gs
+
+rich ~ nadd + comp.prec
+even ~ nadd + comp.prec
+mass.above ~ nadd + disk + rich + even + comp.prec
+
+rich ~~ even&quot;
+
+fit.comp &lt;- sem(comp, data = seabloom, estimator = &quot;MLM&quot;)
+summary(fit.comp, fit.measures = TRUE)</code></pre>
+<pre><code>## lavaan 0.6-9 ended normally after 56 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        14
+##                                                       
+##   Number of observations                          5040
+##                                                       
+## Model Test User Model:
+##                                               Standard      Robust
+##   Test Statistic                                91.690      91.421
+##   Degrees of freedom                                 4           4
+##   P-value (Chi-square)                           0.000       0.000
+##   Scaling correction factor                                  1.003
+##        Satorra-Bentler correction                                 
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                              5311.652    5842.949
+##   Degrees of freedom                                15          15
+##   P-value                                        0.000       0.000
+##   Scaling correction factor                                  0.909
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.983       0.985
+##   Tucker-Lewis Index (TLI)                       0.938       0.944
+##                                                                   
+##   Robust Comparative Fit Index (CFI)                         0.983
+##   Robust Tucker-Lewis Index (TLI)                            0.938
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)             -20076.753  -20076.753
+##   Loglikelihood unrestricted model (H1)     -20030.908  -20030.908
+##                                                                   
+##   Akaike (AIC)                               40181.506   40181.506
+##   Bayesian (BIC)                             40272.858   40272.858
+##   Sample-size adjusted Bayesian (BIC)        40228.371   40228.371
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.066       0.066
+##   90 Percent confidence interval - lower         0.055       0.055
+##   90 Percent confidence interval - upper         0.078       0.078
+##   P-value RMSEA &lt;= 0.05                          0.011       0.011
+##                                                                   
+##   Robust RMSEA                                               0.066
+##   90 Percent confidence interval - lower                     0.055
+##   90 Percent confidence interval - upper                     0.078
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.020       0.020
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                           Robust.sem
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Composites:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   comp.prec &lt;~                                        
+##     precip.mm         1.000                           
+##     precip.gs        -0.842    0.043  -19.722    0.000
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   rich ~                                              
+##     nadd             -0.186    0.005  -35.413    0.000
+##     comp.prec         0.911    0.050   18.319    0.000
+##   even ~                                              
+##     nadd              0.005    0.000   14.962    0.000
+##     comp.prec        -0.042    0.003  -15.494    0.000
+##   mass.above ~                                        
+##     nadd              0.085    0.003   29.377    0.000
+##     disk              0.423    0.037   11.444    0.000
+##     rich              0.085    0.006   14.248    0.000
+##     even             -0.702    0.115   -6.081    0.000
+##     comp.prec         0.108    0.018    6.190    0.000
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##  .rich ~~                                             
+##    .even             -0.399    0.010  -38.686    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .rich             12.859    0.287   44.756    0.000
+##    .even              0.039    0.001   41.182    0.000
+##    .mass.above        1.684    0.058   28.785    0.000
+##     comp.prec         0.000</code></pre>
+<pre class="r"><code># modindices(fit.comp, minimum.value = 3.84)
+# fit.comp.up &lt;- update(fit.comp, &quot;rich ~ mass.above&quot;)
+# summary(fit.comp.up)</code></pre>
+</div>
 </div>
 </div>
 <div id="interactions" class="section level1">

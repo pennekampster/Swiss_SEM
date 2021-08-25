@@ -155,11 +155,13 @@ diversity ~ nadd + precip.mm"
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
+modindices(fit.lv, minimum.value = 3.84)
 ```
 
 
 
 ## Composite variable
+### Landuse composite
 Let's create a "landuse" composite variable.
 To save one parameter, we fix the `disk` at one--now the model is just identified.
 
@@ -174,12 +176,13 @@ mass.above ~ comp.landuse + rich + even + precip.mm
 rich ~~ even"
 
 fit.comp <- sem(comp, data = seabloom)
-summary(fit.comp)
+summary(fit.comp, fit.measures = TRUE)
+
 # modindices(fit.comp, minimum.value = 3.84)
 ```
 
 
-## Manually compute composite
+#### Manually compute composite
 Sometimes `lavaan` struggles to fit models with composites. In such cases, the composites can be first calculated manually and then incorporated into the model as a regular variable [@grace21].
 
 First, we specify and fit a model containing only the indicators and the response.
@@ -221,6 +224,24 @@ summary(fit.comp)
 ```
 
 
+### Precipitation composite
+```{r}
+comp <- 
+"comp.prec <~ 1 * precip.mm + precip.gs
+
+rich ~ nadd + comp.prec
+even ~ nadd + comp.prec
+mass.above ~ nadd + disk + rich + even + comp.prec
+
+rich ~~ even"
+
+fit.comp <- sem(comp, data = seabloom, estimator = "MLM")
+summary(fit.comp, fit.measures = TRUE)
+
+# modindices(fit.comp, minimum.value = 3.84)
+# fit.comp.up <- update(fit.comp, "rich ~ mass.above")
+# summary(fit.comp.up)
+```
 
 
 # Interactions
