@@ -31,31 +31,16 @@ Also, we rescale the biomass and precipitation so that they are in approximately
 ```{r}
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
-# seabloom <- read.table("~/repos/Swiss_SEM/2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv",
-#                        sep = ",", header = TRUE)
-# seabloom <- seabloom[seabloom$year == 2000, ]
 
 seabloom$mass.above <- seabloom$mass.above / 100
 seabloom$precip.mm <- seabloom$precip.mm / 100
 seabloom$precip.gs <- seabloom$precip.gs / 100
-
-# seabloom.agg <- aggregate(list(rich = seabloom$rich, even = seabloom$even,
-#                                ens.pie = seabloom$ens.pie, 
-#                                mass.above = seabloom$mass.above, 
-#                                precip.mm = seabloom$precip.mm,
-#                                precip.gs = seabloom$precip.gs),
-#                           by = list(year = seabloom$year,
-#                                     nadd = seabloom$nadd,
-#                                     ntrt = seabloom$ntrt,
-#                                     disk = seabloom$disk, 
-#                                     field = seabloom$field),
-#                           FUN = mean, data = seabloom)
 ```
 
 
 
 ## Rerun the model
-First, we rerun the model as before.
+First, we run the model as before.
 
 
 ![](Figures/SimplePrecSEM.svg){width=60%}
@@ -88,7 +73,7 @@ Often, ellipses are used to denote a latent variable.
 Composites are a special case of latent variables.
 In comparison to latent variables, they arise from the indicators. For this reason, they are visualized by arrows pointing from the indicators to the composite.
 In that respect, they represent a collective effect (e.g., the collective effect of the abiotic environment).
-Composites are often symbolized by hexangular shapes or--the same the latent variable--by ellipses.
+Composites are often symbolized by hexangular shapes or--the same as for latent variables--by ellipses.
 
 Carried over to our example, we measured instances of the general process diversity (richness, evenness etc.).
 Further, we summarize the abiotic condition (nutrient addition, precipitation etc.) of a plot in a composite variable.
@@ -103,6 +88,10 @@ Let's first create a latent variable "diversity" from the three measurements of 
 Indicators for a LV should be positively correlated with each other.
 
 
+* Latent variable models with only 2 indicators are locally non-identified. To solve this problem, we can (a) ensure x1 and x2 have equal variances, in this case by standardizing the data. (2) When latent variables are included we must specify a fixed value for some parameter associated with the LV to achieve identification. The lavaan default is to set the loading from the LV to the first-mentioned indicator to 1.0. (3) For single-indicator LVs, the default measurement error is set to 0.0 [@grace21a].
+
+
+### Correlations between indicators
 @grace21a:
 
 1. we expect the indicators to be correlated with one another. If we fail to find significant correlations (based on standard tests and null hypothesis testing, p < 0.05, then the indicators are not varying in concert and the data will not support the claim of a latent cause).
@@ -123,52 +112,37 @@ cor.test(seabloom$even.rev, seabloom$rich)
 ```
 
 
+### CFA
 2. It is customary in SEM practice to analyse latent variable models in two stages, first evaluating the fit between latent variables and indicators (Fig. 5A) and...
 
 ```{r}
-## Balance the variances (doesn't help)
-# var(seabloom$rich)
-# var(seabloom$even)
-# var(seabloom$ens.pie)
-# 
-# seabloom$rich.var <- seabloom$rich / 10
-# var(seabloom$rich.var)
-
 # diversity <- 'div =~ lambda*rich + lambda*even.rev + lambda*ens.pie'
-diversity <- 'div =~ a * rich + a * even'
+diversity <- 'div =~ a * rich + a * even.rev'
+# diversity <- 'div =~ rich' # single-indicator LV
 
-fit.diversity <- sem(diversity, data = seabloom, estimator = "MLM")
+fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 summary(fit.diversity, fit.measures = TRUE)
 
 # modindices(diversity)
+varTable(fit.diversity)
 ```
 
 
-1. ...then second, evaluating the full model (e.g. Fig. 6). SE models that include only latent variables and their indicators are often referred to as confirmatory factor analysis (CFA) models
-
-
-
-* Latent variable models with only 2 indicators are locally non-
-identified. To solve this problem, we can (a) ensure x1 and x2 have
-equal variances, in this case by standardizing the data. (2) When latent
-variables are included we must specify a fixed value for some
-parameter associated with the LV to achieve identification. The lavaan
-default is to set the loading from the LV to the first-mentioned indicator
-to 1.0. (3) For single-indicator LVs, the default measurement error is
-set to 0.0 [@grace21a].
-
-
+Balancing the variances doesn't help...
 ```{r}
-round(cor(seabloom[, c(7, 11:17)]), digits=2)
-
-
-lv <- "diversity =~ a * rich + a * even.rev"
-
-cfa.lv <- cfa(lv, seabloom)
-summary(cfa.lv)
-
-varTable(cfa.lv)
+# varTable(fit.diversity)
+# 
+# seabloom$rich.var <- seabloom$rich / 10
+# var(seabloom$rich.var)
+# 
+# diversity <- 'div =~ a * rich.var + a * even.rev'
+# 
+# fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 ```
+
+
+### SEM
+3. ...then second, evaluating the full model (e.g. Fig. 6). SE models that include only latent variables and their indicators are often referred to as confirmatory factor analysis (CFA) models
 
 
 ```{r}
@@ -176,12 +150,13 @@ lv <-"
 # Latent variable definition
 diversity =~ rich + even
 
-mass.above ~ nadd + disk + diversity
-diversity ~ nadd"
+mass.above ~ nadd + disk + diversity + precip.mm
+diversity ~ nadd + precip.mm"
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
 ```
+
 
 
 ## Composite variable
