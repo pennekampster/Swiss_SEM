@@ -65,12 +65,21 @@ summary(fit.simple)
 
 
 # Latent and composite variables
-Latent variables are ... They are modeled ...
+**Latent variables** are ... They are modeled ...
 Usually, they are visualized by arrows pointing from the latent variable to the indicators.
 This symbolizes the underlying process that generated the indicators. In other words, a latent variables gives rise to the indicators.
 Often, ellipses are used to denote a latent variable.
 
-Composites are a special case of latent variables.
+
+@grace08:
+* Here we define a latent variable as one that represents a factor we believe to exist and to be relevant to our analysis, but which is unmeasured (Bollen 2002). Latent variables play a special role in structural equation modeling because they represent a kind of bridge between observed data and theoretical generalization.
+* Composites are another type of variable that can be specified in SEMs and they represent potentially heterogeneous collections of causes. A composite can be either a composite of manifest variables or a composite of latent variables (it is also possible to have a composite that is a mixture of observed and latent variables).
+* An unknown weights composite represents the collective effects of a set of causes on some response variable(s).
+
+
+
+
+**Composites** are a special case of latent variables.
 In comparison to latent variables, they arise from the indicators. For this reason, they are visualized by arrows pointing from the indicators to the composite.
 In that respect, they represent a collective effect (e.g., the collective effect of the abiotic environment).
 Composites are often symbolized by hexangular shapes or--the same as for latent variables--by ellipses.
