@@ -1,0 +1,95 @@
+# Live coding examples for R Markdown
+
+## Add authors and change output format
+author:
+  - Rachel Korn
+  - Frank Pennekamp
+  - and someone else
+date: "`r format(Sys.time(), '%d.%m.%Y')`"
+output: html_document
+output: pdf_document
+
+
+![](md_logic.png){ width=150% }\
+
+
+## Unordered lists
+... are easily generated
+
+* with
+* asterisks
+- or 
+- dashes.
++ And pluses!
+
+
+Ordered lists can be
+
+1. preceded
+111) by
+0) any
+0) number.
+
+
+## Comments and new page
+<!-- Type three asterisks for a newpage -->
+## ***
+
+
+## Text formatting
+Surrounding text by special characters formats it as __bold__, _italics_ or `as inline code` and formulas are pretty printed in math mode
+
+$$A = \pi*r^{2}$$.
+
+
+## Tables
+Also tables have a simple formatting scheme:
+
+
+| Right | Left | Default | Center |
+|-:|:-|-|:-:| # it's about beauty! but...
+| 12 | 12 | 12 | 12 |
+| 123 | 123 | 123 | 123 |
+| 1 | 1 | 1 | 1 |
+
+
+## Examples with R
+
+```{r}
+## Set a constant for random number generation
+set.seed(29899)
+
+## Create normally distributed values
+norm <- rnorm(100, mean = 0, sd = 1)
+summary(norm)
+```
+
+Chunk shortcut: alt + ctrl + i
+
+
+### Plot random numbers
+
+```{r}
+hist(norm, main = "")
+```
+
+
+### Same with hidden code chunks
+
+```{r, echo = FALSE}
+norm <- rnorm(1000, mean = 0, sd = 1)
+hist(norm, main = "")
+```
+
+
+## Convert R objects to tables
+```{r}
+library(pander)
+
+df <- data.frame(
+  Plant = c("a", "b", "c"),
+  Temperature = rep(20, 3),
+  Growth = c(0.65, 0.95, 0.15))
+emphasize.italics.cols(1) # italicize 1st column
+pander(df) # print as table
+```
