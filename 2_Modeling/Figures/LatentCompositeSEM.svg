@@ -11,8 +11,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="203.61342mm"
-   height="100.15922mm"
-   viewBox="0 0 203.61342 100.15922"
+   height="99.630058mm"
+   viewBox="0 0 203.61342 99.63006"
    version="1.1"
    id="svg18563"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
@@ -303,9 +303,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="478.19285"
-     inkscape:cy="95.3035"
+     inkscape:zoom="1.4"
+     inkscape:cx="358.48978"
+     inkscape:cy="95.303481"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -331,7 +331,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(11.258593,-145.27635)">
+     transform="translate(11.258593,-145.80551)">
     <path
        transform="matrix(0.63330883,0.00833299,-0.01806461,0.29213801,5.834783,143.07296)"
        d="m 169.79504,301.3761 -37.32369,1.14652 -19.65476,-31.75 17.66892,-32.89652 37.32369,-1.14653 19.65476,31.75 z"
@@ -545,12 +545,12 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="115.27161"
-       y="203.12488"
+       x="115.80077"
+       y="202.59572"
        id="text3502"><tspan
          sodipodi:role="line"
-         x="115.27161"
-         y="203.12488"
+         x="115.80077"
+         y="202.59572"
          style="stroke-width:0.26458332"
          id="tspan3500">0</tspan></text>
     <path
@@ -561,14 +561,14 @@
        sodipodi:nodetypes="cc" />
     <text
        id="text4158"
-       y="151.69524"
-       x="115.27161"
+       y="151.16608"
+       x="115.80077"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        xml:space="preserve"><tspan
          id="tspan4156"
          style="stroke-width:0.26458332"
-         y="151.69524"
-         x="115.27161"
+         y="151.16608"
+         x="115.80077"
          sodipodi:role="line">ζ</tspan></text>
   </g>
 </svg>
