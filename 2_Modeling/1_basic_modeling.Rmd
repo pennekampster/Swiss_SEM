@@ -450,7 +450,7 @@ This time, the model converged, however, with poor fit:
 - The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(fitmeasures(fit.simple, "chisq"), digits = 2)` / `r fitmeasures(fit.simple, "df")` = `r round(fitmeasures(fit.simple, "chisq") / fitmeasures(fit.simple, "df"), digits = 2)`, what indicates that the model is quite far away from a decent fit [@grace21].
 - The $p$-value, which represents the probability of the data given our model (or no significant discrepancy between model and data), should be larger than 0.05 [@grace21].
 - The [comparative fit index (CFI)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99].
-Our robust CFI of `r round(fitmeasures(fit.simple, "cfi.robust"), digits = 2)` is fairly below this threshold.
+Our robust CFI of `r round(fitmeasures(fit.simple, "cfi.robust"), digits = 2)` is fairly below this threshold. In compoarison to the $p$-value, the CFI has the advantage to be independent of sample size.
 
 
 
