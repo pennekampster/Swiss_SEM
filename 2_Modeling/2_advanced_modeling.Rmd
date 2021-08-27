@@ -66,15 +66,12 @@ summary(fit.simple)
 
 # Latent and composite variables
 
-@grace08:
-
-* Here we define a latent variable as one that represents a factor we believe to exist and to be relevant to our analysis, but which is unmeasured (Bollen 2002). Latent variables play a special role in structural equation modeling because they represent a kind of bridge between observed data and theoretical generalization.
-* Composites are another type of variable that can be specified in SEMs and they represent potentially heterogeneous collections of causes. A composite can be either a composite of manifest variables or a composite of latent variables (it is also possible to have a composite that is a mixture of observed and latent variables).
-* An unknown weights composite represents the collective effects of a set of causes on some response variable(s).
 
 
+**Latent variables** represent unmeasured variables that are represented by their  indicator variables^[Indicator variables are observed/manifest variables that are linked to either a latent or composite variable.] [@bollen89]. As a consequence, a latent variable is free of  random or systematic measurement errors in contrast to its indicators [@bollen89].
+They have a special role in SEM because they represent a kind of bridge between observed data and theoretical generalization [@grace08].
 
-**Latent variables** are ... They are modeled ...
+ 
 Usually, they are visualized by arrows pointing from the latent variable to the indicators.
 This symbolizes the underlying process that generated the indicators. In other words, a latent variables gives rise to the indicators.
 Often, ellipses are used to denote a latent variable.
@@ -82,13 +79,33 @@ Often, ellipses are used to denote a latent variable.
 
 
 
-**Composites** are a special case of latent variables.
+
+**Composites** are another type of variables which represent the collective effects of a set of causes on some response variable(s) [@grace08].
 In comparison to latent variables, they arise from the indicators. For this reason, they are visualized by arrows pointing from the indicators to the composite.
 In that respect, they represent a collective effect (e.g., the collective effect of the abiotic environment).
+Since its values are determined by its causes (indicators), the error variance is specified to be 0 [@grace08].
 Composites are often symbolized by hexangular shapes or--the same as for latent variables--by ellipses.
+
+
+**Key differences** between them are [@grace08]:
+
+1. The flow of causation in a latent variables is from the construct to its indicators, meaning that the indicators are driven by an underlying, unmeasured process, the latent variable. In the case of a composite variable, the flow of causation is reversed and the indicators are independent entities no matter the construct.
+<!-- * we ask whether “Soil” has causal influences on pH, moisture, and texture. In other words, we are asking whether the variation among stands in soil conditions is such that pH, moisture, and texture are simultaneously being controlled by a common difference among soils. If so, causation flows from the construct to the indicators. Alternatively, if it is the case that pH, moisture, and texture behave inde-pendently from one another, then causation flows from the indicators to the construct. -->
+1. If the indicators are redundant, they likely belong to a latent variable. If the meaning of the construct changes after dropping one of the indicators, the construct likely is a composite.
+<!-- * The second question is whether the indicators in a block are interchangeable, if so, then they constitute redundant measures and are likely to represent effect indicators consistent with a L → M block. Also, we might ask if dropping one of the indicators in a block alters the meaning of the construct. -->
+1. As a latent variable represents an underlying, data-generating process, its indicators need to be correlated to each other. In the case of a composite variable, there is no assumption about the relation between the indicators. Thus, correlation among indicators are uninformative about the direction of the causal flow, but a lack of such contraindicates that the construct is a latent variable.
+<!-- * We should, therefore, recognize that a correlation among indicators does not inform us as to the direction of causal flow, though a lack of correlation among indicators would contraindicate the prospect that a block should be of the L → M form. -->
+
+
+
+
+
+
 
 Carried over to our example, we measured instances of the general process diversity (richness, evenness etc.).
 Further, we summarize the abiotic condition (nutrient addition, precipitation etc.) of a plot in a composite variable.
+
+
 
 
 ![](Figures/LatentCompositeSEM.svg){width=50%}
@@ -100,7 +117,7 @@ Let's first create a latent variable "diversity" from the three measurements of 
 Indicators for a LV should be positively correlated with each other.
 
 
-* Latent variable models with only 2 indicators are locally non-identified. To solve this problem, we can (a) ensure x1 and x2 have equal variances, in this case by standardizing the data. (2) When latent variables are included we must specify a fixed value for some parameter associated with the LV to achieve identification. The lavaan default is to set the loading from the LV to the first-mentioned indicator to 1.0. (3) For single-indicator LVs, the default measurement error is set to 0.0 [@grace21a].
+* Latent variable models with only 2 indicators are locally non-identified. To solve this problem, we can (a) ensure x1 and x2 have equal variances, in this case by standardizing the data. (2) When latent variables are included we must specify a fixed value for some parameter associated with the LV to achieve identification. The lavaan default is to set the loading from the LV to the first-mentioned indicator to 1.0. (3) For single-indicator LVs, the default measurement error is set to 0.0 [@grace21].
 
 
 ### Correlations between indicators
@@ -116,7 +133,7 @@ cor.test(seabloom$even, seabloom$ens.pie)
 plot(seabloom$ens.pie, seabloom$even)
 ```
 
-As evenness is negatively correlated with richness, we reverse its orientation (so that absolute evenness is found at 0, while absolute unevenness is found at 1):
+To ease convergence of the algorithm, we reverse the orientation of evenness as it is negatively correlated with richness (so that absolute evenness is found at 0, while absolute unevenness is found at 1):
 
 ```{r}
 seabloom$even.rev <- 1 - seabloom$even
@@ -133,11 +150,26 @@ diversity <- 'div =~ a * rich + a * even.rev'
 # diversity <- 'div =~ rich' # single-indicator LV
 
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
+```
+
+Parameter estimates taking improper solution, i.e. impossible values, are a sign of model misspecification.
+The case that we see here with negative variances is known as "Heywood case". Another improper solution is correlations larger than one [@bollen89].
+Reasons for this warning could be
+(i) slightly negative error estimates (what would not really be a problem),
+(ii) the need to code indicators for the latent variable to be positively related,
+(iii) local non-identification or
+(iv) general misspecification [@grace21].
+
+
+```{r}
 summary(fit.diversity, fit.measures = TRUE)
 
 # modindices(diversity)
-varTable(fit.diversity)
+# varTable(fit.diversity)
 ```
+
+**The variance of `env.rev` is negative (`r round(lavInspect(fit.diversity, "est")$theta[2, 2], digits = 2)`) and if `even` is used instead of `even.rev`, the variance of `div` becomes negative...`**
+
 
 
 Balancing the variances doesn't help...
@@ -198,11 +230,13 @@ summary(fit.comp, fit.measures = TRUE)
 Sometimes `lavaan` struggles to fit models with composites. In such cases, the composites can be first calculated manually and then incorporated into the model as a regular variable [@grace21].
 
 First, we specify and fit a model containing only the indicators and the response.
+
 ```{r}
 compman <- 'mass.above ~ disk + nadd'
 fit.compman <- sem(compman, data = seabloom)
 summary(fit.compman, rsq = TRUE, standardized = TRUE)
 ```
+
 Then, we compute the composite scores by taking the sum of all indicator variables multiplied by their estimates.
 
 ```{r}
@@ -269,8 +303,7 @@ library("ggplot2")
 theme_set(theme_bw())
 
 
-ggplot(aes(disk, mass.above, 
-           group = disk), data = seabloom) +
+ggplot(aes(disk, mass.above, group = disk), data = seabloom) +
   geom_boxplot() +
   facet_grid( ~ nadd) +
   scale_x_continuous(breaks = c(0, 1)) +
