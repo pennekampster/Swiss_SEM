@@ -545,7 +545,7 @@ Further, the difference in the $\chi^2$ is `r round(anova(fit.simple, fit.simple
 
 
 ## Saturated model
-A saturated model includes all possible paths. As a result, there are no degrees of freedom left and it thus has perfect fit.
+In a saturated model all possible paths are specified and as a result, there are no degrees of freedom left [@grace10].
 They represent a special class of model because they allow for everything to add up, meaning we can completely recover the observed matrix of covariances. Unsaturated models have testable implications, however.
 Under global estimation, our comparison for calculating the GOF is to a saturated model. The reason is that saturated models permit every covariance to be explained, so the model fit function value $F_{ML}$ fit function goes to zero. Thus, also $\chi^2 = 0$.
 In comparison, an unsaturated model will have a positive $F_{ML}$ [@grace21].
