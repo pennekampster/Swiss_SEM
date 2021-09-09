@@ -476,22 +476,5 @@ seabloom$lat[seabloom$field == "C"] <- -93.1933
 # lavSpatialCorrect(fit.simple, seabloom$lon, seabloom$lat)
 ```
 
-
-
-
-# Model pruning?
-Now, let's delete all statistically non-significant paths from the model to obtain the most parsimonous model. **--> all paths are statistically significant...**
-
-
-<!-- ```{r} -->
-<!-- sem.prune <- -->
-<!-- "mass.above ~ nadd + rich -->
-<!-- rich ~ nadd -->
-<!-- even ~ nadd  -->
-
-<!-- rich ~~ even" -->
-
-<!-- fit.sem.prune <- sem(sem.prune, data = seabloom) -->
-<!-- summary(fit.sem.prune, rsq = TRUE) -->
-<!-- ``` -->
+# References
 

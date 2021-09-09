@@ -29,6 +29,8 @@ text-align: justify}
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library("here")
+library(ggplot2)
+library(GGally)
 ```
 
 
@@ -63,7 +65,7 @@ We estimated **total aboveground biomass** as the summed biomass of all non-wood
 **Species richness** is the number of species in each 0.3 m^2^ sample.
 We quantified **plant diversity** as the Effective Number of Species based on the Probability of Interspecific Encounter (ENS~PIE~), a measure of diversity that is more robust to the effects of sampling scale and less sensitive to the presence of
 rare species than species richness.
-ENS~PIE~ is equivalent to the Inverse Simpson's index of diversity ($1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass reesented by species $i$).
+ENS~PIE~ is equivalent to the Inverse Simpson's index of diversity ($1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass represented by species $i$).
 
 
 
@@ -146,15 +148,14 @@ The `pairs` function yields an overview over the numerical data that we will use
 
 
 ```{r}
-pairs(seabloom[, c(7, 11:16)], lower.panel = NULL)
+ggpairs(seabloom[, c(7, 11:16)], upper=NULL, lower = list(continuous = wrap("points", alpha = 0.05)))  + theme_bw() + theme(panel.grid=element_blank())
 ```
 
 
 # Metamodel
 A [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind a model and links it to theory.
 Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
-productivity (biomass) is directly influenced by the environment (nutrients, disturbance and precipitation) on the one hand and biodiversity (richness and evenness) on the other hand.
-Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
+productivity (biomass) is directly influence on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
 
 
 ![](Figures/Metamodel.svg){width=70%}
@@ -181,7 +182,7 @@ If a linear model is visualized in a DAG, it becomes apparent that there is a se
 These correlations have a huge influence on the coefficients between the predictors $x_{1\ldots i}$ (here, nutrients, precipitation, richness and evenness) and the response $y$ (here, biomass).
 Despite their importance, it is impossible to include any information about the reason of the correlations between the predictors.
 Further, they make it nearly impossible to create a proper causal model, since there are many possible causal relations that can create a set of "unanalyzed
-associations" what hinders interpretations [@grace21].
+associations" which hinders interpretations [@grace21].
 
 
 ![](Figures/LMdir.svg){width=45%}
@@ -237,15 +238,14 @@ library("lavaan")
 
 
 ## Collinearity
-Variables that are highly correlated with $r > 0.85$ become redundant. Then, one of them can be dropped or they can be modeled summarized as a latent variable [@grace06].
 
 Inspecting our set of variables shows that correlations between all variables are rather weak except the precipitation throughout the year and those throughout the field season.
 
-
 ```{r}
-round(cor(seabloom[, c(7, 11:16)]), digits = 2)
+ggpairs(seabloom[, c(7, 11:16)], lower = list(continuous = wrap("points", alpha = 0.05)))  + theme_bw() + theme(panel.grid=element_blank())
 ```
 
+Variables that are highly correlated with $r > 0.85$ become redundant. Then, one of them can be dropped or they can be modeled summarized as a latent variable [@grace06].
 
 ## An example SEM
 This toy model shall illustrate the logic of SEM.
@@ -449,10 +449,10 @@ summary(fit.simple, fit.measures = TRUE)
 ## Goodness of fit
 This time, the model converged, however, with poor fit:
 
-- The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(fitmeasures(fit.simple, "chisq"), digits = 2)` / `r fitmeasures(fit.simple, "df")` = `r round(fitmeasures(fit.simple, "chisq") / fitmeasures(fit.simple, "df"), digits = 2)`, what indicates that the model is quite far away from a decent fit [@grace21].
+- The ratio of the test statistic and the degrees of freedom should be smaller than 2. Here, the ratio is `r round(fitmeasures(fit.simple, "chisq"), digits = 2)` / `r fitmeasures(fit.simple, "df")` = `r round(fitmeasures(fit.simple, "chisq") / fitmeasures(fit.simple, "df"), digits = 2)`, which indicates that the model is quite far away from a decent fit [@grace21].
 - The $p$-value, which represents the probability of the data given our model (or no significant discrepancy between model and data), should be larger than 0.05 [@grace21].
 - The [comparative fit index (CFI)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis#Comparative_fit_index) ranges between zero and one, whereas a value $> .95$ is considered as a good fit indicator [@hu99].
-Our robust CFI of `r round(fitmeasures(fit.simple, "cfi.robust"), digits = 2)` is fairly below this threshold. In compoarison to the $p$-value, the CFI has the advantage to be independent of sample size.
+Our robust CFI of `r round(fitmeasures(fit.simple, "cfi.robust"), digits = 2)` is fairly below this threshold. In comparison to the $p$-value, the CFI has the advantage to be independent of sample size.
 
 
 
@@ -497,39 +497,6 @@ summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE)
 modindices(fit.simple.up, minimum.value = 0.01)
 ```
 
-
-
-## Standardized coefficients
-Using analysis of covariances allows for estimation of both unstandardized (raw) and standardized coefficients.
-While the analysis is based on covariances for estimating unstandardized coefficients, it is based on correlations for estimating standardized coefficients.
-The computational relation between correlations and covariances is:
-
-$r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
-
-... where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)  [@grace21].
-
-
-Significance testing of standardized coefficients violates statistical principles as significance tests are based on unstandardized (raw) coefficients
-Thus, standardized coefficients are used for interpretation only [@grace21].
-
-
-For raw coefficients, the predicted effects are in raw units and have a pretty straight-forward interpretation: as in our example, e.g., the predicted change in 10 mg/m^2^ above-ground biomass associated with a certain change in added nutrients.
-For the standardized coefficients, however, the interpretation is more complex: they express the predicted changes in terms of standard deviation units.
-Thus, they are only interpretable within a sample what hinders generalization.
-Still, they ease comparison as they are in the same units across various
-pathways [@grace21].
-
-
-There are different standardizations available in `lavaan`, whereof `std.all` is based on the standard deviation:
-
-
-```{r}
-standardizedsolution(fit.simple.up, type = "std.all")
-```
-
-
-
-
 ## Model comparison
 To evaluate whether the simple or the updated model perform better, we can calculate the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) and compute a significance test based on the $\chi^2$ test statistic with the `anova` function.
 
@@ -542,6 +509,37 @@ From the ANOVA table we can see the difference in AIC = `r round(anova(fit.simpl
 
 Further, the difference in the $\chi^2$ is `r round(anova(fit.simple, fit.simple.up)[2, 5], digits = 2)`--far beyond the threshold value of 3.84 that is necessary to detect a statistically significant difference on a confidence level of $\alpha = 0.05$.
 
+
+
+
+** First exercise for students **
+
+
+
+
+## Standardized coefficients
+Using analysis of covariances allows for estimation of both unstandardized (raw) and standardized coefficients.
+While the analysis is based on covariances for estimating unstandardized coefficients, it is based on correlations for estimating standardized coefficients.
+The computational relation between correlations and covariances is:
+
+$r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
+
+... where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)  [@grace21].
+
+
+Significance testing of standardized coefficients violates statistical principles. Significance tests are hence based on unstandardized (raw) coefficients and standardized coefficients are used for interpretation only [@grace21].
+
+
+For raw coefficients, the predicted effects are in raw units and have a pretty straight-forward interpretation: as in our example, e.g., the predicted change in 10 mg/m^2^ above-ground biomass associated with a certain change in added nutrients.
+For the standardized coefficients, however, the interpretation is more complex: they express the predicted changes in terms of standard deviation units.
+Thus, they are only interpretable within a sample which hinders generalization. Still, they ease comparison as they are in the same units across various
+pathways [@grace21].
+
+There are different standardizations available in `lavaan`, whereof `std.all` is based on the standard deviation:
+
+```{r}
+standardizedsolution(fit.simple.up, type = "std.all")
+```
 
 
 ## Saturated model
@@ -594,10 +592,29 @@ aictab(list(fit.simple, fit.simple.up, fit.satur),
 **??? Not sure how this shall show unsupported links...**
 
 
+# Model pruning
+Now, let's delete all statistically non-significant paths from the saturated model to obtain the most parsimonous model. There is only a single non-significant path, that is, the path between disturbance and evenness. 
+
+```{r}
+prune <-
+"mass.above ~ nadd + rich + even + precip.mm + disk
+rich ~ nadd + precip.mm + disk
+even ~ nadd + precip.mm 
+
+rich ~~ even"
+
+fit.prune <- sem(prune, data = seabloom, estimator = "MLM")
+summary(fit.prune, rsq = TRUE, fit.measures = TRUE)
+
+aictab(list(fit.satur, fit.prune),
+       c("saturated", "pruned"))
+```
+
+When comparing the CFI and AIC, we see that the pruned model is slightly superior to the saturated model. The AIC is the lowest (although dAIC < 2) and the number of model parameters is lower and hence this model is the most parsimonous.
 
 
 ## Summary output
-Now, let's have a closer look on the model via `summary` requesting also the standardized estimates:
+Now that we have our final model, let's have a closer look on the model via `summary` requesting also the standardized estimates:
 
 ```{r}
 summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE, standardized = TRUE)
@@ -635,7 +652,7 @@ inspect(fit.simple.up, what = "r2")
 ## Visualize the results
 
 The package [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot) allows to simply and straight-forwardly visualize diagrams from `lavaan` objects.
-Since it was removed from [CRAN](https://cran.r-project.org/) begin of 2021, it needs to be downloaded and installed from the archive.
+Since it was removed from [CRAN](https://cran.r-project.org/) beginning of 2021, it needs to be downloaded and installed from the archive.
 The code below first tests, if `lavaanPlot` is missing in the local library and if so, installs it from the latest archived repository on CRAN.
 
 Another library that handles `lavaan` objects would be [`semPlot`](https://cran.r-project.org/web/packages/semPlot/index.html). 
@@ -701,18 +718,15 @@ To present the results of a SEM, following should be stated in the report [@grac
 * Computed queries as table or graph
 
 
-
-# LM vs SEM
-The common conclusions for both LM and SEM is that in our example, evenness is of little importance for explaining the total biomass production.
-
-
-Comparing SEM with LM:
-
-* SEM represents a network type approach with direct and indirect effects
-* SEM allows for sequential learning
-* LM more likely to detect interactions between variables
+<!-- # LM vs SEM -->
+<!-- The common conclusions for both LM and SEM is that in our example, evenness is of little importance for explaining the total biomass production. -->
 
 
+<!-- Comparing SEM with LM: -->
+
+<!-- * SEM represents a network type approach with direct and indirect effects -->
+<!-- * SEM allows for sequential learning -->
+<!-- * LM more likely to detect interactions between variables -->
 
 
 # References
