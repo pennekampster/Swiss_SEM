@@ -22,3 +22,42 @@ AIC(fit.simple.up, fit.simple.exc)
 
 
 
+# Exercise to construct composite variables
+
+# Composite variables are convenient to model nonlinear relationships
+
+ggplot(data=seabloom, aes(precip.gs, mass.above)) + geom_point() + 
+  stat_smooth(method="lm", formula = "y ~ poly(x, 2)", se=F) + 
+  stat_smooth(method="lm", formula = "y ~ x", colour="red")
+
+
+comp2 <- "
+landuse2 <~  0.06544565 * nadd + 0.4466863 * disk
+
+rich ~ landuse2 + precip.mm
+even ~ landuse2 + precip.mm
+
+mass.above ~ landuse2 + rich + even + precip.mm
+
+rich ~~ even"
+
+fit.comp2 <- sem(comp2, data = seabloom)
+summary(fit.comp2, standardize = T)
+
+
+
+comp2 <- "
+landuse2 <~   nadd + 1 * disk
+
+rich ~ landuse2 + precip.mm
+even ~ landuse2 + precip.mm
+
+mass.above ~ landuse2 + rich + even + precip.mm
+
+rich ~~ even"
+
+fit.comp2 <- sem(comp2, data = seabloom, )
+summary(fit.comp2, standardize=T)
+
+
+

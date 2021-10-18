@@ -282,8 +282,6 @@ lavInspect(fit.comp.man, "rsquare")
 lavInspect(fit.comp.man2, "rsquare")
 ```
 
-
-
 Finally, we can integrate the composite `landuse` into the `simple` model from before.
 
 ```{r}
@@ -295,31 +293,9 @@ mass.above ~ landuse + rich + even + precip.mm
 
 rich ~~ even"
 
-
 fit.comp <- sem(comp, data = seabloom)
 summary(fit.comp)
 ```
-
-
-### Precipitation composite
-```{r}
-comp <- 
-"comp.prec <~ 1 * precip.mm + precip.gs
-
-rich ~ nadd + comp.prec
-even ~ nadd + comp.prec
-mass.above ~ nadd + disk + rich + even + comp.prec
-
-rich ~~ even"
-
-fit.comp <- sem(comp, data = seabloom, estimator = "MLM")
-summary(fit.comp, fit.measures = TRUE)
-
-# modindices(fit.comp, minimum.value = 3.84)
-# fit.comp.up <- update(fit.comp, "rich ~ mass.above")
-# summary(fit.comp.up)
-```
-
 
 # Interactions
 ![](Figures/Interaction.svg){width=50%}
@@ -393,7 +369,7 @@ summary(fit.int.full, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
 
 Not the greatest fit in terms of $p$-value (`r round(fitmeasures(fit.int.full, "pvalue"), digits = 2)`), but really fine in terms of CFI (`r round(fitmeasures(fit.int.full, "cfi"), digits = 3)`).
 
-## Multigroup fitting to incorporate interactions
+## Multigroup fitting 
 
 Another way to incorporate interactions is to fit SEMs where coefficients can vary among groups. Lavaan offers the "group" argument to specify for which groups coefficients should be estimated. Importantly, groups have to be of categorical nature. For our dataset, the application of the disturbance ("yes" vs "no") is categorical. So let's fit the SEM to the two disturbance regimes:
 
@@ -411,7 +387,7 @@ summary(fit.int.mg, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
 
 The default option is to let all coefficients vary between groups, but have the same structure of direct and indirect effects. Let's visualize the estimated coefficients:
 
-```{r}
+```{r, results=F}
 fit_tab <- (summary(fit.int.mg, fit.measures = TRUE, standardized = TRUE, rsq = TRUE))$PE
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
 fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
@@ -457,7 +433,7 @@ summary(fit.int.mg.constrain, fit.measures = TRUE, standardized = TRUE, rsq = TR
 
 Let's visualize again the coefficients to see the effect:
 
-```{r}
+```{r, results=F}
 fit_tab <- (summary(fit.int.mg.constrain, fit.measures = TRUE, standardized = TRUE, rsq = TRUE))$PE
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
 fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
@@ -476,7 +452,7 @@ Model comparison with AICc indicates that the disturbance effect probably intera
 
 ```{r}
 library(AICcmodavg)
-aictab(list(fit.int.full2, fit.int.mg, fit.int.mg.constrain))
+aictab(list(fit.int.mg, fit.int.mg.constrain))
 ```
 
 
