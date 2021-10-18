@@ -393,6 +393,72 @@ summary(fit.int.full, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
 
 Not the greatest fit in terms of $p$-value (`r round(fitmeasures(fit.int.full, "pvalue"), digits = 2)`), but really fine in terms of CFI (`r round(fitmeasures(fit.int.full, "cfi"), digits = 3)`).
 
+## Multigroup fitting to incorporate interactions
+
+Another way to incorporate interactions is to fit SEMs where coefficients can vary among groups. Lavaan offers the "group" argument to specify for which groups coefficients should be estimated. Importantly, groups have to be of categorical nature. For our dataset, the application of the disturbance ("yes" vs "no") is categorical. So let's fit the SEM to the two disturbance regimes:
+
+```{r}
+int.mg <-
+"mass.above ~ rich + even + precip.mm
+rich ~ nadd + precip.mm
+even ~ nadd + precip.mm
+
+rich ~~ even"
+
+fit.int.mg <- sem(int.mg, group = "disk", data = seabloom)
+summary(fit.int.mg, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
+```
+
+The default option is to let all coefficients vary between groups, but have the same structure of direct and indirect effects. Let's visualize the estimated coefficients:
+
+```{r}
+fit_tab <- (summary(fit.int.mg, fit.measures = TRUE, standardized = TRUE, rsq = TRUE))$PE
+fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
+fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
+                            ifelse(fit_tab$group == 2, "dist", NA))
+
+ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr)) + 
+  geom_point(size=1) + geom_errorbar(aes(ymin = est-se*1.96, ymax = est+se*1.96)) + 
+  facet_wrap(~term, scales="free") + 
+  scale_colour_manual(values = c("blue",  "red")) + 
+  geom_hline(aes(yintercept = 0), colour = "black", linetype = "dashed") + 
+  guides(colour=F) +
+  theme_bw() 
+```
+
+Each facet grid shows a path and the estimated coefficients, one for disturbed (in blue) and one for the undisturbed plots (in red).
+
+To test equality constraints, such as same means of coefficients among groups, lavaan offers the "group.equal" argument:
+
+```{r, results = 'asis'}
+group.equal=c(
+"intercepts",
+"means",
+"regressions",
+"residuals",
+"residual.covariances")
+```
+
+Furthermore, we can test equality constraints by labeling parameters. To do so, we provide namees for the path coefficients that we want to be equal for both groups (here "b1" and "b2").
+
+```{r}
+int.mg.constrain <-
+"mass.above ~ rich + even + precip.mm
+rich ~ c('b1', 'b1') * nadd + precip.mm
+even ~ c('b2', 'b2') *  nadd + precip.mm
+
+rich ~~ even"
+
+fit.int.mg <- sem(int.mg.constrain, group = "disk", data = seabloom)
+summary(fit.int.mg, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
+```
+
+
+
+
+
+
+
 # Complex sampling structure
 Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages.
 As a result, these data violate the principle of being [*i.i.d.* (independent and identically distributed)](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).
