@@ -25,7 +25,7 @@ library("here")
 
 
 
-# Load data and rerun the model
+# Load data and re-run the model
 Here, we use the very same data set as in the introductory part to SEM (`1_basic_modeling.html`).
 Also, we rescale the biomass and precipitation so that they are in approximately the same range as the other variables.
 
