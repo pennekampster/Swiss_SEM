@@ -437,25 +437,47 @@ group.equal=c(
 "regressions",
 "residuals",
 "residual.covariances")
+
+#fit.int.mg <- sem(int.mg, group = "disk", group.equal = c("regressions"), data = seabloom)
 ```
 
-Furthermore, we can test equality constraints by labeling parameters. To do so, we provide namees for the path coefficients that we want to be equal for both groups (here "b1" and "b2").
+Furthermore, we can test equality constraints by labeling parameters. To do so, we provide namees for the path coefficients that we want to be equal for both groups (e.g. "b1"), whereas path coefficients that we want to vary between groups have different names (e.g., "b4a" and "b4b").
 
 ```{r}
 int.mg.constrain <-
-"mass.above ~ rich + even + precip.mm
-rich ~ c('b1', 'b1') * nadd + precip.mm
-even ~ c('b2', 'b2') *  nadd + precip.mm
+"mass.above ~  c('b1', 'b1') * rich + c('b2', 'b2') * even + c('b3', 'b3') * precip.mm
+rich ~ c('b4a', 'b4b') * nadd + c('b5', 'b5') * precip.mm
+even ~ c('b6a', 'b6b') *  nadd + c('b7', 'b7') * precip.mm
 
 rich ~~ even"
 
-fit.int.mg <- sem(int.mg.constrain, group = "disk", data = seabloom)
-summary(fit.int.mg, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
+fit.int.mg.constrain <- sem(int.mg.constrain, group = "disk", data = seabloom)
+summary(fit.int.mg.constrain, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
 ```
 
+Let's visualize again the coefficients to see the effect:
 
+```{r}
+fit_tab <- (summary(fit.int.mg.constrain, fit.measures = TRUE, standardized = TRUE, rsq = TRUE))$PE
+fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
+fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
+                            ifelse(fit_tab$group == 2, "dist", NA))
 
+ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr)) + 
+  geom_point(size=1) + geom_errorbar(aes(ymin = est-se*1.96, ymax = est+se*1.96)) + 
+  facet_wrap(~term, scales="free") + 
+  scale_colour_manual(values = c("blue",  "red")) + 
+  geom_hline(aes(yintercept = 0), colour = "black", linetype = "dashed") + 
+  guides(colour=F) +
+  theme_bw() 
+```
 
+Model comparison with AICc indicates that the disturbance effect probably interacts with more than the nitrogen addition. 
+
+```{r}
+library(AICcmodavg)
+aictab(list(fit.int.full2, fit.int.mg, fit.int.mg.constrain))
+```
 
 
 
@@ -510,22 +532,25 @@ if(!file.exists("lavSpatialCorrect.R"))
 if(!file.exists("lavSpatialCorrect.R"))
   {system("wget https://raw.githubusercontent.com/jebyrnes/spatial_correction_lavaan/master/predict_lavaan.R")}
 
-source("lavSpatialCorrect.R")
-source("predict_lavaan.R")
+source(here("lavSpatialCorrect.R"))
+source(here("predict_lavaan.R"))
 ```
 
 ## Geographical coordinates
 To account for spatial autocorrelation, we first need the coordinates of the respective fields. As none are given in the publication, we use approximated location inferred from the map in the supplementary.
 
 ```{r}
-seabloom$lat[seabloom$field == "A"] <- 45.4232 + rnorm(length(seabloom$lat[seabloom$field == "A"]), mean=0, .001)
-seabloom$lon[seabloom$field == "A"] <- -93.197 + rnorm(length(seabloom$lat[seabloom$field == "A"]), mean=0, .001)
+library(tidyverse)
+seabloom_A <- seabloom %>% filter(field == "A") %>% mutate(lat = 45.4232 + rnorm(n(), mean=0, .1),
+                                               lon = -93.197 + rnorm(n(), mean=0, .001))
 
-seabloom$lat[seabloom$field == "B"] <- 45.4258 + rnorm(length(seabloom$lat[seabloom$field == "B"]), mean=0, .001)
-seabloom$lon[seabloom$field == "B"] <- -93.2102 + rnorm(length(seabloom$lat[seabloom$field == "B"]), mean=0, .001)
+seabloom_B <- seabloom %>% filter(field == "B") %>% mutate(lat = 45.4258 + rnorm(n(), mean=0, .1),
+                                               lon = -93.2102 + rnorm(n(), mean=0, .001))
 
-seabloom$lat[seabloom$field == "C"] <- 45.3969 + rnorm(length(seabloom$lat[seabloom$field == "C"]), mean=0, .001)
-seabloom$lon[seabloom$field == "C"] <- -93.1933 + + rnorm(length(seabloom$lat[seabloom$field == "C"]), mean=0, .001)
+seabloom_C <- seabloom %>% filter(field == "C") %>% mutate(lat = 45.3969 + rnorm(n(), mean=0, .1),
+                                               lon = -93.1933 + rnorm(n(), mean=0, .001))
+
+seabloom <- bind_rows(seabloom_A, seabloom_B, seabloom_C)
 ```
 
 
@@ -533,6 +558,7 @@ seabloom$lon[seabloom$field == "C"] <- -93.1933 + + rnorm(length(seabloom$lat[se
 "lavSpatialCorrect calculates Moran's I for the residuals of all endogenous variables, and then spatially corrects them via Moran's I. If they are spatially independent, the effective sample size = the true sample size."
 
 ```{r}
+
 
 predict_lavaan <- function(fit, newdata = NULL){
   stopifnot(inherits(fit, "lavaan"))
@@ -620,7 +646,6 @@ predict_lavaan <- function(fit, newdata = NULL){
   
 }
 
-
 fitted_lavaan <- function(fit){
   predict_lavaan(fit)
 }
@@ -640,58 +665,19 @@ residuals_lavaan <- function(fit){
 }
 
 
-############################################
-########### EXAMPLE CODE
-############################################
-# 
-# iris_mod <- "
-# Sepal.Width ~ Sepal.Length
-# Petal.Width ~ Sepal.Width + Petal.Length
-# 
-# "
-# 
-# iris_fit <- sem(iris_mod, data=iris, meanstructure = TRUE)
-# 
-# fitted_lavaan(iris_fit)
-# 
-# res <- residuals_lavaan(iris_fit)
-# 
-# par(mfrow=c(1,2))
-# for(i in 1:2) {
-#   qqnorm(res[,i], main=names(res)[i])
-#   qqline(res[,i])
-# }
-# par(mfrow=c(1,1))   
-# 
-# newdata <- data.frame(Sepal.Length=1:10, Petal.Length=11:20)
-# pred <- predict_lavaan(iris_fit, newdata=newdata)
-# 
-# plot(Petal.Width ~ Sepal.Length, data=cbind(newdata, pred))
-# 
-# library(mvnormtest)
-# mshapiro.test(t(res))
-
-
-
-
 fit.simple2 <- sem(simple, data = seabloom, meanstructure=T)
 summary(fit.simple2)
 
 library(ggplot2)
-qplot(lat, lon, data=seabloom, color=mass.above) +
-  theme_bw(base_size=18) + 
-  scale_color_gradient("AGB", low="lightgreen", high="darkgreen")
 
 # residuals are key for the analysis
 fitRes <- as.data.frame(residuals_lavaan(fit.simple2))
 
-seabloom$fitted.value <- fitted.values(fit.simple2, "casewise")
-seabloom$resid <- seabloom$mass.above - seabloom$fitted.value
-
+seabloom$fitted.value <- fitted.values(fit.simple2, "casewise")[1]
+seabloom$resid <- as.numeric(seabloom$mass.above - seabloom$fitted.value)
 
 #raw visualization of NDVI residuals
-ggplot(data=seabloom, aes(lat, lon)) + geom_point(aes(colour=fitRes$mass.above))
-
+ggplot(data=seabloom, aes(lat, lon, colour=resid)) + geom_point()
 lavSpatialCorrect(fit.simple2, seabloom$lon, seabloom$lat)
 ```
 
