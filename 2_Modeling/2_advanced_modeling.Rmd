@@ -393,9 +393,6 @@ summary(fit.int.full, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
 
 Not the greatest fit in terms of $p$-value (`r round(fitmeasures(fit.int.full, "pvalue"), digits = 2)`), but really fine in terms of CFI (`r round(fitmeasures(fit.int.full, "cfi"), digits = 3)`).
 
-
-
-
 # Complex sampling structure
 Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages.
 As a result, these data violate the principle of being [*i.i.d.* (independent and identically distributed)](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).
@@ -436,44 +433,200 @@ summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)
 We see that the robust $p$-value increased substantially from `r round(fitmeasures(fit.simple, "pvalue.scaled"), digits = 2)` to `r round(fitmeasures(fit.simple.nest, "pvalue.scaled"), digits = 2)`, while the R^2^, the estimates and their standard errors remained basically the same.
 
 
-
-
 # Spatial autocorrelation
 We can detect spatial autocorrelation in this analysis with the help of a script developped by Jarret Byrnes...
-
 
 First, download the script if absent and load it.
 ```{r}
 if(!file.exists("lavSpatialCorrect.R"))
   {system("wget https://raw.githubusercontent.com/jebyrnes/spatial_correction_lavaan/master/lavSpatialCorrect.R")}
 
+if(!file.exists("lavSpatialCorrect.R"))
+  {system("wget https://raw.githubusercontent.com/jebyrnes/spatial_correction_lavaan/master/predict_lavaan.R")}
+
 source("lavSpatialCorrect.R")
+source("predict_lavaan.R")
 ```
-
-
 
 ## Geographical coordinates
 To account for spatial autocorrelation, we first need the coordinates of the respective fields. As none are given in the publication, we use approximated location inferred from the map in the supplementary.
 
 ```{r}
-seabloom$lat[seabloom$field == "A"] <- 45.4232
-seabloom$lat[seabloom$field == "A"] <- -93.197
+seabloom$lat[seabloom$field == "A"] <- 45.4232 + rnorm(length(seabloom$lat[seabloom$field == "A"]), mean=0, .001)
+seabloom$lon[seabloom$field == "A"] <- -93.197 + rnorm(length(seabloom$lat[seabloom$field == "A"]), mean=0, .001)
 
-seabloom$lat[seabloom$field == "B"] <- 45.4258
-seabloom$lat[seabloom$field == "B"] <- -93.2102
+seabloom$lat[seabloom$field == "B"] <- 45.4258 + rnorm(length(seabloom$lat[seabloom$field == "B"]), mean=0, .001)
+seabloom$lon[seabloom$field == "B"] <- -93.2102 + rnorm(length(seabloom$lat[seabloom$field == "B"]), mean=0, .001)
 
-seabloom$lat[seabloom$field == "C"] <- 45.3969
-seabloom$lat[seabloom$field == "C"] <- -93.1933
+seabloom$lat[seabloom$field == "C"] <- 45.3969 + rnorm(length(seabloom$lat[seabloom$field == "C"]), mean=0, .001)
+seabloom$lon[seabloom$field == "C"] <- -93.1933 + + rnorm(length(seabloom$lat[seabloom$field == "C"]), mean=0, .001)
 ```
 
 
 ## Correct for spatial autocorrelation
-"lavSpatialCorrect calculates Moran's I for the residuals of all endogenous variables, and then spatially corrects them via Moran's I. If they are spatially independent, the effective sample size = the true sample size.
-"
+"lavSpatialCorrect calculates Moran's I for the residuals of all endogenous variables, and then spatially corrects them via Moran's I. If they are spatially independent, the effective sample size = the true sample size."
 
 ```{r}
-# Fails because of missing function...
-# lavSpatialCorrect(fit.simple, seabloom$lon, seabloom$lat)
+
+predict_lavaan <- function(fit, newdata = NULL){
+  stopifnot(inherits(fit, "lavaan"))
+  
+  #Make sure we can use this
+  if(!inspect(fit, "meanstructure")) stop("Need to supply meanstructure = TRUE in fit\n")
+  if(is.null(newdata)){
+    newdata <- data.frame(inspect(fit, "data"))
+    names(newdata) <- lavNames(fit)
+  }
+  
+  if(length(lavNames(fit, type="lv"))!=0) stop("Does not currently work with latent variables\n")
+  
+  #check for new data
+  if(sum(!(lavNames(fit, type="ov.x") %in% names(newdata)))>0) stop("Not all exogenous variables supplied!")
+  
+  #Add some new columns to newdata
+  newdata$Intercept <- 1
+  newdata[lavNames(fit, "ov.nox")] <- 0
+  
+  
+  mod_df <- data.frame(lhs = fit@ParTable$lhs,
+                       op = fit@ParTable$op,
+                       rhs = fit@ParTable$rhs,
+                       exo = fit@ParTable$exo,
+                       est = fit@ParTable$est,
+                       se = fit@ParTable$se,
+                       stringsAsFactors=FALSE)
+  
+  #Drop covariances
+  mod_df <- mod_df[-which(mod_df$op=="~~"),]
+  mod_df[which(mod_df$op=="~1"),]$rhs <- "Intercept"
+  
+  #get rid of exogenous on lhs
+  mod_df <- mod_df[-which(mod_df$exo==1),]
+  
+  #Order by lhs
+  mod_df <- mod_df[sort(mod_df$lhs, index.return=TRUE)$ix,]
+  
+  #let us know which variables on the rhs are exogenous
+  mod_df$ord <- 0
+  mod_df[which(!(mod_df$rhs %in% mod_df$lhs)),]$ord <- 1
+  
+  #Make a "order"
+  ord_current <- 1
+  while(sum(mod_df$ord==0)>0){
+    for(r in unique(mod_df$lhs)){
+      val <-  sum(mod_df[which(mod_df$lhs==r),]$ord==0)
+      if(val==0) {
+        mod_df[which(mod_df$lhs==r),]$ord <- ord_current
+        
+        if(sum(mod_df$rhs==r)>0)
+          mod_df[which(mod_df$rhs==r),]$ord <- ord_current+1
+      }
+    }
+  ord_current <- ord_current +1
+  }
+  
+  #correct for ragged ordering
+  for(r in unique(mod_df$lhs)){
+    mod_df[which(mod_df$lhs==r),]$ord <- max(mod_df[which(mod_df$lhs==r),]$ord)
+  }
+  
+  #sort by order 
+  mod_df <- mod_df[sort(mod_df$ord, index.return=TRUE)$ix,]
+  
+  #now do the fitting in order
+  fit_df <- data.frame(base = rep(1, nrow(newdata)))
+  
+  for(r in unique(mod_df$lhs)){
+    subdf <- subset(mod_df, mod_df$lhs==r)
+    #make a formula
+    rhs <- paste0(subdf$rhs, collapse=" + ")
+    form <- as.formula(paste0(r, " ~ ", rhs))
+    
+    #use formula to get right part of the data in right format
+    mod_mat <- model.matrix(form, newdata)[,-1]
+    new_val = mod_mat %*% subdf$est
+    
+    fit_df[[r]] <- new_val
+    newdata[[r]] <- new_val
+  }
+  
+  return(fit_df[,-1])
+  
+}
+
+
+fitted_lavaan <- function(fit){
+  predict_lavaan(fit)
+}
+
+residuals_lavaan <- function(fit){
+  fitted_vals <- fitted_lavaan(fit)
+  
+  rawdata <- data.frame(inspect(fit, "data"))
+  names(rawdata) <- lavNames(fit)
+  
+  res <- data.frame(base = rep(1, nrow(rawdata)))
+  for(vals in names(fitted_vals)){
+    res[[vals]] <- rawdata[[vals]] - fitted_vals[[vals]] 
+  }
+  
+  return(res[,-1])
+}
+
+
+############################################
+########### EXAMPLE CODE
+############################################
+# 
+# iris_mod <- "
+# Sepal.Width ~ Sepal.Length
+# Petal.Width ~ Sepal.Width + Petal.Length
+# 
+# "
+# 
+# iris_fit <- sem(iris_mod, data=iris, meanstructure = TRUE)
+# 
+# fitted_lavaan(iris_fit)
+# 
+# res <- residuals_lavaan(iris_fit)
+# 
+# par(mfrow=c(1,2))
+# for(i in 1:2) {
+#   qqnorm(res[,i], main=names(res)[i])
+#   qqline(res[,i])
+# }
+# par(mfrow=c(1,1))   
+# 
+# newdata <- data.frame(Sepal.Length=1:10, Petal.Length=11:20)
+# pred <- predict_lavaan(iris_fit, newdata=newdata)
+# 
+# plot(Petal.Width ~ Sepal.Length, data=cbind(newdata, pred))
+# 
+# library(mvnormtest)
+# mshapiro.test(t(res))
+
+
+
+
+fit.simple2 <- sem(simple, data = seabloom, meanstructure=T)
+summary(fit.simple2)
+
+library(ggplot2)
+qplot(lat, lon, data=seabloom, color=mass.above) +
+  theme_bw(base_size=18) + 
+  scale_color_gradient("AGB", low="lightgreen", high="darkgreen")
+
+# residuals are key for the analysis
+fitRes <- as.data.frame(residuals_lavaan(fit.simple2))
+
+seabloom$fitted.value <- fitted.values(fit.simple2, "casewise")
+seabloom$resid <- seabloom$mass.above - seabloom$fitted.value
+
+
+#raw visualization of NDVI residuals
+ggplot(data=seabloom, aes(lat, lon)) + geom_point(aes(colour=fitRes$mass.above))
+
+lavSpatialCorrect(fit.simple2, seabloom$lon, seabloom$lat)
 ```
 
 # References
