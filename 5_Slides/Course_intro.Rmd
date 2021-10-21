@@ -1,0 +1,59 @@
+---
+title: "Introduction to structural equation modeling"
+author: "Frank Pennekamp"
+date: "10/19/2021"
+output: 
+  beamer_presentation: 
+    incremental: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Introduction of the team
+
+Dr. Frank Pennekamp (main instructor)  
+Dr. James Grace (advanced topics and model clinic)  
+Dr. Rachel Korn (course development)  
+  
+Swiss SEM team
+
+# Schedule
+
+- Day 1:
+  * General introduction to SEM to model ecological systems
+  * Fitting SEMs to data
+  * Model pruning, visualization and reporting
+- Day 2:
+  * Latent and composite variables
+  * Interactions
+  * Complex sampling designs
+  * Spatial autocorrelation
+- Day 3:
+  * Self-study with possibility to meet with instructor(s)
+
+# Overview
+
+What the course is about
+
+- Global estimation with R package lavaan
+- Hands on exercises and live coding
+- We will work with a single dataset
+
+What will not be covered
+
+- Local estimation of SEMs (with piecewiseSEM)
+- Advanced topics like incorporating random effects, feedbacks, temporal autocorrelation
+
+# Learning objectives
+
+- Participants understand the benefits and limits of SEMs
+- Participants are able to fit, interpret and visualize a SEM
+- Participants are able to apply SEM to their own dataset
+
+
+
+
+
+
