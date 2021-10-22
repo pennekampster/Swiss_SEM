@@ -2,7 +2,10 @@
 title: "Introduction to structural equation modelling"
 author: "Frank Pennekamp"
 date: "11/11/2020"
-output: beamer_presentation
+output: 
+  beamer_presentation: 
+    incremental: no
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +23,7 @@ library(ggplot2)
 
 ## Research questions
 
-- Ecology is about interactions between organisms and their environments.
+- Ecology is about the interactions between organisms and their environments.
 - We often have ideas how things could be connected in ecological systems. 
 - To test these ideas, we need a way to dissect when they occurr for a reason versus randomness.
 - We use statistics to understand, when connections are non-random.
@@ -43,12 +46,44 @@ To better understand the relationship among variables in complex ecosystems:
 
 - System thinking
   - "Understanding the whole rather than the parts in isolation"
-- Examine relative influences and responses
-- In SEM specification of a model is based on theory and research to determine and validify a proposed causal process and/or model.
+- Examine direct and indirect effects and multiple responses
+- In SEM, a model is usually specified based on theory to determine and validify a proposed causal process and/or model.
+
+## Why do we need to use SEM in Ecology
 
 Two goals of SEM:  
 1) Understand the patterns of correlation/covariance among a set of variables.  
 2) Explain as much of their variance as possible with the model specified (Kline, 1998).  
+
+## Thinking about the model
+
+Which variables are include in the model: 
+- Supported by theory.  
+- Ecologically meaningful.  
+- Garbage in - garbage out concept (both data quality and ecologically meaningful).  
+
+Setting arrow direction. 
+- Causal vs correlation. 
+- Support for both directions, how to proceed (loops).
+
+Good practice: Table of causal relationships before analysis. 
+
+## Meta-model
+
+- Thinking about what is missing in the model, measurement errors etc. 
+- Present the concept of meta-model and impications for research. 
+- Include a graphical representation of the meta-model as what is missing in the model. 
+
+![](images/Metamodel.pdf){width=50%}
+
+
+## Modelling philosophy 
+
+- Two approaches: theory (hypothesis-driven) to exploratory (data-driven). 
+- Show as a continuum between two extremes. 
+- Importance of being aware about what the model is telling to us. 
+- Final discussion about what SEM provides and the importance of system thinking in ecology. 
+
 
 ## Introduction to the dataset
 
@@ -73,7 +108,8 @@ Understanding the recovery of a grassland for two decades following an intensive
 
 ## Introduction to the dataset
 
-![](images/CedarCreek_map.png){width=50%}
+![](images/CedarCreek_map.png){width=40%}
+
 Map showing location of the study site (Cedar Creek Ecosystem Science Reserve), the location of the three study fields within the reserve, and location of the 35 x 55 m intact (black) and disturbed (red) plots within each field. 
 
 ## Introduction to the dataset
@@ -89,6 +125,8 @@ Effect of soil disturbance (disking) and nutrient enrichment on live, abovegroun
 
 ## Question of interest
 
+![](images/Seabloom_PathDiagram.pdf){width=50%}
+
 Present one research question based on the data.
 This question only NEEDS to include 2 variables.
 Biomass ->  richness and evenness 
@@ -101,7 +139,7 @@ Draw a model by hand
 
 ## Introduce the graphical model representation (X -> Y):
 
-```{r, echo=F, out.width="50%", fig.align='center'}
+```{r, echo=F, out.width="50%", fig.align='center', include=F}
 grViz("
 digraph boxes_and_circles {
 
@@ -133,7 +171,7 @@ General notation:
 - Explain the concept and discuss with students the topic. 
 - Show the difference between direct effects and correlation together with the graphical representation.  
 
-```{r, echo=F, out.width="50%", fig.align='center'}
+```{r, echo=F, out.width="50%", fig.align='center', include=F}
 grViz("
 digraph boxes_and_circles {
 
@@ -177,56 +215,26 @@ Present the bivariate model.
 Include the equation and a plot.
 It is important that students understand that all they know can be defined with a graphical representation.
 
-lm(y~x1)
+`lm(y~x1)`
 
-```{r, echo=F, out.width="50%", fig.align='center'}
-grViz("
-digraph boxes_and_circles {
 
-  # a 'graph' statement
-  graph [overlap = true, fontsize = 10, layout = dot,
-       rankdir = RL]
+![](images/LM.pdf){width=50%}
 
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X; Y;
-
-  # 'edge' statements
-  X -> Y
-}
-")
-
-```
-
-```{r, out.width='30%', echo=F, message=F}
-set.seed(2397348)
-dat <- data.frame(x1 = runif(50), x3 = runif(50))
-dat$x2 = 0.5 * dat$x1 + runif(50)
-dat$x3 = 0.5 * dat$x2 + runif(50)
-dat$y = -0.3 * dat$x2 + 0.7 * dat$x1 + 0.9 * dat$x2 * dat$x1 + runif(50)
-ggplot(data=dat, aes(x=x1,y=y)) + geom_point() + stat_smooth(method="lm")
-```
 
 ## Multiple independent variables
 
-```{r, out.width=c('30%', '30%'), fig.show='hold', echo=F, message=F}
-ggplot(data=dat, aes(x=x1,y=y)) + geom_point() + stat_smooth(method="lm")
-ggplot(data=dat, aes(x=x2,y=y)) + geom_point() + stat_smooth(method="lm")
-ggplot(data=dat, aes(x=x3,y=y)) + geom_point() + stat_smooth(method="lm")
-
-```
-
 - Discuss with students other variables that may affect B.  
-- Introduce a new variable and the question that it answers 
-- Add nutrient variable 
+- Introduce a new variable and the question that it answers. 
+- Add nutrient variable. 
 - Show the graphical model (X1 -> Y, X2 -> Y). 
 - Include the equation and the two partial plots. 
 - Be clear this is a multiple regression model. 
 
-lm(y~x1+x2, data=dat)
+`lm(y~x1+x2+x3)`
 
-```{r, out.width="50%", fig.align='center'}
+![](images/LMdir.pdf){width=50%}
+
+```{r, out.width="50%", fig.align='center', include=F}
 grViz("
 digraph boxes_and_circles {
 
@@ -248,22 +256,14 @@ digraph boxes_and_circles {
 ")
 ```
 
-## Multiple independent variables
-
-```{r, out.width=c('30%', '30%'), fig.show='hold', echo=F, message=F}
-library(visreg)
-summary(lm(y~x1+x2+x3, data=dat))
-visreg(lm(y~x1+x2, data=dat), partial =T, gg=TRUE)
-```
-
 ## Indirect effect
 
-- All the models we have seen so far, show direct effects.
-- A direct effect is a directional relation between two variables, e.g., independent and dependent variables.
+- All relationships in the previous models are direct.
+  - Directional relation between two variables, e.g., independent and dependent variables.
 - Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.
 - Include partial plots for both to illustrate the indirect effect.
 
-```{r, out.width="50%", fig.align='center'}
+```{r, out.width="50%", fig.align='center', include=F}
 grViz("
 digraph boxes_and_circles {
 
@@ -277,23 +277,18 @@ digraph boxes_and_circles {
   X1; X2, Y
 
   # several 'edge' statements
-    X1->X2;
-    X2->Y;
+    X1->X2[style=dashed];
+    X2->Y[style=dashed];
     X1->Y;
 }
 ")
 ```
-
+![](images/LMdir.pdf){width=50%}
 
 ## Mediation
 
-
-
-
-
-
-
-
+- Tests whether a particular variable has a mediating effect.  
+- Often used to test underlying mechanisms.  
 
 
 ## Interaction questions (Moderation)
@@ -304,7 +299,9 @@ digraph boxes_and_circles {
 - Include partial plots to illustrate the interaction effect.  
 - Make clear that this is the same as an interaction in traditional regression models. 
 
-```{r, out.width="50%", fig.align='center'}
+![](images/Interaction.pdf){width=50%}
+
+```{r, out.width="50%", fig.align='center', include=F}
 grViz("
 digraph boxes_and_circles {
 
@@ -332,7 +329,9 @@ digraph boxes_and_circles {
 Until now everything was about paths but modelling also involves variables.
 A variable that is not directly measured is a latent variable (examples).
 
-```{r, out.width="50%", fig.align='center'}
+![](images/LatentCompositeSEM.pdf){width=50%}
+
+```{r, out.width="50%", fig.align='center', include=F}
 grViz("
 digraph boxes_and_circles {
    
@@ -361,7 +360,9 @@ digraph boxes_and_circles {
 
 Composite variables specify the influences of collections of other variables (examples)
 
-```{r, out.width="50%", fig.align='center'}
+![](images/LatentCompositeSEM.pdf){width=50%}
+
+```{r, out.width="50%", fig.align='center', include=F}
 grViz("
 digraph boxes_and_circles {
    
@@ -387,53 +388,70 @@ digraph boxes_and_circles {
 
 ## System level approach
 
-Show a very complex model including multiple types of variables, arrows (direct and correlations) for the study system.
-The complex model is built based on submodels, each one addressing specific questions.
-We need a framework to analyze this together -> SEM
-Discuss about complexity in ecology and if SEM is useful to answer your questions ("We need to do things as simple as possible, but no simpler").
+- Show a very complex model including multiple types of variables, arrows (direct and correlations) for the study system. 
+- The complex model is built based on submodels, each one addressing specific questions. 
+- We need a framework to analyze this together -> SEM 
+- Discuss about complexity in ecology and if SEM is useful to answer your questions ("We need to do things as simple as possible, but no simpler"). 
 
-## Assumptions of SEM 
+![](images/FullSEM.pdf){width=50%}
 
-Assumptions common to any statistical analysis (normality, amount of data, experimental design...).
-Assumptions specific to SEM (data in the same scale...).
+```{r out.width="30%", fig.align='center', include=F}
+grViz('
+digraph boxes_and_circles {
+   
+      graph[layout=dot]
+      
+    subgraph {
+    
+    node[shape=box]
+    a -> b[color=black, penwidth=3.0, label="0.5"]
+    a -> c[color=black, penwidth=3.0, label="0.5"]
+    c -> b[color=red, penwidth=1.5, label="-0.25"]
+    c -> e[color=red, penwidth=1.5, label="-0.25"]
+      }
+      
+      
+    subgraph {
+           
+    node[shape=box]
 
-## Thinking about the model
+    e -> e[color=black, penwidth=3.0, label="0.5"]
+    e -> b[color=red, penwidth=1.5, label="-0.25"]
 
-Which variables include in the model 
-- Supported by theory.
-- Ecologically meaningful.
-- Garbage in - garbage out concept (both data quality and ecologically meaningful).
+      }
+       
+      
+{rank = "same"; c;e}
 
-Setting arrow direction.
-- Causal vs correlation.
-- Support for both directions, how to proceed (loops).
 
-Good practice: Table of causal relationships before analysis.
+}
+')
+```
 
-## Meta-model
 
-Thinking about what is missing in the model, measurement errors etc.
-Present the concept of meta-model and impications for research.
-Include a graphical representation of the meta-model as what is missing in the model.
+## Assumptions of SEM with lavaan
 
-## Modelling philosophy 
+  - Normality
+  - Global estimation[^1]
+  - Directed acyclic relationships[^2]
+  - Linear relationships[^3]
+  - Backdoor criterion
 
-Two approaches: from theory (hypothesis) to data (exploratories).
-Show as a continuum between two extremes.
-Importance of being aware about what the model is telling to us.
-Finall discussion about what SEM provides and the importance of system thinking in ecology.
+[^1]: Local estimation possible.
+[^2]: Causal loops possible.
+[^3]: Nonlinear relationships possible.
 
-## SEM Steps
+## SEM workflow
 
-review the relevant theory and research literature to support model specification
-specify a model (e.g., diagram, equations)
-determine model identification (e.g., if unique values can be found for parameter estimation; the number of degrees of
-freedom, df, for model testing is positive)
-select measures for the variables represented in the model
-collect data
-conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)
-estimate parameters in the model
-assess model fit
-respecify the model if meaningful
-interpret and present results
+1) Review the relevant theory and research literature to support model specification 
+2) Specify a model (e.g., diagram, equations) 
+3) Determine model identification (e.g., if unique values can be found for parameter estimation; the number of degrees of
+freedom, df, for model testing is positive)  
+4) Select measures for the variables represented in the model
+5) Collect data
+6) Conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)
+7) Estimate parameters in the model
+8) Assess model fit
+9) Re-specify the model if meaningful
+10) Interpret and present results visually
 

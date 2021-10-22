@@ -7,7 +7,17 @@ dat$x3 = 0.5 * dat$x2 + runif(50)
 dat$y = 0.8 * dat$x2 + 1.7 * dat$x1 + 0.9 * (dat$x1 * dat$x2) + runif(50)
 dat$x1x2 = dat$x1 * dat$x2
 
+ggplot(data=dat, aes(x=x1,y=y)) + geom_point() + stat_smooth(method="lm")
+ggplot(data=dat, aes(x=x2,y=y)) + geom_point() + stat_smooth(method="lm")
+ggplot(data=dat, aes(x=x3,y=y)) + geom_point() + stat_smooth(method="lm")
+
 library(lavaan)
+library(visreg)
+
+summary(lm(y~x1+x2+x3, data=dat))
+visreg(lm(y~x1+x2, data=dat), partial =T, gg=TRUE)
+
+
 
 model <- ' 
 y ~ x1 + x2 + x3
@@ -16,6 +26,10 @@ y ~ x1 + x2 + x3
 fit <- sem(model, data=dat)
 summary(fit, fit.measures = TRUE, standardized=T)
 modindices(fit)
+
+
+
+
 
 
 model1 <- ' 
@@ -27,6 +41,8 @@ x3 ~ x2
 fit1 <- sem(model1, data=dat)
 summary(fit1, fit.measures = TRUE, standardized=T)
 modindices(fit1)
+
+aictab(list(model, model1))
 
 
 model2 <- ' 
