@@ -4,8 +4,9 @@ author: "Frank Pennekamp"
 date: "11/11/2020"
 output: 
   beamer_presentation: 
-    incremental: no
+    incremental: true
     toc: no
+    slide_level: 2
 ---
 
 ```{r setup, include=FALSE}
@@ -23,11 +24,14 @@ library(ggplot2)
 <!-- Specially required feedback on causality, meta-model, backdoor criterion, loops. -->
 <!-- Concepts for technical part that could be introduced also here: global vs local, information criteria for arrow selection (for me better on technical part). -->
 
-- Ecology is about the interactions between organisms and their environments.  
+\centering
+![](images/ecosystem.jpg){width=30%}
+
+- Ecology is about the interactions between organisms and their environment.  
 - We often have ideas how things could be connected in ecological systems.   
-- To test these ideas, we need a way to dissect when they occurr for a reason versus randomness.  
-- We use statistics to understand, when connections are non-random.  
-- Research questions are about understanding cause and effect.  
+- To test hypotheses, we need a way to dissect when they occurr for a reason versus randomness.  
+- We use statistics to understand, when connections are non-random.
+- Research questions are often about understanding cause and effect.  
 
 <!-- Ask students about their research questions -->
 
@@ -37,64 +41,85 @@ library(ggplot2)
 
 - System thinking
   - "Understanding the whole rather than the parts in isolation" 
-- SEM unites multiple variables in a single causal network -> simultaneous tests of multiple hypotheses.  
-- Causality is central to SEM: technique implicitly assumes that the relationships among variables represent causal links.  
+- SEM unites multiple variables in a single causal network: simultaneous tests of multiple hypotheses.  
+- Causality is central: SEM implicitly assumes that the relationships among variables represent causal links.  
 
-## Why do we need to use SEM in Ecology
+## Causality
+ 
+- "Correlation does not imply causation"
+- Causation indicates a relation between two variables in which one variable is affected by another. 
+- The arrow above indicates a causal relationship. 
 
-To better understand the relationship among variables in complex ecosystems:   
-- We often have multiple observed variables  
-- We want to test and evaluate multivariate causal relationships  
-- Test direct and indirect effects on assumed causal relationships  
-- Incorporate observed and latent variables  
-- Include interaction terms can test main effects and interaction effects  
+<!-- - Explain the concept and discuss with students the topic.  -->
+<!-- - Show the difference between direct effects and correlation together with the graphical representation.   -->
 
-## Why do we need to use SEM in Ecology
+## Regression models vs SEM
 
-Two goals of SEM:   
-1) Understand the patterns of correlation/covariance among a set of variables.  
-2) Explain as much of their variance as possible with the model specified.  
+- We often have multiple observed variables.  
+- We want to test and evaluate multivariate causal relationship.  
+- Test direct and indirect effects on assumed causal relationships.  
+- Incorporate observed and latent variables.  
+- Include interaction terms can test main effects and interaction effects.  
 
-## Thinking about the model
+## Two goals of SEM: 
+
+1)  Understand the patterns of correlation/covariance among a set of variables.  
+2)  Explain as much of their variance as possible with the model specified.  
+
+## Thinking about the model  
 
 A SEM is usually specified based on theory to determine and validify a proposed causal process and/or model.  
 
-Consideration of variables:     
+Which variables to include?     
+
 - Supported by theory.  
 - Ecologically meaningful.  
-- Garbage in - garbage out concept (both data quality and ecologically meaningful).  
-- Causal vs correlation (Setting arrow direction.)    
+- Garbage in - garbage out (both data quality and ecologically meaningful).  
 
 Good practice: Make a table / graph of putative causal relationships before analysis. 
 
-## Meta-model
+## SEM modelling philosophy 
 
-- A metamodel summarizes the concept behind a model and links it to theory.   
+- Continuum between theory (hypothesis-driven) to exploratory (data-driven) modelling.  
+- Important to be explicit about the approach taken.     
 
-\emph{Productivity (biomass) is directly influence on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.}
+<!-- - Importance of being aware about what the model is telling to us.   -->
+<!-- - Final discussion about what SEM provides and the importance of system thinking in ecology.   -->
 
-<!-- - Thinking about what is missing in the model, measurement errors etc.  -->
-<!-- - Present the concept of meta-model and impications for research.  -->
-<!-- - Include a graphical representation of the meta-model as what is missing in the model.  -->
+## Graphical models:  
 
-\centering
-![](images/Metamodel.pdf){width=50%}
+```{r, echo=F, out.width="50%", fig.align='center'}
+grViz("
+digraph boxes_and_circles {
 
-## Modelling philosophy 
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10, layout = dot,
+       rankdir = RL]
 
-- Two approaches: theory (hypothesis-driven) to exploratory (data-driven). 
-- Show as a continuum between two extremes. 
-- Importance of being aware about what the model is telling to us. 
-- Final discussion about what SEM provides and the importance of system thinking in ecology. 
+  # 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  X; Y;
 
+  # 'edge' statements
+  X -> Y
+}
+")
+```
+
+- Directed acyclic graphs (no loops).   
+- Variables are nodes (boxes).   
+- Edges (one-headed arrows) are causal relationships such as X affects Y.   
+- Edges (two-headed arrows) are non-causal relationships such as X and Y are correlated.   
 
 ## Introduction to the dataset
 
-![](images/CedarCreek.jpg)
+![](images/CedarCreek.jpg)   
 
-We will use an experimental dataset collected at the Cedar Creek Ecosystem Science Reserve to  examine long-term consequences of human-driven environmental changes ecosystem responses to:  
-- Disturbance  
-- Nitrogen deposition  
+We will use an experimental dataset collected at the Cedar Creek Ecosystem Science Reserve to  examine long-term consequences of human-driven environmental changes ecosystem responses to:
+
+- Disturbance   
+- Nitrogen deposition   
 - Changes in precipitation  
 
 ## Introduction to the dataset
@@ -131,50 +156,23 @@ Effect of soil disturbance (disking) and nutrient enrichment on live, abovegroun
 \centering
 ![](images/Seabloom_PathDiagram.pdf){width=50%}
 
-
-Present one research question based on the data.
-This question only NEEDS to include 2 variables.
-Biomass ->  richness and evenness 
+- What is the effect of richness on biomass?   
 
 <!-- Ask students about how they would address this question. -->
 
-## Graphical representation
-Draw a model by hand
+## Meta-model
 
+A metamodel summarizes the concept behind a model and links it to theory.   
 
-## Directed acyclic graphs:
+\emph{Productivity (biomass) is directly influence on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.}
 
-```{r, echo=F, out.width="50%", fig.align='center'}
-grViz("
-digraph boxes_and_circles {
+<!-- - Thinking about what is missing in the model, measurement errors etc.  -->
+<!-- - Present the concept of meta-model and impications for research.  -->
+<!-- - Include a graphical representation of the meta-model as what is missing in the model.  -->
 
-  # a 'graph' statement
-  graph [overlap = true, fontsize = 10, layout = dot,
-       rankdir = RL]
+\centering
+![](images/Metamodel.pdf){width=50%}
 
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X; Y;
-
-  # 'edge' statements
-  X -> Y
-}
-")
-```
-
-General notation:  
-- Variables are nodes.   
-- Arrows are causal relationships.  
-
-## Causality
-
-- What is a causal relationship?  
-- "Correlation does not imply causation"
-- Causation indicates a relation between two variables in which one variable is affected by another. 
-- The arrow above indicates a causal relationship. 
-- Explain the concept and discuss with students the topic. 
-- Show the difference between direct effects and correlation together with the graphical representation.  
 
 ```{r, echo=F, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -214,31 +212,40 @@ digraph boxes_and_circles {
 
 ```
 
-## Simple statistical model
+## A simple bivariate model.
 
-Present the bivariate model.
-Include the equation and a plot.
-It is important that students understand that all they know can be defined with a graphical representation.
+\centering ![](images/LM.pdf){width=50%}
 
-`lm(y~x1)`
+\centering ```lm(biomass ~ precipitation)```
 
-\centering
-![](images/LM.pdf){width=50%}
+- Linear regression     
+- Regression coefficient quantifies the strength of relationship   
+- Change in Y for one unit change in X   
+
+<!-- Present the bivariate model. -->
+<!-- Include the equation and a plot. -->
+<!-- It is important that students understand that all they know can be defined with a graphical representation. -->
 
 
 ## Multiple independent variables
 
-- Discuss with students other variables that may affect B.  
-- Introduce a new variable and the question that it answers. 
-- Add nutrient variable. 
-- Show the graphical model (X1 -> Y, X2 -> Y). 
-- Include the equation and the two partial plots. 
-- Be clear this is a multiple regression model. 
-
-`lm(y~x1+x2+x3)`
-
 \centering
 ![](images/LMdir.pdf){width=50%}
+
+\centering ```lm(biomass ~ precipitation + nutrients + ...)```
+
+
+- Often more than one independent variable important = multiple regression   
+- Estimates partial regression coefficients (i.e. effect of x1 on y when x2 is fixed)    
+- All effects are direct.
+
+<!-- - Discuss with students other variables that may affect B.   -->
+<!-- - Introduce a new variable and the question that it answers.  -->
+<!-- - Add nutrient variable.  -->
+<!-- - Show the graphical model (X1 -> Y, X2 -> Y).  -->
+<!-- - Include the equation and the two partial plots.  -->
+<!-- - Be clear this is a multiple regression model.  -->
+
 
 
 ```{r, out.width="50%", fig.align='center', include=F}
@@ -263,12 +270,19 @@ digraph boxes_and_circles {
 ")
 ```
 
-## Indirect effect
+## Multiple independent variables
 
-- All relationships in the previous models are direct.
-  - Directional relation between two variables, e.g., independent and dependent variables.
-- Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.
-- Include partial plots for both to illustrate the indirect effect.
+\centering
+![](images/LMind2.pdf){width=50%}
+
+\centering ```lm(richness ~ nutrients)```  
+\centering ```lm(evenness ~ nutrients)```   
+\centering ```lm(biomass ~ richness + evenness)```
+
+- Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.   
+- Indirect effects can be quantified by the product of the compound path.
+
+   
 
 ```{r, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -291,124 +305,22 @@ digraph boxes_and_circles {
 ")
 ```
 
-\centering
-![](images/LMind.pdf){width=50%}
-
-
-
 ## Mediation
 
+\centering ![](images/LMind2_full_mediation.pdf){width=50%}
+
 - Tests whether a particular variable has a mediating effect.  
-- Often used to test underlying mechanisms.  
+- Often used to test underlying mechanisms. 
+- Full mediation versus partial mediation.     
 
-
-## Interaction questions (Moderation)
-
-- Present another question involving a new variable with an interactive effect (X3 -> (Y -> Z)). 
-- Show the graphical representation. 
-- Explanation of interactive effects. 
-- Include partial plots to illustrate the interaction effect.  
-- Make clear that this is the same as an interaction in traditional regression models. 
-
-\centering
-![](images/Interaction.pdf){width=50%}
-
-
-```{r, out.width="50%", fig.align='center', include=F}
-grViz("
-digraph boxes_and_circles {
-
-  # a 'graph' statement
-  graph [overlap = true, fontsize = 10, layout = dot,
-       rankdir = RL]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X1; X2; Y, middleman
-
-  # several 'edge' statements
-    X1->middleman[arrowhead=none];
-    middleman->Y;
-    middleman[shape=none width=0 height=0 label='' style=invis]
-    X2->middleman [constraint=false];
-
-}
-")
-```
-
-## Latent variables
-
-Until now everything was about paths but modelling also involves variables.
-A variable that is not directly measured is a latent variable (examples).
-
-\centering
-![](images/LatentCompositeSEM.pdf){width=50%}
-
-
-```{r, out.width="50%", fig.align='center', include=F}
-grViz("
-digraph boxes_and_circles {
-   
-   node [shape=box]
-   X1;X2;X3;Z;
-
-   
-   node [shape=circle]
-   Y
-    
-    Y -> X1;
-    Y -> X2;
-    Y -> X3;
-    Y -> Z;
-    Z;
-    
-  X1->X2->X3 [style='invis']
-  {rank = 'max'; Z}
-  {rank = 'min'; X1}
-  {rank = 'same'; X1;X2;X3}
-}
-")
-```
-
-## Composite variables
-
-Composite variables specify the influences of collections of other variables (examples)
-
-\centering
-![](images/LatentCompositeSEM.pdf){width=50%}
-
-
-```{r, out.width="50%", fig.align='center', include=F}
-grViz("
-digraph boxes_and_circles {
-   
-   node [shape=box]
-   X1;X2;X3;Z;
-
-   
-   node [shape=hexagon]
-   Y
-    
-      X1 -> Y;
-    X2 -> Y;
-    X3 -> Y;
-    Y -> Z;
-    Z;
-    
-  X1->X2->X3 [style='invis']
-  {rank = 'max'; Z}
-  {rank = 'same'; X1;X2;X3}
-}
-")
-```
+\centering ![](images/LMind2_partial_mediation.pdf){width=50%}
 
 ## System level approach
 
-- Show a very complex model including multiple types of variables, arrows (direct and correlations) for the study system. 
-- The complex model is built based on submodels, each one addressing specific questions. 
-- We need a framework to analyze this together -> SEM 
-- Discuss about complexity in ecology and if SEM is useful to answer your questions ("We need to do things as simple as possible, but no simpler"). 
+<!-- - Show a very complex model including multiple types of variables, arrows (direct and correlations) for the study system.  -->
+<!-- - The complex model is built based on submodels, each one addressing specific questions.  -->
+<!-- - We need a framework to analyze this together -> SEM  -->
+<!-- - Discuss about complexity in ecology and if SEM is useful to answer your questions ("We need to do things as simple as possible, but no simpler").  -->
 
 \centering
 ![](images/FullSEM.pdf){width=50%}
@@ -447,6 +359,27 @@ digraph boxes_and_circles {
 ')
 ```
 
+- Variables that only have paths emanating from them (i.e., do not have arrows going into them) are called *exogenous variables*.
+- Variables for which arrows are also directed into are called endogenous. An endogenous variable can also have arrows directing out of it, but the sole condition is that they must be predicted
+
+## Grace's 8 rules of path coefficients
+<!-- https://jslefche.github.io/sem_book/global-estimation.html -->
+
+1) Unspecified relationships among exogenous variables are simply their bivariate correlations.  
+2) When two variables are connected by a single path, the coefficient of that path is the regression coefficient.  
+3) The strength of a compound path (one that includes multiple links) is the product of the individual coefficients.  
+4) When variables are connected by more than one pathway, each pathway is the ‘partial’ regression coefficient.  
+5) Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables.  
+6) Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.  
+7) The total effect one variable has on another is the sum of its direct and indirect effects.  
+8) The total effect (including undirected paths) is equivalent to the total correlation.   
+
+## Goodness-of-fit
+
+- $\chi^2$ statistic: failing to reject the null hypothesis that the $\chi^2$ statistic is different from 0 (the ideal fit) implies a generally good representation of the data (P > 0.05).   
+- Root-mean squared error of approximation (RMSEA): this statistic penalizes models based on sample size. An ‘acceptable’ value is generally <0.10 and a ‘good’ value is anything <0.08.  
+- Comparative fit index (CFI): this statistic considers the deviation from a ‘null’ model. In most cases, the null estimates all variances but sets the covariances to 0. A value >0.9 is considered good.   
+- Standardized root-mean squared residual (SRMR): the standardized difference between the observed and predicted correlations. A value <0.08 is considered good.   
 
 ## Assumptions of SEM with lavaan
 
@@ -460,12 +393,25 @@ digraph boxes_and_circles {
 [^2]: Causal loops possible.
 [^3]: Nonlinear relationships possible.
 
-## SEM workflow
+## Model identifiability
+
+- Underidentified: not enough pieces of information to identify parameters uniquely (df < 0)  
+- Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0)  
+- Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df > 0)   
+
+## Data requirements
+
+- Replication should be at least 5 times the number of estimated coefficients (not error variances or other correlations).
+- To estimate two relationships, we require at least n=10 to fit that model.
+- Ideally, replication is 5-20x the number of estimated parameters. 
+- The larger the sample size, the more precise (unbiased) the estimates will be. 
+
+
+## SEM workflow in a nutshell
 
 1) Review the relevant theory and research literature to support model specification 
 2) Specify a model (e.g., diagram, equations) 
-3) Determine model identification (e.g., if unique values can be found for parameter estimation; the number of degrees of
-freedom, df, for model testing is positive)  
+3) Determine model identification 
 4) Select measures for the variables represented in the model
 5) Collect data
 6) Conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)
@@ -474,3 +420,4 @@ freedom, df, for model testing is positive)
 9) Re-specify the model if meaningful
 10) Interpret and present results visually
 
+# Questions?

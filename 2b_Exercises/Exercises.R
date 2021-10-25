@@ -1,4 +1,4 @@
-# First exercise after fitting first SEM:
+# Live coding part I
 
 library(lavaan)
 library(visreg)
@@ -6,12 +6,12 @@ library(ggplot2)
 library(AICcmodavg)
 
 set.seed(2397348)
-N <- 500
+N <- 50
 dat <- data.frame(x1 = runif(N))
 dat$x2 = 0.9 * dat$x1 + runif(N)
 dat$x3 = 0.5 * dat$x2 + runif(N)
-dat$y = 1.7 * dat$x1 +0.8 * dat$x2 + 0.9 * (dat$x1 * dat$x2) + runif(N)
-dat$x1x2 = dat$x1 * dat$x2
+dat$y = 1.7 * dat$x1 + 0.8 * dat$x2 + runif(N) # + 0.9 * (dat$x1 * dat$x2) + runif(N)
+#dat$x1x2 = dat$x1 * dat$x2
 
 ggplot(data=dat, aes(x=x1,y=y)) + geom_point() + stat_smooth(method="lm")
 ggplot(data=dat, aes(x=x2,y=y)) + geom_point() + stat_smooth(method="lm")
@@ -41,6 +41,29 @@ modindices(fit1)
 aictab(list(fit, fit1))
 
 
+model1a <- ' 
+y ~ b1 * x1 +  b2 * x2 
+x2 ~ b3 * x1
+x3 ~ b4 * x2
+
+
+dir.x1.y := b1
+indir.x1.y := b3 * b2
+tot.x1.y := b3 * b2 + b1 
+'
+
+fit1a <- sem(model1a, data=dat)
+summary(fit1a, fit.measures = F, standardized=T)
+modindices(fit2c)
+
+
+
+
+# interaction
+
+dat$y = 1.7 * dat$x1 + 0.8 * dat$x2 + 0.9 * (dat$x1 * dat$x2) + runif(N)
+dat$x1x2 = dat$x1 * dat$x2
+
 lm(y ~ x1 +  x2 + x1x2, data=dat)
 
 model2a <- ' 
@@ -48,8 +71,7 @@ y ~ comp.int
 x2 ~ x1
 x3 ~ x2
 
-comp.int <~ 1.6750 * x1 +  0.7345 * x2 + 1.0067 * x1x2
-
+comp.int <~ 1.5745 * x1 +  0.7477 * x2 + 0.9668 * x1x2
 '
 
 fit2a <- sem(model2a, data=dat)
@@ -69,11 +91,44 @@ fit2b <- sem(model2b, data=dat)
 summary(fit2b, fit.measures = TRUE, standardized=T)
 modindices(fit2b)
 
+model2c <- ' 
+y ~ b1 * x1 +  b2 * x2 + b3 * x1x2 
+x2 ~ b4 * x1
+x3 ~ b5 * x2
 
-aictab(list(fit2a, fit2b))
+
+ind.x1.y := b4 * b2
+ind.x1.x3 := b5 * b2
+
+tot.x1.y := b4 * b2 + b1 
+'
+
+fit2c <- sem(model2c, data=dat)
+summary(fit2c, fit.measures = TRUE, standardized=T)
+modindices(fit2c)
+
+
+aictab(list(fit2a, fit2b, fit2c))
 
 
 
+
+
+
+
+
+
+
+# Exercise: derived quantities
+#
+# Add variables that calculate the total, direct and indirect effect of variable
+
+
+
+
+
+
+# First exercise after fitting first SEM:
 
 # Let's test whether the effect of disturbance is mediated via its
 # effect on richness and eveness, rather than directly on biomass

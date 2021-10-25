@@ -2,9 +2,10 @@
 title: "Introduction to structural equation modeling"
 author: "Frank Pennekamp"
 date: "10/19/2021"
+fontsize: 12pt
 output: 
   beamer_presentation: 
-    incremental: no
+    incremental: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -13,11 +14,12 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Introduction of the team
 
-Dr. Frank Pennekamp (main instructor)  
-Dr. James Grace (advanced topics and model clinic)  
-Dr. Rachel Korn (course development)  
+- Dr. Frank Pennekamp (main instructor)   
+- Dr. James Grace (advanced topics and model clinic)   
+- Dr. Rachel Korn (course development)   
   
-Swiss SEM team
+**Swiss SEM team:**  
+Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr, Dr. Rachel Korn, Dr. James Grace, Dr. Frank Pennekamp
 
 # Schedule
 
@@ -25,11 +27,13 @@ Swiss SEM team
   * General introduction to SEM to model ecological systems
   * Fitting SEMs to data
   * Model pruning, visualization and reporting
+  * Discussion with James Grace
 - Day 2:
   * Latent and composite variables
   * Interactions
   * Complex sampling designs
   * Spatial autocorrelation
+  * Discussion with James Grace
 - Day 3:
   * Self-study with possibility to meet with instructor(s)
 
@@ -39,7 +43,7 @@ What the course is about
 
 - Global estimation with R package lavaan
 - Hands on exercises and live coding
-- We will work with a single dataset
+- We will work (mostly) with a single, ecological dataset
 
 What will not be covered
 

@@ -13,11 +13,11 @@ We have now analysed the model.
 
 How would you draw the model output to represent the minimum information required in order to reproduce this model?
 
-<!-- Alternative wording could be "How would you draw the model output for a manuscript"? That might create more variation which would be kind of fun-->
+<!-- Alternative wording could be "How would you draw the model output for a manuscript"? 
+That might create more variation which would be kind of fun-->
 
-\begin{center}
+\centering
 Draw your idea
-\end{center}
 
 
 # What can you expect to see out in nature?

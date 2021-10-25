@@ -95,13 +95,8 @@ Composites are often symbolized by hexangular shapes or--the same as for latent 
 1. As a latent variable represents an underlying, data-generating process, its indicators need to be correlated to each other. In the case of a composite variable, there is no assumption about the relation between the indicators. Thus, correlation among indicators are uninformative about the direction of the causal flow, but a lack of such contraindicates that the construct is a latent variable.
 <!-- * We should, therefore, recognize that a correlation among indicators does not inform us as to the direction of causal flow, though a lack of correlation among indicators would contraindicate the prospect that a block should be of the L → M form. -->
 
-
-
-
-
 Carried over to our example, we measured instances of the general process "diversity" (richness, evenness etc.).
 Further, we summarize the abiotic condition (nutrient addition, precipitation etc.) of a plot in a composite variable.
-
 
 
 ![](Figures/LatentCompositeSEM.svg){width=50%}
