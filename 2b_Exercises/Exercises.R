@@ -1,23 +1,24 @@
 # First exercise after fitting first SEM:
 
+library(lavaan)
+library(visreg)
+library(ggplot2)
+library(AICcmodavg)
+
 set.seed(2397348)
-dat <- data.frame(x1 = runif(50), x3 = runif(50))
-dat$x2 = 0.9 * dat$x1 + runif(50)
-dat$x3 = 0.5 * dat$x2 + runif(50)
-dat$y = 0.8 * dat$x2 + 1.7 * dat$x1 + 0.9 * (dat$x1 * dat$x2) + runif(50)
+N <- 500
+dat <- data.frame(x1 = runif(N))
+dat$x2 = 0.9 * dat$x1 + runif(N)
+dat$x3 = 0.5 * dat$x2 + runif(N)
+dat$y = 1.7 * dat$x1 +0.8 * dat$x2 + 0.9 * (dat$x1 * dat$x2) + runif(N)
 dat$x1x2 = dat$x1 * dat$x2
 
 ggplot(data=dat, aes(x=x1,y=y)) + geom_point() + stat_smooth(method="lm")
 ggplot(data=dat, aes(x=x2,y=y)) + geom_point() + stat_smooth(method="lm")
 ggplot(data=dat, aes(x=x3,y=y)) + geom_point() + stat_smooth(method="lm")
 
-library(lavaan)
-library(visreg)
-
 summary(lm(y~x1+x2+x3, data=dat))
-visreg(lm(y~x1+x2, data=dat), partial =T, gg=TRUE)
-
-
+visreg(lm(y~x1+x2+x3, data=dat), partial =T, gg=TRUE)
 
 model <- ' 
 y ~ x1 + x2 + x3
@@ -26,11 +27,6 @@ y ~ x1 + x2 + x3
 fit <- sem(model, data=dat)
 summary(fit, fit.measures = TRUE, standardized=T)
 modindices(fit)
-
-
-
-
-
 
 model1 <- ' 
 y ~ x1 + x2 
@@ -42,23 +38,39 @@ fit1 <- sem(model1, data=dat)
 summary(fit1, fit.measures = TRUE, standardized=T)
 modindices(fit1)
 
-aictab(list(model, model1))
+aictab(list(fit, fit1))
 
 
-model2 <- ' 
+lm(y ~ x1 +  x2 + x1x2, data=dat)
+
+model2a <- ' 
 y ~ comp.int 
+x2 ~ x1
+x3 ~ x2
+
+comp.int <~ 1.6750 * x1 +  0.7345 * x2 + 1.0067 * x1x2
+
+'
+
+fit2a <- sem(model2a, data=dat)
+summary(fit2a, fit.measures = TRUE, standardized=T)
+modindices(fit2a)
+
+model2b <- ' 
+y ~ comp.int 
+x2 ~ x1
 x3 ~ x2
 
 comp.int <~ 1 * x1 +  x2 + x1x2
 
 '
 
-fit2 <- sem(model2, data=dat)
-summary(fit2, fit.measures = TRUE, standardized=T)
-modindices(fit2)
+fit2b <- sem(model2b, data=dat)
+summary(fit2b, fit.measures = TRUE, standardized=T)
+modindices(fit2b)
 
 
-AIC(fit1, fit2)
+aictab(list(fit2a, fit2b))
 
 
 

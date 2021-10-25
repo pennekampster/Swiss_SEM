@@ -1,5 +1,5 @@
 ---
-title: "Introduction to structural equation modelling - basic modelling"
+title: "Introduction to structural equation modelling - advanced modelling techniques"
 author: "Frank Pennekamp"
 date: "11/11/2020"
 output: 

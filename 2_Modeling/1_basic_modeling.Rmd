@@ -217,9 +217,8 @@ summary(lm.even)
 
 
 ## Conclusion
-**UPDATE: The direct effect model showed that in the year 2000 biomass was statistically significantly positively related to nutrient input (the nitrogen additon rate `nadd`) and species richness (`rich`), but not to evenness (`even`).
-Additionally, nutrient input had a statistically significantly negative influence on species richness and to a lesser extent, also on evenness.**
-
+The direct effect model showed that biomass was statistically significantly positively related to nutrient input (the nitrogen additon rate `nadd`) and species richness (`rich`), but negatively to evenness (`even`).
+Additionally, nutrient input had a statistically significantly negative influence on species richness but a positive effect on evenness.
 
 
 # Structural equation modeling
