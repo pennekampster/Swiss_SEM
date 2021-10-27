@@ -2,9 +2,10 @@
 title: "Introduction to structural equation modelling - basic modelling"
 author: "Frank Pennekamp"
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
-output: 
+institute: Centre for Modern Beamer Themes
+output:
   beamer_presentation: 
-    incremental: true
+    incremental: false
     toc: no
     slide_level: 2
 ---
@@ -398,6 +399,17 @@ digraph boxes_and_circles {
 - Underidentified: not enough pieces of information to identify parameters uniquely (df < 0)  
 - Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0)  
 - Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df > 0)   
+
+## Model identifiability
+
+"t-rule" to quickly gauge whether a model is under-, just, or overidentified: 
+
+$$ t \leq \frac{n (n + 1 )}{2} $$
+
+*t* = number of unknowns (parameters to be estimated) 
+*n* = number of knowns (observed variables). 
+
+The left hand side is how many pieces of information we want to know. The right hand side reflects the information we have to work with and is equal to the number of unique cells in the observed variance-covariance matrix (diagonal = variance, and lower triangle = covariances).
 
 ## Data requirements
 
