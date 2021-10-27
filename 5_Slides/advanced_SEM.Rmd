@@ -1,11 +1,18 @@
 ---
 title: "Introduction to structural equation modelling - advanced modelling techniques"
 author: "Frank Pennekamp"
+institute: 
+- Department of Evolutionary Biology and Environmental Sciences
+- University of Zurich
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
 output: 
-  beamer_presentation: 
-    incremental: no
+  beamer_presentation:
+    slide_level: 2
+    theme: metropolis
+    incremental: yes
     toc: no
+    latex_engine: xelatex
+    highlight: espresso
 ---
 
 ```{r setup, include=FALSE}
@@ -15,17 +22,26 @@ library(DiagrammeR)
 library(ggplot2)
 ```
 
+## Overview
+
+- Interactions  
+- Latent variables  
+- Composite variables  
+- Complex survey designs   
+- Temporal autocorrelation  
+- Spatial autocorrelation  
+
 ## Interaction questions (Moderation)
 
-- Present another question involving a new variable with an interactive effect (X3 -> (Y -> Z)). 
-- Show the graphical representation. 
-- Explanation of interactive effects. 
-- Include partial plots to illustrate the interaction effect.  
-- Make clear that this is the same as an interaction in traditional regression models. 
-
 \centering
+
 ![](images/Interaction.pdf){width=50%}
 
+- In nature, things often are contingent on each other.
+- For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.  
+- Such a behaviour is called an interaction, which indicates that the effect of the two main effects are different when combined.  
+- Both positive and negative interactions are possible.  
+- In regression, the interaction is represented by a coefficient that estimates the effect of the product of the two predictors.  
 
 ```{r, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -50,13 +66,47 @@ digraph boxes_and_circles {
 ")
 ```
 
-## Latent variables
+## Interactions (Moderation)
 
-Until now everything was about paths but modelling also involves variables.
-A variable that is not directly measured is a latent variable (examples).
+Interactions can be modelled in different ways in lavaan:
+
+1) Multiple groups
+2) Composites
+
+## Interactions (Moderation)
+
+- We will first use multigroup fitting.  
+- This allows coefficients to vary among groups.  
+- Lavaan offers the “group” argument to specify for which groups coefficients should be estimated.   
+- Importantly, groups have to be of categorical nature. 
+
+```mod <- sem(model, group = "age_class", data = dd)```
+
+## Interactions (Moderation)
+
+- Lavaan allows to introduce equality constraints on various aspects via the `group.equal` argument:
+
+```mod <- sem(model, group = "age_class", group.equal = c("regressions"), data = dd)```
+
+```
+group.equal=c(
+"intercepts",
+"means",
+"regressions",
+"residuals",
+"residual.covariances")
+```
+
+
+## Latent variables
 
 \centering
 ![](images/LatentCompositeSEM.pdf){width=50%}
+
+- Until now everything was about paths but modelling also involves variables.  
+- Latent variables are variables that are unobserved, but whose influence can be summarized through one or more indicator variables.  
+- They are useful for capturing complex or conceptual properties of a system that are difficult to quantify or measure directly. 
+- First, the direction of causality is reversed from what you might expect: from the latent variables to the observed variable. This is because the indicator variable is an emergent manifestation of the underlying phenomenon represented by the latent variable.
 
 
 ```{r, out.width="50%", fig.align='center', include=F}

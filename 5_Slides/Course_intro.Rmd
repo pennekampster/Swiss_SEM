@@ -1,11 +1,19 @@
 ---
 title: "Introduction to structural equation modeling"
+subtitle: "Basic modelling"
 author: "Frank Pennekamp"
+institute:
+- Department of Evolutionary Biology and Environmental Sciences
+- University of Zurich
 date: "`r format(Sys.time(), '%d.%m.%Y')`"
 fontsize: 12pt
 output: 
   beamer_presentation: 
-    incremental: yes
+    theme: metropolis
+    keep_tex: no
+    incremental: no
+    latex_engine: xelatex
+classoption: compress
 ---
 
 ```{r setup, include=FALSE}
