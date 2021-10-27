@@ -31,8 +31,9 @@ summary(fit)
 
 # Fit SEMs
 model2 <- ' 
-y ~ x1 + x2 + x3
-x2 ~ x1 
+y ~ x1 + x3
+x2 ~ x1
+x3 ~ x2
 '
 fit2 <- sem(model2, data=dat)
 summary(fit2)
@@ -49,10 +50,9 @@ x3 ~ x2
 '
 
 fit3 <- sem(model3, data=dat)
+summary(fit3)
+
 summary(fit3, fit.measures = T)
-
-
-
 
 # model pruning?
 model_true <- ' 
@@ -69,6 +69,23 @@ summary(fit1, fit.measures = T)
 
 # any more paths to include?
 subset(modindices(fit1), mi > 3.84)
+
+# compare nested fits
+anova(fit1, fit3)
+aictab(list(fit1, fit3))
+
+
+model_true <- ' 
+y ~ x1 + x2 
+x2 ~ x1
+x3 ~ x2
+
+# setting covariance to zero
+y ~~ 0*x3 
+'
+
+fit1 <- sem(model_true, data=dat)
+summary(fit1, fit.measures = T)
 
 # compare nested fits
 anova(fit1, fit3)
