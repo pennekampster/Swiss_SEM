@@ -13,6 +13,7 @@ output:
     toc: no
     latex_engine: xelatex
     highlight: espresso
+beameroption: "show notes"
 ---
 
 ```{r setup, include=FALSE}
@@ -22,14 +23,30 @@ library(DiagrammeR)
 library(ggplot2)
 ```
 
+<!-- ## Test -->
+
+<!-- ::: incremental  -->
+
+<!-- - \alert<4>{This is\only<4>{ really} important} -->
+<!-- - Now this -->
+<!-- - And now this -->
+
+<!-- ::: -->
+
+
+
 ## Overview
 
-- Interactions  
+- Interactions
 - Latent variables  
 - Composite variables  
 - Complex survey designs   
 - Temporal autocorrelation  
 - Spatial autocorrelation  
+
+<!-- <div class = "notes"> -->
+<!-- Some notes to myself. -->
+<!-- </div> -->
 
 ## Interaction questions (Moderation)
 
@@ -84,9 +101,11 @@ Interactions can be modelled in different ways in lavaan:
 
 ## Interactions (Moderation)
 
-- Lavaan allows to introduce equality constraints on various aspects via the `group.equal` argument:
+Lavaan allows to introduce equality constraints on various aspects via the `group.equal` argument:
 
 ```mod <- sem(model, group = "age_class", group.equal = c("regressions"), data = dd)```
+
+Additional constraints could be:
 
 ```
 group.equal=c(
@@ -97,17 +116,38 @@ group.equal=c(
 "residual.covariances")
 ```
 
+## Interactions (Moderation)
+
+- Even more control by having the same name for different parameters: 
+
+```{r}
+model <- ' 
+y ~ c("b1", "b1") * x1 + c("b2", "b2") * x3
+x2 ~ c("b3", "b4") * x1
+x3 ~ c("b5", "b5") * x2
+'
+```
+
+Same coefficients for all but the effect of x1 on x2.
+
+## Revisiting the meta-model
+
+\centering
+![](images/Metamodel.pdf){width=50%}
+
+- A meta-model summarizes the concept behind a model and links it to theory. 
+- However, some of the parts of the model may be difficult to quantify and measure directly.  
+- This is because they represent an abstract, multifaceted concept (e.g., intelligence).
+- Or, because we measure variables with error.
+- This is where latent and composite variables are needed.   
 
 ## Latent variables
 
 \centering
 ![](images/LatentCompositeSEM.pdf){width=50%}
 
-- Until now everything was about paths but modelling also involves variables.  
 - Latent variables are variables that are unobserved, but whose influence can be summarized through one or more indicator variables.  
-- They are useful for capturing complex or conceptual properties of a system that are difficult to quantify or measure directly. 
-- First, the direction of causality is reversed from what you might expect: from the latent variables to the observed variable. This is because the indicator variable is an emergent manifestation of the underlying phenomenon represented by the latent variable.
-
+- They can capture complex or conceptual properties of a system that are difficult to quantify or measure directly. 
 
 ```{r, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -134,12 +174,24 @@ digraph boxes_and_circles {
 ")
 ```
 
-## Composite variables
-
-Composite variables specify the influences of collections of other variables (examples)
+## Latent variables
 
 \centering
 ![](images/LatentCompositeSEM.pdf){width=50%}
+
+- First, the direction of causality is reversed from what you might expect: from the latent variables to the observed variable. 
+- This is because the indicator variable is an emergent manifestation of the underlying phenomenon represented by the latent variable.   
+- All indicator variables should be positively correlated to the latent variable, since they are driven by it. Recode to achieve this.   
+- Latent variables are often represented by an oval node shape.   
+
+## Composite variables
+
+\centering
+![](images/LatentCompositeSEM.pdf){width=50%}
+
+Composite variables specify the influences of collections of other variables (examples).
+
+
 
 
 ```{r, out.width="50%", fig.align='center', include=F}
@@ -166,5 +218,7 @@ digraph boxes_and_circles {
 ")
 ```
 
+_ _ _
 
+Questions?
 

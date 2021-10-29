@@ -20,14 +20,12 @@ classoption: compress
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Introduction of the team
+# Introduction of the **Swiss SEM team**
 
 - Dr. Frank Pennekamp (main instructor)   
 - Dr. James Grace (advanced topics and model clinic)   
 - Dr. Rachel Korn (course development)   
-  
-**Swiss SEM team:**  
-Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr, Dr. Rachel Korn, Dr. James Grace, Dr. Frank Pennekamp
+- Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course development)
 
 # Schedule
 
@@ -64,7 +62,7 @@ What will not be covered
 - Participants are able to fit, interpret and visualize a SEM
 - Participants are able to apply SEM to their own dataset
 
-
+# Questions?
 
 
 
