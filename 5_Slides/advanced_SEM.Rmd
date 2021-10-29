@@ -120,7 +120,7 @@ group.equal=c(
 
 - Even more control by having the same name for different parameters: 
 
-```{r}
+```
 model <- ' 
 y ~ c("b1", "b1") * x1 + c("b2", "b2") * x3
 x2 ~ c("b3", "b4") * x1
@@ -148,6 +148,7 @@ Same coefficients for all but the effect of x1 on x2.
 
 - Latent variables are variables that are unobserved, but whose influence can be summarized through one or more indicator variables.  
 - They can capture complex or conceptual properties of a system that are difficult to quantify or measure directly. 
+- Latent variables are often represented by an oval node shapes (ellipses).   
 
 ```{r, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -179,20 +180,21 @@ digraph boxes_and_circles {
 \centering
 ![](images/LatentCompositeSEM.pdf){width=50%}
 
-- First, the direction of causality is reversed from what you might expect: from the latent variables to the observed variable. 
+- First, the direction of causality is reversed from what you might expect: from the latent variables to the observed variable (reflective indicators). 
 - This is because the indicator variable is an emergent manifestation of the underlying phenomenon represented by the latent variable.   
-- All indicator variables should be positively correlated to the latent variable, since they are driven by it. Recode to achieve this.   
-- Latent variables are often represented by an oval node shape.   
+- All indicator variables should be positively correlated to the latent variable, since they are driven by it. Recode to achieve this. 
+- A latent variable is free of random or systematic measurement errors in contrast to its indicators
 
 ## Composite variables
 
 \centering
 ![](images/LatentCompositeSEM.pdf){width=50%}
 
-Composite variables specify the influences of collections of other variables (examples).
-
-
-
+- Composite variables specify the influences of collections of other variables (examples).
+- In comparison to latent variables, they arise from the indicators.  
+- they are visualized by arrows pointing from the indicators to the composite (formative or causal indicators).
+- since its values are determined by its causes (indicators), the error variance is specified to be 0.  
+- Composites are often shown as hexangular shapes or ellipses (latent composites).  
 
 ```{r, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -218,7 +220,27 @@ digraph boxes_and_circles {
 ")
 ```
 
-_ _ _
+## Key differences between latent and composite variables
 
-Questions?
+- flow of causation in a latent variables is from the construct to its indicators, i.e., indicators are driven by an underlying, unmeasured process represented by the latent variable.   
+- for composite variables, the flow of causation is reversed and the indicators are independent entities no matter the construct.   
+- If the indicators are redundant, they likely belong to a latent variable.   
+- If the meaning of the construct changes after dropping one of the indicators, the construct likely is a composite.  
+- As a latent variable represents an underlying, data-generating process, its indicators need to be correlated to each other. 
+- In the case of a composite variable, there is no assumption about the relation between the indicators. Thus, correlation among indicators are uninformative about the direction of the causal flow, but a lack of such contraindicates that the construct is a latent variable.
+
+## Complex sampling structure
+
+- Often, the data is nested within sites or contains groups with non-random differences such as sexes or lifestages.  
+- As  such, data violates the principle of being i.i.d. (independent and identically distributed).  
+- Necessary to account for this structure in the data in the model.
+- The add-on package lavaan.survey allows the analysis of stratified, clustered or weighted data.  
+- lavaan objects can be processed further with a specific data structure:
+  1) initialize the design   
+  2) post-process the lavaan object and compute the adjusted results.
+  3) Result is a corrected lavaan object.
+
+## Spatial autocorrelation
+
+## Questions?
 
