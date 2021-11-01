@@ -245,7 +245,7 @@ library(faux)
 
 # Single indicator variable
 
-set.seed(13144235253)
+set.seed(6545753454)
 dat <- rnorm_multi(n = 100, 
                    mu = c(18, 20, 19),
                    sd = c(4, 5, 5),
@@ -253,7 +253,11 @@ dat <- rnorm_multi(n = 100,
                    varnames = c("M1", "M2", "X"),
                    empirical = T)
 
-dat$y <- 0.5 * dat$X 
+dat$y <- 0.5 * dat$X + rnorm(100, sd=1)
+
+pairs(dat)
+
+
 
 cfa <- "y ~ X"
 fit <- cfa(cfa, data=dat)
@@ -261,10 +265,12 @@ summary(fit, standardized=T, rsq=T)
 
 
 latent <- '
-xi =~ lambda * M1 + lambda * M2 # exogenous latent
+xi =~ X # exogenous latent
 eta =~ y # endogenous latent
 
 eta ~ xi # path model
+
+X ~~ 0.9486833*X
 
 '
 fit <- cfa(latent, data=dat)
