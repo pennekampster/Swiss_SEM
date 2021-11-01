@@ -210,7 +210,7 @@ aictab(list(fit2a, fit2b, fit2c))
 
 # Exercise: derived quantities
 #
-# Add variables that calculate the total, direct and indirect effect of variable
+# Add variables that calculate the total, direct and indirect effect of each variable
 
 
 
@@ -238,6 +238,73 @@ summary(fit.simple.exc, fit.measures = TRUE, rsq = TRUE)
 modindices(fit.simple.exc, minimum.value = 0.01)
 
 AIC(fit.simple.up, fit.simple.exc)
+
+
+# Exercise to construct latent variables
+library(faux)
+
+# Single indicator variable
+
+set.seed(13144235253)
+dat <- rnorm_multi(n = 100, 
+                   mu = c(18, 20, 19),
+                   sd = c(4, 5, 5),
+                   r = c(0.9), 
+                   varnames = c("M1", "M2", "X"),
+                   empirical = T)
+
+dat$y <- 0.5 * dat$X 
+
+cfa <- "y ~ X"
+fit <- cfa(cfa, data=dat)
+summary(fit, standardized=T, rsq=T)
+
+
+latent <- '
+xi =~ lambda * M1 + lambda * M2 # exogenous latent
+eta =~ y # endogenous latent
+
+eta ~ xi # path model
+
+'
+fit <- cfa(latent, data=dat)
+summary(fit, standardized=T, rsq=T)
+
+
+
+
+
+
+
+
+
+# Multiple indicator variables
+set.seed(72643276)
+dat <- rnorm_multi(n = 100, 
+                   mu = c(10, 20, 20),
+                   sd = c(4, 5, 5),
+                   r = c(0.4, 0.1, 0.3), 
+                   varnames = c("length", "width", "mass"),
+                   empirical = F)
+
+pairs(dat)
+
+cfa <- "body_size =~ length + width + mass"
+fit <- cfa(cfa, data=dat)
+summary(fit, standardized=T, rsq=T)
+
+
+# Two factor latent variable
+dat$length_std <- (mean(dat$length)-dat$length) / sd(dat$length)
+dat$width_std <- (mean(dat$width)-dat$width) / sd(dat$width)
+
+cfa <- "body_size =~ lambda*length_std + lambda*width_std"
+fit <- cfa(cfa, data=dat)
+summary(fit, standardized=T, rsq=T)
+
+
+
+
 
 
 

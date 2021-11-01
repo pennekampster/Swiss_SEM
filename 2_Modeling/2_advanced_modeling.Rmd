@@ -34,9 +34,29 @@ Also, we rescale the biomass and precipitation so that they are in approximately
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
 
+#seabloom <- subset(seabloom, year >= 2000)
+seabloom$rich <- seabloom$rich / 10
+
 seabloom$mass.above <- seabloom$mass.above / 100
 seabloom$precip.mm <- seabloom$precip.mm / 100
 seabloom$precip.gs <- seabloom$precip.gs / 100
+
+
+# remove_outliers <- function(x, na.rm = TRUE, ...) {
+#   qnt <- quantile(x, probs=c(.25, .75), na.rm = na.rm, ...)
+#   H <- 1.5 * IQR(x, na.rm = na.rm)
+#   y <- x
+#   y[x < (qnt[1] - H)] <- NA
+#   y[x > (qnt[2] + H)] <- NA
+#   y
+# }
+# 
+# library(tidyverse)
+# 
+# seabloom <- seabloom %>% mutate(across(c(mass.above, precip.gs, precip.mm, rich, even), remove_outliers))
+# seabloom <- na.omit(seabloom)  
+
+
 ```
 
 
@@ -62,10 +82,6 @@ fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
 ```
 
-
-
-
-
 # Latent and composite variables
 
 **Latent variables** represent unmeasured variables that are represented by their  indicator variables^[Indicator variables are observed/manifest variables that are linked to either a latent or composite variable.] [@bollen89]. As a consequence, a latent variable is free of  random or systematic measurement errors in contrast to its indicators [@bollen89].
@@ -75,8 +91,6 @@ They have a special role in SEM because they represent a kind of bridge between 
 Usually, they are visualized by arrows pointing from the latent variable to the indicators (so-called "reflective" [@grace21] or "formative indicators" [@grace10]).
 This symbolizes the underlying process that generated the indicators. In other words, latent variables give rise to their indicators.
 Often, ellipses are used to denote a latent variable.
-
-
 
 
 **Composites** are another type of variables which represent the collective effects of a set of causes on some response variable(s) [@grace08].
@@ -107,7 +121,6 @@ Let's first create a latent variable "diversity" from the three measurements of 
 
 Indicators for a LV should be positively correlated with each other.
 
-
 * Latent variable models with only 2 indicators are locally non-identified. To solve this problem, we can (a) ensure x1 and x2 have equal variances, in this case by standardizing the data. (2) When latent variables are included we must specify a fixed value for some parameter associated with the LV to achieve identification. The lavaan default is to set the loading from the LV to the first-mentioned indicator to 1.0. (3) For single-indicator LVs, the default measurement error is set to 0.0 [@grace21].
 
 
@@ -120,14 +133,25 @@ cor.test(seabloom$even, seabloom$rich)
 cor.test(seabloom$ens.pie, seabloom$rich)
 cor.test(seabloom$even, seabloom$ens.pie)
 ## Not that surprising that there is no correlation...
-plot(seabloom$ens.pie, seabloom$even)
+plot(seabloom$ens.pie, seabloom$rich)
 ```
 
 To ease convergence of the algorithm, we reverse the orientation of evenness as it is negatively correlated with richness (so that absolute evenness is found at 0, while absolute unevenness is found at 1):
 
 ```{r}
-seabloom$even.rev <- 1 - seabloom$even
+seabloom$ens.pie.rev <- 1 - seabloom$ens.pie
+seabloom$ens.pie2 <- seabloom$rich * seabloom$even
+
+
+
+seabloom$even.rev <- 1- seabloom$even
 cor.test(seabloom$even.rev, seabloom$rich)
+cor.test(seabloom$ens.pie, seabloom$even.rev)
+
+plot(seabloom$ens.pie.rev, seabloom$rich)
+plot(seabloom$ens.pie.rev, seabloom$even.rev)
+
+
 ```
 
 
@@ -138,15 +162,24 @@ first the fit between the latent variables (these models are referred to as and 
 
 
 ```{r}
-diversity <- 'div =~ rich + even.rev + ens.pie'
+seabloom$rich_std <- (mean(seabloom$rich)-seabloom$rich) / sd(seabloom$rich)
+seabloom$even_std <- (mean(seabloom$even)-seabloom$even) / sd(seabloom$even)
+
+diversity <- 'div =~ lambda*rich_std + lambda*even_std'
+
+diversity <- 'div =~ 1*even + lambda*rich_std'
+
 
 # setting the same lambda for all indicators to achieve model identification
-diversity <- 'div =~ lambda*rich + lambda*ens.pie'
+# diversity <- 'div =~ lambda*rich + lambda*ens.pie'
 # diversity <- 'div =~ a * rich + a * even.rev'
 # diversity <- 'div =~ rich' # single-indicator LV
 
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
-summary(fit.diversity)
+summary(fit.diversity, standardized=T, rsq=T)
+
+varTable(fit.diversity)
+
 # Request modification indices – error correlations only
 subset(modindices(fit.diversity), mi > 3.0 & op == "~~")
 ```
@@ -211,7 +244,7 @@ Now, let's evaluate the full model including the latent variable as well as the 
 ```{r}
 lv <-"
 # Latent variable definition
-diversity =~ rich + even.rev
+diversity =~ rich + even
 
 mass.above ~ nadd + disk + diversity + precip.mm
 diversity ~ nadd + precip.mm"
@@ -220,6 +253,42 @@ fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
 modindices(fit.lv, minimum.value = 3.84)
 ```
+
+
+```{r}
+
+cor.test(seabloom$precip.gs, seabloom$precip.mm)
+plot(seabloom$precip.gs, seabloom$precip.mm)
+
+lv <-"
+# Latent variable definition
+precip =~ lambda*precip.mm + lambda*precip.gs
+precip~~0*precip
+"
+
+fit.lv <- cfa(lv, data = seabloom, estimator = "MLM")
+summary(fit.lv, standardized=T)
+modindices(fit.lv, minimum.value = 3.84)
+```
+
+```{r}
+lv <-"
+# Latent variable definition
+precip =~ precip.mm + precip.gs
+
+mass.above ~ nadd + disk + precip
+rich ~ nadd + precip + disk
+even ~ nadd + precip + disk"
+
+fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
+summary(fit.lv, standardized=T)
+modindices(fit.lv, minimum.value = 3.84)
+```
+
+
+
+
+
 
 
 
