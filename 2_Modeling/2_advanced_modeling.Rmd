@@ -133,25 +133,15 @@ cor.test(seabloom$even, seabloom$rich)
 cor.test(seabloom$ens.pie, seabloom$rich)
 cor.test(seabloom$even, seabloom$ens.pie)
 ## Not that surprising that there is no correlation...
-plot(seabloom$ens.pie, seabloom$rich)
+plot(seabloom$ens.pie, seabloom$even)
 ```
 
 To ease convergence of the algorithm, we reverse the orientation of evenness as it is negatively correlated with richness (so that absolute evenness is found at 0, while absolute unevenness is found at 1):
 
 ```{r}
-seabloom$ens.pie.rev <- 1 - seabloom$ens.pie
-seabloom$ens.pie2 <- seabloom$rich * seabloom$even
-
-
-
-seabloom$even.rev <- 1- seabloom$even
+seabloom$even.rev <- 1 - seabloom$even
 cor.test(seabloom$even.rev, seabloom$rich)
 cor.test(seabloom$ens.pie, seabloom$even.rev)
-
-plot(seabloom$ens.pie.rev, seabloom$rich)
-plot(seabloom$ens.pie.rev, seabloom$even.rev)
-
-
 ```
 
 
@@ -160,20 +150,8 @@ Latent variable models are usually evaluated in two stages:
 first the fit between the latent variables (these models are referred to as and their indicators [confirmatory factor analysis (CFA)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis)), second the full model [@grace21a].
 
 
-
 ```{r}
-seabloom$rich_std <- (mean(seabloom$rich)-seabloom$rich) / sd(seabloom$rich)
-seabloom$even_std <- (mean(seabloom$even)-seabloom$even) / sd(seabloom$even)
-
-diversity <- 'div =~ lambda*rich_std + lambda*even_std'
-
-diversity <- 'div =~ 1*even + lambda*rich_std'
-
-
-# setting the same lambda for all indicators to achieve model identification
-# diversity <- 'div =~ lambda*rich + lambda*ens.pie'
-# diversity <- 'div =~ a * rich + a * even.rev'
-# diversity <- 'div =~ rich' # single-indicator LV
+diversity <- 'div =~ rich + even.rev + ens.pie'
 
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 summary(fit.diversity, standardized=T, rsq=T)
@@ -192,49 +170,26 @@ Reasons for the current warning could be
 (iii) local non-identification or
 (iv) general misspecification [@grace21].
 
+Here we clearly have a problem with model mis-specification. The variable ens.pie is a linear combination of evenness and species richness. This causes the model to fail. Therefore we abandon the ens.pie variable for a moment and focus on a two indicator latent variable.
+
+Remember that two indicator latent variables are not identifiable because we only have one piece of information two estimate two path coefficients.
+
+A possible solution is to standardize the two variables and then estimate a single path coefficient by forcing a single coefficient for both indicators:
 
 ```{r}
-summary(fit.diversity, fit.measures = TRUE)
+seabloom$rich_std <- (mean(seabloom$rich)-seabloom$rich) / sd(seabloom$rich)
+seabloom$even.rev_std <- (mean(seabloom$even.rev)-seabloom$even.rev) / sd(seabloom$even.rev)
 
-# modindices(diversity)
-# varTable(fit.diversity)
+diversity <- 'div =~ lambda*rich_std + lambda*even.rev_std'
+
+fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
+summary(fit.diversity, standardized=T, rsq=T)
+
+varTable(fit.diversity)
+
+# Request modification indices – error correlations only
+subset(modindices(fit.diversity), mi > 3.0 & op == "~~")
 ```
-
-**The variance of `env.rev` is negative (`r round(lavInspect(fit.diversity, "est")$theta[2, 2], digits = 2)`) and if `even` is used instead of `even.rev`, the variance of `div` becomes negative...`**
-
-
-
-Balancing the variances doesn't help...
-```{r}
-# varTable(fit.diversity)
-# 
-# seabloom$rich.var <- seabloom$rich / 10
-# var(seabloom$rich.var)
-# 
-# diversity <- 'div =~ a * rich.var + a * even.rev'
-# 
-# fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
-```
-
-
-### CFA with pre-calculated coefficients
-Works neither...
-
-```{r}
-# div <- "mass.above ~ rich + even.rev"
-# fit.div <- sem(div, seabloom, estimator = "MLM")
-# summary(fit.div)
-# 
-# beta_rich <- lavInspect(fit.div, "est")$beta[1, 2]
-# beta_even <- lavInspect(fit.div, "est")$beta[1, 3]
-# 
-# div <- "div =~ beta_rich * rich + beta_even * even.rev"
-# 
-# fit.diversity <- cfa(div, data = seabloom, estimator = "MLM")
-# # Request modification indices – error correlations only
-# subset(modindices(fit.diversity), mi > 3.0 & op == "~~")
-```
-
 
 
 ### Full model
@@ -244,7 +199,7 @@ Now, let's evaluate the full model including the latent variable as well as the 
 ```{r}
 lv <-"
 # Latent variable definition
-diversity =~ rich + even
+diversity =~ lambda*rich_std + lambda*even.rev_std
 
 mass.above ~ nadd + disk + diversity + precip.mm
 diversity ~ nadd + precip.mm"
@@ -255,35 +210,6 @@ modindices(fit.lv, minimum.value = 3.84)
 ```
 
 
-```{r}
-
-cor.test(seabloom$precip.gs, seabloom$precip.mm)
-plot(seabloom$precip.gs, seabloom$precip.mm)
-
-lv <-"
-# Latent variable definition
-precip =~ lambda*precip.mm + lambda*precip.gs
-precip~~0*precip
-"
-
-fit.lv <- cfa(lv, data = seabloom, estimator = "MLM")
-summary(fit.lv, standardized=T)
-modindices(fit.lv, minimum.value = 3.84)
-```
-
-```{r}
-lv <-"
-# Latent variable definition
-precip =~ precip.mm + precip.gs
-
-mass.above ~ nadd + disk + precip
-rich ~ nadd + precip + disk
-even ~ nadd + precip + disk"
-
-fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
-summary(fit.lv, standardized=T)
-modindices(fit.lv, minimum.value = 3.84)
-```
 
 
 

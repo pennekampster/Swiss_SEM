@@ -309,6 +309,35 @@ fit <- cfa(cfa, data=dat)
 summary(fit, standardized=T, rsq=T)
 
 
+# Exercise 2 indicator latent variables
+cor.test(seabloom$precip.gs, seabloom$precip.mm)
+plot(seabloom$precip.gs, seabloom$precip.mm)
+
+seabloom$precip.mm_std <- (mean(seabloom$precip.mm)-seabloom$precip.mm) / sd(seabloom$precip.mm)
+seabloom$precip.gs_std <- (mean(seabloom$precip.gs)-seabloom$precip.gs) / sd(seabloom$precip.gs)
+
+
+
+lv <-"
+# Latent variable definition
+climate =~ lambda*precip.mm_std + lambda*precip.gs_std
+"
+
+fit.lv <- cfa(lv, data = seabloom, estimator = "MLM")
+summary(fit.lv, standardized=T)
+modindices(fit.lv, minimum.value = 3.84)
+
+lv <-"
+# Latent variable definition
+climate =~ lambda*precip.mm_std + lambda*precip.gs_std
+
+mass.above ~ nadd + disk + climate
+rich ~ nadd + climate + disk
+even ~ nadd + climate + disk"
+
+fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
+summary(fit.lv, standardized=T)
+modindices(fit.lv, minimum.value = 3.84)
 
 
 
