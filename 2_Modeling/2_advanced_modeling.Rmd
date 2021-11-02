@@ -35,7 +35,7 @@ seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad
                        sep = ",", header = TRUE)
 
 #seabloom <- subset(seabloom, year >= 2000)
-seabloom$rich <- seabloom$rich / 10
+seabloom$rich <- seabloom$rich
 
 seabloom$mass.above <- seabloom$mass.above / 100
 seabloom$precip.mm <- seabloom$precip.mm / 100
@@ -87,7 +87,6 @@ summary(fit.simple)
 **Latent variables** represent unmeasured variables that are represented by their  indicator variables^[Indicator variables are observed/manifest variables that are linked to either a latent or composite variable.] [@bollen89]. As a consequence, a latent variable is free of  random or systematic measurement errors in contrast to its indicators [@bollen89].
 They have a special role in SEM because they represent a kind of bridge between observed data and theoretical generalization [@grace08].
 
- 
 Usually, they are visualized by arrows pointing from the latent variable to the indicators (so-called "reflective" [@grace21] or "formative indicators" [@grace10]).
 This symbolizes the underlying process that generated the indicators. In other words, latent variables give rise to their indicators.
 Often, ellipses are used to denote a latent variable.
@@ -116,7 +115,7 @@ Further, we summarize the abiotic condition (nutrient addition, precipitation et
 ![](Figures/LatentCompositeSEM.svg){width=50%}
 
 
-## Latent variable
+# Latent variable
 Let's first create a latent variable "diversity" from the three measurements of diversity (richness, evenness and ENS~PIE~).
 
 Indicators for a LV should be positively correlated with each other.
@@ -124,7 +123,7 @@ Indicators for a LV should be positively correlated with each other.
 * Latent variable models with only 2 indicators are locally non-identified. To solve this problem, we can (a) ensure x1 and x2 have equal variances, in this case by standardizing the data. (2) When latent variables are included we must specify a fixed value for some parameter associated with the LV to achieve identification. The lavaan default is to set the loading from the LV to the first-mentioned indicator to 1.0. (3) For single-indicator LVs, the default measurement error is set to 0.0 [@grace21].
 
 
-### Correlations between indicators
+## Correlations between indicators
 If we fail to find significant correlations based on standard tests and null hypothesis testing, we reject the hypothesis that the indicators are varying in concert and the data contradicts the claim of a latent cause [@grace21a].
 
 
@@ -145,9 +144,9 @@ cor.test(seabloom$ens.pie, seabloom$even.rev)
 ```
 
 
-### Confirmatory factor analysis
+## Confirmatory factor analysis
 Latent variable models are usually evaluated in two stages:
-first the fit between the latent variables (these models are referred to as and their indicators [confirmatory factor analysis (CFA)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis)), second the full model [@grace21a].
+first the fit between the latent variables and their indicators ([confirmatory factor analysis (CFA)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis)), second the full model [@grace21a].
 
 
 ```{r}
@@ -157,9 +156,6 @@ fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 summary(fit.diversity, standardized=T, rsq=T)
 
 varTable(fit.diversity)
-
-# Request modification indices – error correlations only
-subset(modindices(fit.diversity), mi > 3.0 & op == "~~")
 ```
 
 Parameter estimates taking improper solution, i.e. impossible values, are a sign of model misspecification.
@@ -170,9 +166,9 @@ Reasons for the current warning could be
 (iii) local non-identification or
 (iv) general misspecification [@grace21].
 
-Here we clearly have a problem with model mis-specification. The variable ens.pie is a linear combination of evenness and species richness. This causes the model to fail. Therefore we abandon the ens.pie variable for a moment and focus on a two indicator latent variable.
+Here we clearly have a problem with model mis-specification. According to (@seabloom20), the variable ens.pie is the product of evenness and species richness. This causes the model to fail. Therefore let's abandon the ens.pie variable for a moment and focus on a two indicator latent variable.
 
-Remember that two indicator latent variables are not identifiable because we only have one piece of information two estimate two path coefficients.
+Remember that two indicator latent variables are not identifiable because we only have one piece of information (their correlation) to estimate two path coefficients.
 
 A possible solution is to standardize the two variables and then estimate a single path coefficient by forcing a single coefficient for both indicators:
 
@@ -183,44 +179,50 @@ seabloom$even.rev_std <- (mean(seabloom$even.rev)-seabloom$even.rev) / sd(seablo
 diversity <- 'div =~ lambda*rich_std + lambda*even.rev_std'
 
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
-summary(fit.diversity, standardized=T, rsq=T)
-
-varTable(fit.diversity)
-
-# Request modification indices – error correlations only
-subset(modindices(fit.diversity), mi > 3.0 & op == "~~")
+summary(fit.diversity, standardized=T)
 ```
 
+This worked, all variances are positive and we get a single coefficient for the effects of diversity on richness and evenness. As the model is just identified, we do not have a possibility to test model fit.
 
-### Full model
+## Full model
 Now, let's evaluate the full model including the latent variable as well as the remaining variables.
 
-
 ```{r}
-lv <-"
+lv <- '
 # Latent variable definition
-diversity =~ lambda*rich_std + lambda*even.rev_std
+diversity =~ lambda*even.rev_std + lambda*rich_std
 
 mass.above ~ nadd + disk + diversity + precip.mm
-diversity ~ nadd + precip.mm"
+diversity ~ nadd + precip.mm
+'
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
-modindices(fit.lv, minimum.value = 3.84)
 ```
 
+The model converged, but the model fit is not great. The coefficients suggest effects of nutrient addition and precipitation on diversity. However, we would expect a negative effect of nutrient addition, while the effect is positive. The opposite expectation would hold for precipitation, but here we see a negative effect. Can you explain why this is the case?
+
+Right, it has to do with reversing the direction of the evenness effect. As both richness and reversed evenness influence AGB, the meaning of the latent diversity effect is reversed. We can see this when we fit a model that just contains the ens.pie variable:
+
+```{r}
+lv <- '
+mass.above ~ nadd + disk + ens.pie + precip.mm
+ens.pie ~ nadd + precip.mm
+'
+
+fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
+summary(fit.lv)
+```
+
+As you can see, now the joint effect of evenness and richness is negatively influenced by nutrient addition and positively (but non-significantly) by precipitation. The model is also fitting the data pretty well.
 
 
+# Composite variable
 
+Composite variables are another type of variable that make the SEM framework very flexible. As described above, composite variables specify the influence of collections of other variables. In comparison to latent variables, they arise from the indicators. They are hence visualized by arrows pointing from the indicators to the composite (formative or causal indicators). Composite variables are a great means to ease the interpretation of multiple indicators at once.
 
-
-
-
-
-
-## Composite variable
-### Landuse composite
-To model the collective effect of the treatment, let's create a "landuse" composite variable that accounts for disturbance and nutrient addition.
+## Landuse composite
+To model the collective effect of the treatment, let's create a "landuse" composite variable that accounts for both the disturbance and nutrient addition.
 To save one parameter, we fix the `disk` at one--now the model is just identified.
 
 ```{r}
@@ -234,13 +236,11 @@ mass.above ~ comp.landuse + rich + even + precip.mm
 rich ~~ even"
 
 fit.comp <- sem(comp, data = seabloom)
-summary(fit.comp, fit.measures = TRUE)
-
-# modindices(fit.comp, minimum.value = 3.84)
+summary(fit.comp)
 ```
 
 
-#### Manually compute composite
+### Manually compute composite
 Sometimes `lavaan` struggles to fit models with composites. In such cases, the composites can be first calculated manually and then incorporated into the model as a regular variable [@grace21].
 
 First, we specify and fit a model containing only the indicators and the response.
@@ -264,7 +264,6 @@ Fitting this newly calculated variable `landuse` to the response `mass.above`...
 comp.man2 <- "mass.above ~ landuse"
 fit.comp.man2 <- sem(comp.man2, data = seabloom)
 ```
-
 
 ... yields the same standardized coefficient and R^2^ for `mass.above` as above.
 
@@ -291,13 +290,13 @@ fit.comp <- sem(comp, data = seabloom)
 summary(fit.comp)
 ```
 
-# Interactions
+## Interactions
+
+In nature, things often are contingent on each other. For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is. Such a behaviour is called an interaction, which indicates that the effect of the two main effects are different when combined.  
+
 ![](Figures/Interaction.svg){width=50%}
 
-
-## Inspect the data
-First, we visually inspect the hypothesized interaction between the effect of disturbance on above-ground biomass and the amount of nutrients.
-
+First, let's visually inspect the hypothesized interaction between the effect of disturbance on above-ground biomass and the amount of nutrients.
 
 ```{r}
 library("ggplot2")
@@ -312,13 +311,12 @@ ggplot(aes(disk, mass.above, group = disk), data = seabloom) +
   ylab("Above-ground biomass [g/m²]")
 ```
 
-**The higher the amount of added nutrients, the higher the gap in above-ground biomass between the undisturbed and disturbed plots.**
+It seems that the higher the amount of added nutrients, the higher the gap in above-ground biomass between the disturbed and undisturbed plots.
 
-
-## Modeling the interaction
+### Modeling the interaction
 ![](Figures/Interaction_Composite.svg){width=50%}
 
-
+In regression, the interaction is represented by a coefficient that estimates the effect of the product of the two predictors. Let's create this new variable and call it diskxnadd.   
 
 ```{r}
 seabloom$diskxnadd <- seabloom$disk * seabloom$nadd
@@ -329,7 +327,6 @@ summary(fit.int)
 ```
 
 The results show a significant effect of both variables and their interaction.
-
 
 Next, we model them as a composite:
 
@@ -342,11 +339,9 @@ fit.compint <- sem(compint, data = seabloom)
 summary(fit.compint, standardized = TRUE, rsq = TRUE)
 ```
 
-
 The combined effect of the predictors is the `std.all` value for the regression (`r round(lavInspect(fit.compint, what = "std.all")$beta[2, 1], digits = 3)`).
 
-
-## Full model
+### Full model
 ```{r}
 int.full <-
 "comp.int <~ 1 * disk + nadd + diskxnadd
@@ -392,7 +387,7 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
   facet_wrap(~term, scales="free") + 
   scale_colour_manual(values = c("blue",  "red")) + 
   geom_hline(aes(yintercept = 0), colour = "black", linetype = "dashed") + 
-  guides(colour=F) +
+  guides(colour="none") +
   theme_bw() 
 ```
 
@@ -438,7 +433,7 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
   facet_wrap(~term, scales="free") + 
   scale_colour_manual(values = c("blue",  "red")) + 
   geom_hline(aes(yintercept = 0), colour = "black", linetype = "dashed") + 
-  guides(colour=F) +
+  guides(colour="none") +
   theme_bw() 
 ```
 
@@ -448,8 +443,6 @@ Model comparison with AICc indicates that the disturbance effect probably intera
 library(AICcmodavg)
 aictab(list(fit.int.mg, fit.int.mg.constrain))
 ```
-
-
 
 # Complex sampling structure
 Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages.
@@ -466,10 +459,8 @@ The result is a corrected `lavaan` object.
 library("lavaan.survey")
 ```
 
-
 As sampling was performed in `r length(unique(seabloom$plot))` plots nested in three  different fields (`A`, `B` and `C`), let's adjust for this structure.
 For this, we first specify the study design as plots (`ids`) to be nested within fields (`strata`).
-
 
 ```{r}
 design <- svydesign(ids = ~ plot, strata = ~ field, nest = TRUE, 
@@ -477,16 +468,13 @@ design <- svydesign(ids = ~ plot, strata = ~ field, nest = TRUE,
 summary(design)
 ```
 
-
 Next, we can refit the `simple` model from before with `lavaan.survey` using the specified study design as an argument.
-
 
 ```{r}
 fit.simple.nest <- lavaan.survey(lavaan.fit = fit.simple,
                                  survey.design = design)
 summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)
 ```
-
 
 We see that the robust $p$-value increased substantially from `r round(fitmeasures(fit.simple, "pvalue.scaled"), digits = 2)` to `r round(fitmeasures(fit.simple.nest, "pvalue.scaled"), digits = 2)`, while the R^2^, the estimates and their standard errors remained basically the same.
 

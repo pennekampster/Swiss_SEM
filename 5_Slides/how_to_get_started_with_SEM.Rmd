@@ -133,12 +133,18 @@ Location of the 4 x 4 m nutrient treatment plots within each 35 x 55 m Intact or
 
 Effect of soil disturbance (disking) and nutrient enrichment on live, aboveground plant biomass. Colors indicate nutrient addition treatment: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1). 
 
-## Question of interest
+## Introduction to the dataset
+
+\centering
+![](images/AGB_diversity.pdf){width=100%}
+Effect of soil disturbance (disking) and nutrient enrichment on (a) diversity (ENSPIE), (b) richness (S, species 0.3 m−2), and (c) evenness (ENSPIE S−1). 
+
+## Question of interest: what is the effect of richness on biomass?
 
 \centering
 ![](images/Seabloom_PathDiagram.pdf){width=50%}
 
-- What is the effect of richness on biomass?   
+
 
 <!-- Ask students about how they would address this question. -->
 
@@ -314,9 +320,9 @@ digraph boxes_and_circles {
 
 ## Mediation
 
-\centering ![](images/LMind2_full_mediation.pdf){width=50%}
-\centering ![](images/LMind2_partial_mediation.pdf){width=50%}
-\centering ![](images/LMind2_no_mediation.pdf){width=50%}
+\centering ![](images/LMind2_full_mediation.pdf){width=30%}
+\centering ![](images/LMind2_partial_mediation.pdf){width=30%}
+\centering ![](images/LMind2_no_mediation.pdf){width=30%}
 
 - Tests whether a particular variable has a mediating effect on a path.  
 - Often used to test underlying mechanisms.
@@ -367,8 +373,8 @@ digraph boxes_and_circles {
 ')
 ```
 
-- Endogenous variables only have paths emanating from them (i.e., do not have arrows going into them).
-- Endogenous variables have paths directed into them. 
+- \alert{Exogenous} variables only have paths emanating from them (i.e., do not have arrows going into them).
+- \alert{Endogenous} variables have paths directed into them. 
 - An endogenous variable can also have arrows directing out of it, but the sole condition is that they must be predicted.  
 
 ## Grace's 8 rules of path coefficients
@@ -378,6 +384,9 @@ digraph boxes_and_circles {
 2) When two variables are connected by a single path, the coefficient of that path is the regression coefficient.  
 3) The strength of a compound path (one that includes multiple links) is the product of the individual coefficients.  
 4) When variables are connected by more than one pathway, each pathway is the ‘partial’ regression coefficient.  
+
+## Grace's 8 rules of path coefficients
+
 5) Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables.  
 6) Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.  
 7) The total effect one variable has on another is the sum of its direct and indirect effects.  
@@ -386,8 +395,8 @@ digraph boxes_and_circles {
 ## Goodness-of-fit
 
 - $\chi^2$ statistic: good fit when failing to reject the null hypothesis that the $\chi^2$ statistic is different from 0 \alert{(P > 0.05)}.   
+- Comparative fit index (CFI): this statistic considers the deviation from a ‘null’ model. In most cases, the null estimates all variances but sets the covariances to 0. A value > 0.9 is considered good. 
 - Root-mean squared error of approximation (RMSEA): statistic penalizes models based on sample size. A value < 0.10 is acceptable, and anything < 0.08 is good.  
-- Comparative fit index (CFI): this statistic considers the deviation from a ‘null’ model. In most cases, the null estimates all variances but sets the covariances to 0. A value > 0.9 is considered good.   
 - Standardized root-mean squared residual (SRMR): the standardized difference between the observed and predicted correlations. A value < 0.08 is considered good.   
 
 ## Assumptions of SEM with lavaan
