@@ -245,41 +245,39 @@ library(faux)
 
 # Single indicator variable
 
-set.seed(6545753454)
-dat <- rnorm_multi(n = 100, 
-                   mu = c(18, 20, 19),
-                   sd = c(4, 5, 5),
+set.seed(6553454)
+dat <- rnorm_multi(n = 50, 
+                   mu = c(10, 10, 10),
+                   sd = c(1, 1, 1),
                    r = c(0.9), 
-                   varnames = c("M1", "M2", "X"),
-                   empirical = T)
-
-dat$y <- 0.5 * dat$X + rnorm(100, sd=1)
+                   varnames = c("M1", "M2", "y"),
+                   empirical = F)
 
 pairs(dat)
 
 
+N <- 50
+dat <- data.frame(M1 = runif(N))
+dat$M2 = dat$M1 + runif(N)
+dat$Xi = 0.9 * dat$M1 + 0.9 * dat$M2
+dat$y <- dat$Xi + runif(N)
 
-cfa <- "y ~ X"
+
+cfa <- "y ~ M1"
 fit <- cfa(cfa, data=dat)
 summary(fit, standardized=T, rsq=T)
 
 
 latent <- '
-xi =~ X # exogenous latent
+xi =~ lambda*M1 + lambda*M2 # exogenous latent
+
 eta =~ y # endogenous latent
 
 eta ~ xi # path model
 
-X ~~ 0.9486833*X
-
 '
 fit <- cfa(latent, data=dat)
 summary(fit, standardized=T, rsq=T)
-
-
-
-
-
 
 
 
