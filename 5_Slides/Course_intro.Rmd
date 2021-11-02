@@ -45,16 +45,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Overview
 
-What the course is about
-
-- Global estimation with R package lavaan
-- Hands on exercises and live coding
-- We will work (mostly) with a single, ecological dataset
-
-What will not be covered
-
-- Local estimation of SEMs (with piecewiseSEM)
-- Advanced topics like incorporating random effects, feedbacks, temporal autocorrelation
+- What the course is about:  
+  - Global estimation with R package lavaan
+  - Hands on exercises and live coding
+  - We will work (mostly) with a single, ecological dataset
+- What will not be covered   
+  - Local estimation of SEMs (with piecewiseSEM)
+  - Advanced topics like incorporating random effects, feedbacks, temporal autocorrelation
 
 # Learning objectives
 
