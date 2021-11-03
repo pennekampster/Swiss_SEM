@@ -31,6 +31,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library("here")
 library(ggplot2)
 library(GGally)
+library(AICcmodavg)
 ```
 
 
@@ -320,14 +321,13 @@ histWithDensity <- function(variable, name){
 
 
 Then, we can apply this function to our three endogenous variables to plot the histograms with the expected density curves under a normal distribution:
+
 ```{r}
 par(mfrow = c(1, 3))
 histWithDensity(seabloom$mass.above, "mass.above")
 histWithDensity(seabloom$rich, "rich")
 histWithDensity(seabloom$even, "even")
 ```
-
-
 
 <div class="alert alert-info">
   <strong>Exercise:</strong> would you infer that the endogenous variables meet the assumption of being (multivariate) normally distributed from the results of the the Q-Q plots, the Henze-Zirkler test and the histograms? And why (not)?
@@ -471,8 +471,6 @@ Note, however, that the modification indices are uninformed suggestions and furt
 In this example, the modification indices indicate--amongst other--a missing relation between richness and evenness.
 Including this relation into the model would expectedly improve its fit by a change in the $\chi^2$ by `r round(modindices(fit.simple, minimum.value = 3)[1, 4], digits = 3)`.
 
-
-
 This path is necessary as richness and evenness are computationally related to each other (they are not independent quantities).
 Thus, let's include a correlation between `rich` and `even` (*Note*: in SEM, a correlation between two variables points to an omitted common cause/variable that drives this correlation).
 With the function `update()` it is possible to directly incorporate the missing path into the specified model without rewriting it from scratch:
@@ -488,9 +486,9 @@ summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE)
 # getCall(fit.simple); getCall(fit.simple.up)
 ```
 
-**Now, the model has a decent fit with a ratio of test statistic and degrees of freedom smaller than two (i.e. `r round(fitmeasures(fit.simple.up, "chisq") / fitmeasures(fit.simple.up, "df"), digits = 2)`) and a $p$-value of `r round(fitmeasures(fit.simple.up, "pvalue"), digits = 2)`. Further, also the robust CFI is now `r round(fitmeasures(fit.simple.up, "cfi.robust"), digits = 2)`.**
+Now, the model has a decent fit with a ratio of test statistic and degrees of freedom smaller than two (i.e. `r round(fitmeasures(fit.simple.up, "chisq") / fitmeasures(fit.simple.up, "df"), digits = 2)`) and a $p$-value of `r round(fitmeasures(fit.simple.up, "pvalue"), digits = 2)`. Further, also the robust CFI is now `r round(fitmeasures(fit.simple.up, "cfi.robust"), digits = 2)`.
 
-**Another look at the modification indices shows that further modifications would yield only smallest improvements to the model fit, so that we can ignore them confidently:**
+Another look at the modification indices shows that further modifications would yield only smallest improvements to the model fit, so that we can ignore them confidently:
 
 ```{r}
 modindices(fit.simple.up, minimum.value = 0.01)
@@ -508,14 +506,6 @@ From the ANOVA table we can see the difference in AIC = `r round(anova(fit.simpl
 
 Further, the difference in the $\chi^2$ is `r round(anova(fit.simple, fit.simple.up)[2, 5], digits = 2)`--far beyond the threshold value of 3.84 that is necessary to detect a statistically significant difference on a confidence level of $\alpha = 0.05$.
 
-
-
-
-** First exercise for students **
-
-
-
-
 ## Standardized coefficients
 Using analysis of covariances allows for estimation of both unstandardized (raw) and standardized coefficients.
 While the analysis is based on covariances for estimating unstandardized coefficients, it is based on correlations for estimating standardized coefficients.
@@ -525,9 +515,7 @@ $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
 
 ... where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)  [@grace21].
 
-
 Significance testing of standardized coefficients violates statistical principles. Significance tests are hence based on unstandardized (raw) coefficients and standardized coefficients are used for interpretation only [@grace21].
-
 
 For raw coefficients, the predicted effects are in raw units and have a pretty straight-forward interpretation: as in our example, e.g., the predicted change in 10 mg/m^2^ above-ground biomass associated with a certain change in added nutrients.
 For the standardized coefficients, however, the interpretation is more complex: they express the predicted changes in terms of standard deviation units.
@@ -544,9 +532,8 @@ standardizedsolution(fit.simple.up, type = "std.all")
 ## Saturated model
 In a saturated model all possible paths are specified and as a result, there are no degrees of freedom left [@grace10].
 They represent a special class of model because they allow for everything to add up, meaning we can completely recover the observed matrix of covariances. Unsaturated models have testable implications, however.
-Under global estimation, our comparison for calculating the GOF is to a saturated model. The reason is that saturated models permit every covariance to be explained, so the model fit function value $F_{ML}$ fit function goes to zero. Thus, also $\chi^2 = 0$.
+Under global estimation, our comparison for calculating the GOF is the saturated model. The reason is that saturated models permit every covariance to be explained, so the model fit function value $F_{ML}$ fit function goes to zero. Thus, also $\chi^2 = 0$.
 In comparison, an unsaturated model will have a positive $F_{ML}$ [@grace21].
-
 
 
 Adding each a path from `disk` to richness (`rich`) and evenness (`even`) turns our simple model into a saturated one.
@@ -577,18 +564,18 @@ summary(fit.satur, rsq = TRUE)
 
 
 
-## Importance of included paths
-In combination with the AIC, from the saturated model it is possible to evaluate if there are any unsupported links in the model.
+<!-- ## Importance of included paths -->
+<!-- In combination with the AIC, from the saturated model it is possible to evaluate if there are any unsupported links in the model. -->
 
 
-```{r}
-library("AICcmodavg")
+<!-- ```{r} -->
+<!-- library("AICcmodavg") -->
 
-aictab(list(fit.simple, fit.simple.up, fit.satur),
-       c("simple", "simple.up", "saturated"))
-```
+<!-- aictab(list(fit.simple, fit.simple.up, fit.satur), -->
+<!--        c("simple", "simple.up", "saturated")) -->
+<!-- ``` -->
 
-**??? Not sure how this shall show unsupported links...**
+<!-- **??? Not sure how this shall show unsupported links...** -->
 
 
 # Model pruning
@@ -697,9 +684,6 @@ semPaths(fit.simple.up, what = "est", whatLabels = "est",
          layoutSplit = TRUE, curve = 1, curvature = 1, #fixedStyle = 1,
          exoCov = FALSE, rotation = 1)
 ```
-
-
-
 
 What is missing in this plot are the $R^2$ values for the endogenous variables.
 They can either be represented as the $R^2$, the variance explained for endogenous variables or as the quantity of error variances ($\zeta$) either in raw or standardized units.
