@@ -1,6 +1,5 @@
 ---
 title: "Introduction to structural equation modeling"
-subtitle: "Basic modelling"
 author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences

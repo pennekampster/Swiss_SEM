@@ -371,13 +371,13 @@ even ~ nadd + precip.mm
 rich ~~ even"
 
 fit.int.mg <- sem(int.mg, group = "disk", data = seabloom)
-summary(fit.int.mg, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
+summary(fit.int.mg, standardized = TRUE, rsq = TRUE)
 ```
 
 The default option is to let all coefficients vary between groups, but have the same structure of direct and indirect effects. Let's visualize the estimated coefficients:
 
 ```{r, results=F}
-fit_tab <- (summary(fit.int.mg, fit.measures = TRUE, standardized = TRUE, rsq = TRUE))$PE
+fit_tab <- (summary(fit.int.mg, standardized = TRUE, rsq = TRUE))$PE
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
 fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
                             ifelse(fit_tab$group == 2, "dist", NA))
@@ -417,13 +417,13 @@ even ~ c('b6a', 'b6b') *  nadd + c('b7', 'b7') * precip.mm
 rich ~~ even"
 
 fit.int.mg.constrain <- sem(int.mg.constrain, group = "disk", data = seabloom)
-summary(fit.int.mg.constrain, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
+summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
 ```
 
 Let's visualize again the coefficients to see the effect:
 
 ```{r, results=F}
-fit_tab <- (summary(fit.int.mg.constrain, fit.measures = TRUE, standardized = TRUE, rsq = TRUE))$PE
+fit_tab <- (summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE))$PE
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
 fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
                             ifelse(fit_tab$group == 2, "dist", NA))
@@ -473,7 +473,7 @@ Next, we can refit the `simple` model from before with `lavaan.survey` using the
 ```{r}
 fit.simple.nest <- lavaan.survey(lavaan.fit = fit.simple,
                                  survey.design = design)
-summary(fit.simple.nest, fit.measures = TRUE, rsq = TRUE)
+summary(fit.simple.nest, rsq = TRUE)
 ```
 
 We see that the robust $p$-value increased substantially from `r round(fitmeasures(fit.simple, "pvalue.scaled"), digits = 2)` to `r round(fitmeasures(fit.simple.nest, "pvalue.scaled"), digits = 2)`, while the R^2^, the estimates and their standard errors remained basically the same.
