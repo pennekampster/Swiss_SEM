@@ -1,5 +1,5 @@
 ---
-title: "How to present SEMs?"
+title: "How to present Structural Equation Models?"
 author: "Swiss SEM team"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences
@@ -20,7 +20,7 @@ beameroption: "show notes"
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Exercice
+## Exercise
 
 We have now analysed the model. 
 

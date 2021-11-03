@@ -26,6 +26,9 @@ knitr::opts_chunk$set(echo = FALSE)
 - Dr. Rachel Korn (course development)   
 - Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course development)
 
+\centering
+![](images/Swiss_SEM_team.png){width=50%}
+
 ## Schedule
 
 - Day 1:
