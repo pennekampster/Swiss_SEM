@@ -13,19 +13,23 @@ output:
     toc: no
     latex_engine: xelatex
     highlight: espresso
-beameroption: "show notes"
+header-includes:
+  - \setbeameroption{hide notes}   
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+
 ## Exercise: Draw your idea
 
-How would you draw the model output to represent the minimum information required in order to reproduce this model?
+How would you draw your model output for others to reproduce and evaluate this model?
 
 <!-- Alternative wording could be "How would you draw the model output for a manuscript"? 
 That might create more variation which would be kind of fun-->
+
+\note{Thank the audience for being awake.}
 
 ## What can you expect to see out in nature?
 
@@ -34,13 +38,16 @@ That might create more variation which would be kind of fun-->
 
 <!-- We chose this figure because it is a very simple illustration of a latent variable. The purpose of this study was to test whether the latent concept of "learning engagement" could be measured in a lab environment. The authors demonstrated the validity of this construct by testing whether their latent variable predicted three outcomes that learning engagement would be expected to predict controlling for three potential confounding variables -->
 
+\note{Thank the audience for being awake again.}
 
 ## What can you expect to see out in nature?
+
 ![Preston -- manuscript head](images/preston_title.jpg){height=30%}
 ![Preston -- figure](images/Preston_sem.png){height=50%}
 <!-- This figure is interesting because it's the key analysis of the paper, but the SEM diagram is only presented in the supplement. -->
 
 ## What can you expect to see out in nature?
+
 ![Hodapp -- manuscript head](images/Hodapp_title.jpg){height=30%}
 ![Hodapp -- figure](images/Hodapp_sem.jpg){height=60%}
 <!-- This figure does not show a multi-group model. Each treatment was modeled independently. Question: Is it appropriate to compare standardized coefficients between models with different datasets? In other words is the .53 in panel A the same as .53 in panel B? -->
@@ -53,51 +60,55 @@ That might create more variation which would be kind of fun-->
 <!-- This is one of the most well cited empirical papers using SEM in ecology. It's interesting how little they show on the actual diagram, but rather show the coefficients for a huge number of responses. Question, which paths do these coefficients map onto?  -->
 
 ## What can you expect to see out in nature?
+
 ![Duffy -- manuscript head](images/duffy_title.jpg){height=30%}
 ![Duffy -- figure](images/Duffy_sem.jpg){height=60%}
 <!-- lots of exogenous variables, no endogenous. red = negative, black = positive. no non-significant paths? -->
 
 ## What can you expect to see out in nature?
+
 ![Domeignoz -- manuscript head](images/Domeignoz-Horta_title.jpg){height=30%}
 ![Domeignoz -- figure](images/Domeignoz-Horta_sem.jpg){height=60%}
 <!-- there is a lot of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are -->
 
 ## What can you expect to see out in nature?
+
 ![Zhang -- manuscript head](images/Zhang_title.jpg){height=30%}
 ![Zhang -- figure](images/Zhang_sem.jpg){height=60%}
 <!-- One really nice thing about the piecewise approach is it allows you to compare explanatory power of your fixed and random effects. What exactly does the composite represent though? -->
 
 ## What can you expect to see out in nature?
+
 ![Lefcheck -- manuscript head](images/Lefcheck_title.jpg){height=30%}
 ![Lefcheck -- figure](images/Lefcheck_sem.jpg){height=60%}
 <!-- Use of color to highlight important paths. -->
 
 ## What can you expect to see out in nature?
+
 ![Jones -- manuscript head](images/Jones_title.jpg){height=30%}
 ![Jones -- figure](images/Jones_sem.jpg){height=60%}
 <!-- Lots of information. The gray, solid line is "marginally significant" (0.1 > p > 0.05) -->
 
 ## What can you expect to see out in nature?
+
 ![Poorter -- manuscript head](images/Poorter_title.jpg){height=30%}
 ![Poorter -- figure](images/Poorter_sem.jpg){height=60%}
 <!-- Use of color. Showing a conceptual model in the same figure as the data-model. Unusual way of showing a composite. -->
 
 ## What can you expect to see out in nature?
+
 ![Mazancourt -- manuscript head](images/Mazancourt_title.png){height=30%}
 ![Mazancourt -- figure](images/Mazancourt_sem.jpg){height=60%}
 <!-- Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it's four separate models -->
 
 ## What can you expect to see out in nature?
-![Boeddinghaus -- manuscript head](images/Boeddinghaus_title.jpg){height=30%}
-![Boeddinghaus -- figure](images/Boeddinghaus_sem.jpg){height=90%}
-<!-- chart junk, hard to read, yet still a very imporant contribution to ecological literature -->
 
-## What can you expect to see out in nature?
 ![Mazziotta -- manuscript head](images/Mazziotta_title.jpg){height=30%}
 ![Mazziotta -- figure](images/Mazziotta_sem.jpg){height=60%}
 <!-- I love the use of color here, but why does it go from bottom to top? -->
 
 ## What can you expect to see out in nature?
+
 ![Tabi -- manuscript head](images/Tabi_title.jpg){height=30%}
 ![Tabi -- figure](images/tabi_sem.jpg){height=60%}
 <!-- Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so. -->
@@ -108,136 +119,155 @@ That might create more variation which would be kind of fun-->
 
 ## Theory
 
-*Maybe one slide drawing on theory from people like Edward Tufte*
-*Information/ink ratio*
+<!-- *Maybe one slide drawing on theory from people like Edward Tufte* -->
+<!-- *Information/ink ratio* -->
 
-## What is a good SEM drawing
+- What is the important information to convey?
+- Breaking up models into several panels or figures
+- Try to have high information-to-ink ratio
+- Display variables that is informative for reader rather than distracting:
+  - Top to bottom, or left to right
+  - Moving information to a supplement
+- Use colours that work for colour-blind people
 
-Discussion: 
+## What is a good SEM drawing?
 
 - Starting from what you draw and what you just saw, what is the minimum necessary information to include in an SEM?  
 - What is missing in your drawing?  
 
+##  What is a good SEM drawing?
 
-## Necessary information
+\alert{There are no rules.} Here are our guidelines to help drawing an informatiove, interpretable and reproducible SEM diagram.
 
-There are no rules. Here are our guidelines to help drawing a good/reproducible/interpretable SEM diagram.
-
-1) Represent your variables  
-1) Represent your coefficients  
-1) Represent all paths   
-1) Report model goodness of fit  
+1) Show the relevant variables  
+1) Represent causal relationships by the path coefficients  
+1) Represent all relevant paths (regardless of significance)   
+1) Report goodness of fit of the model 
 1) Report explanatory power for endogenous variables  
-1) Include important tables  
+1) Include tables with additional coefficients and derived quantities  
+
+## Show the relevant variables 
 
 
-## Necessary information: Represent your variables
-
+:::::::::::::: {.columns}
+::: {.column}
 - Squares are manifest (measured) variables  
 - Ellipses are latent variables   
-- Hexagons for composite variables   
+- Hexagons for composite variables 
+:::
+::: {.column}
+![](images/Jones_sem.jpg){height=80%}
+:::
+::::::::::::::
 
-![Jones -- figure](images/Jones_sem.jpg){height=60%}
 
-## Necessary information: Represent your coefficients
+## Represent causal relationships by the path coefficients  
 
-Indicate the magnitude, direction, and significance:
+:::::::::::::: {.columns}
+::: {.column}
+- Indicate the magnitude, direction, and significance by:   
+  - Linetype or color for direction   
+  - Dashed vs solid for significance   
+  - Arrow width for magnitude   
+  - Labelling with coefficient
+:::
+::: {.column}
+![](images/Hodapp_sem.jpg){height=80%}
+:::
+::::::::::::::
 
-- Color for direction   
-- Dashed vs solid for significance   
-- Arrow width for magnitude   
-- Write the numbers  
 
-![Hodapp -- figure](images/Hodapp_sem.jpg){height=40%}
 
-## Necessary information: Represent all paths
 
-![Poorter -- figure](images/Poorter_sem.jpg){height=40%}
+## Represent all relevant paths (regardless of significance) 
 
+:::::::::::::: {.columns}
+::: {.column}
 - Represent all causal paths included in your model regardless of significance. 
 - Not necessarily in the same figure.
 - Represent important correlations.
 - Exogenous variables can be included.
 - Always include correlations among the errors of endogenous variables.
+:::
+::: {.column}
+![](images/Poorter_sem.jpg){height=80%}
+:::
+::::::::::::::
 
-## Necessary information: Report model goodness of fit
 
-![Domeignoz -- figure](images/Domeignoz-Horta_sem.jpg){height=60%}
+## Report model goodness of fit
 
+
+:::::::::::::: {.columns}
+::: {.column}
 - Covariance-based approaches:
   - $\chi^2$  
   - CFI  
   - SRMR  
   - RMSEA  
+:::
+::: {.column}
+![](images/Jones_sem.jpg){height=80%}
+:::
+::::::::::::::
 
-## Necessary information: Explanatory power for endogenous variables
 
+##  Report explanatory power for endogenous variables
 
+:::::::::::::: {.columns}
+::: {.column}
+- Residual error or $R^2$ 
+:::
+::: {.column}
+![](images/R2_endogenous.pdf){height=50%}
+:::
+::::::::::::::
 
-- Residual error or $R^2$    
+## Include tables with additional coefficients and derived quantities
 
-## Necessary information: include important tables
-
+:::::::::::::: {.columns}
+::: {.column}
 - Table of path coefficients
 
+ ![](images/path_coeff_table.pdf){height=100%}
+:::
+::: {.column}
+- Direct, indirect and total effects
 
+![](images/Duffy_derived.jpg){height=100%}
+:::
+::::::::::::::
 
+## Data presentation
+
+- Showing the underlying data
+  - Plots of raw correlations
+  - Correlation tables
+  - Shows distribution of data
+  - Partial plots
 
 ## Room for artistry 
 
-This will depend on the audience and support:
+- This will depend on the audience and support:
+  - Is this a paper?
+  - Is this a presentation?
+  - What is the narrative structure?
 
-- Is this a paper?
-- Is this a presentation?
-- What is the narrative structure?
-
-Key thing here is that one structure might not work in every case.
-Not advocating for anything in particular, but note that the same model for a paper might not be the right presentation for an SEM.
-
+- Key thing here is that one structure might not work in every case.
+- Not advocating for anything in particular, but note that the same model for a paper might not be the right presentation for an SEM.
 
 ## Room for artistry
 
-Interactions, multigroup models, composites, etc.
+- Meta models:
+  - Shows the core concepts and their relationships, ignoring the data.
+  - The most abstracted vision of the causal process you are trying to capture
 
-Color, size, etc.
+![](images/Mazziotta_sem.jpg){height=60%}
 
-Organizing variables in space in a way that is useful to your reader rather than distracting:
-
-- Top to bottom, or left to right?
-- Mediator relative placement
-
-Composite variable: do we need to show everything?
-
-Breaking up complicated models into several panels or several figures
-
-Moving information to a supplement
-
-## Room for artistry
-
-Meta models, apriori models, etc
-
-- Start with something abstract (metamodel concept)
-- shows the core concepts and their relationships, ignoring the data.
-- The most abstracted vision of the causal process you are trying to capture
-
-
-## Room for artistry
-
-Showing the underlying data
-
-Raw correlations:
-
-- Shows linearity assumption, shows distribution of data, etc
-- Correlation tables
-
-Partial plots
 
 ## Building the plot 
 
-This can be done in R. But it is generally done in external software like powerpoint, illustrator, or Inkscape.
+- Dedicated packages available in R (e.g., semPlot, lavaanPlot)
+- Fine-tuning in external software like powerpoint, illustrator, or Inkscape.
 
-In R, it can be useful to visualise your code and your model output.
-
-Resources for drawing in R: <https://statistics.ohlsen-web.de/sem-path-diagram/>
-
-
+# Questions?  
