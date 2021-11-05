@@ -118,13 +118,11 @@ Further, we summarize the abiotic condition (nutrient addition, precipitation et
 # Latent variable
 Let's first create a latent variable "diversity" from the three measurements of diversity (richness, evenness and ENS~PIE~).
 
-Indicators for a LV should be positively correlated with each other.
-
-* Latent variable models with only 2 indicators are locally non-identified. To solve this problem, we can (a) ensure x1 and x2 have equal variances, in this case by standardizing the data. (2) When latent variables are included we must specify a fixed value for some parameter associated with the LV to achieve identification. The lavaan default is to set the loading from the LV to the first-mentioned indicator to 1.0. (3) For single-indicator LVs, the default measurement error is set to 0.0 [@grace21].
-
+Latent variable models are usually evaluated in two stages:
+first the fit between the latent variables and their indicators ([confirmatory factor analysis (CFA)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis)), second the full model [@grace21a].
 
 ## Correlations between indicators
-If we fail to find significant correlations based on standard tests and null hypothesis testing, we reject the hypothesis that the indicators are varying in concert and the data contradicts the claim of a latent cause [@grace21a].
+Indicators for a LV should be positively correlated with each other. If we fail to find significant correlations based on standard tests and null hypothesis testing, we reject the hypothesis that the indicators are varying in concert and the data contradicts the claim of a latent cause [@grace21a].
 
 
 ```{r}
@@ -145,9 +143,8 @@ cor.test(seabloom$ens.pie, seabloom$even.rev)
 
 
 ## Confirmatory factor analysis
-Latent variable models are usually evaluated in two stages:
-first the fit between the latent variables and their indicators ([confirmatory factor analysis (CFA)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis)), second the full model [@grace21a].
 
+Let's start with the CFA:
 
 ```{r}
 diversity <- 'div =~ rich + even.rev + ens.pie'
@@ -168,9 +165,9 @@ Reasons for the current warning could be
 
 Here we clearly have a problem with model mis-specification. According to (@seabloom20), the variable ens.pie is the product of evenness and species richness. This causes the model to fail. Therefore let's abandon the ens.pie variable for a moment and focus on a two indicator latent variable.
 
-Remember that two indicator latent variables are not identifiable because we only have one piece of information (their correlation) to estimate two path coefficients.
+Latent variable models with only 2 indicators are locally non-identified because we only have one piece of information (their correlation) to estimate two path coefficients. To solve this problem, we can (a) ensure x1 and x2 have equal variances, in this case by standardizing the data. (2) When latent variables are included we must specify a fixed value for some parameter associated with the LV to achieve identification. The lavaan default is to set the loading from the LV to the first-mentioned indicator to 1.0. (3) For single-indicator LVs, the default measurement error is set to 0.0 [@grace21].
 
-A possible solution is to standardize the two variables and then estimate a single path coefficient by forcing a single coefficient for both indicators:
+Here we standardize the two variables and then estimate a single path coefficient by forcing a single coefficient for both indicators:
 
 ```{r}
 seabloom$rich_std <- (mean(seabloom$rich)-seabloom$rich) / sd(seabloom$rich)
@@ -236,7 +233,7 @@ mass.above ~ comp.landuse + rich + even + precip.mm
 rich ~~ even"
 
 fit.comp <- sem(comp, data = seabloom)
-summary(fit.comp)
+summary(fit.comp, standardized=T)
 ```
 
 
@@ -248,7 +245,7 @@ First, we specify and fit a model containing only the indicators and the respons
 ```{r}
 comp.man <- 'mass.above ~ disk + nadd'
 fit.comp.man <- sem(comp.man, data = seabloom)
-summary(fit.comp.man, rsq = TRUE, standardized = TRUE)
+summary(fit.comp.man)
 ```
 
 Then, we compute the composite scores by taking the sum of all indicator variables multiplied by their estimates.
@@ -279,16 +276,18 @@ Finally, we can integrate the composite `landuse` into the `simple` model from b
 
 ```{r}
 comp <- "
-rich ~ landuse + precip.mm
-even ~ landuse + precip.mm
+rich ~ precip.mm + landuse
+even ~ precip.mm + landuse
 
 mass.above ~ landuse + rich + even + precip.mm
 
 rich ~~ even"
 
 fit.comp <- sem(comp, data = seabloom)
-summary(fit.comp)
+summary(fit.comp, standardized=T)
 ```
+
+When you compare the estimates of the composites fitted automatically or manually, you see that they are very close, as is expected.
 
 ## Interactions
 
