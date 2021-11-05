@@ -36,11 +36,7 @@ fit <- cfa(latent, data=dat)
 summary(fit, standardized=T, rsq=T)
 
 
-
-
-
-
-# More than two indicator variables
+# CFA with more than two indicator variables
 set.seed(72643276)
 dat <- rnorm_multi(n = 100, 
                    mu = c(20, 20, 20),
@@ -54,6 +50,10 @@ pairs(dat)
 cfa <- "body_size =~ mass + width + length"
 fit <- cfa(cfa, data=dat)
 summary(fit, standardized=T, rsq=T)
+
+
+
+
 
 
 
@@ -103,4 +103,7 @@ x3 ~ b5 * x2
 fit2c <- sem(model2c, data=dat)
 summary(fit2c, fit.measures = TRUE, standardized=T)
 modindices(fit2c)
+
+
+
 

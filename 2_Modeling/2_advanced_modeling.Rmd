@@ -34,14 +34,13 @@ Also, we rescale the biomass and precipitation so that they are in approximately
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
 
-#seabloom <- subset(seabloom, year >= 2000)
-seabloom$rich <- seabloom$rich
-
 seabloom$mass.above <- seabloom$mass.above / 100
 seabloom$precip.mm <- seabloom$precip.mm / 100
 seabloom$precip.gs <- seabloom$precip.gs / 100
+```
 
 
+```{r echo=F, include=F}
 # remove_outliers <- function(x, na.rm = TRUE, ...) {
 #   qnt <- quantile(x, probs=c(.25, .75), na.rm = na.rm, ...)
 #   H <- 1.5 * IQR(x, na.rm = na.rm)
@@ -54,9 +53,7 @@ seabloom$precip.gs <- seabloom$precip.gs / 100
 # library(tidyverse)
 # 
 # seabloom <- seabloom %>% mutate(across(c(mass.above, precip.gs, precip.mm, rich, even), remove_outliers))
-# seabloom <- na.omit(seabloom)  
-
-
+# seabloom <- na.omit(seabloom) 
 ```
 
 
