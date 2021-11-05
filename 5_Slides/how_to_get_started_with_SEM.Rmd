@@ -12,6 +12,7 @@ output:
     theme: metropolis 
     incremental: false
     toc: no
+header-includes: \usepackage{booktabs}
 ---
 
 ```{r setup, include=FALSE}
@@ -20,6 +21,8 @@ knitr::opts_chunk$set(echo = FALSE)
 library(DiagrammeR)
 library(ggplot2)
 ```
+
+# General information 
 
 ## Introduction of the **Swiss SEM team**
 
@@ -138,6 +141,8 @@ Good practice: Make a table / graph of putative causal relationships before anal
 <!-- - Importance of being aware about what the model is telling to us.   -->
 <!-- - Final discussion about what SEM provides and the importance of system thinking in ecology.   -->
 
+# Introduction to the dataset
+
 ## Introduction to the dataset
 
 ![](images/CedarCreek.jpg)   
@@ -160,14 +165,14 @@ Understanding the recovery of a grassland for two decades following an intensive
 \centering
 ![](images/CedarCreek_map.png){width=40%}
 
-Map showing location of the study site (Cedar Creek Ecosystem Science Reserve), the location of the three study fields within the reserve, and location of the 35 x 55 m intact (black) and disturbed (red) plots within each field. 
+Location of the study site (Cedar Creek Ecosystem Science Reserve), the location of the three study fields within the reserve, and location of the 35 x 55 m intact (black) and disturbed (red) plots within each field. 
 
 ## Introduction to the dataset
 
 \centering
 ![](images/CedarCreek_exp_design.png){width=50%}
 
-Location of the 4 x 4 m nutrient treatment plots within each 35 x 55 m Intact or Disturbed plot within each of three fields (A, B, and C). Letters indicate the nutrient treatments, and the colored plots are treatments that are the focus of the analyses presented here: Control (orange) and 9.5 g N m-2 yr-1 (blue). 
+Location of the 4 x 4 m nutrient treatment plots within each 35 x 55 m Intact or Disturbed plot within each of three fields (A, B, and C). Letters indicate the nutrient treatments. 
 
 ## Introduction to the dataset
 
@@ -183,6 +188,7 @@ Effect of soil disturbance (disking) and nutrient enrichment on live, abovegroun
 ![](images/AGB_diversity.pdf){width=100%}
 Effect of soil disturbance (disking) and nutrient enrichment on (a) diversity (ENSPIE), (b) richness (S, species 0.3 m−2), and (c) evenness (ENSPIE S−1). 
 
+
 ## Question of interest: what is the effect of richness on biomass?
 
 \centering
@@ -197,15 +203,16 @@ Effect of soil disturbance (disking) and nutrient enrichment on (a) diversity (E
 \centering
 ![](images/Metamodel.pdf){width=50%}
 
-A metamodel summarizes the concept behind a model and links it to theory.   
+Meta-model are conceptual models that allow to link data with theory.   
 
-\emph{Productivity (biomass) is directly influence on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.}
+1) Productivity (biomass) is directly influenced by the environment (nutrients, disturbance and precipitation)
+2) Productivity (biomass) is directly influenced by biodiversity (richness and evenness). 
+3) The environment also influences biodiversity and thus, have an indirect effect on productivity via biodiversity.
+
 
 <!-- - Thinking about what is missing in the model, measurement errors etc.  -->
 <!-- - Present the concept of meta-model and impications for research.  -->
 <!-- - Include a graphical representation of the meta-model as what is missing in the model.  -->
-
-
 
 ```{r, echo=F, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -482,7 +489,7 @@ The left hand side is how many pieces of information we want to know. The right 
 ## SEM workflow in a nutshell
 
 1) Review the relevant theory and research literature to support model specification 
-2) Specify a model (e.g., diagram, equations) 
+2) Specify a model (e.g., diagram) 
 3) Determine model identification 
 4) Select measures for the variables represented in the model
 5) Collect data
@@ -492,4 +499,88 @@ The left hand side is how many pieces of information we want to know. The right 
 9) Re-specify the model if meaningful
 10) Interpret and present results visually
 
+# Lavaan syntax
+
+## Lavaan syntax
+
+Define model:
+```
+simple <-
+"mass.above ~ nadd + rich + even + precip.mm + disk
+rich ~ nadd + precip.mm
+even ~ nadd + precip.mm"
+```
+
+Fit model:
+```
+fit.simple <- sem(simple, data = seabloom)
+```
+
+## Lavaan syntax
+
+| Formula type | Operator | Meaning | Example |
+| :----- | :----- | :----- | :----- |
+| regression  | `~` | is regressed on | `y ~ x` |
+| correlation | `~~` | correlate errors for | `y1 ~~ y2` |
+| latent | `=~` | set reflective indicators | `Height =~ y1 + y2 + y3` |
+| composite | `<~` | set formative indicators | `Comp1 <~ 1*x1 + x2 + x3` |
+| intercept | `~ 1` | estimate mean for `y` without `x`s | `y ~ 1` |
+| labelling | `*` | name coefficients | `y ~ b1*x1 + b2*x2` |
+| defining | `:=` | define quantity | `TotalEffect := b1*b3 + b2` |
+
+
+
 # Questions?
+
+# Your turn: working with the Seabloom dataset
+
+## Exercise 1
+
+- exploration of dataset (variables and treatments)
+- check collinearity and normality
+- Fitting linear models to estimate coefficients
+  - Multiple regression (direct effects of predictors on AGB)
+  - Multiple regression (indirect effects on richness and evenness)
+
+## Exercise 2
+
+\centering
+![](images/SimpleSEM.pdf){width=50%}
+
+- Fitting of above SEM to Seabloom data:
+	- Assess model goodness of fit
+	- Investigate the modification indices. Are there paths to add that are reasonable?
+	- Check model summary.
+
+## Exercise 3
+
+\centering
+![](images/SimpleSEM.pdf){width=50%}
+
+- Model analysis:
+	- calculate standardized coefficients
+	- add derived quantities
+
+## Exercise 4
+
+\centering
+![](images/FullSEM.pdf){width=50%}
+
+- Perform mediation analysis:
+  - Is the effect of disturbance is mediated via its effect on richness and eveness, rather than directly on biomass.
+  - Add paths from disk to rich and even, remove the path to mass.above
+  - Compare model fit to simple model. What do you conclude?
+
+
+## Exercise 5
+
+\centering
+![](images/FullSEM.pdf){width=50%}
+
+- Saturated model:
+  - Model comparison with simpler models used previously.
+  - Perform model pruning.
+  - Decide on most parsimonious model and summarize model.
+
+  
+
