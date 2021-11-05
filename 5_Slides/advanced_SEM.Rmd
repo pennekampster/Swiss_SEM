@@ -334,13 +334,13 @@ summary(fit.simple)
 
 ## Exercise 2
 
-- Construct latent variable diversity based on richness, evenness and ens.pie
+- Construct latent variable diversity based on richness, evenness and ens.pie:
   - Run confirmatory factor analysis
   - What do you conclude?
   
 ## Exercise 3
 
-- Construct latent variable diversity only based on richness and evenness
+- Construct latent variable diversity only based on richness and evenness:
   - Run confirmatory factor analysis
   - Include latent variable into full model
   - What do you conclude?
