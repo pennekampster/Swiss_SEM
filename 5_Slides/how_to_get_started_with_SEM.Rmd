@@ -13,6 +13,7 @@ output:
     incremental: false
     toc: no
 header-includes: \usepackage{booktabs}
+always_allow_html: true
 ---
 
 ```{r setup, include=FALSE}
@@ -371,9 +372,11 @@ digraph boxes_and_circles {
 
 ## Mediation
 
-\centering ![](images/LMind2_full_mediation.pdf){width=30%}
-\centering ![](images/LMind2_partial_mediation.pdf){width=30%}
-\centering ![](images/LMind2_no_mediation.pdf){width=30%}
+\centering ![](images/LMind2_full_mediation.pdf){width=40%}  
+
+<!-- \centering ![](images/LMind2_partial_mediation.pdf){width=30%}   -->
+
+\centering ![](images/LMind2_no_mediation.pdf){width=40%}  
 
 - Tests whether a particular variable has a mediating effect on a path.  
 - Often used to test underlying mechanisms.
@@ -531,6 +534,8 @@ fit.simple <- sem(simple, data = seabloom)
 
 
 # Questions?
+
+# Live coding session
 
 # Your turn: working with the Seabloom dataset
 
