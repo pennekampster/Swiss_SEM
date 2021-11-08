@@ -1,34 +1,35 @@
 # Live coding part I
 
 library(lavaan)
-library(visreg)
 library(ggplot2)
 library(AICcmodavg)
 
+# simulate a dataset with known causal structure (make drawing)
 set.seed(2397348)
 N <- 50
 dat <- data.frame(x1 = runif(N))
 dat$x2 = 0.9 * dat$x1 + runif(N)
 dat$x3 = -0.5 * dat$x2 + runif(N)
-dat$y = 1.7 * dat$x1 + 0.8 * dat$x2 + runif(N) # + 0.9 * (dat$x1 * dat$x2) + runif(N)
+dat$y = 1.7 * dat$x1 + 0.8 * dat$x2 + runif(N) 
 
 ggplot(data=dat, aes(x=x1,y=y)) + geom_point() + stat_smooth(method="lm")
 ggplot(data=dat, aes(x=x2,y=y)) + geom_point() + stat_smooth(method="lm")
 ggplot(data=dat, aes(x=x3,y=y)) + geom_point() + stat_smooth(method="lm")
 
-summary(lm(y~x1+x2+x3, data=dat))
-visreg(lm(y~x1+x2+x3, data=dat), partial =T, gg=TRUE)
+# fit multiple regression
 
-# fit multiple regressions
+# with lm
+summary(lm(y~x1+x2+x3, data=dat))
+
+# in lavaan
 model <- ' 
 y ~ x1 + x2 + x3
 '
-
 fit <- sem(model, data=dat)
-summary(fit)
+summary(fit, rsq=T)
 
 
-# Fit SEMs
+# Fit first SEM
 model2 <- ' 
 y ~ x1 + x3
 x2 ~ x1
@@ -53,25 +54,23 @@ summary(fit3)
 
 summary(fit3, fit.measures = T)
 
-# model pruning?
+# model pruning
 model_true <- ' 
 y ~ x1 + x2 
 x2 ~ x1
 x3 ~ x2
-
-# setting covariance to zero
-y ~~ 0*x3 
 '
 
-fit1 <- sem(model_true, data=dat)
-summary(fit1, fit.measures = T)
+fit_true <- sem(model_true, data=dat)
+summary(fit_true, fit.measures = T)
+
 
 # any more paths to include?
-subset(modindices(fit1), mi > 3.84)
+subset(modindices(fit_true))
 
 # compare nested fits
-anova(fit1, fit3)
-aictab(list(fit1, fit3))
+anova(fit2, fit_true)
+aictab(list(fit2, fit_true), c("fit 2", "fit true"))
 
 
 model_true <- ' 
@@ -87,8 +86,8 @@ fit1 <- sem(model_true, data=dat)
 summary(fit1, fit.measures = T)
 
 # compare nested fits
-anova(fit1, fit3)
-aictab(list(fit1, fit3))
+anova(fit3, fit_true)
+aictab(list(fit3, fit_true), c("fit 3", "fit true"))
 
 
 # Parameter labelling and derived quantities
