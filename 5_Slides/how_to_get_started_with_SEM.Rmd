@@ -10,7 +10,7 @@ output:
   beamer_presentation:
     latex_engine: xelatex
     theme: metropolis 
-    incremental: false
+    incremental: true
     toc: no
 header-includes: \usepackage{booktabs}
 always_allow_html: true
@@ -22,6 +22,12 @@ knitr::opts_chunk$set(echo = FALSE)
 library(DiagrammeR)
 library(ggplot2)
 ```
+
+## Quick introduction of participants
+
+- Who are you?
+- Why do you want to learn about SEM?
+- What is your research question for day 3?
 
 # General information 
 
@@ -35,20 +41,19 @@ library(ggplot2)
 \centering
 ![](images/Swiss_SEM_team.png){width=50%}
 
-## Schedule
+## Schedule & content
 
-- Day 1:
+- *Day 1*:
   * General introduction to SEM to model ecological systems
-  * Fitting SEMs to data
+  * Fitting SEMs to data (live demo)
   * Model pruning, visualization and reporting
   * Discussion with James Grace
-- Day 2:
+- *Day 2*:
   * Latent and composite variables
   * Interactions
   * Complex sampling designs
-  * Spatial autocorrelation
   * Discussion with James Grace
-- Day 3:
+- *Day 3*:
   * Self-study with possibility to meet with instructor(s)
 
 ## Overview
@@ -56,15 +61,15 @@ library(ggplot2)
 - What the course is about:  
   - Global estimation with R package lavaan
   - Hands on exercises and live coding
-  - We will work (mostly) with a single, ecological dataset
+  - We will work with a single, ecological dataset (Seabloom et al. 2020)
 - What will not be covered   
   - Local estimation of SEMs (with piecewiseSEM)
   - Advanced topics like incorporating random effects, feedbacks, temporal autocorrelation
 
 ## Learning objectives
 
-- Participants understand the benefits and limits of SEMs
-- Participants are able to fit, interpret and visualize a SEM
+- Participants understand the advantages and limits of SEMs to draw inferences from data
+- Participants are able to fit, interpret and visualize a SEM with `lavaan`.
 - Participants are able to apply SEM to their own dataset
 
 # Getting started with Structural Equation Modeling
@@ -82,7 +87,7 @@ library(ggplot2)
 
 - Ecology is about the interactions between organisms and their environment.  
 - We often have ideas how things could be connected in ecological systems.   
-- To test hypotheses, we need a way to dissect when they occurr for a reason versus randomness.  
+- To test hypotheses, we need a way to dissect when they occur for a reason versus randomness.  
 - We use statistics to understand what is signal and what is noise.
 - Research questions are often about cause and effect.  
 
@@ -92,34 +97,38 @@ library(ggplot2)
 
 <!-- Here we ask students about what is a SEM, why they want to learn them etc. -->
 
-- System thinking
+- Promotes system thinking:
   - "Understanding the whole rather than the parts in isolation" 
 - SEM unites multiple variables in a single causal network: simultaneous tests of multiple hypotheses.  
-- Causality is central: SEM implicitly assumes that the relationships among variables represent causal links.  
+- Causality is central: 
+  - SEM assumes that the specified relationships among variables represent causal links.  
 
 ## Causality
 
 \centering
-![](images/correlation.jpg){width=50%}
+![](images/correlation.jpg){width=40%}
 
-- "Correlation does not imply causation"
-- Causation indicates a relation between two variables in which one variable is affected by another. 
+- "Correlation does not imply causation".
+- Everything else being equal, seeing variation in X leading to variation in Y.
+- Experiments to isolate effect of X on Y.
+- Experiments not always feasible, hence development of SEM.
 
 <!-- - Explain the concept and discuss with students the topic.  -->
 <!-- - Show the difference between direct effects and correlation together with the graphical representation.   -->
 
+# Differences and similarities between SEM and regression models
 
 ## Regression models vs SEM
 
 - We often have multiple observed variables.  
+- Include terms to test for interactions. 
 - We want to test and evaluate multivariate causal relationship.  
 - Test direct and indirect effects on assumed causal relationships.  
 - Incorporate observed and latent variables.  
-- Include interaction terms can test main effects and interaction effects.  
 
 ## Two goals of SEM: 
 
-1)  Understand the patterns of correlation/covariance among a set of variables.  
+1)  Understand the underlying causal network driving the correlation/covariance among a set of variables.  
 2)  Explain as much of their variance as possible with the model specified.  
 
 ## Thinking about the model  
@@ -131,8 +140,6 @@ Which variables to include?
 - Supported by theory.  
 - Ecologically meaningful.  
 - Garbage in - garbage out (both data quality and ecologically meaningful).  
-
-Good practice: Make a table / graph of putative causal relationships before analysis. 
 
 ## SEM modelling philosophy 
 
@@ -156,7 +163,7 @@ We will use an experimental dataset collected at the Cedar Creek Ecosystem Scien
 
 ## Introduction to the dataset
 
-Understanding the recovery of a grassland for two decades following an intensive agricultural disturbance under ambient and elevated nutrient conditions.  
+Research questions:
 
 1) How has aboveground biomass changed as a function of disturbance (disking) and nutrient addition?   
 2) How are these effects mediated by diversity?  
@@ -193,9 +200,7 @@ Effect of soil disturbance (disking) and nutrient enrichment on (a) diversity (E
 ## Question of interest: what is the effect of richness on biomass?
 
 \centering
-![](images/Seabloom_PathDiagram.pdf){width=50%}
-
-
+![](images/Seabloom_PathDiagram.pdf){width=70%}
 
 <!-- Ask students about how they would address this question. -->
 
@@ -279,6 +284,13 @@ digraph boxes_and_circles {
 - Edges (one-headed arrows) are causal relationships such as X affects Y.   
 - Edges (two-headed arrows) are non-causal relationships such as X and Y are correlated. 
 
+# Exercise: 
+
+## Exercise: 
+
+- Draw a meta-model of the dataset you will work with on Thursday.
+- Make a table with putative causal relationships. 
+
 ## A simple bivariate model.
 
 \centering ![](images/LM.pdf){width=50%}
@@ -336,6 +348,34 @@ digraph boxes_and_circles {
 ")
 ```
 
+# From regression models to SEM
+
+## SEM: variance-covariance matrix
+
+```{r}
+set.seed(5)
+x <- rnorm(30, sd=runif(30, 2, 50))
+d <- matrix(x, 10)
+V <- cov(d)
+V
+```
+
+- Comparison of specified SEM to observed variance-covariance matrix
+- The variances appear along the diagonal and covariances appear in the off-diagonal elements
+
+## SEM: correlation matrix
+
+```{r}
+set.seed(5)
+x <- rnorm(30, sd=runif(30, 2, 50))
+d <- matrix(x, 10)
+V <- cov(d)
+cov2cor(V)
+```
+
+- Correlation matrix is standardized variance-covariance matrix
+
+
 ## Multiple independent variables
 
 \centering
@@ -347,7 +387,6 @@ digraph boxes_and_circles {
 
 - Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.   
 - Indirect effects can be quantified by the product of the compound path.
-
 
 ```{r, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -434,7 +473,7 @@ digraph boxes_and_circles {
 ## Grace's 8 rules of path coefficients
 <!-- https://jslefche.github.io/sem_book/global-estimation.html -->
 
-1) Unspecified relationships among exogenous variables are the bivariate correlations.  
+1) Unspecified relationships among exogenous variables are their bivariate correlations.  
 2) When two variables are connected by a single path, the coefficient of that path is the regression coefficient.  
 3) The strength of a compound path (one that includes multiple links) is the product of the individual coefficients.  
 4) When variables are connected by more than one pathway, each pathway is the ‘partial’ regression coefficient.  
@@ -448,16 +487,16 @@ digraph boxes_and_circles {
 
 ## Goodness-of-fit
 
-- $\chi^2$ statistic: good fit when failing to reject the null hypothesis that the $\chi^2$ statistic is different from 0 \alert{(P > 0.05)}.   
-- Comparative fit index (CFI): this statistic considers the deviation from a ‘null’ model. In most cases, the null estimates all variances but sets the covariances to 0. A value > 0.9 is considered good. 
-- Root-mean squared error of approximation (RMSEA): statistic penalizes models based on sample size. A value < 0.10 is acceptable, and anything < 0.08 is good.  
-- Standardized root-mean squared residual (SRMR): the standardized difference between the observed and predicted correlations. A value < 0.08 is considered good.   
+- *$\chi^2$ statistic*: good fit when failing to reject the null hypothesis that the $\chi^2$ statistic is different from 0 \alert{(P > 0.05)}.   
+- *Comparative fit index (CFI)*: this statistic considers the deviation from a ‘null’ model. In most cases, the null estimates all variances but sets the covariances to 0. A value > 0.9 is considered good. 
+- *Root-mean squared error of approximation (RMSEA)*: statistic penalizes models based on sample size. A value < 0.10 is acceptable, and anything < 0.08 is good.  
+- *Standardized root-mean squared residual (SRMR)*: the standardized difference between the observed and predicted correlations. A value < 0.08 is considered good.   
 
 ## Assumptions of SEM with lavaan
 
-  - (Multivariate) Normality
-  - Global estimation[^1]
-  - Directed acyclic relationships[^2]
+  - (Multivariate) normality of endogenous variables
+  - Global estimation based on variance-covariance matrix[^1]
+  - Directed (acyclic) relationships[^2]
   - Linear relationships[^3]
 
 [^1]: Local estimation possible.
@@ -466,9 +505,9 @@ digraph boxes_and_circles {
 
 ## Model identifiability
 
-- Underidentified: not enough pieces of information to identify parameters uniquely (df < 0)  
-- Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0)  
-- Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df > 0)   
+- Underidentified: not enough pieces of information to identify parameters uniquely (df < 0).  
+- Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).  
+- Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df > 0).   
 
 ## Model identifiability
 
@@ -476,15 +515,16 @@ digraph boxes_and_circles {
 
 $$ t \leq \frac{n (n + 1 )}{2} $$
 
-*t* = number of unknowns (parameters to be estimated)   
+*t* = number of unknowns (parameters to be estimated, i.e. variances & covariances)   
 *n* = number of knowns (observed variables). 
 
-The left hand side is how many pieces of information we want to know. The right hand side reflects the information we have to work with and is equal to the number of unique cells in the observed variance-covariance matrix (diagonal = variance, and lower triangle = covariances).
+The LHS is how many pieces of information we want to know.   
+RHS: information we have (number of unique cells in the observed variance-covariance matrix).  
 
 ## Data requirements
 
 - Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).
-- To estimate two relationships, we require at least n = 10 to fit that model.
+- To estimate two relationships, at least n = 10 required to fit model.
 - Ideally, replication is 5-20x the number of estimated parameters. 
 - The larger the sample size, the more precise (unbiased) the estimates. 
 
@@ -498,8 +538,8 @@ The left hand side is how many pieces of information we want to know. The right 
 5) Collect data
 6) Conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)
 7) Estimate parameters in the model
-8) Assess model fit
-9) Re-specify the model if meaningful
+8) Assess model goodness-of-fit
+9) Check for missing or unnecessary links
 10) Interpret and present results visually
 
 # Lavaan syntax
@@ -530,8 +570,6 @@ fit.simple <- sem(simple, data = seabloom)
 | intercept | `~ 1` | estimate mean for `y` | `y ~ 1` |
 | labelling | `*` | name coefficients | `y ~ b1*x1 + b2*x2` |
 | defining | `:=` | define quantity | `Total := b1*b3 + b2` |
-
-
 
 # Questions?
 
