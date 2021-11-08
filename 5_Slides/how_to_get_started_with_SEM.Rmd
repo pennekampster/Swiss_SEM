@@ -592,31 +592,23 @@ fit.simple <- sem(simple, data = seabloom)
 ![](images/SimpleSEM.pdf){width=50%}
 
 - Fitting of above SEM to Seabloom data:
-	- Assess model goodness of fit
+	- Assess model goodness of fit.
 	- Investigate the modification indices. Are there paths to add that are reasonable?
 	- Check model summary.
+	- What can you conclude?
 
 ## Exercise 3
 
 \centering
 ![](images/SimpleSEM.pdf){width=50%}
 
+After finding a model with good fit:
+
 - Model analysis:
-	- calculate standardized coefficients
-	- add derived quantities
+	- Calculate the standardized coefficients.
+	- Add derived quantities (direct and indirect effects of nutrients and disturbance).
 
 ## Exercise 4
-
-\centering
-![](images/FullSEM.pdf){width=50%}
-
-- Perform mediation analysis:
-  - Is the effect of disturbance is mediated via its effect on richness and eveness, rather than directly on biomass.
-  - Add paths from disk to rich and even, remove the path to mass.above
-  - Compare model fit to simple model. What do you conclude?
-
-
-## Exercise 5
 
 \centering
 ![](images/FullSEM.pdf){width=50%}
@@ -625,6 +617,20 @@ fit.simple <- sem(simple, data = seabloom)
   - Model comparison with simpler models used previously.
   - Perform model pruning.
   - Decide on most parsimonious model and summarize model.
+  - What do you conclude?
+
+## Exercise 5
+
+\centering
+![](images/FullSEM.pdf){width=50%}
+
+- Perform mediation analysis:
+  - Is the effect of disturbance mediated via its effect on richness and eveness, rather than directly on biomass?
+  - Add paths from disturbance to richness and evenness, remove the direct paths to AGB (both nutrients and disturbance).
+  - Compare model fit to simple model. What do you conclude?
+
+
+
 
   
 
