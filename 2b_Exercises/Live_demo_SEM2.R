@@ -105,4 +105,26 @@ summary(fit2c, fit.measures = TRUE, standardized=T)
 modindices(fit2c)
 
 
+# Multigroup fitting: interaction
+
+# let's generate some data (make drawing)
+set.seed(2397348)
+N <- 100
+dat <- data.frame(x1 = rnorm(N))
+dat$group = rep(c("1","2"), each = N/2)
+dat$y <- ifelse(dat$group == "1", 0.5 * dat$x1, -0.7 * dat$x1) + rnorm(N)
+
+# no group
+summary(lm(y~x1+group, data=dat))
+
+model3a <- ' 
+y ~ x1
+'
+
+fit3a <- sem(model3a, group = "group", data=dat)
+summary(fit3a, fit.measures=T)
+
+
+
+
 
