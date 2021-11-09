@@ -4,7 +4,7 @@ author: "Frank Pennekamp"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences
 - University of Zurich
-date: "`r format(Sys.time(), '%d.%m.%Y')`"
+date: "10.11.2021"
 output: 
   beamer_presentation:
     slide_level: 2
@@ -14,6 +14,7 @@ output:
     latex_engine: xelatex
     highlight: espresso
 beameroption: "show notes"
+always_allow_html: true
 ---
 
 ```{r setup, include=FALSE}

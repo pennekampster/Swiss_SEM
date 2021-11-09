@@ -4,7 +4,7 @@ author: "Swiss SEM team"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences
 - University of Zurich
-date: "`r format(Sys.time(), '%d.%m.%Y')`"
+date: "10.11.2021"
 output: 
   beamer_presentation:
     slide_level: 2
@@ -125,7 +125,7 @@ That might create more variation which would be kind of fun-->
 - What is the important information to convey?
 - Breaking up models into several panels or figures
 - Try to have high information-to-ink ratio
-- Display variables that is informative for reader rather than distracting:
+- Display variables that are informative rather than distracting for reader:
   - Top to bottom, or left to right
   - Moving information to a supplement
 - Use colours that work for colour-blind people

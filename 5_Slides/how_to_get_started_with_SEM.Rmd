@@ -5,7 +5,7 @@ author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences
 - University of Zurich
-date: "`r format(Sys.time(), '%d.%m.%Y')`"
+date: "09.11.2021"
 output:
   beamer_presentation:
     latex_engine: xelatex
