@@ -24,12 +24,12 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Exercise: Draw your idea
 
-How would you draw your model output for others to reproduce and evaluate this model?
+How would you draw your model for a manuscript?
 
 <!-- Alternative wording could be "How would you draw the model output for a manuscript"? 
 That might create more variation which would be kind of fun-->
 
-\note{Thank the audience for being awake.}
+\note{Notes.}
 
 ## What can you expect to see out in nature?
 
@@ -37,8 +37,6 @@ That might create more variation which would be kind of fun-->
 ![Halliday et al 2018 -- figure](images/Halliday_2018_sem.jpg){height=60%}
 
 <!-- We chose this figure because it is a very simple illustration of a latent variable. The purpose of this study was to test whether the latent concept of "learning engagement" could be measured in a lab environment. The authors demonstrated the validity of this construct by testing whether their latent variable predicted three outcomes that learning engagement would be expected to predict controlling for three potential confounding variables -->
-
-\note{Thank the audience for being awake again.}
 
 ## What can you expect to see out in nature?
 
@@ -71,10 +69,10 @@ That might create more variation which would be kind of fun-->
 ![Domeignoz -- figure](images/Domeignoz-Horta_sem.jpg){height=60%}
 <!-- there is a lot of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are -->
 
-## What can you expect to see out in nature?
+<!-- ## What can you expect to see out in nature? -->
 
-![Zhang -- manuscript head](images/Zhang_title.jpg){height=30%}
-![Zhang -- figure](images/Zhang_sem.jpg){height=60%}
+<!-- ![Zhang -- manuscript head](images/Zhang_title.jpg){height=30%} -->
+<!-- ![Zhang -- figure](images/Zhang_sem.jpg){height=60%} -->
 <!-- One really nice thing about the piecewise approach is it allows you to compare explanatory power of your fixed and random effects. What exactly does the composite represent though? -->
 
 ## What can you expect to see out in nature?
@@ -113,22 +111,20 @@ That might create more variation which would be kind of fun-->
 ![Tabi -- figure](images/tabi_sem.jpg){height=60%}
 <!-- Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so. -->
 
-## Discussion
+# What makes a good data visualization?
 
-### What makes a good data visualization?
-
-## Theory
+<!-- ## Theory -->
 
 <!-- *Maybe one slide drawing on theory from people like Edward Tufte* -->
 <!-- *Information/ink ratio* -->
 
-- What is the important information to convey?
-- Breaking up models into several panels or figures
-- Try to have high information-to-ink ratio
-- Display variables that are informative rather than distracting for reader:
-  - Top to bottom, or left to right
-  - Moving information to a supplement
-- Use colours that work for colour-blind people
+<!-- - What is the important information to convey? -->
+<!-- - Aim for high information-to-ink ratio. -->
+<!-- - Display variables that are informative rather than distracting for reader. -->
+<!-- - Simplify with multiple panels or figures. -->
+<!-- - Reading direction: top to bottom, or left to right -->
+<!-- - Moving information to a supplement -->
+<!-- - Use colours that work for colour-blind people -->
 
 ## What is a good SEM drawing?
 
@@ -137,7 +133,7 @@ That might create more variation which would be kind of fun-->
 
 ##  What is a good SEM drawing?
 
-\alert{There are no rules.} Here are our guidelines to help drawing an informatiove, interpretable and reproducible SEM diagram.
+\alert{There are no rules.} Here are our guidelines to help drawing an informative, interpretable and reproducible SEM diagram.
 
 1) Show the relevant variables  
 1) Represent causal relationships by the path coefficients  
@@ -147,7 +143,6 @@ That might create more variation which would be kind of fun-->
 1) Include tables with additional coefficients and derived quantities  
 
 ## Show the relevant variables 
-
 
 :::::::::::::: {.columns}
 ::: {.column}
@@ -227,12 +222,12 @@ That might create more variation which would be kind of fun-->
 
 :::::::::::::: {.columns}
 ::: {.column}
-- Table of path coefficients
+Table of path coefficients:
 
  ![](images/path_coeff_table.pdf){height=100%}
 :::
 ::: {.column}
-- Direct, indirect and total effects
+Direct, indirect and total effects:
 
 ![](images/Duffy_derived.jpg){height=100%}
 :::
@@ -248,22 +243,19 @@ That might create more variation which would be kind of fun-->
 
 ## Room for artistry 
 
-- This will depend on the audience and support:
+- This will depend on the audience and the purpose:
   - Is this a paper?
   - Is this a presentation?
   - What is the narrative structure?
-
-- Key thing here is that one structure might not work in every case.
-- Not advocating for anything in particular, but note that the same model for a paper might not be the right presentation for an SEM.
+  - Design the figure accordingly.
 
 ## Room for artistry
 
 - Meta models:
   - Shows the core concepts and their relationships, ignoring the data.
-  - The most abstracted vision of the causal process you are trying to capture
+  - The most conceptual version of the causal network you try to capture.
 
 ![](images/Mazziotta_sem.jpg){height=60%}
-
 
 ## Building the plot 
 
