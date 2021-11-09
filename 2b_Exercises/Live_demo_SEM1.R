@@ -123,17 +123,17 @@ fit1b <- sem(model1b, data=dat)
 summary(fit1b, fit.measures = F, standardized=T)
 
 # diagnostics
-resid(fit1, type="cor")
+resid(fit1b, type="cor")
 
 
 # interpretation
 
 # table of parameter estimates (confidence intervals)
-parameterEstimates(fit1)
-subset(parameterEstimates(fit1, standardized=T), op == "~")
+parameterEstimates(fit1b)
+subset(parameterEstimates(fit1b, standardized=T), op == "~")
 
 # get standardized estimates, SE and CIs
-standardizedSolution(fit1, type = "std.all")
+standardizedSolution(fit1b, type = "std.all")
 
 # standardized parameters and R square values (std.lv vs std.all)
-summary(fit1, standardized=T, rsq=T)
+summary(fit1b, standardized=T, rsq=T)

@@ -528,6 +528,25 @@ There are different standardizations available in `lavaan`, whereof `std.all` is
 standardizedsolution(fit.simple.up, type = "std.all")
 ```
 
+## Derived quantities
+
+To estimate derived quantities and their standard errors, we can use the `:=` operator in lavaan. The below code shows how to derive the direct, indirect and total effect of nutrients on above ground biomass by calculating compound paths and by summing up direct and indirect effects.
+
+```{r class.source = 'fold-hide'}
+derived <-
+"mass.above ~ b1 * nadd + b2 * rich + b3 * even + disk
+rich ~ b4 * nadd + disk
+even ~ b5 * nadd
+
+dir.nut.effect   := b1
+indir.nut.effect := b2 * b4 + b3 * b5
+tot.nut.effect :=  b1 + b2 * b4 + b3 * b5
+"
+
+fit.derived <- sem(derived, data = seabloom, estimator = "MLM")
+summary(fit.derived, rsq = TRUE)
+```
+
 
 ## Saturated model
 In a saturated model all possible paths are specified and as a result, there are no degrees of freedom left [@grace10].

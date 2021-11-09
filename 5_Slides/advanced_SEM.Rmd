@@ -48,7 +48,6 @@ library(ggplot2)
 - So far, we have only worked with manifest (measured) variables.   
 - However, some aspects of a meta-model may be difficult to quantify and measure directly.  
 - This is because they represent an abstract, multifaceted concept (e.g., general intelligence).
-- Or, because we measure variables with error.
 - This is where latent and composite variables are needed.   
 
 # Latent variables
@@ -59,8 +58,8 @@ library(ggplot2)
 ![](images/LatentSEM.pdf){width=50%}
 
 - Latent variables are unobserved, but their influence is captured by indicator variable(s).  
-- Latents can capture complex or conceptual properties that are difficult to quantify or measure directly. 
-- Graphically, latent variables are often represented by an oval node shapes (ellipses).   
+- Graphically, latent variables are often represented by an oval node shapes (ellipses).  
+- Direction of causality reversed: from latent variables to the observed variables (reflective indicators). 
 
 ```{r, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -92,7 +91,6 @@ digraph boxes_and_circles {
 \centering
 ![](images/LatentSEM.pdf){width=50%}
 
-- Direction of causality reversed: from latent variables to the observed variables (reflective indicators). 
 - Indicator variables are emergent manifestation of the underlying phenomenon represented by the latent variable.   
 - All indicators should be positively correlated to the latent variable (i.e., driver).
 - In contrast to indicators, latent variables are free of random or systematic measurement errors.
@@ -120,11 +118,11 @@ Latents often fitted in two steps:
 \centering
 ![](images/CompositeSEM.pdf){width=50%}
 
-- Composite variables specify the influence of collections of other variables (e.g., landuse).
-- In comparison to latent variables, they arise from the indicators.  
-- Visualized by arrows pointing from the indicators to the composite (formative or causal indicators).
+- Composite variables specify the influence of collections of variables (e.g., land use).
+- In comparison to latent variables, composites arise from the indicators.  
+- They are visualized by arrows pointing from the indicators to the composite (formative or causal indicators).
 - Values are determined by its causes (indicators), thus error variance is set to 0.  
-- Composites are often shown as hexangular shapes or ellipses (latent composites).  
+- Composites are shown as hexangular shapes.  
 
 ```{r, out.width="50%", fig.align='center', include=F}
 grViz("
@@ -166,6 +164,14 @@ How distinguish latent and composites:
 
 - Rule of thumb 1: if the indicators are redundant, they likely belong to a latent variable.   
 - Rule of thumb 2: If the meaning of the construct changes after dropping one of the indicators, the construct likely is a composite.  
+
+# Exercise
+
+## Exercise:
+
+- Revisit the meta-model you have drawn yesterday:
+  - Which contructs could be modelled with a latent or composite variable?
+  - Adapt your meta-model accordingly.
 
 # Interactions
 
@@ -259,20 +265,20 @@ Same coefficients for all but the effect of x1 on x2.
 - Improper solutions:  
   - Negative variances  
   - Correlations larger than 1  
-- Reasons for the warnings are:
-  1) slightly negative error estimates (not really a problem)   
-  2) indicators for latent variables need to be positively correlated   
-  3) local non-identification   
-  4) general misspecification   
+- Reasons for the warnings can be:
+  1) Slightly negative error estimates (not really a problem)   
+  2) Indicators for latent variables need to be positively correlated   
+  3) Local non-identification   
+  4) General model misspecification   
 
 # Complex sampling structure
 
 ## Complex sampling structure
 
-- Needed when data is nested:
-  - within sites
-  - within groups such as families, nests  
-- Nesting violates the principle of being independent and identically distributed.  
+- Needed when data is nested, e.g.,
+  - Within sites.
+  - Within groups such as families, nests. 
+- Nesting violates the principle of independent and identically distributed observations.  
 - Necessary to account for this structure in the data in the model.
 
 ## Complex sampling structure
@@ -282,10 +288,10 @@ library("lavaan.survey")
 ```
 
 - The add-on package lavaan.survey allows the analysis of stratified, clustered or weighted data.  
-- lavaan objects can be processed further with a specific data structure:
-  1) initialize the design   
-  2) post-process the lavaan object and compute the adjusted results.
-  3) Result is a corrected lavaan object.
+- Lavaan objects are processed with a specific data structure:
+  1) Initialize the design   
+  2) Post-process the lavaan object and compute the adjusted results.
+  3) Corrected lavaan object as result.
 
 ## Complex sampling structure
 
