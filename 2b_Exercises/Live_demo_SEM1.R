@@ -64,7 +64,6 @@ x3 ~ x2
 fit_true <- sem(model_true, data=dat)
 summary(fit_true, fit.measures = T)
 
-
 # any more paths to include?
 subset(modindices(fit_true))
 
@@ -82,8 +81,8 @@ x3 ~ x2
 y ~~ 0*x3 
 '
 
-fit1 <- sem(model_true, data=dat)
-summary(fit1, fit.measures = T)
+fit3 <- sem(model_true, data=dat)
+summary(fit3, fit.measures = T)
 
 # compare nested fits
 anova(fit3, fit_true)
