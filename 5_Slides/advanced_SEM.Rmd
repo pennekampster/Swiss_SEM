@@ -290,10 +290,12 @@ library("lavaan.survey")
 ## Complex sampling structure
 
 ```
-design <- svydesign(ids = ~ plot, strata = ~ field, nest = TRUE, data = dat)
+design <- svydesign(ids = ~ plot, strata = ~ field, 
+nest = TRUE, data = dat)
 summary(design)
 
-fit.nested <- lavaan.survey(lavaan.fit = model, survey.design = design)
+fit.nested <- lavaan.survey(lavaan.fit = model, 
+survey.design = design)
 ```
 
 - Needed to specify the study design
