@@ -52,6 +52,30 @@ cfa <- "body_size =~ mass + width + length"
 fit <- cfa(cfa, data=dat)
 summary(fit, standardized=T, rsq=T)
 
+# Interactions
+
+# Multigroup fitting: interaction
+
+# let's generate some data (make drawing)
+N <- 100
+set.seed(2397348)
+dat <- data.frame(x1 = rnorm(N))
+dat$group = rep(c("1","2"), each = N/2)
+dat$y <- ifelse(dat$group == "1", 0.9 * dat$x1, 0.7 * dat$x1) + rnorm(N, 0, 1)
+
+# ANCOVA
+summary(lm(y~x1 * group, data=dat))
+
+model3a <- ' 
+y ~ x1
+'
+
+fit3a <- sem(model3a, group = "group", data=dat)
+summary(fit3a, fit.measures=T)
+
+
+
+
 
 
 # Composite variables: interaction
@@ -103,27 +127,6 @@ y ~ b1 * x1 +  b2 * x2 + b3 * x1x2
 fit2c <- sem(model2c, data=dat)
 summary(fit2c, fit.measures = TRUE, standardized=T)
 modindices(fit2c)
-
-
-# Multigroup fitting: interaction
-
-# let's generate some data (make drawing)
-set.seed(2397348)
-N <- 100
-dat <- data.frame(x1 = rnorm(N))
-dat$group = rep(c("1","2"), each = N/2)
-dat$y <- ifelse(dat$group == "1", 0.5 * dat$x1, -0.7 * dat$x1) + rnorm(N)
-
-# no group
-summary(lm(y~x1+group, data=dat))
-
-model3a <- ' 
-y ~ x1
-'
-
-fit3a <- sem(model3a, group = "group", data=dat)
-summary(fit3a, fit.measures=T)
-
 
 
 
