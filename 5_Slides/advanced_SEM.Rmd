@@ -9,7 +9,7 @@ output:
   beamer_presentation:
     slide_level: 2
     theme: metropolis
-    incremental: true
+    incremental: false
     toc: no
     latex_engine: xelatex
     highlight: espresso

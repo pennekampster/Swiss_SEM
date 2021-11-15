@@ -10,7 +10,7 @@ output:
   beamer_presentation:
     latex_engine: xelatex
     theme: metropolis 
-    incremental: true
+    incremental: false
     toc: no
 header-includes: \usepackage{booktabs}
 always_allow_html: true
