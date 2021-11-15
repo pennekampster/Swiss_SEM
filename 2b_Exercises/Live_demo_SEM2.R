@@ -10,10 +10,10 @@ set.seed(6553454)
 dat <- rnorm_multi(n = 50, 
                    mu = c(10, 10),
                    sd = c(1, 1),
-                   r = c(0.9), 
+                   r = c(0.6), 
                    varnames = c("M1", "M2"),
                    empirical = F)
-dat$Xi = 0.3 * dat$M1 + 0.3 * dat$M2
+dat$Xi = 0.2 * dat$M1 + 0.8 * dat$M2
 dat$y <- dat$Xi + runif(50)
 
 pairs(dat)
@@ -28,13 +28,17 @@ summary(fit, standardized=T, rsq=T)
 latent <- '
 xi =~ lambda*M1 + lambda*M2 # exogenous latent
 
-eta =~ y # endogenous latent
+#eta =~ y # endogenous latent
 
-eta ~ xi # path model
+y ~ xi # path model
 '
 
 fit <- cfa(latent, data=dat)
 summary(fit, standardized=T, rsq=T)
+
+
+
+
 
 
 # example CFA with more than two indicator variables
@@ -61,7 +65,7 @@ N <- 100
 set.seed(2397348)
 dat <- data.frame(x1 = rnorm(N))
 dat$group = rep(c("1","2"), each = N/2)
-dat$y <- ifelse(dat$group == "1", 0.9 * dat$x1, 0.7 * dat$x1) + rnorm(N, 0, 1)
+dat$y <- ifelse(dat$group == "1", 0.2 * dat$x1, 0.9 * dat$x1) + rnorm(N, 0, 1)
 
 # ANCOVA
 summary(lm(y~x1 * group, data=dat))
@@ -72,6 +76,16 @@ y ~ x1
 
 fit3a <- sem(model3a, group = "group", data=dat)
 summary(fit3a, fit.measures=T)
+
+
+model3b <- ' 
+y ~ c("b1", "b1") * x1
+'
+
+fit3b <- sem(model3b, group = "group", data=dat)
+summary(fit3b, fit.measures=T)
+fit3b
+aictab(list(fit3a, fit3b))
 
 
 
@@ -107,6 +121,8 @@ modindices(fit2a)
 
 # get coefficients
 summary(lm(y ~ x1 * x2, data=dat))
+coef(lm(y ~ x1 * x2, data=dat))
+
 
 model2b <- ' 
 comp.int <~ 1.72075 * x1 +   0.43481 * x2 + -0.67734  * x1x2
