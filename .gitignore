@@ -28,3 +28,8 @@ vignettes/*.pdf
 .Renviron
 Swiss_SEM.Rproj
 .Rproj.user
+
+# ignore Quarto presentation files
+/5_Slides/Intro_to_SEM_part1_files
+/5_Slides/Intro_to_SEM_part2_files
+/5_Slides/Intro_to_SEM_visualization_files
