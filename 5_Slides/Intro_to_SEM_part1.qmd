@@ -13,6 +13,8 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
+editor:
+  render-on-save: true
 ---
 
 ```{r setup, include=FALSE}
@@ -69,19 +71,22 @@ library(knitr)
     -   Global estimation with R package lavaan
     -   Hands on exercises and live coding
     -   We will work with a single, ecological dataset (Seabloom et al. 2020)
+
+.  .  .  
+
 -   What will not be covered
     -   Local estimation of SEMs (with piecewiseSEM)
     -   Advanced topics like incorporating random effects, feedbacks, temporal autocorrelation
 
 ## Learning objectives
 
--   Participants understand the advantages and limits of SEMs to draw inferences from data
+-   Participants understand the capabilities and limits of SEMs to draw inferences from data
 -   Participants are able to fit, interpret and visualize a SEM with `lavaan`.
 -   Participants are able to apply SEM to their own dataset
 
 # Getting started with Structural Equation Modeling
 
-## Research questions {.smaller}
+## Research question _first_ {.smaller}
 
 <!-- Comments: -->
 
@@ -93,17 +98,19 @@ library(knitr)
 
 <!-- Concepts for technical part that could be introduced also here: global vs local, information criteria for arrow selection (for me better on technical part). -->
 
+::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
--   Ecology is about the relationships between organisms and their environment.
+-   Ecology = relationships between organisms and their environment.
 -   As ecologists, we hypothesize how things could be connected in ecological systems.
--   To test our hypotheses, we need a way to dissect when they occur for a reason versus randomness.
+-   Often our research questions are about cause and effect in ecological systems.   
+-   Testing hypotheses requires us to dissect when they occur for a reason vs. randomness.
 -   Statistics allow us to separate between signal and noise.
--   Often our research questions are about cause and effect in ecological systems.
 :::
 
 ::: {.column width="50%"}
 ![](images/ecosystem.jpg)
+:::
 :::
 :::
 
@@ -113,16 +120,18 @@ Ask students about their research questions
 
 ## Causality
 
+::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
 -   "Correlation does not imply causation".
--   Everything else being equal, seeing variation in X leading to variation in Y.
--   Experiments to isolate effect of X on Y.
--   Experiments not always feasible, hence development of SEM.
+-   Experiments required to isolate effect of X on Y.
+-   Everything else being equal, variation in X leading to variation in Y (=X causes Y).
+-   Causal inference methods when experiments not feasible.
 :::
 
-::: {.column width="50%"}
+::: {.column width="40%"}
 ![](images/correlation.jpg)
+:::
 :::
 :::
 
@@ -135,6 +144,7 @@ Ask students about their research questions
 
 ## Regression models
 
+::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
 -   Multiple observed variables.
@@ -143,6 +153,7 @@ Ask students about their research questions
 :::
 
 ::: {.column width="50%"}
+
 ```{dot}
 //| fig-width: 4
 digraph {
@@ -177,8 +188,12 @@ digraph {
   
 }
 ```
+
+
 :::
 :::
+:::
+
 
 ::: notes
 -   Explain the concept and discuss with students the topic.
@@ -189,6 +204,7 @@ digraph {
 
 ## SEM models {.smaller}
 
+::: {.incremental}
 -   Test and evaluate multivariate causal relationship by embracing intercorrelations (system thinking).
 -   Test both direct and indirect effects on assumed causal relationships.
 -   Incorporate observed and unobserved ('latent') variables.
@@ -282,6 +298,7 @@ digraph {
 }
 ```
 :::
+:::
 
 ## Two goals of SEM:
 
@@ -294,18 +311,23 @@ digraph {
 
 ## SEM modelling philosophy
 
+::: {.incremental}
 -   A SEM is usually specified based on theory to determine and validify a proposed causal process and/or model.
 -   Continuum between theory (hypothesis-driven) to exploratory (data-driven) modelling.\
 -   Causal diagram to specify relationships.
+:::
 
 ## Causal diagram
 
+::: {.incremental}
 -   Picture of putative cause-effect relationships.
 -   Data-generating mechanisms leading to a set of observational expectations.
 -   Causal diagrams are based on directed acyclic graphs (DAGs).
+:::
 
 ## Directed acyclic graphs {.smaller}
 
+::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
 -   Directed = unidirectional.
@@ -356,6 +378,7 @@ digraph {
   }
 
 ```
+:::
 :::
 :::
 
@@ -425,9 +448,12 @@ Ask students about how they would address this question.
 
 Meta-model are conceptual models that allow to link data with theory.
 
+::: {.incremental}
 1)  Productivity (biomass) is directly influenced by the environment (nutrients, disturbance and precipitation)
 2)  Productivity (biomass) is directly influenced by biodiversity (richness and evenness).
 3)  The environment also influences biodiversity and thus, have an indirect effect on productivity via biodiversity.
+:::
+
 
 ::: notes
 -   Ask students about how they would address this question.
@@ -435,8 +461,6 @@ Meta-model are conceptual models that allow to link data with theory.
 -   Present the concept of meta-model and impications for research.
 -   Include a graphical representation of the meta-model as what is missing in the model.
 :::
-
-# Exercise:
 
 ## Exercise:
 
@@ -473,17 +497,14 @@ digraph  {
 }
 ```
 
-\centering `lm(biomass ~ precipitation)`
-
+::: {.incremental}
+-    `lm(biomass ~ precipitation)`
 -   Linear regression\
 -   Regression coefficient quantifies the strength of relationship\
 -   Change in Y for one unit change in X
+::: 
 
 ## Multiple independent variables {.smaller}
-
-\centering
-
-<!-- ![](images/LMdir.pdf){width="50%"} -->
 
 ```{dot}
 //| fig-width: 4
@@ -519,11 +540,12 @@ digraph  {
 
 ```
 
-\centering `lm(biomass ~ precipitation + nutrients + ...)`
-
+::: {.incremental}
+-   `lm(biomass ~ precipitation + nutrients + ...)`
 -   More than one independent variable = multiple regression\
 -   Estimates partial effects (i.e. effect of precipitation on biomass when nutrient addition is fixed)\
 -   Only direct effects.
+:::
 
 <!-- - Discuss with students other variables that may affect B.   -->
 
@@ -541,16 +563,14 @@ digraph  {
 
 ## Multiple independent variables {.smaller}
 
-\centering
+`lm(richness ~ nutrients)`\
+`lm(evenness ~ nutrients)`\
+`lm(biomass ~ richness + evenness)`\
 
-![](images/LMind2.pdf){width="50%"}
-
-\centering `lm(richness ~ nutrients)`\
-\centering `lm(evenness ~ nutrients)`\
-\centering `lm(biomass ~ richness + evenness)`
-
+::: {.incremental}
 -   Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.\
 -   Indirect effects can be quantified by the product of the compound path.
+:::
 
 ```{dot}
 //| fig-width: 6
@@ -571,7 +591,7 @@ digraph  {
     nutrients->evenness [style=dashed];
     evenness->biomass [style=dashed];
     richness->biomass [style=dashed];
-    nutrients->biomass [color=red];
+    nutrients->biomass [color=red, minlen=3];
     
     {rank=min; nutrients;}
     {rank=max; biomass;}
@@ -587,10 +607,73 @@ digraph  {
 
 \centering ![](images/LMind2_no_mediation.pdf){width="40%"}
 
+.  .  .
+
+```{dot}
+//| fig-width: 6
+digraph  {
+
+   label     = "Full mediation"
+   labelloc  =  t // t: Place the graph's title on top.
+   fontsize  = 10 // Make title stand out by giving a large font size
+
+  # a 'graph' statement
+  graph [overlap = false, layout = dot, splines = curved,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  nutrients; richness; biomass;
+
+  # several 'edge' statements
+    nutrients->richness [style=solid];
+    richness->biomass [style=solid];
+    
+    {rank=min; nutrients;}
+    {rank=max; biomass;}
+    {rank=same; richness;}
+}
+```
+
+.  .  .
+
+```{dot}
+//| fig-width: 6
+digraph  {
+
+   label     = "Partial mediation"
+   labelloc  =  t // t: Place the graph's title on top.
+   fontsize  = 10 // Make title stand out by giving a large font size
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 10, layout = dot, splines = curved,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  nutrients; richness; biomass;
+
+  # several 'edge' statements
+    nutrients->richness [style=solid];
+    richness->biomass [style=solid];
+    nutrients->biomass [style=solid];
+
+    {rank=min; nutrients;}
+    {rank=max; biomass;}
+    {rank=same; richness;}
+}
+```
+
+::: {.incremental}
 -   Tests whether a particular variable has a mediating effect on a path.\
 -   Often used to test underlying mechanisms.
 -   In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.
 -   Possibilities: complete mediation, partial mediation, no mediation.
+:::
 
 ## System level approach
 
@@ -602,13 +685,43 @@ digraph  {
 
 <!-- - Discuss about complexity in ecology and if SEM is useful to answer your questions ("We need to do things as simple as possible, but no simpler").  -->
 
-\centering
 
-![](images/FullSEM.pdf){width="50%"}
 
--   \alert{Exogenous} variables only have paths emanating from them (i.e., do not have arrows going into them).
--   \alert{Endogenous} variables have paths directed into them.
+```{dot}
+//| fig-width: 8
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 20, layout = dot, splines = curved,
+       rankdir = LR, ranksep = 1]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  nutrients; evenness; richness; biomass; disturbance;
+
+  # several 'edge' statements
+    nutrients->richness;
+    nutrients->evenness;
+    evenness->biomass;
+    richness->biomass;
+    nutrients->biomass;
+    disturbance -> evenness
+    disturbance -> richness
+    disturbance -> biomass;
+    
+    {rank=min; nutrients;}
+    {rank=max; biomass;}
+    {rank=same; richness evenness;}
+}
+```
+
+::: {.incremental}
+-   Exogenous variables only have paths emanating from them (i.e., do not have arrows going into them).
+-   Endogenous variables have paths directed into them.
 -   An endogenous variable can also have arrows directing out of it, but the sole condition is that they must be predicted.
+:::
 
 ## SEM machinery
 
@@ -640,11 +753,13 @@ V <- cov(d)
 kable(V)
 ```
 
+::: {.incremental}
 -   Variance: $VAR_{x}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})}{N-1}$
     -   Variance is the degree of spread in a set of data.
 -   Covariance: $COV_{x,y}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})(y_{i}-\bar{y})}{N-1}$
     -   Covariance measures how much two variables are moving together.
 -   The variances appear along the diagonal and covariances appear in the off-diagonal elements
+::: 
 
 ## SEM: correlation matrix {.smaller}
 
@@ -664,18 +779,23 @@ kable(cov2cor(V))
 
 ## Goodness-of-fit {.smaller}
 
+::: {.incremental}
 -   Compare the specified SEM model (given variance-covariance) to the observed variance-covariance
 -   $\chi^2$ statistic: good fit when failing to reject the null hypothesis that the $\chi^2$ statistic is different from 0 \alert{(P > 0.05)}.\
 -   *Comparative fit index (CFI)*: this statistic considers the deviation from a 'null' model. In most cases, the null estimates all variances but sets the covariances to 0. A value \> 0.9 is considered good.
 -   *Root-mean squared error of approximation (RMSEA)*: statistic penalizes models based on sample size. A value \< 0.10 is acceptable, and anything \< 0.08 is good.\
 -   *Standardized root-mean squared residual (SRMR)*: the standardized difference between the observed and predicted correlations. A value \< 0.08 is considered good.
+:::
 
 ## Assumptions of SEM with lavaan
 
+::: {.incremental}
 -   (Multivariate) normality of endogenous variables
 -   Global estimation based on variance-covariance matrix[^1]
 -   Directed (acyclic) relationships[^2]
 -   Linear relationships[^3]
+::: 
+
 
 [^1]: Local estimation possible.
 
@@ -685,9 +805,11 @@ kable(cov2cor(V))
 
 ## Model identifiability
 
+::: {.incremental}
 -   Underidentified: not enough pieces of information to identify parameters uniquely (df \< 0).\
 -   Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
 -   Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
+:::
 
 ## Model identifiability {.smaller}
 
@@ -701,14 +823,15 @@ $$ t \leq \frac{n (n + 1 )}{2} $$
 The LHS is how many pieces of information we want to know.\
 RHS: information we have (number of unique cells in the observed variance-covariance matrix).
 
+
 ## Data requirements
 
+::: {.incremental}
 -   Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).
 -   To estimate two relationships, at least n = 10 required to fit model.
 -   Ideally, replication is 5-20x the number of estimated parameters.
 -   The larger the sample size, the more precise (unbiased) the estimates.
-
-# Grace's 8 rules of path coefficients
+:::
 
 ## Grace's 8 rules of path coefficients
 
@@ -763,7 +886,7 @@ digraph  {
   X 
   Y1 
   Y2
-
+  
   # 'edge' statements
   X -> Y1 [label = <&gamma;<SUB>X,Y1</SUB>> ]
   Y1 -> Y2 [label = <&beta;<SUB>Y1,Y2</SUB>> ]
@@ -810,28 +933,89 @@ digraph  {
 
 > When variables are connected by more than one pathway, each pathway is the 'partial' regression coefficient.
 
+::: {.incremental}
 -   The partial regression coefficient accounts for influence of more than one variable on the response\
 -   In other words, the coefficient for one predictor controls for the influence of other predictors in the model\
 -   The coefficients of multiple regression are partial coefficients
+::: 
+
+```{dot}
+//| fig-width: 5
+digraph {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 5, layout = dot, rankdir = LR];
+
+  # 'node' statements
+  node [shape = box, fontname = Helvetica];
+  
+  X; 
+  Y1; 
+  Y2;
+  
+  # 'edge' statements
+  X -> Y1 [label = <&beta;<SUB>X,Y1</SUB>> minlen=3 ];
+  X -> Y2 [label = <&beta;<SUB>X,Y2</SUB>> minlen=3 ];
+
+  {rank=min; X; };
+
+}
+```
+
 
 ## Rule 5 {.smaller}
 
 > Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables.
 
--   $R^{2}$: ratio of explained to total variation in response (here Y)\
+::: {.incremental}
+-   $R^{2}$: ratio of explained to total variation in response (here Y1)\
 -   Unexplained or residual variance = $1 - R^{2}$
--   Captures other (unknown) sources causing correlation between X2 and other variables to deviate from 1.
+-   Captures other (unknown) sources causing correlation between Y1 and other variables to deviate from 1.
+-   In a path diagram, error variances are often represented as $\zeta$ with an arrow leading into the endogenous variable.
+:::
 
-In a path diagram, error variances are often represented as $\zeta$ with an arrow leading into the endogenous variable.
+```{dot}
+//| fig-width: 5
+digraph {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR];
+
+  # 'node' statements
+  node [shape = box, fontname = Helvetica];
+  
+  X; 
+  Y1; 
+  Y2;
+
+  E3 [label = < &zeta;<SUB>Y1</SUB> = 1 - R<SUP>2</SUP> >];
+
+    node [shape = plain,
+        fontname = Helvetica];
+  E1;
+
+  # 'edge' statements
+  X -> Y1;
+  X -> Y2;
+  E1 -> Y1; 
+
+E1 [label = <&zeta;<SUB>Y1</SUB>>]; 
+
+  {rank=min; X; };
+{rank=max; E1; };
+}
+```
 
 ## Rule 6 {.smaller}
 
 > Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.
 
+::: {.incremental}
 -   Imagine we remove the path from Y to Y1\
 -   If they were exogenous variables, the relationship would be their bivariate correlation (Rule #1)\
 -   Here we have we have to remove the effects of X on both variables.\
 -   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.
+:::
 
 ```{dot}
 //| fig-width: 6
@@ -906,6 +1090,7 @@ digraph {
 
 ## SEM workflow in a nutshell {.smaller}
 
+::: {.incremental}
 1)  Review the relevant theory and research literature to support model specification
 2)  Specify a model (e.g., diagram)
 3)  Determine model identification
@@ -916,6 +1101,7 @@ digraph {
 8)  Assess model goodness-of-fit
 9)  Check for missing or unnecessary links
 10) Interpret and present results visually
+:::
 
 # Lavaan syntax
 
