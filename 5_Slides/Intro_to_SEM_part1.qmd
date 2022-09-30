@@ -200,7 +200,6 @@ digraph {
 -   Show the difference between direct effects and correlation together with the graphical representation.
 :::
 
-<!-- ![](images/regression_limitations.png){width="60%"} -->
 
 ## SEM models {.smaller}
 
@@ -208,8 +207,6 @@ digraph {
 -   Test and evaluate multivariate causal relationship by embracing intercorrelations (system thinking).
 -   Test both direct and indirect effects on assumed causal relationships.
 -   Incorporate observed and unobserved ('latent') variables.
-
-<!-- ![](images/regression_limitations.png){width="60%"} -->
 
 ::: {layout-ncol="3"}
 ```{dot}
@@ -440,16 +437,61 @@ Effect of soil disturbance (disking) and nutrient enrichment on (a) diversity (E
 Ask students about how they would address this question.
 :::
 
-## Meta-model
+## Meta-model {.smaller}
 
-\centering
+```{dot}
+//| fig-width: 6
+digraph  {
 
-![](images/Metamodel.pdf){width="50%"}
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, splines = curved, rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  
+   subgraph cluster_bio {
+        label="Biotic"
+        fontname = Helvetica
+		    color=lightgrey;
+        evenness, richness;
+        }
+
+
+   subgraph cluster_env {
+        label="Environment"
+        fontname = Helvetica
+     		color=lightgrey;
+
+        nutrients;
+        disturbance;
+        }
+
+    nutrients->richness;
+    nutrients->evenness;
+    nutrients->biomass;
+    disturbance -> biomass;
+
+   subgraph cluster_prod {
+     label="Productivity";
+     fontname = Helvetica;
+     color=lightgrey;
+     biomass; 
+     }
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+}
+```
+
+
+
 
 Meta-model are conceptual models that allow to link data with theory.
 
 ::: {.incremental}
-1)  Productivity (biomass) is directly influenced by the environment (nutrients, disturbance and precipitation)
+1)  Productivity (biomass) is directly influenced by the environment (nutrients and disturbance)
 2)  Productivity (biomass) is directly influenced by biodiversity (richness and evenness).
 3)  The environment also influences biodiversity and thus, have an indirect effect on productivity via biodiversity.
 :::
@@ -468,10 +510,6 @@ Meta-model are conceptual models that allow to link data with theory.
 -   Make a table with putative causal relationships.
 
 ## A simple bivariate model.
-
-\centering
-
-<!-- ![](images/LM.pdf){width="50%"} -->
 
 ```{dot}
 //| fig-width: 6
@@ -600,14 +638,6 @@ digraph  {
 ```
 
 ## Mediation {.smaller}
-
-\centering ![](images/LMind2_full_mediation.pdf){width="40%"}
-
-<!-- \centering ![](images/LMind2_partial_mediation.pdf){width=30%}   -->
-
-\centering ![](images/LMind2_no_mediation.pdf){width="40%"}
-
-.  .  .
 
 ```{dot}
 //| fig-width: 6
@@ -1136,7 +1166,7 @@ Fit model:
 
 # Your turn: working with the Seabloom dataset
 
-## Exercise 1
+## Exercise 1 {.smaller}
 
 -   Exploration of dataset (variables and treatments)
 -   Check collinearity and normality
@@ -1145,11 +1175,39 @@ Fit model:
     -   Multiple regression (indirect effects on richness and evenness)
     -   What can you conclude?
 
-## Exercise 2
+## Exercise 2 {.smaller}
 
-\centering
+```{dot}
+//| fig-width: 6
+digraph  {
 
-![](images/SimpleSEM.pdf){width="50%"}
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+        disturbance;
+
+    nutrients->richness;
+    nutrients->evenness;
+    disturbance -> biomass;
+
+     biomass; 
+
+    evenness:e-> richness:e [dir=both; minlen=3] ;
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+ { rank="same"; nutrients; disturbance}
+ { rank="same"; evenness; richness}
+}
+```
+
 
 -   Fitting of above SEM to Seabloom data:
     -   Assess model goodness of fit.
@@ -1157,11 +1215,39 @@ Fit model:
     -   Check model summary.
     -   What can you conclude?
 
-## Exercise 3
+## Exercise 3 {.smaller}
 
-\centering
+```{dot}
+//| fig-width: 6
+digraph  {
 
-![](images/SimpleSEM.pdf){width="50%"}
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=2, splines=curved]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+        disturbance;
+
+    nutrients->richness;
+    nutrients->evenness;
+    disturbance -> biomass;
+
+     biomass; 
+
+    evenness:e-> richness:e [dir=both; minlen=3] ;
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+ { rank="same"; nutrients; disturbance}
+ { rank="same"; evenness; richness}
+}
+```
+
 
 After finding a model with good fit:
 
@@ -1169,11 +1255,42 @@ After finding a model with good fit:
     -   Calculate the standardized coefficients.
     -   Add derived quantities (direct and indirect effects of nutrients and disturbance).
 
-## Exercise 4
+## Exercise 4 {.smaller}
 
-\centering
 
-![](images/FullSEM.pdf){width="50%"}
+```{dot}
+//| fig-width: 6
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=2, splines=curved]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness;
+        richness;
+        nutrients;
+        disturbance; 
+        biomass; 
+
+    nutrients->richness;
+    nutrients->evenness;
+    disturbance -> biomass;
+
+   disturbance -> richness;
+   disturbance-> evenness;
+
+    evenness:e-> richness:e [dir=both; minlen=3] ;
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+ { rank="same"; nutrients; disturbance}
+ { rank="same"; evenness; richness}
+}
+```
 
 -   Saturated model:
     -   Model comparison with simpler models used previously.
@@ -1181,11 +1298,42 @@ After finding a model with good fit:
     -   Decide on most parsimonious model and summarize model.
     -   What do you conclude?
 
-## Exercise 5
+## Exercise 5 {.smaller}
 
-\centering
+```{dot}
+//| fig-width: 6
+digraph  {
 
-![](images/FullSEM.pdf){width="50%"}
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=2, splines=curved]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness;
+        richness;
+        nutrients;
+        disturbance; 
+        biomass; 
+
+    nutrients->richness;
+    nutrients->evenness;
+    disturbance -> biomass;
+
+   disturbance -> richness;
+   disturbance-> evenness;
+
+    evenness:e-> richness:e [dir=both; minlen=3] ;
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+ { rank="same"; nutrients; disturbance}
+ { rank="same"; evenness; richness}
+}
+```
+
 
 -   Perform mediation analysis:
     -   Is the effect of disturbance mediated via its effect on richness and eveness, rather than directly on biomass?
