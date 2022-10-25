@@ -3,39 +3,96 @@ library(faux)
 library(lavaan)
 library(AICcmodavg)
 
+## latent variables
+
 # Accounting for measurement error with 2 indicator variables
 
 # let's generate some data, where the two measurements are correlated (make a drawing)
+n<- 500
 set.seed(6553454)
-dat <- rnorm_multi(n = 50, 
-                   mu = c(10, 10),
-                   sd = c(1, 1),
-                   r = c(0.6), 
-                   varnames = c("M1", "M2"),
+dat <- rnorm_multi(n = n, 
+                   mu = c(1, 1, 1),
+                   sd = c(.1, .1, .1),
+                   r = c(0.4), 
+                   varnames = c("M1", "M2", "Xi"),
                    empirical = F)
-dat$Xi = 0.2 * dat$M1 + 0.8 * dat$M2
-dat$y <- dat$Xi + runif(50)
+dat$y <- 2.5 * dat$Xi
 
 pairs(dat)
 cor.test(dat$M1, dat$M2)
 
 # direct effect of M1 on y (check R2)
 cfa <- "y ~ M1"
-fit <- cfa(cfa, data=dat)
+fit <- sem(cfa, data=dat)
 summary(fit, standardized=T, rsq=T)
 
 # effect of M1 and M2 on y (check R2)
 latent <- '
 xi =~ lambda*M1 + lambda*M2 # exogenous latent
 
-#eta =~ y # endogenous latent
+eta =~ y # endogenous latent
 
-y ~ xi # path model
+eta ~ xi # path model
 '
 
-fit <- cfa(latent, data=dat)
+fit <- sem(latent, data=dat)
 summary(fit, standardized=T, rsq=T)
 
+
+#https://skranz.github.io//r/2022/01/26/two_noisy_x.html
+
+set.seed(1)
+n = 1000
+x = rnorm(n)
+
+eta1 = rnorm(n) # measurement error1
+noisy1 = x + eta1
+
+eta2 = rnorm(n) # measurement error2
+noisy2 = x + eta2
+
+u = rnorm(n)
+beta0=0; beta1 = .5
+y = beta0+beta1*x + u
+
+dat <- data.frame(y, eta1, eta2, noisy1, noisy2)
+
+# attenuation bias
+summary(lm(y~noisy1))
+summary(lm(y~noisy2))
+
+# effect of M1 and M2 on y (check R2)
+ivreg <- '
+y ~ noisy1 
+noisy1 ~ noisy2
+y ~~ noisy1
+'
+
+fit <- sem(ivreg, data=dat)
+summary(fit, standardized=T, rsq=T)
+
+
+# effect of M1 and M2 on y (check R2)
+lm <- '
+y ~ noisy1 # exogenous latent
+'
+
+fit <- sem(lm, data=dat)
+summary(fit, standardized=T, rsq=T)
+
+
+
+# effect of M1 and M2 on y (check R2)
+latent <- '
+xi =~ lambda*noisy1 + lambda*noisy2 # exogenous latent
+
+eta =~ y # endogenous latent
+
+eta ~ xi # path model
+'
+
+fit <- sem(latent, data=dat)
+summary(fit, standardized=T, rsq=T)
 
 
 
@@ -46,7 +103,7 @@ set.seed(72643276)
 dat <- rnorm_multi(n = 100, 
                    mu = c(20, 20, 20),
                    sd = c(5, 5, 5),
-                   r = c(0.4, 0.5, 0.3), 
+                   r = c(0.4, 0.5, 0.7), 
                    varnames = c("length", "width", "mass"),
                    empirical = F)
 
@@ -55,6 +112,10 @@ pairs(dat)
 cfa <- "body_size =~ mass + width + length"
 fit <- cfa(cfa, data=dat)
 summary(fit, standardized=T, rsq=T)
+
+
+
+
 
 # Interactions
 
