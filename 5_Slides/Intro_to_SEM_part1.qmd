@@ -297,10 +297,12 @@ digraph {
 :::
 :::
 
-## Two goals of SEM:
+## 4 purposes of SEM:
 
-1)  Understand the underlying causal network driving the correlation/covariance among a set of variables.\
-2)  Explain as much of their variance as possible with the model specified.
+1)  Understand which drivers influence a system ('driver-focused SEM')
+2)  Understand and explain a particular property of a system ('response-focused')
+3)  Understand causal pathways ('mediation-focused')
+4)  Evaluate available theory ('theory-focused')
 
 ## Explanatory modelling
 
@@ -327,10 +329,11 @@ digraph {
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
--   Directed = unidirectional.
--   Acyclic = no causal loops permitted.\
--   Variables are nodes (boxes).\
--   Edges (one-headed arrows) are causal relationships such as X affects Y.\
+-   Variables are nodes (boxes). 
+-   Edges (one-headed arrows) are causal relationships such as X affects Y.  
+-   Directed = unidirectional.  
+-   Edges can have any functional shape. 
+-   Acyclic = no causal loops permitted.  
 -   Omitted links and nodes have empirical implications (= assumptions about the causal diagram)
 :::
 
