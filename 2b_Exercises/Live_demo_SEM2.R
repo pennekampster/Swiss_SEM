@@ -1,46 +1,10 @@
 # Live demo latent and composite variables
-library(faux)
 library(lavaan)
 library(AICcmodavg)
 
 ## latent variables
 
 # Accounting for measurement error with 2 indicator variables
-
-# let's generate some data, where the two measurements are correlated (make a drawing)
-n<- 500
-set.seed(6553454)
-dat <- rnorm_multi(n = n, 
-                   mu = c(1, 1, 1),
-                   sd = c(.1, .1, .1),
-                   r = c(0.4), 
-                   varnames = c("M1", "M2", "Xi"),
-                   empirical = F)
-dat$y <- 2.5 * dat$Xi
-
-pairs(dat)
-cor.test(dat$M1, dat$M2)
-
-# direct effect of M1 on y (check R2)
-cfa <- "y ~ M1"
-fit <- sem(cfa, data=dat)
-summary(fit, standardized=T, rsq=T)
-
-# effect of M1 and M2 on y (check R2)
-latent <- '
-xi =~ lambda*M1 + lambda*M2 # exogenous latent
-
-eta =~ y # endogenous latent
-
-eta ~ xi # path model
-'
-
-fit <- sem(latent, data=dat)
-summary(fit, standardized=T, rsq=T)
-
-
-#https://skranz.github.io//r/2022/01/26/two_noisy_x.html
-
 set.seed(1)
 n = 1000
 x = rnorm(n)
@@ -58,31 +22,22 @@ y = beta0+beta1*x + u
 dat <- data.frame(y, eta1, eta2, noisy1, noisy2)
 
 # attenuation bias
-summary(lm(y~noisy1))
-summary(lm(y~noisy2))
-
-# effect of M1 and M2 on y (check R2)
-ivreg <- '
-y ~ noisy1 
-noisy1 ~ noisy2
-y ~~ noisy1
-'
-
-fit <- sem(ivreg, data=dat)
-summary(fit, standardized=T, rsq=T)
-
-
-# effect of M1 and M2 on y (check R2)
 lm <- '
 y ~ noisy1 # exogenous latent
 '
-
 fit <- sem(lm, data=dat)
 summary(fit, standardized=T, rsq=T)
 
+# use latent variable to model underlying cause
+latent <- '
+xi =~ lambda*noisy1 + lambda*noisy2 # exogenous latent
+y ~ xi # path model
+'
+fit <- sem(latent, data=dat)
+summary(fit, standardized=T, rsq=T)
 
 
-# effect of M1 and M2 on y (check R2)
+# fully latent model
 latent <- '
 xi =~ lambda*noisy1 + lambda*noisy2 # exogenous latent
 
@@ -93,7 +48,6 @@ eta ~ xi # path model
 
 fit <- sem(latent, data=dat)
 summary(fit, standardized=T, rsq=T)
-
 
 
 
