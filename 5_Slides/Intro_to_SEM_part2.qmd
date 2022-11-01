@@ -160,7 +160,7 @@ digraph  {
 ::: {.incremental}
 - Indicator variables are emergent manifestation of the latent variable.   
 - All indicators should be positively correlated to the latent variable (i.e., driver).
-- Latent variables free of random or systematic measurement errors, in contrast to indicators,.
+- Latent variables are free of random or systematic measurement errors, in contrast to indicators.
 :::
 
 ## Latent variables
@@ -181,6 +181,35 @@ Latents often fitted in two steps:
   - Precursor to evaluation of any structural models in which the latent variables appear.
 2) Full model including latent variable
   - To estimate effect of latent variable on other variables.
+:::
+
+## Using latents to adjust for measurement error in the explanatory variables
+
+::: {.incremental}
+- Variables are often measured with error.  
+- Regression approaches assume that explanatory variables are measured without error.  
+- What difference does it make?  
+- Measurement error biases the slope towards zero -> regression dilution  
+:::
+
+## Regression dilution
+
+```{r}
+#| echo: true
+library(ggplot2)
+set.seed(1981981)
+x <- rnorm(100)
+y <- 2*x + rnorm(100)
+ggplot(data=NULL, aes(x=x,y=y)) + geom_point() + 
+geom_abline(b=2, colour="red") + stat_smooth(method="lm")
+```
+
+## Using latents to adjust for measurement error in the explanatory variables
+
+::: {.incremental}
+- Possible to estimate measurement error with multiple measures.
+- Latent variable with multiple indicator variables.
+- Will lead to better slope estimate and higher R2.
 :::
 
 # Composite variables
