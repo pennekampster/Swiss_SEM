@@ -50,8 +50,6 @@ fit <- sem(latent, data=dat)
 summary(fit, standardized=T, rsq=T)
 
 
-
-
 # example CFA with more than two indicator variables
 set.seed(72643276)
 dat <- rnorm_multi(n = 100, 
@@ -76,11 +74,11 @@ summary(fit, standardized=T, rsq=T)
 # Multigroup fitting: interaction
 
 # let's generate some data (make drawing)
-N <- 100
+N <- 50
 set.seed(2397348)
 dat <- data.frame(x1 = rnorm(N))
 dat$group = rep(c("1","2"), each = N/2)
-dat$y <- ifelse(dat$group == "1", 0.2 * dat$x1, 0.9 * dat$x1) + rnorm(N, 0, 1)
+dat$y <- ifelse(dat$group == "1", 0.2 * dat$x1, 0.9 * dat$x1) + rnorm(N, 0, .1)
 
 # ANCOVA
 summary(lm(y~x1 * group, data=dat))

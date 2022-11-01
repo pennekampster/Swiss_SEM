@@ -71,6 +71,13 @@ x2 ~ x1
 x3 ~ x2
 '
 
+# let's include additional path (x2 on y)
+model3 <- ' 
+y ~ x1 + x2 + x3
+x2 ~ x1 
+x3 ~ x2
+'
+
 dagify(y ~ x1 + x2 + x3,
        x2 ~ x1,
        x3 ~ x2) %>% 
@@ -102,10 +109,15 @@ subset(modindices(fit_true))
 
 # compare nested fits
 anova(fit2, fit_true)
-aictab(list(fit3, fit_true), c("fit 2", "fit true"))
+aictab(list(fit2, fit_true), c("fit 2", "fit true"))
+
+# look at the underlying representations
+lavInspect(fit3, what = "observed")
+lavInspect(fit3, what = "implied")
+lavInspect(fit3, what = "resid")
 
 
-model_true <- ' 
+model4 <- ' 
 y ~ x1 + x2 
 x2 ~ x1
 x3 ~ x2
@@ -114,12 +126,31 @@ x3 ~ x2
 y ~~ 0*x3 
 '
 
-fit3 <- sem(model_true, data=dat)
-summary(fit3, fit.measures = T)
+fit4 <- sem(model4, data=dat)
+summary(fit4, fit.measures = T)
 
 # compare nested fits
-anova(fit3, fit_true)
-aictab(list(fit3, fit_true), c("fit 3", "fit true"))
+anova(fit3, fit4)
+aictab(list(fit3, fit4), c("fit 3", "fit 4"))
+
+
+model2_wrong <- ' 
+y ~ x1 + x3 
+x2 ~ x1
+x3 ~ x2
+y ~~ x3 
+'
+
+fit2_wrong <- sem(model2_wrong, data=dat)
+summary(fit2_wrong, fit.measures = T)
+
+# compare nested fits
+anova(fit3, fit2_wrong)
+aictab(list(fit3, fit2_wrong), c("fit 3", "fit 2 wrong"))
+
+
+
+
 
 
 # Any questions?

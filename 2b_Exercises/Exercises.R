@@ -10,7 +10,7 @@ library(AICcmodavg)
 # Exercise: Mediation 
 
 # Let's test whether the effect of disturbance is mediated via its
-# effect on richness and eveness, rather than directly on biomass
+# effect on richness and evenness, rather than directly on biomass
 # Add paths from disk to rich and even, remove the path to mass.above
 # Compare model fit to simple model
 # What do you conclude?
