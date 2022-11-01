@@ -1,10 +1,9 @@
 ---
 author: "Frank Pennekamp"
 title: "Introduction to structural equation modelling"
-subtitle: "Advanced modelling"
+subtitle: "Day 2: Advanced modelling"
 institute: 
-- Department of Evolutionary Biology and Environmental Sciences
-- University of Zurich
+- Department of Evolutionary Biology and Environmental Sciences, University of Zurich
 date: "9.11.2022"
 format:
   revealjs: 
@@ -13,6 +12,7 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
+    code-overflow: wrap
 editor:
   render-on-save: true
 ---
@@ -83,11 +83,11 @@ digraph  {
 ```
 
 ::: {.incremental}
-- Meta-model are conceptual models that allow to link data with theory. 
-- So far, we have only worked with manifest (measured) variables.   
+- Meta-model = conceptual models to link data with theory. 
+- So far, only manifest (measured) variables considered.   
 - However, some aspects of a meta-model may be difficult to quantify and measure directly.  
-- This is because they represent an abstract, multifaceted concept (e.g., general intelligence).
-- This is where latent and composite variables are needed.   
+- This is because they represent an abstract, multifaceted concept.
+- Latent and composite variables can deal with these situations.   
 :::
 
 # Latent variables
@@ -99,15 +99,15 @@ digraph  {
 
 digraph  {
 
-    graph [rankdir = LR, fontname = Helvetica]
+  graph [rankdir = LR]
    
-   node [shape=box]
+   node [shape=box, fontname = Helvetica]
    X1 [label="evenness"];
    X2 [label="richness"];
    Z [label="biomass"];
 
    
-   node [shape=circle]
+   node [shape=oval]
     Y [label="diversity"]
     
     Y -> X1;
@@ -122,12 +122,10 @@ digraph  {
 ```
 
 ::: {.incremental}
-- Latent variables are unobserved, but their influence is captured by indicator variable(s).  
-- Graphically, latent variables are often represented by an oval node shapes (ellipses).  
+- Latent variables are unobserved, but influence captured by indicator variable(s).  
 - Direction of causality reversed: from latent variables to the observed variables (reflective indicators). 
+- Graphically, latent variables are often represented by an oval node shapes (ellipses).  
 ::: 
-
-
 
 ## Latent variables
 
@@ -139,13 +137,13 @@ digraph  {
 
     graph [rankdir = LR, fontname = Helvetica]
    
-   node [shape=box]
+   node [shape=box, fontname = Helvetica]
    X1 [label="evenness"];
    X2 [label="richness"];
    Z [label="biomass"];
 
    
-   node [shape=circle]
+   node [shape=oval]
     Y [label="diversity"]
     
     Y -> X1;
@@ -160,9 +158,9 @@ digraph  {
 ```
 
 ::: {.incremental}
-- Indicator variables are emergent manifestation of the underlying phenomenon represented by the latent variable.   
+- Indicator variables are emergent manifestation of the latent variable.   
 - All indicators should be positively correlated to the latent variable (i.e., driver).
-- In contrast to indicators, latent variables are free of random or systematic measurement errors.
+- Latent variables free of random or systematic measurement errors, in contrast to indicators,.
 :::
 
 ## Latent variables
@@ -196,16 +194,16 @@ digraph boxes_and_circles {
    
    graph [overlap = false, fontsize = 10, rankdir = LR, fontname = Helvetica]
    
-   node [shape=box]
+   node [shape=box, fontname = Helvetica]
    X1 [label="disturbance"];
    X2 [label="nutrients"];
    Z [label="biomass"];
 
    
-   node [shape=hexagon]
+   node [shape=hexagon, fontname = Helvetica]
   Y [label="land use"]
 
-  node [shape=plain]
+  node [shape=plain, fontname = Helvetica]
   E [label="0"]
   E -> Y [constraint=false];
 
@@ -219,11 +217,11 @@ digraph boxes_and_circles {
 ```
 
 ::: {.incremental} 
-- Composite variables specify the influence of collections of variables (e.g., land use).
+- Composites specify the collective influence of a set of variables (e.g., land use).
 - In comparison to latent variables, composites arise from the indicators.  
-- They are visualized by arrows pointing from the indicators to the composite (formative or causal indicators).
 - Values are determined by its causes (indicators), thus error variance is set to 0.  
-- Composites are shown as hexangular shapes.  
+- Composites are shown as hexangular shapes.
+  + arrows pointing from the indicators to the composite (formative or causal indicators).
 :::
 
 ## Key differences between latent and composite variables {.smaller}
@@ -231,10 +229,11 @@ digraph boxes_and_circles {
 ::: columns
 ::: {.column width="40%"}
 ::: {.incremental}
-- Flow of causation in a latent variables is from the construct to its indicators, i.e., indicators are driven by an underlying, unmeasured process.   
-- As a latent variable represents an underlying, data-generating process, its indicators need to be correlated to each other. 
-- For composite variables, the flow of causation is reversed and the indicators are independent entities.   
-- In the case of a composite variable, there is no assumption about the relation between the indicators. 
+- Flow of causation: 
+- Latents: from construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.
+  + indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.   
+- Composite: flow of causation is reversed and the indicators are independent entities.   
+  + there is no assumption about the relation between the indicators (can be positive/negative). 
 :::
 :::
 
@@ -246,7 +245,7 @@ digraph boxes_and_circles {
 
   graph [splines = curved, rankdir = LR, fontname = Helvetica]
    
-   node [shape=box]
+   node [shape=box, fontname = Helvetica]
    X1 [label="evenness"];
    X2 [label="richness"];
    Z [label="biomass"];
@@ -254,14 +253,14 @@ digraph boxes_and_circles {
    X4 [label="nutrients"];
 
    
-   node [shape=circle]
+   node [shape=oval, fontname = Helvetica]
    Y1 [label="diversity"]
     
    Y1 -> X1 [dir=back];
     Y1 -> X2 [dir=back];
     Y1 -> Z;
      
-  node [shape=hexagon]
+  node [shape=hexagon, fontname = Helvetica]
   Y2 [label="land use"]
 
   X3 -> Y2;
@@ -326,8 +325,8 @@ digraph boxes_and_circles {
 ::: {.incremental}
 - In nature, things often are contingent on each other.
 - For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.  
-- Such a behaviour is called an interaction, which indicates that the effect of the two main effects are different when combined.  
-- Both positive and negative interactions are possible.  
+- Moderation: effects are different when combined.  
+- Modelled with interaction: Both positive and negative interactions are possible.  
 - In regression, the interaction is represented by a coefficient that estimates the effect of the product of the two predictors.  
 :::
 
@@ -341,7 +340,9 @@ Interactions can be modelled in different ways in lavaan:
 
 ## Interactions (multi group)
 
-```mod <- sem(model, group = "age_class", data = dd)```
+```r
+sem(model, group = "age_class", data = dd)
+```
 
 ::: {.incremental}
 - Multigroup fitting allows coefficients to vary among groups.  
@@ -353,29 +354,26 @@ Interactions can be modelled in different ways in lavaan:
 
 Lavaan allows to introduce equality constraints on various aspects via the `group.equal` argument:
 
-```mod <- sem(model, group = "age_class", group.equal = c("regressions"), data = dd)```
-
-Additional constraints could be:
-
+```r
+sem(model, group = "age_class", group.equal = c("regressions"), data = dd)
 ```
-group.equal=c(
-"intercepts",
-"means",
-"regressions",
-"residuals",
-"residual.covariances")
+
+
+Adding constraints via `group.equal`:
+
+```r
+group.equal=c("intercepts", "means", "regressions", "residuals", "residual.covariances")
 ```
 
 ## Interactions (multi group)
 
 - Even more control by having the same name for different parameters: 
 
-```
+```r 
 model <- ' 
 y ~ c("b1", "b1") * x1 + c("b2", "b2") * x3
 x2 ~ c("b3", "b4") * x1
-x3 ~ c("b5", "b5") * x2
-'
+x3 ~ c("b5", "b5") * x2'
 ```
 
 Same coefficients for all but the effect of x1 on x2.
@@ -410,9 +408,10 @@ Same coefficients for all but the effect of x1 on x2.
 
 ## Complex sampling structure
 
-```
+```r
 library("lavaan.survey")
 ```
+
 ::: {.incremental}
 - The add-on package lavaan.survey allows the analysis of stratified, clustered or weighted data.  
 - Lavaan objects are processed with a specific data structure:
@@ -423,7 +422,7 @@ library("lavaan.survey")
 
 ## Complex sampling structure
 
-```
+```r
 design <- svydesign(ids = ~ plot, strata = ~ field, 
 nest = TRUE, data = dat)
 summary(design)
@@ -455,7 +454,7 @@ survey.design = design)
 
 Start with the following model:
 
-```
+```r
 library("lavaan")
 
 simple <-

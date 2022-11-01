@@ -1,10 +1,9 @@
 ---
 title: "Introduction to structural equation modelling"
-subtitle: "Basic modelling"
+subtitle: "Day 1: Basic modelling"
 author: "Frank Pennekamp"
 institute:
-- Department of Evolutionary Biology and Environmental Sciences
-- University of Zurich
+- Department of Evolutionary Biology and Environmental Sciences, University of Zurich
 date: "08.11.2022"
 format:
   revealjs: 
@@ -13,6 +12,7 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
+    footer: Introduction to SEM (2022)
 editor:
   render-on-save: true
 ---
@@ -69,13 +69,13 @@ library(knitr)
 
 -   What the course is about:
     -   Global estimation with R package lavaan
-    -   Hands on exercises and live coding
+    -   Hands-on exercises and live coding
     -   We will work with a single, ecological dataset (Seabloom et al. 2020)
 
 .  .  .  
 
 -   What will not be covered
-    -   Local estimation of SEMs (with piecewiseSEM)
+    -   Local estimation of SEMs (with R package piecewiseSEM)
     -   Advanced topics like incorporating random effects, feedbacks, temporal autocorrelation
 
 ## Learning objectives
@@ -297,16 +297,23 @@ digraph {
 :::
 :::
 
-## 4 purposes of SEM:
+## Motivation to use SEM:
 
-1)  Understand which drivers influence a system ('driver-focused SEM')
-2)  Understand and explain a particular property of a system ('response-focused')
-3)  Understand causal pathways ('mediation-focused')
-4)  Evaluate available theory ('theory-focused')
+::: {.incremental}
+1) Driver-focused: Understand which drivers influence a system 
+2) Response-focused: Understand and explain a particular property of a system  
+3) Mediation-focused: Understand causal pathways  
+4) Theory-focused: Evaluate available theory 
+::: 
 
 ## Explanatory modelling
 
-![](images/Explanatory_modelling.png){width="90%"}
+![](images/Explanatory_modelling.png){width="60%"}
+
+::: aside
+[Grace, James B., and Kathryn M. Irvine. 2020. “Scientist’s Guide to Developing Explanatory Statistical Models Using Causal Analysis Principles.” Ecology 101 (4): e02962.]{style="font-size: 5mm; text-align: center"}
+:::
+
 
 ## SEM modelling philosophy
 
@@ -488,9 +495,6 @@ digraph  {
 }
 ```
 
-
-
-
 Meta-model are conceptual models that allow to link data with theory.
 
 ::: {.incremental}
@@ -515,7 +519,7 @@ Meta-model are conceptual models that allow to link data with theory.
 ## A simple bivariate model.
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 4
 digraph  {
 
   # a 'graph' statement
@@ -602,16 +606,7 @@ digraph  {
 
 # From regression models to SEM
 
-## Multiple independent variables {.smaller}
-
-`lm(richness ~ nutrients)`\
-`lm(evenness ~ nutrients)`\
-`lm(biomass ~ richness + evenness)`\
-
-::: {.incremental}
--   Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.\
--   Indirect effects can be quantified by the product of the compound path.
-:::
+## Multiple independent and dependent variables {.smaller}
 
 ```{dot}
 //| fig-width: 6
@@ -639,6 +634,58 @@ digraph  {
     {rank=same; richness evenness;}
 }
 ```
+
+`lm(richness ~ nutrients)`\
+`lm(evenness ~ nutrients)`\
+`lm(biomass ~ richness + evenness + nutrients)`\
+
+::: {.incremental}
+- Exogenous variables: only have paths emanating from them, not going into them.   
+- Endogenous variables have paths directed into them.  
+  + An endogenous variable can also have arrows directing out of it.  
+  + Endogenous variables must be predicted.  
+:::
+
+
+## Multiple independent and dependent variables {.smaller}
+
+
+```{dot}
+//| fig-width: 6
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 10, layout = dot, splines = curved,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  nutrients; evenness, richness; biomass;
+
+  # several 'edge' statements
+    nutrients->richness [style=dashed];
+    nutrients->evenness [style=dashed];
+    evenness->biomass [style=dashed];
+    richness->biomass [style=dashed];
+    nutrients->biomass [color=red, minlen=3];
+    
+    {rank=min; nutrients;}
+    {rank=max; biomass;}
+    {rank=same; richness evenness;}
+}
+```
+
+`lm(richness ~ nutrients)`\
+`lm(evenness ~ nutrients)`\
+`lm(biomass ~ richness + evenness + nutrients)`\
+
+::: {.incremental}
+-   Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.\
+-   Indirect effects can be quantified by the product of the compound path.
+:::
+
 
 ## Mediation {.smaller}
 
@@ -708,58 +755,59 @@ digraph  {
 -   Possibilities: complete mediation, partial mediation, no mediation.
 :::
 
-## System level approach
 
-<!-- - Show a very complex model including multiple types of variables, arrows (direct and correlations) for the study system.  -->
+## SEM workflow in a nutshell {.smaller}
 
-<!-- - The complex model is built based on submodels, each one addressing specific questions.  -->
+1)  Review the relevant theory and research literature to support model specification
+2)  Specify a model (e.g., diagram)
+3)  Determine model identification
+4)  Select measures for the variables represented in the model
+5)  Collect data
+6)  Conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)
+7)  Estimate parameters in the model
+8)  Assess model goodness-of-fit
+9)  Check for missing or unnecessary links
+10) Interpret and present results visually
 
-<!-- - We need a framework to analyze this together -> SEM  -->
+# Model identification
 
-<!-- - Discuss about complexity in ecology and if SEM is useful to answer your questions ("We need to do things as simple as possible, but no simpler").  -->
-
-
-
-```{dot}
-//| fig-width: 8
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 20, layout = dot, splines = curved,
-       rankdir = LR, ranksep = 1]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-        
-  nutrients; evenness; richness; biomass; disturbance;
-
-  # several 'edge' statements
-    nutrients->richness;
-    nutrients->evenness;
-    evenness->biomass;
-    richness->biomass;
-    nutrients->biomass;
-    disturbance -> evenness
-    disturbance -> richness
-    disturbance -> biomass;
-    
-    {rank=min; nutrients;}
-    {rank=max; biomass;}
-    {rank=same; richness evenness;}
-}
-```
+## Model identification
 
 ::: {.incremental}
--   Exogenous variables only have paths emanating from them (i.e., do not have arrows going into them).
--   Endogenous variables have paths directed into them.
--   An endogenous variable can also have arrows directing out of it, but the sole condition is that they must be predicted.
+-   Underidentified: not enough pieces of information to identify parameters uniquely (df \< 0).\
+-   Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
+-   Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
 :::
 
-## SEM machinery
+## Model identification {.smaller}
 
--   The building block of the global estimation procedure for SEM is the variance-covariance matrix
--   Let's revisit the basics:
+"t-rule" to quickly gauge whether a model is under-, just, or overidentified:
+
+$$ t \leq \frac{n (n + 1 )}{2} $$
+
+*t* = number of unknowns (parameters to be estimated, i.e. variances & covariances)\
+*n* = number of knowns (observed variables).
+
+The LHS is how many pieces of information we want to know.\
+RHS: information we have (number of unique cells in the observed variance-covariance matrix).
+
+## Data requirements
+
+::: {.incremental}
+-   Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).
+-   To estimate two relationships, at least n = 10 required to fit model.
+-   Ideally, replication is 5-20x the number of estimated parameters.
+-   The larger the sample size, the more precise (unbiased) the estimates.
+:::
+
+# Model estimation
+
+## How to estimate SEMs? 
+
+- Structural equation modelling is a framework rather than a statistical technique   
+- Different estimation procedures possible   
+- Lavaan uses Maximum likelihood estimation       
+- Variance-covariance matrix used for global estimation of SEM    
 
 ## SEM: variance-covariance matrix
 
@@ -810,67 +858,11 @@ kable(cov2cor(V))
 -   Correlation: $COR_{x,y}=\frac{COV_{x,y}}{\sigma_x*\sigma_y}$
 -   Correlation matrix is standardized variance-covariance matrix
 
-## Goodness-of-fit {.smaller}
-
-::: {.incremental}
--   Compare the specified SEM model (given variance-covariance) to the observed variance-covariance
--   $\chi^2$ statistic: good fit when failing to reject the null hypothesis that the $\chi^2$ statistic is different from 0 \alert{(P > 0.05)}.\
--   *Comparative fit index (CFI)*: this statistic considers the deviation from a 'null' model. In most cases, the null estimates all variances but sets the covariances to 0. A value \> 0.9 is considered good.
--   *Root-mean squared error of approximation (RMSEA)*: statistic penalizes models based on sample size. A value \< 0.10 is acceptable, and anything \< 0.08 is good.\
--   *Standardized root-mean squared residual (SRMR)*: the standardized difference between the observed and predicted correlations. A value \< 0.08 is considered good.
-:::
-
-## Assumptions of SEM with lavaan
-
-::: {.incremental}
--   (Multivariate) normality of endogenous variables
--   Global estimation based on variance-covariance matrix[^1]
--   Directed (acyclic) relationships[^2]
--   Linear relationships[^3]
-::: 
-
-
-[^1]: Local estimation possible.
-
-[^2]: Causal loops possible.
-
-[^3]: Nonlinear relationships possible.
-
-## Model identifiability
-
-::: {.incremental}
--   Underidentified: not enough pieces of information to identify parameters uniquely (df \< 0).\
--   Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
--   Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
-:::
-
-## Model identifiability {.smaller}
-
-"t-rule" to quickly gauge whether a model is under-, just, or overidentified:
-
-$$ t \leq \frac{n (n + 1 )}{2} $$
-
-*t* = number of unknowns (parameters to be estimated, i.e. variances & covariances)\
-*n* = number of knowns (observed variables).
-
-The LHS is how many pieces of information we want to know.\
-RHS: information we have (number of unique cells in the observed variance-covariance matrix).
-
-
-## Data requirements
-
-::: {.incremental}
--   Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).
--   To estimate two relationships, at least n = 10 required to fit model.
--   Ideally, replication is 5-20x the number of estimated parameters.
--   The larger the sample size, the more precise (unbiased) the estimates.
-:::
-
 ## Grace's 8 rules of path coefficients
 
 <!-- https://jslefche.github.io/sem_book/global-estimation.html -->
 
--   The inferential heart of structural equation modeling are the regression coefficients
+-   The inferential heart of structural equation modeling are the model coefficients (parameters)
 
 ## Rule 1 {.smaller}
 
@@ -1121,20 +1113,42 @@ digraph {
 
 > The total effect (including undirected paths) is equivalent to the total correlation.
 
-## SEM workflow in a nutshell {.smaller}
+# Model evaluation
+
+## Model fit measures {.smaller}
 
 ::: {.incremental}
-1)  Review the relevant theory and research literature to support model specification
-2)  Specify a model (e.g., diagram)
-3)  Determine model identification
-4)  Select measures for the variables represented in the model
-5)  Collect data
-6)  Conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)
-7)  Estimate parameters in the model
-8)  Assess model goodness-of-fit
-9)  Check for missing or unnecessary links
-10) Interpret and present results visually
+
++ *$\chi^2$ statistic*
+  - compare the model-implied to the observed variance-covariance
+  - good fit when failing to reject the null hypothesis that the $\chi^2$ statistic is different from 0 (P > 0.05)   
+  - sample-size dependent
++ *Comparative fit index (CFI)*: 
+  - quantifies deviation from a 'null' model, where variances are estimated but covariances set to 0.
+  - higher is better, \> 0.95 is considered good.
++ *Root-mean squared error of approximation (RMSEA)*
+  - statistic penalizes models based on sample size
+  - \< 0.10 is acceptable, and anything \< 0.06 is good
++ *Standardized root-mean squared residual (SRMR)*
+  - standardized difference between the observed and predicted correlations
+  - \< 0.08 is considered good
 :::
+
+## Assumptions of SEM with lavaan
+
+::: {.incremental}
+-   (Multivariate) normality of endogenous variables
+-   Global estimation based on variance-covariance matrix[^1]
+-   Directed (acyclic) relationships[^2]
+-   Linear relationships[^3]
+::: 
+
+
+[^1]: Local estimation possible.
+
+[^2]: Causal loops possible.
+
+[^3]: Nonlinear relationships possible.
 
 # Lavaan syntax
 
@@ -1142,14 +1156,18 @@ digraph {
 
 Define model:
 
-    simple <-
-    "mass.above ~ nadd + rich + even + precip.mm + disk
-    rich ~ nadd + precip.mm
-    even ~ nadd + precip.mm"
+```r
+simple <-
+"mass.above ~ nadd + rich + even + precip.mm + disk
+rich ~ nadd + precip.mm
+even ~ nadd + precip.mm"
+````
 
 Fit model:
 
-    fit.simple <- sem(simple, data = seabloom)
+```r
+fit.simple <- sem(simple, data = seabloom)
+```
 
 ## Lavaan syntax {.smaller}
 
@@ -1171,12 +1189,12 @@ Fit model:
 
 ## Exercise 1 {.smaller}
 
--   Exploration of dataset (variables and treatments)
--   Check collinearity and normality
--   Fitting linear models to estimate coefficients
+- Exploration of dataset (variables and treatments)
+- Check collinearity and normality
+- Fit linear models to estimate coefficients
     -   Multiple regression (direct effects of predictors on AGB)
     -   Multiple regression (indirect effects on richness and evenness)
-    -   What can you conclude?
+- What do you conclude?
 
 ## Exercise 2 {.smaller}
 
@@ -1212,11 +1230,11 @@ digraph  {
 ```
 
 
--   Fitting of above SEM to Seabloom data:
+-   Fit the above DAG to the Seabloom data:
     -   Assess model goodness of fit.
     -   Investigate the modification indices. Are there paths to add that are reasonable?
     -   Check model summary.
-    -   What can you conclude?
+- What do you conclude?
 
 ## Exercise 3 {.smaller}
 
@@ -1299,7 +1317,7 @@ digraph  {
     -   Model comparison with simpler models used previously.
     -   Perform model pruning.
     -   Decide on most parsimonious model and summarize model.
-    -   What do you conclude?
+- What do you conclude?
 
 ## Exercise 5 {.smaller}
 
@@ -1337,8 +1355,8 @@ digraph  {
 }
 ```
 
-
 -   Perform mediation analysis:
     -   Is the effect of disturbance mediated via its effect on richness and eveness, rather than directly on biomass?
     -   Add paths from disturbance to richness and evenness, remove the direct paths to AGB (both nutrients and disturbance).
-    -   Compare model fit to simple model. What do you conclude?
+    -   Compare model fit to simple model. 
+- What do you conclude?
