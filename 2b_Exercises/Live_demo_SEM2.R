@@ -1,12 +1,13 @@
 # Live demo latent and composite variables
 library(lavaan)
 library(AICcmodavg)
+library(faux)
 
-## latent variables
+## Latent variables
 
 # Accounting for measurement error with 2 indicator variables
 set.seed(1)
-n = 1000
+n = 100
 x = rnorm(n)
 
 eta1 = rnorm(n) # measurement error1
@@ -16,7 +17,7 @@ eta2 = rnorm(n) # measurement error2
 noisy2 = x + eta2
 
 u = rnorm(n)
-beta0=0; beta1 = .5
+beta0=0; beta1 = .25
 y = beta0+beta1*x + u
 
 dat <- data.frame(y, eta1, eta2, noisy1, noisy2)
@@ -88,7 +89,7 @@ y ~ x1
 '
 
 fit3a <- sem(model3a, group = "group", data=dat)
-summary(fit3a, fit.measures=T)
+summary(fit3a)
 
 
 model3b <- ' 

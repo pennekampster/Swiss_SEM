@@ -172,6 +172,10 @@ fit1a <- sem(model1a, data=dat)
 summary(fit1a, fit.measures = F, standardized=T)
 
 
+fit1a <- sem(model1a, data=dat, se = "bootstrap", bootstrap = 1000)
+summary(fit1a, fit.measures = F, standardized=T)
+
+
 # Fixing parameters
 
 model1b <- ' 
