@@ -33,18 +33,9 @@ That might create more variation which would be kind of fun
 :::
 
 
-
 ## What can you expect to see out in nature?
 
-::: {.column-page}
-![](images/Halliday_2018_sem.jpg)
-:::
-
-::: notes
-We chose this figure because it is a very simple illustration of a latent variable. The purpose of this study was to test whether the latent concept of "learning engagement" could be measured in a lab environment. The authors demonstrated the validity of this construct by testing whether their latent variable predicted three outcomes that learning engagement would be expected to predict controlling for three potential confounding variables
-:::
-
-## What can you expect to see out in nature?
+Four SEMs across treatments.
 
 ::: {.column-page}
 ![](images/Hodapp_sem.jpg)
@@ -67,12 +58,13 @@ This is one of the most well cited empirical papers using SEM in ecology. It's i
 
 ## What can you expect to see out in nature?
 
+Lots of exogenous variables. red = negative, black = positive. no non-significant paths?
 
-![](images/Duffy_sem.png){.absolute .absolute width="700" right=200}
+![](images/Duffy_sem.png){.absolute .absolute width="600" right=200}
 
 
 ::: notes
-<!-- lots of exogenous variables, no endogenous. red = negative, black = positive. no non-significant paths? -->
+Lots of exogenous variables. red = negative, black = positive. no non-significant paths?
 :::
 
 
@@ -119,7 +111,7 @@ There is a lot of information, including path coefficients, r2, goodness of fit.
 
 ## What can you expect to see out in nature?
 
-![](images/tabi_sem.jpg){.absolute .absolute width="900" right=100}
+![](images/Tabi_SEM.png){.absolute .absolute width="900" right=100}
 
 <!-- Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so. -->
 
@@ -228,30 +220,28 @@ Guidelines to help drawing an informative, interpretable and reproducible SEM di
 
 ##  Report explanatory power for endogenous variables
 
-::: {.incremental}
 :::::::::::::: {.columns}
 ::: {.column}
 - Residual error or $R^2$ 
 :::
 ::: {.column}
-![](images/R2_endogenous.pdf){height=50%}
+![](images/R2_endogenous.png){height=50%}
 :::
 ::::::::::::::
-:::
 
 ## Include tables with additional coefficients and derived quantities 
 
 ::: {.incremental}
 :::::::::::::: {.columns}
-::: {.column}
+::: {.column width="50%"}
 Table of path coefficients:
 
- ![](images/path_coeff_table.pdf){height=100%}
+ ![](images/path_coeff_table.png){.absolute .absolute width="400"}
 :::
-::: {.column}
+::: {.column width="50%"}
 Direct, indirect and total effects:
 
-![](images/Duffy_derived.jpg){height=100%}
+![](images/Duffy_derived.jpg){.absolute .absolute width="400"}
 :::
 ::::::::::::::
 :::
@@ -262,7 +252,7 @@ Direct, indirect and total effects:
 - Showing the underlying data
   - Plots of raw correlations
   - Correlation tables
-  - Shows distribution of data
+  - Show data distributions
   - Partial plots
 :::
 
@@ -278,19 +268,15 @@ Direct, indirect and total effects:
 
 ## Room for artistry {.smaller}
 
-::: {.incremental}
 - Meta models:
   - Shows the core concepts and their relationships, ignoring the data.
   - The most conceptual version of the causal network you try to capture.
-:::
 
 ![](images/Mazziotta_sem.jpg){height=60%}
 
-## Building the plot
+## Plotting tools
 
-::: {.incremental}
 - Dedicated packages available in R (e.g., semPlot, lavaanPlot)
-- Fine-tuning in external software like powerpoint, illustrator, or Inkscape.
-:::
+- Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.
 
 # Questions?  
