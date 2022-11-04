@@ -25,12 +25,20 @@ library(DiagrammeR)
 library(ggplot2)
 ```
 
-## Advanced SEM topics covered today
+## Schedule & content {.smaller}
 
-- Latent variables  
-- Composite variables  
-- Interactions  
-- Complex survey designs    
+-   *Day 1*:
+    -   General introduction to SEM to model ecological systems
+    -   Fitting SEMs to data (live demo)
+    -   Model pruning, visualization and reporting
+    -   Discussion with James Grace
+-   *Day 2*: 
+    -   Latent and composite variables
+    -   Interactions
+    -   Complex sampling designs
+    -   Discussion with James Grace
+-   *Day 3*:
+    -   Self-study with possibility to meet with instructor(s)
 
 ## Revisiting the meta-model  {.smaller}
 
@@ -174,13 +182,16 @@ digraph  {
 
 Latents often fitted in two steps:  
 
-::: {.incremental}
+. . .
+
 1) Confirmatory factor analysis
   - Multi-indicator latent variables: the same process generated multiple indicator variables.    
   - Precursor to evaluation of any structural models in which the latent variables appear.
+
+.  .  .
+
 2) Full model including latent variable
   - To estimate effect of latent variable on other variables.
-:::
 
 ## Using latents to adjust for measurement error in the explanatory variables
 
@@ -190,22 +201,21 @@ Latents often fitted in two steps:
 - What difference does it make?
 :::
 
-## Regression dilution
+## Regression dilution {.smaller}
 
 
 ```{r}
 #| echo: false
-library(ggplot2)
-set.seed(1981981)
-x <- rnorm(50)
-y <- 2*x 
-y2 <- y + rnorm(50, sd=4)
-ggplot(data=NULL) + geom_point(aes(x=x,y=y2)) +  stat_smooth( aes(x=x,y=y2), method="lm", se=F, colour="blue") + stat_smooth(aes(x=x,y=y), method="lm", colour="red", se=F) + scale_colour_manual(values = c("red", "blue")) 
+library(ggplot2); set.seed(1981981)
+x <- rnorm(50); x2 <- x + rnorm(50); y <- 2*x; 
+ggplot(data=NULL) + geom_point(aes(x=x2,y=y), colour="blue") +   
+stat_smooth( aes(x=x2,y=y), method="lm", se=F, colour="blue") + 
+geom_abline(intercept=0,slope=2, colour="red")
 ```
 
 
 ::: {.incremental}
-- Red = true slope, blue slope estimated with OLS.
+- Red = true slope, blue = OLS slope.
 - Measurement error biases the slope towards zero. 
 - How to account for regression dilution?
 :::
@@ -267,7 +277,7 @@ digraph boxes_and_circles {
 - Flow of causation: 
   - *Latents*: from construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.
   - Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.   
-  - *Composite*: flow of causation is reversed and the indicators are independent entities.   
+  - *Composites*: flow of causation is reversed and the indicators are independent entities.   
   - There is no assumption about the relation between the indicators (can be positive/negative). 
 :::
 :::
@@ -361,7 +371,6 @@ digraph boxes_and_circles {
 - In nature, things often are contingent on each other.
 - For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.  
 - Moderation: effects are different when combined.  
-- Moderation modelled with interaction term.
 - In regression, the interaction coefficient estimates the effect of the product of the two predictors.  
 - Interaction coefficient estimates the deviation from additivity. 
 :::
@@ -394,11 +403,12 @@ Lavaan allows to introduce equality constraints on various aspects via the `grou
 sem(model, group = "age_class", group.equal = c("regressions"), data = dd)
 ```
 
+. . . 
 
 Adding constraints via `group.equal`:
 
 ```r
-group.equal=c("intercepts", "means", "regressions", "residuals", "residual.covariances")
+group.equal=c("intercepts", "means", "regressions", "residuals")
 ```
 
 ## Interactions (multi group)
@@ -419,16 +429,17 @@ Same coefficients for all but the effect of x1 on x2.
 
 ## Heywood cases : when things go wrong
 
-::: {.incremental}
 - Improper solutions:  
   - Negative variances  
   - Correlations larger than 1  
+
+. . .
+
 - Reasons for the warnings can be:
   1) Slightly negative error estimates (not really a problem)   
   2) Indicators for latent variables need to be positively correlated   
   3) Local non-identification   
   4) General model misspecification   
-:::
 
 # Complex sampling structure
 
@@ -448,13 +459,14 @@ Same coefficients for all but the effect of x1 on x2.
 library("lavaan.survey")
 ```
 
-::: {.incremental}
 - The add-on package lavaan.survey allows the analysis of stratified, clustered or weighted data.  
+
+. . .
+
 - Lavaan objects are processed with a specific data structure:
   1) Initialize the design   
   2) Post-process the lavaan object and compute the adjusted results.
   3) Corrected lavaan object as result.
-:::
 
 ## Complex sampling structure
 
