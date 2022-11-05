@@ -1,6 +1,6 @@
 ---
 title: "Basics of structural equation modeling"
-date: "09.11.2021"
+date: "08.11.2022"
 output:
   html_document:
     toc: true
