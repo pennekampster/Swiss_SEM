@@ -1,0 +1,2838 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="Intro_to_SEM_part1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Intro_to_SEM_part1_files/libs/quarto-html/tabby.min.js"></script>
+<script src="Intro_to_SEM_part1_files/libs/quarto-html/popper.min.js"></script>
+<script src="Intro_to_SEM_part1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Intro_to_SEM_part1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Intro_to_SEM_part1_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="Intro_to_SEM_part1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.0.36">
+
+  <meta name="author" content="Frank Pennekamp">
+  <title>Introduction to structural equation modelling</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="Intro_to_SEM_part1_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="Intro_to_SEM_part1_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="Intro_to_SEM_part1_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="Intro_to_SEM_part1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="Intro_to_SEM_part1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="Intro_to_SEM_part1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Intro_to_SEM_part1_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <h1 class="title">Introduction to structural equation modelling</h1>
+  <p class="subtitle">Day 1: Basic modelling</p>
+  <p class="author">Frank Pennekamp</p>
+  <p class="institute">Department of Evolutionary Biology and Environmental Sciences, University of Zurich</p>
+  <p class="date">08.11.2022</p>
+</section>
+
+<section id="quick-introduction-of-participants" class="slide level2">
+<h2>Quick introduction of participants</h2>
+<ul>
+<li>Who are you?</li>
+<li>Why do you want to learn about SEM?</li>
+<li>What is your research question for day 3?</li>
+</ul>
+</section>
+<section>
+<section id="general-information" class="title-slide slide level1 center">
+<h1>General information</h1>
+
+</section>
+<section id="introduction-of-the-swiss-sem-team" class="slide level2 smaller">
+<h2>Introduction of the <strong>Swiss SEM team</strong></h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li>Dr.&nbsp;Frank Pennekamp (main instructor)<br>
+</li>
+<li>Dr.&nbsp;James Grace (advanced topics and model clinic)<br>
+</li>
+<li>Dr.&nbsp;Rachel Korn (course development)<br>
+</li>
+<li>Dr.&nbsp;Noémie Pichon, Dr.&nbsp;Fletcher Halliday, Dr.&nbsp;Eliane Meier, Dr.&nbsp;Hugo Saiz, Dr.&nbsp;Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course development)</li>
+</ul>
+</div><div class="column" style="width:60%;">
+<p><img data-src="images/Swiss_SEM_team.png" style="width:100.0%"></p>
+</div>
+</div>
+</section>
+<section id="schedule-content" class="slide level2 smaller">
+<h2>Schedule &amp; content</h2>
+<ul>
+<li><em>Day 1</em>:
+<ul>
+<li>General introduction to SEM to model ecological systems</li>
+<li>Fitting SEMs to data (live demo)</li>
+<li>Model pruning, visualization and reporting</li>
+<li>Discussion with James Grace</li>
+</ul></li>
+<li><em>Day 2</em>:
+<ul>
+<li>Latent and composite variables</li>
+<li>Interactions</li>
+<li>Complex sampling designs</li>
+<li>Discussion with James Grace</li>
+</ul></li>
+<li><em>Day 3</em>:
+<ul>
+<li>Self-study with possibility to meet with instructor(s)</li>
+</ul></li>
+</ul>
+</section>
+<section id="overview" class="slide level2 smaller">
+<h2>Overview</h2>
+<ul>
+<li>What the course is about:
+<ul>
+<li>Global estimation with R package lavaan</li>
+<li>Hands-on exercises and live coding</li>
+<li>All exercises about one ecological dataset (Seabloom et al.&nbsp;2020)</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>What will <em>not</em> be covered
+<ul>
+<li>Local estimation of SEMs (with R package piecewiseSEM)</li>
+<li>Advanced topics:
+<ul>
+<li>random effects</li>
+<li>feedback loops</li>
+<li>temporal autocorrelation</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="learning-objectives" class="slide level2">
+<h2>Learning objectives</h2>
+<ul>
+<li>Participants understand the capabilities and limits of SEMs to draw inference from data.</li>
+<li>Participants are able to fit, evaluate, interpret and visualize a SEM with <code>lavaan</code>.</li>
+<li>Participants are able to apply and assess SEMs fitted to their own datasets.</li>
+</ul>
+</section></section>
+<section>
+<section id="getting-started-with-structural-equation-modeling" class="title-slide slide level1 center">
+<h1>Getting started with Structural Equation Modeling</h1>
+
+</section>
+<section id="research-question-first" class="slide level2 smaller">
+<h2>Research question <em>first</em></h2>
+<!-- Comments: -->
+<!-- Each slide represents a concept/topic to teach. Can be expanded to more slides. -->
+<!-- Content must be revisited to be consistent in wording, concepts etc. -->
+<!-- Specially required feedback on causality, meta-model, backdoor criterion, loops. -->
+<!-- Concepts for technical part that could be introduced also here: global vs local, information criteria for arrow selection (for me better on technical part). -->
+<div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment">Ecological system = complex network of interactions between organisms and their environment.</li>
+<li class="fragment">As ecologists, we hypothesize how things could be connected in ecological systems (e.g., species interactions, drivers).</li>
+<li class="fragment">Research questions are often about particular cause-effect relationships in ecological systems.<br>
+</li>
+<li class="fragment">Testing hypotheses requires us to dissect when they occur for a reason vs.&nbsp;randomness.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/ecosystem.jpg"></p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Ask students about their research questions</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="correlation-does-not-imply-causation" class="slide level2">
+<h2>“Correlation does not imply causation”</h2>
+<div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment">Causation: everything else being equal, variation in X leading to variation in Y (=X causes Y).</li>
+<li class="fragment">Experiments required to isolate effect of X on Y.</li>
+<li class="fragment">Drawing causal insights from observational data possible, but additional (strong) assumptions required.</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/correlation.jpg"></p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Example shown: is this correlation or causation?</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="from-regression-models-to-sem" class="title-slide slide level1 center">
+<h1>From regression models to SEM</h1>
+
+</section>
+<section id="regression-models" class="slide level2">
+<h2>Regression models</h2>
+<div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment">Multiple observed variables.</li>
+<li class="fragment">Only direct effects can be modelled with regression models.</li>
+<li class="fragment">Correlations between predictors usually ignored (up to threshold).</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-fig-width="4">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="384" height="290" viewbox="0.00 0.00 350.00 264.01" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 260.01)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-260.01 346,-260.01 346,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="54,-208 0,-208 0,-172 54,-172 54,-208"></polygon> <text text-anchor="start" x="18.44" y="-186.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="27.78" y="-186.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="198,-208 144,-208 144,-172 198,-172 198,-208"></polygon> <text text-anchor="start" x="162.44" y="-186.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="171.78" y="-186.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge5" class="edge">
+<title>
+X1:n-&gt;X2:n
+</title>
+<path fill="none" stroke="black" d="M27,-209C27,-237.62 142.23,-240.64 166.53,-218.06"></path> <polygon fill="black" stroke="black" points="169.72,-219.52 171,-209 163.44,-216.42 169.72,-219.52"></polygon> </g> <!-- X3 --> <g id="node3" class="node">
+<title>
+X3
+</title>
+<polygon fill="none" stroke="black" points="342,-208 288,-208 288,-172 342,-172 342,-208"></polygon> <text text-anchor="start" x="306.44" y="-186.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="315.78" y="-186.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text> </g> <!-- X1&#45;&gt;X3 --> <g id="edge7" class="edge">
+<title>
+X1:n-&gt;X3:n
+</title>
+<path fill="none" stroke="black" d="M29.49,-217.93C56.04,-268.76 286.58,-268.69 312.61,-217.73"></path> <polygon fill="black" stroke="black" points="32.83,-216.85 27,-208 26.04,-218.55 32.83,-216.85"></polygon> <polygon fill="black" stroke="black" points="316.01,-218.55 315,-208 309.22,-216.88 316.01,-218.55"></polygon> </g> <!-- Y --> <g id="node4" class="node">
+<title>
+Y
+</title>
+<polygon fill="none" stroke="black" points="198,-122 144,-122 144,-86 198,-86 198,-122"></polygon> <text text-anchor="middle" x="171" y="-99.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
+<title>
+X1-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M54.09,-173.2C76.87,-159.91 109.64,-140.79 134.7,-126.18"></path> <polygon fill="black" stroke="black" points="136.67,-129.08 143.55,-121.01 133.15,-123.03 136.67,-129.08"></polygon> </g> <!-- X2&#45;&gt;X3 --> <g id="edge6" class="edge">
+<title>
+X2:n-&gt;X3:n
+</title>
+<path fill="none" stroke="black" d="M171,-209C171,-237.62 286.23,-240.64 310.53,-218.06"></path> <polygon fill="black" stroke="black" points="313.72,-219.52 315,-209 307.44,-216.42 313.72,-219.52"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
+<title>
+X2-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M171,-171.6C171,-160.26 171,-145.23 171,-132.32"></path> <polygon fill="black" stroke="black" points="174.5,-132.1 171,-122.1 167.5,-132.1 174.5,-132.1"></polygon> </g> <!-- X3&#45;&gt;Y --> <g id="edge3" class="edge">
+<title>
+X3-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M287.91,-173.2C265.13,-159.91 232.36,-140.79 207.3,-126.18"></path> <polygon fill="black" stroke="black" points="208.85,-123.03 198.45,-121.01 205.33,-129.08 208.85,-123.03"></polygon> </g> <!-- E --> <g id="node5" class="node">
+<title>
+E
+</title>
+<text text-anchor="start" x="167.11" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">ε</text> </g> <!-- E&#45;&gt;Y --> <g id="edge4" class="edge">
+<title>
+E-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M171,-36.1C171,-47.37 171,-62.38 171,-75.33"></path> <polygon fill="black" stroke="black" points="167.5,-75.6 171,-85.6 174.5,-75.6 167.5,-75.6"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Explain the concept and discuss with students the topic.</li>
+<li>Show the difference between direct effects and correlation together with the graphical representation.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sem-models" class="slide level2 smaller">
+<h2>SEM models</h2>
+<div>
+<ul>
+<li class="fragment">Allow testing multivariate causal relationship.</li>
+<li class="fragment">SEM embraces relationships between variables (system thinking).</li>
+<li class="fragment">Allow testing both direct and indirect effects.</li>
+<li class="fragment">Incorporate observed and unobserved (‘latent / composite’) variables.</li>
+</ul>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell quarto-layout-cell" data-fig-width="3" style="flex-basis: 33.3%;justify-content: center;">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="288" height="62" viewbox="0.00 0.00 206.00 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-40 202,-40 202,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="start" x="18.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="27.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="126,-36 72,-36 72,0 126,0 126,-36"></polygon> <text text-anchor="start" x="90.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="99.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge1" class="edge">
+<title>
+X1-&gt;X2
+</title>
+<path fill="none" stroke="black" d="M54.28,-18C56.74,-18 59.19,-18 61.65,-18"></path> <polygon fill="black" stroke="black" points="61.75,-21.5 71.75,-18 61.75,-14.5 61.75,-21.5"></polygon> </g> <!-- X3 --> <g id="node3" class="node">
+<title>
+X3
+</title>
+<polygon fill="none" stroke="black" points="198,-36 144,-36 144,0 198,0 198,-36"></polygon> <text text-anchor="start" x="162.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="171.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text> </g> <!-- X2&#45;&gt;X3 --> <g id="edge2" class="edge">
+<title>
+X2-&gt;X3
+</title>
+<path fill="none" stroke="black" d="M126.28,-18C128.74,-18 131.19,-18 133.65,-18"></path> <polygon fill="black" stroke="black" points="133.75,-21.5 143.75,-18 133.75,-14.5 133.75,-21.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<div class="cell quarto-layout-cell" data-fig-width="3" style="flex-basis: 33.3%;justify-content: center;">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="288" height="182" viewbox="0.00 0.00 206.00 130.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 126)">
+<title>
+box2
+</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-126 202,-126 202,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="start" x="18.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="27.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="126,-36 72,-36 72,0 126,0 126,-36"></polygon> <text text-anchor="start" x="90.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="99.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text> </g> <!-- X3 --> <g id="node3" class="node">
+<title>
+X3
+</title>
+<polygon fill="none" stroke="black" points="198,-36 144,-36 144,0 198,0 198,-36"></polygon> <text text-anchor="start" x="162.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="171.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text> </g> <!-- U1 --> <g id="node4" class="node">
+<title>
+U1
+</title>
+<polygon fill="none" stroke="black" points="126,-122 72,-122 72,-86 126,-86 126,-122"></polygon> <text text-anchor="start" x="90.05" y="-100.8" font-family="Helvetica,sans-Serif" font-size="14.00">U</text> <text text-anchor="start" x="100.16" y="-100.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text> </g> <!-- U1&#45;&gt;X1 --> <g id="edge1" class="edge">
+<title>
+U1-&gt;X1
+</title>
+<path fill="none" stroke="black" d="M84.08,-85.6C73.78,-73.58 59.92,-57.41 48.44,-44.02"></path> <polygon fill="black" stroke="black" points="50.82,-41.41 41.65,-36.1 45.5,-45.97 50.82,-41.41"></polygon> </g> <!-- U1&#45;&gt;X2 --> <g id="edge2" class="edge">
+<title>
+U1-&gt;X2
+</title>
+<path fill="none" stroke="black" d="M99,-85.6C99,-74.26 99,-59.23 99,-46.32"></path> <polygon fill="black" stroke="black" points="102.5,-46.1 99,-36.1 95.5,-46.1 102.5,-46.1"></polygon> </g> <!-- U1&#45;&gt;X3 --> <g id="edge3" class="edge">
+<title>
+U1-&gt;X3
+</title>
+<path fill="none" stroke="black" d="M113.92,-85.6C124.22,-73.58 138.08,-57.41 149.56,-44.02"></path> <polygon fill="black" stroke="black" points="152.5,-45.97 156.35,-36.1 147.18,-41.41 152.5,-45.97"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<div class="cell quarto-layout-cell" data-fig-width="3" style="flex-basis: 33.3%;justify-content: center;">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="288" height="162" viewbox="0.00 0.00 206.00 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-112 202,-112 202,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="start" x="18.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="27.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="126,-36 72,-36 72,0 126,0 126,-36"></polygon> <text text-anchor="start" x="90.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="99.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge3" class="edge">
+<title>
+X1-&gt;X2
+</title>
+<path fill="none" stroke="black" d="M54.22,-18C56.64,-18 59.11,-18 61.6,-18"></path> <polygon fill="black" stroke="black" points="61.74,-21.5 71.74,-18 61.74,-14.5 61.74,-21.5"></polygon> </g> <!-- X3 --> <g id="node3" class="node">
+<title>
+X3
+</title>
+<polygon fill="none" stroke="black" points="198,-36 144,-36 144,0 198,0 198,-36"></polygon> <text text-anchor="start" x="162.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> <text text-anchor="start" x="171.78" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text> </g> <!-- X3&#45;&gt;X2 --> <g id="edge4" class="edge">
+<title>
+X3-&gt;X2
+</title>
+<path fill="none" stroke="black" d="M143.78,-18C141.36,-18 138.89,-18 136.4,-18"></path> <polygon fill="black" stroke="black" points="136.26,-14.5 126.26,-18 136.26,-21.5 136.26,-14.5"></polygon> </g> <!-- U1 --> <g id="node4" class="node">
+<title>
+U1
+</title>
+<polygon fill="none" stroke="black" points="126,-108 72,-108 72,-72 126,-72 126,-108"></polygon> <text text-anchor="start" x="90.05" y="-86.8" font-family="Helvetica,sans-Serif" font-size="14.00">U</text> <text text-anchor="start" x="100.16" y="-86.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text> </g> <!-- U1&#45;&gt;X1 --> <g id="edge1" class="edge">
+<title>
+U1-&gt;X1
+</title>
+<path fill="none" stroke="black" d="M80.83,-71.83C72.28,-63.28 61.94,-52.94 52.62,-43.62"></path> <polygon fill="black" stroke="black" points="54.96,-41.01 45.41,-36.41 50.01,-45.96 54.96,-41.01"></polygon> </g> <!-- U1&#45;&gt;X3 --> <g id="edge2" class="edge">
+<title>
+U1-&gt;X3
+</title>
+<path fill="none" stroke="black" d="M117.17,-71.83C125.72,-63.28 136.06,-52.94 145.38,-43.62"></path> <polygon fill="black" stroke="black" points="147.99,-45.96 152.59,-36.41 143.04,-41.01 147.99,-45.96"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="motivations-to-use-sem" class="slide level2">
+<h2>Motivations to use SEM:</h2>
+<div>
+<ol type="1">
+<li class="fragment">Driver-focused: Understand which drivers influence a system</li>
+<li class="fragment">Response-focused: Understand and explain a particular property of a system<br>
+</li>
+<li class="fragment">Mediation-focused: Understand causal pathways<br>
+</li>
+<li class="fragment">Theory-focused: Evaluate available theory</li>
+</ol>
+</div>
+</section>
+<section id="explanatory-modelling-with-sem" class="slide level2">
+<h2>Explanatory modelling with SEM</h2>
+<p><img data-src="images/Explanatory_modelling.png" style="width:60.0%"></p>
+
+<aside><div>
+<p><span style="font-size: 5mm; text-align: center">Grace, James B., and Kathryn M. Irvine. 2020. “Scientist’s Guide to Developing Explanatory Statistical Models Using Causal Analysis Principles.” Ecology 101 (4): e02962.</span></p>
+</div></aside></section>
+<section id="sem-modelling-philosophy" class="slide level2">
+<h2>SEM modelling philosophy</h2>
+<div>
+<ul>
+<li class="fragment">A SEM should be specified based on prior evidence / theory (i.e., a meta-model).</li>
+<li class="fragment">Each path requires justification.</li>
+<li class="fragment">Continuum between theory (hypothesis-driven) to exploratory (data-driven) modelling.</li>
+<li class="fragment">Causal diagram to specify relationships of actual variables (using meta-model).</li>
+</ul>
+</div>
+</section>
+<section id="causal-diagram" class="slide level2">
+<h2>Causal diagram</h2>
+<div>
+<ul>
+<li class="fragment">Graph specifying putative cause-effect relationships.</li>
+<li class="fragment">Data-generating mechanisms leading to a set of observational expectations.</li>
+<li class="fragment">Causal diagrams are based on directed acyclic graphs (DAGs).</li>
+</ul>
+</div>
+</section>
+<section id="directed-acyclic-graphs" class="slide level2 smaller">
+<h2>Directed acyclic graphs</h2>
+<div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment">Variables are nodes (boxes).</li>
+<li class="fragment">Edges (one-headed arrows) are causal relationships such as X affects Y.<br>
+</li>
+<li class="fragment">Directed = unidirectional.<br>
+</li>
+<li class="fragment">Edges can have any functional shape.</li>
+<li class="fragment">Acyclic = no causal loops permitted.<br>
+</li>
+<li class="fragment">Omitted links and nodes have empirical implications (= assumptions about the causal diagram)</li>
+<li class="fragment">U variables represent unmeasured causes.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-fig-width="4">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="384" height="619" viewbox="0.00 0.00 206.00 332.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 328)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-328 202,-328 202,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<title>
+X
+</title>
+<polygon fill="none" stroke="black" points="126,-252 72,-252 72,-216 126,-216 126,-252"></polygon> <text text-anchor="middle" x="99" y="-229.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> </g> <!-- W --> <g id="node3" class="node">
+<title>
+W
+</title>
+<polygon fill="none" stroke="black" points="162,-180 108,-180 108,-144 162,-144 162,-180"></polygon> <text text-anchor="middle" x="135" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">W</text> </g> <!-- X&#45;&gt;W --> <g id="edge1" class="edge">
+<title>
+X-&gt;W
+</title>
+<path fill="none" stroke="black" d="M107.9,-215.7C112,-207.73 116.95,-198.1 121.49,-189.26"></path> <polygon fill="black" stroke="black" points="124.74,-190.6 126.2,-180.1 118.52,-187.4 124.74,-190.6"></polygon> </g> <!-- Z --> <g id="node4" class="node">
+<title>
+Z
+</title>
+<polygon fill="none" stroke="black" points="90,-180 36,-180 36,-144 90,-144 90,-180"></polygon> <text text-anchor="middle" x="63" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">Z</text> </g> <!-- X&#45;&gt;Z --> <g id="edge2" class="edge">
+<title>
+X-&gt;Z
+</title>
+<path fill="none" stroke="black" d="M90.1,-215.7C86,-207.73 81.05,-198.1 76.51,-189.26"></path> <polygon fill="black" stroke="black" points="79.48,-187.4 71.8,-180.1 73.26,-190.6 79.48,-187.4"></polygon> </g> <!-- Y --> <g id="node2" class="node">
+<title>
+Y
+</title>
+<polygon fill="none" stroke="black" points="126,-108 72,-108 72,-72 126,-72 126,-108"></polygon> <text text-anchor="middle" x="99" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text> </g> <!-- W&#45;&gt;Y --> <g id="edge3" class="edge">
+<title>
+W-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M126.1,-143.7C122,-135.73 117.05,-126.1 112.51,-117.26"></path> <polygon fill="black" stroke="black" points="115.48,-115.4 107.8,-108.1 109.26,-118.6 115.48,-115.4"></polygon> </g> <!-- Z&#45;&gt;Y --> <g id="edge4" class="edge">
+<title>
+Z-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M71.9,-143.7C76,-135.73 80.95,-126.1 85.49,-117.26"></path> <polygon fill="black" stroke="black" points="88.74,-118.6 90.2,-108.1 82.52,-115.4 88.74,-118.6"></polygon> </g> <!-- U_w --> <g id="node5" class="node">
+<title>
+U_w
+</title>
+<text text-anchor="start" x="160.89" y="-230.8" font-family="Helvetica,sans-Serif" font-size="14.00">U</text> <text text-anchor="start" x="171" y="-230.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">w</text> </g> <!-- U_w&#45;&gt;W --> <g id="edge5" class="edge">
+<title>
+U_w-&gt;W
+</title>
+<path fill="none" stroke="black" d="M162.1,-215.7C158,-207.73 153.05,-198.1 148.51,-189.26"></path> <polygon fill="black" stroke="black" points="151.48,-187.4 143.8,-180.1 145.26,-190.6 151.48,-187.4"></polygon> </g> <!-- U_x --> <g id="node6" class="node">
+<title>
+U_x
+</title>
+<text text-anchor="start" x="90.44" y="-302.8" font-family="Helvetica,sans-Serif" font-size="14.00">U</text> <text text-anchor="start" x="100.56" y="-302.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">x</text> </g> <!-- U_x&#45;&gt;X --> <g id="edge6" class="edge">
+<title>
+U_x-&gt;X
+</title>
+<path fill="none" stroke="black" d="M99,-287.7C99,-279.98 99,-270.71 99,-262.11"></path> <polygon fill="black" stroke="black" points="102.5,-262.1 99,-252.1 95.5,-262.1 102.5,-262.1"></polygon> </g> <!-- U_y --> <g id="node7" class="node">
+<title>
+U_y
+</title>
+<text text-anchor="start" x="90.44" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">U</text> <text text-anchor="start" x="100.56" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">y</text> </g> <!-- U_y&#45;&gt;Y --> <g id="edge7" class="edge">
+<title>
+U_y-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M99,-36.1C99,-43.79 99,-53.05 99,-61.67"></path> <polygon fill="black" stroke="black" points="95.5,-61.7 99,-71.7 102.5,-61.7 95.5,-61.7"></polygon> </g> <!-- U_z --> <g id="node8" class="node">
+<title>
+U_z
+</title>
+<text text-anchor="start" x="18.44" y="-230.8" font-family="Helvetica,sans-Serif" font-size="14.00">U</text> <text text-anchor="start" x="28.56" y="-230.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">z</text> </g> <!-- U_z&#45;&gt;Z --> <g id="edge8" class="edge">
+<title>
+U_z-&gt;Z
+</title>
+<path fill="none" stroke="black" d="M35.9,-215.7C40,-207.73 44.95,-198.1 49.49,-189.26"></path> <polygon fill="black" stroke="black" points="52.74,-190.6 54.2,-180.1 46.52,-187.4 52.74,-190.6"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Explain the concept and discuss with students the topic.</li>
+<li>Show the difference between direct effects and correlation together with the graphical representation.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section id="questions" class="title-slide slide level1 center">
+<h1>Questions?</h1>
+
+</section>
+
+<section>
+<section id="introduction-to-the-dataset" class="title-slide slide level1 center">
+<h1>Introduction to the dataset</h1>
+
+</section>
+<section id="introduction-to-the-dataset-1" class="slide level2">
+<h2>Introduction to the dataset</h2>
+
+<img data-src="images/CedarCreek.jpg" class="r-stretch"><ul>
+<li>Experimental grassland dataset</li>
+<li>Long-term consequences of human-driven environmental changes ecosystem responses to:
+<ul>
+<li>Disturbance<br>
+</li>
+<li>Nitrogen deposition<br>
+</li>
+<li>Changes in precipitation</li>
+</ul></li>
+</ul>
+</section>
+<section id="introduction-to-the-dataset-2" class="slide level2">
+<h2>Introduction to the dataset</h2>
+<p>Potential Research questions:</p>
+<ol type="1">
+<li>How has aboveground biomass changed as a function of disturbance (disking) and nutrient addition?</li>
+<li>How are these effects mediated by biodiversity?</li>
+</ol>
+</section>
+<section id="introduction-to-the-dataset-3" class="slide level2">
+<h2>Introduction to the dataset</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="images/CedarCreek_map.png" style="width:100.0%"></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Location of the study site (Cedar Creek Ecosystem Science Reserve)</li>
+<li>Design:
+<ul>
+<li>location of the three study fields within the reserve</li>
+<li>location of the 35 x 55 m intact (black) and disturbed (red) plots within each field.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="introduction-to-the-dataset-4" class="slide level2 smaller">
+<h2>Introduction to the dataset</h2>
+
+<img data-src="images/CedarCreek_exp_design.png" class="relative r-stretch" data-right="200" width="700"><ul>
+<li>4 x 4 m nutrient treatment plots within each 35 x 55 m Intact or Disturbed plot (within fields A-C).</li>
+<li>Letters indicate the nutrient treatments.</li>
+</ul>
+</section>
+<section id="introduction-to-the-dataset-5" class="slide level2 smaller">
+<h2>Introduction to the dataset</h2>
+
+<img data-src="images/AGB_disturbance.png" class="r-stretch"><ul>
+<li>Effect of soil disturbance (disking) and nutrient enrichment on aboveground plant biomass.</li>
+<li>Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).</li>
+</ul>
+</section>
+<section id="introduction-to-the-dataset-6" class="slide level2 smaller">
+<h2>Introduction to the dataset</h2>
+
+<img data-src="images/AGB_diversity.png" class="relative r-stretch" data-right="200" width="700"><ul>
+<li>Effect of soil disturbance (disking) and nutrient enrichment on:
+<ol type="a">
+<li>diversity (ENSPIE)</li>
+<li>richness (S, species 0.3 m−2)</li>
+<li>evenness (ENSPIE S−1)</li>
+</ol></li>
+</ul>
+</section>
+<section id="question-of-interest-what-is-the-effect-of-richness-on-biomass" class="slide level2">
+<h2>Question of interest: what is the effect of richness on biomass?</h2>
+<div class="cell" data-fig-width="8">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="768" height="171" viewbox="0.00 0.00 198.16 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-40 194.16,-40 194.16,4 -4,4"></polygon> <!-- biodiversity --> <g id="node1" class="node">
+<title>
+biodiversity
+</title>
+<polygon fill="none" stroke="black" points="86.04,-36 -0.01,-36 -0.01,0 86.04,0 86.04,-36"></polygon> <text text-anchor="middle" x="43.01" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biodiversity</text> </g> <!-- biomass --> <g id="node2" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="black" points="190.22,-36 121.96,-36 121.96,0 190.22,0 190.22,-36"></polygon> <text text-anchor="middle" x="156.09" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- biodiversity&#45;&gt;biomass --> <g id="edge1" class="edge">
+<title>
+biodiversity-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M86.23,-18C96.8,-18 104.87,-18 111.6,-18"></path> <polygon fill="black" stroke="black" points="111.85,-21.5 121.85,-18 111.85,-14.5 111.85,-21.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Ask students about how they would address this question.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="meta-model" class="slide level2 smaller">
+<h2>Meta-model</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="366" viewbox="0.00 0.00 344.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust2" class="cluster">
+<title>
+cluster_env
+</title>
+<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <g id="clust3" class="cluster">
+<title>
+cluster_prod
+</title>
+<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <g id="clust1" class="cluster">
+<title>
+cluster_bio
+</title>
+<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biotic</text> </g> <!-- evenness --> <g id="node1" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="black" points="216.27,-175 140.41,-175 140.41,-139 216.27,-139 216.27,-175"></polygon> <text text-anchor="middle" x="178.34" y="-152.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- biomass --> <g id="node5" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="black" points="320.51,-98 252.24,-98 252.24,-62 320.51,-62 320.51,-98"></polygon> <text text-anchor="middle" x="286.38" y="-75.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge5" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M216.57,-140.89C245.78,-128.1 257.11,-120.86 268.52,-106.35"></path> <polygon fill="black" stroke="black" points="271.52,-108.17 274.59,-98.03 265.87,-104.04 271.52,-108.17"></polygon> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="black" points="212.48,-121 144.21,-121 144.21,-85 212.48,-85 212.48,-121"></polygon> <text text-anchor="middle" x="178.34" y="-98.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- richness&#45;&gt;biomass --> <g id="edge6" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M212.7,-95.63C225.36,-92.92 234.66,-90.93 242.2,-89.32"></path> <polygon fill="black" stroke="black" points="243.1,-92.71 252.15,-87.2 241.64,-85.86 243.1,-92.71"></polygon> </g> <!-- nutrients --> <g id="node3" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="black" points="94.89,-106 25.49,-106 25.49,-70 94.89,-70 94.89,-106"></polygon> <text text-anchor="middle" x="60.19" y="-83.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M74.38,-106.19C89.66,-124.8 99.96,-131.87 130.69,-142.23"></path> <polygon fill="black" stroke="black" points="129.81,-145.63 140.41,-145.41 131.99,-138.97 129.81,-145.63"></polygon> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M94.9,-91.09C104.38,-92.19 115.62,-93.74 134.01,-96.43"></path> <polygon fill="black" stroke="black" points="133.57,-99.9 143.98,-97.9 134.59,-92.98 133.57,-99.9"></polygon> </g> <!-- nutrients&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+nutrients-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M95.11,-74.5C168.1,-46.72 188.05,-44.04 242.56,-63.36"></path> <polygon fill="black" stroke="black" points="241.41,-66.66 252,-66.79 243.8,-60.08 241.41,-66.66"></polygon> </g> <!-- disturbance --> <g id="node4" class="node">
+<title>
+disturbance
+</title>
+<polygon fill="none" stroke="black" points="104.57,-52 15.81,-52 15.81,-16 104.57,-16 104.57,-52"></polygon> <text text-anchor="middle" x="60.19" y="-29.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- disturbance&#45;&gt;biomass --> <g id="edge4" class="edge">
+<title>
+disturbance-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M104.6,-25.64C168.74,-14.53 188.16,-18.94 248.88,-56.36"></path> <polygon fill="black" stroke="black" points="247.39,-59.56 257.73,-61.86 251.09,-53.61 247.39,-59.56"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<p>Meta-model are conceptual models that allow to link data with theory.</p>
+<div>
+<ol type="1">
+<li class="fragment">Productivity (biomass) is directly influenced by the environment (nutrients and disturbance)</li>
+<li class="fragment">Productivity (biomass) is directly influenced by biodiversity (richness and evenness).</li>
+<li class="fragment">The environment also influences biodiversity and thus, have an indirect effect on productivity via biodiversity.</li>
+</ol>
+</div>
+<aside class="notes">
+<ul>
+<li>Ask students about how they would address this question.</li>
+<li>Thinking about what is missing in the model, measurement errors etc.</li>
+<li>Present the concept of meta-model and impications for research.</li>
+<li>Include a graphical representation of the meta-model as what is missing in the model.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="exercise" class="slide level2">
+<h2>Exercise:</h2>
+<ul>
+<li>Draw a meta-model of the dataset you want to understand.</li>
+<li>Make a table with putative causal relationships.</li>
+</ul>
+</section>
+<section id="a-simple-bivariate-model." class="slide level2">
+<h2>A simple bivariate model.</h2>
+<div class="cell" data-fig-width="4">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="384" height="91" viewbox="0.00 0.00 185.81 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-40 181.81,-40 181.81,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="91.74,-36 -0.25,-36 -0.25,0 91.74,0 91.74,-36"></polygon> <text text-anchor="middle" x="45.74" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">precipitation</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="177.88,-36 109.61,-36 109.61,0 177.88,0 177.88,-36"></polygon> <text text-anchor="middle" x="143.74" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge1" class="edge">
+<title>
+X1-&gt;X2
+</title>
+<path fill="none" stroke="black" d="M91.68,-18C94.29,-18 96.9,-18 99.51,-18"></path> <polygon fill="black" stroke="black" points="99.58,-21.5 109.58,-18 99.58,-14.5 99.58,-21.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<div>
+<ul>
+<li class="fragment"><code>lm(biomass ~ precipitation)</code></li>
+<li class="fragment">Linear regression<br>
+</li>
+<li class="fragment">Regression coefficient quantifies the strength of relationship<br>
+</li>
+<li class="fragment">Change in Y for one unit change in X</li>
+</ul>
+</div>
+</section>
+<section id="multiple-independent-variables" class="slide level2 smaller">
+<h2>Multiple independent variables</h2>
+<div class="cell" data-fig-width="4">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="384" height="377" viewbox="0.00 0.00 264.54 260.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-256 260.54,-256 260.54,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="113.17,-252 43.78,-252 43.78,-216 113.17,-216 113.17,-252"></polygon> <text text-anchor="middle" x="78.48" y="-229.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="124.47,-180 32.49,-180 32.49,-144 124.47,-144 124.47,-180"></polygon> <text text-anchor="middle" x="78.48" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">precipitation</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge5" class="edge">
+<title>
+X1:w-&gt;X2:w
+</title>
+<path fill="none" stroke="black" d="M38.17,-225.5C27.13,-207.45 26.64,-202.12 30.98,-172.14"></path> <polygon fill="black" stroke="black" points="35.21,-227.38 43.48,-234 41.14,-223.67 35.21,-227.38"></polygon> <polygon fill="black" stroke="black" points="34.48,-172.4 32.48,-162 27.55,-171.38 34.48,-172.4"></polygon> </g> <!-- X3 --> <g id="node3" class="node">
+<title>
+X3
+</title>
+<polygon fill="none" stroke="black" points="112.61,-108 44.35,-108 44.35,-72 112.61,-72 112.61,-108"></polygon> <text text-anchor="middle" x="78.48" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- X1&#45;&gt;X3 --> <g id="edge7" class="edge">
+<title>
+X1:w-&gt;X3:w
+</title>
+<path fill="none" stroke="black" d="M39.5,-224.67C17.98,-173.96 18.31,-168.03 41.25,-99.6"></path> <polygon fill="black" stroke="black" points="36.33,-226.17 43.48,-234 42.77,-223.43 36.33,-226.17"></polygon> <polygon fill="black" stroke="black" points="44.61,-100.59 44.48,-90 37.98,-98.37 44.61,-100.59"></polygon> </g> <!-- X4 --> <g id="node4" class="node">
+<title>
+X4
+</title>
+<polygon fill="none" stroke="black" points="116.41,-36 40.55,-36 40.55,0 116.41,0 116.41,-36"></polygon> <text text-anchor="middle" x="78.48" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- X1&#45;&gt;X4 --> <g id="edge8" class="edge">
+<title>
+X1:w-&gt;X4:w
+</title>
+<path fill="none" stroke="black" d="M39.54,-224.48C0.08,-128.98 0,-123.02 36.8,-27.53"></path> <polygon fill="black" stroke="black" points="36.42,-226.1 43.48,-234 42.89,-223.42 36.42,-226.1"></polygon> <polygon fill="black" stroke="black" points="40.14,-28.59 40.48,-18 33.61,-26.07 40.14,-28.59"></polygon> </g> <!-- Y --> <g id="node5" class="node">
+<title>
+Y
+</title>
+<polygon fill="none" stroke="black" points="256.61,-144 188.35,-144 188.35,-108 256.61,-108 256.61,-144"></polygon> <text text-anchor="middle" x="222.48" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
+<title>
+X1-&gt;Y:w
+</title>
+<path fill="none" stroke="black" d="M113.27,-218.2C136.57,-205.3 147.45,-189.52 183.04,-134.42"></path> <polygon fill="black" stroke="black" points="185.99,-136.3 188.48,-126 180.11,-132.5 185.99,-136.3"></polygon> </g> <!-- X2&#45;&gt;X3 --> <g id="edge6" class="edge">
+<title>
+X2:w-&gt;X3:w
+</title>
+<path fill="none" stroke="black" d="M30.14,-152.07C24.68,-128.21 25.68,-123.21 39.52,-98.69"></path> <polygon fill="black" stroke="black" points="26.78,-153.07 32.48,-162 33.59,-151.46 26.78,-153.07"></polygon> <polygon fill="black" stroke="black" points="42.57,-100.42 44.48,-90 36.48,-96.96 42.57,-100.42"></polygon> </g> <!-- X2&#45;&gt;X4 --> <g id="edge9" class="edge">
+<title>
+X2:w-&gt;X4:w
+</title>
+<path fill="none" stroke="black" d="M29.76,-152.3C10.61,-83.78 10.65,-77.86 35.85,-27.25"></path> <polygon fill="black" stroke="black" points="26.41,-153.32 32.48,-162 33.15,-151.43 26.41,-153.32"></polygon> <polygon fill="black" stroke="black" points="39.13,-28.51 40.48,-18 32.87,-25.38 39.13,-28.51"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
+<title>
+X2-&gt;Y:w
+</title>
+<path fill="none" stroke="black" d="M124.4,-163.58C140.68,-161.21 152.86,-152.85 180.31,-132.17"></path> <polygon fill="black" stroke="black" points="182.61,-134.82 188.48,-126 178.39,-129.23 182.61,-134.82"></polygon> </g> <!-- X3&#45;&gt;X4 --> <g id="edge10" class="edge">
+<title>
+X3:w-&gt;X4:w
+</title>
+<path fill="none" stroke="black" d="M41.6,-80.25C32.78,-50.11 31.96,-44.23 37.2,-27.76"></path> <polygon fill="black" stroke="black" points="38.29,-81.4 44.48,-90 45.01,-79.42 38.29,-81.4"></polygon> <polygon fill="black" stroke="black" points="40.61,-28.59 40.48,-18 33.97,-26.36 40.61,-28.59"></polygon> </g> <!-- X3&#45;&gt;Y --> <g id="edge3" class="edge">
+<title>
+X3-&gt;Y:w
+</title>
+<path fill="none" stroke="black" d="M112.68,-87.67C136.03,-87.68 146.76,-94.55 180.43,-119.92"></path> <polygon fill="black" stroke="black" points="178.39,-122.77 188.48,-126 182.61,-117.18 178.39,-122.77"></polygon> </g> <!-- X4&#45;&gt;Y --> <g id="edge4" class="edge">
+<title>
+X4-&gt;Y:w
+</title>
+<path fill="none" stroke="black" d="M116.71,-35.78C137.7,-48.37 149.21,-65.2 182.88,-117.33"></path> <polygon fill="black" stroke="black" points="180.11,-119.5 188.48,-126 185.99,-115.7 180.11,-119.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<div>
+<ul>
+<li class="fragment"><code>lm(biomass ~ precipitation + nutrients + ...)</code></li>
+<li class="fragment">More than one independent variable = multiple regression<br>
+</li>
+<li class="fragment">Estimates partial effects (i.e.&nbsp;effect of precipitation on biomass when nutrient addition is fixed)<br>
+</li>
+<li class="fragment">Only direct effects.</li>
+</ul>
+</div>
+<!-- - Discuss with students other variables that may affect B.   -->
+<!-- - Introduce a new variable and the question that it answers.  -->
+<!-- - Add nutrient variable.  -->
+<!-- - Show the graphical model (X1 -> Y, X2 -> Y).  -->
+<!-- - Include the equation and the two partial plots.  -->
+<!-- - Be clear this is a multiple regression model.  -->
+</section>
+<section id="multiple-independent-and-dependent-variables" class="slide level2 smaller">
+<h2>Multiple independent and dependent variables</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="206" viewbox="0.00 0.00 330.76 118.33" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 114.33)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-114.33 326.76,-114.33 326.76,4 -4,4"></polygon> <!-- nutrients --> <g id="node1" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="black" points="69.55,-56.33 0.15,-56.33 0.15,-20.33 69.55,-20.33 69.55,-56.33"></polygon> <text text-anchor="middle" x="34.85" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- evenness --> <g id="node2" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="black" points="218.59,-110.33 142.73,-110.33 142.73,-74.33 218.59,-74.33 218.59,-110.33"></polygon> <text text-anchor="middle" x="180.66" y="-88.13" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M64.5,-56.47C80.06,-64.72 95.88,-69.93 132.68,-79.77"></path> <polygon fill="black" stroke="black" points="131.93,-83.19 142.5,-82.38 133.73,-76.43 131.93,-83.19"></polygon> </g> <!-- richness --> <g id="node3" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="black" points="214.79,-56.33 146.53,-56.33 146.53,-20.33 214.79,-20.33 214.79,-56.33"></polygon> <text text-anchor="middle" x="180.66" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M69.87,-29.82C85.94,-27.39 101.83,-28.3 136.33,-32.56"></path> <polygon fill="black" stroke="black" points="136.22,-36.08 146.57,-33.86 137.09,-29.13 136.22,-36.08"></polygon> </g> <!-- biomass --> <g id="node4" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="black" points="322.82,-56.33 254.56,-56.33 254.56,-20.33 322.82,-20.33 322.82,-56.33"></polygon> <text text-anchor="middle" x="288.69" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- nutrients&#45;&gt;biomass --> <g id="edge5" class="edge">
+<title>
+nutrients-&gt;biomass
+</title>
+<path fill="none" stroke="red" d="M69.75,-24.55C150.14,6.63 170.15,7.8 245.17,-21.05"></path> <polygon fill="red" stroke="red" points="244.01,-24.35 254.6,-24.72 246.55,-17.83 244.01,-24.35"></polygon> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M218.63,-79.09C238.26,-72.06 249.64,-67.4 258.74,-62.14"></path> <polygon fill="black" stroke="black" points="260.84,-64.95 267.3,-56.55 257.02,-59.08 260.84,-64.95"></polygon> </g> <!-- richness&#45;&gt;biomass --> <g id="edge4" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M214.74,-34.97C227.54,-33.78 236.87,-33.06 244.46,-32.82"></path> <polygon fill="black" stroke="black" points="244.55,-36.32 254.54,-32.81 244.54,-29.32 244.55,-36.32"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<p><code>lm(richness ~ nutrients)</code><br>
+<code>lm(evenness ~ nutrients)</code><br>
+<code>lm(biomass ~ richness + evenness + nutrients)</code><br>
+</p>
+<div>
+<ul>
+<li class="fragment">Exogenous variables: only have paths emanating from them, not going into them.<br>
+</li>
+<li class="fragment">Endogenous variables have paths directed into them.
+<ul>
+<li class="fragment">An endogenous variable can also have arrows directing out of it.<br>
+</li>
+<li class="fragment">Endogenous variables must be predicted.<br>
+</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="multiple-independent-and-dependent-variables-1" class="slide level2 smaller">
+<h2>Multiple independent and dependent variables</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="206" viewbox="0.00 0.00 330.76 118.33" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 114.33)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-114.33 326.76,-114.33 326.76,4 -4,4"></polygon> <!-- nutrients --> <g id="node1" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="black" points="69.55,-56.33 0.15,-56.33 0.15,-20.33 69.55,-20.33 69.55,-56.33"></polygon> <text text-anchor="middle" x="34.85" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- evenness --> <g id="node2" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="black" points="218.59,-110.33 142.73,-110.33 142.73,-74.33 218.59,-74.33 218.59,-110.33"></polygon> <text text-anchor="middle" x="180.66" y="-88.13" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M64.5,-56.47C80.06,-64.72 95.88,-69.93 132.68,-79.77"></path> <polygon fill="black" stroke="black" points="131.93,-83.19 142.5,-82.38 133.73,-76.43 131.93,-83.19"></polygon> </g> <!-- richness --> <g id="node3" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="black" points="214.79,-56.33 146.53,-56.33 146.53,-20.33 214.79,-20.33 214.79,-56.33"></polygon> <text text-anchor="middle" x="180.66" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M69.87,-29.82C85.94,-27.39 101.83,-28.3 136.33,-32.56"></path> <polygon fill="black" stroke="black" points="136.22,-36.08 146.57,-33.86 137.09,-29.13 136.22,-36.08"></polygon> </g> <!-- biomass --> <g id="node4" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="black" points="322.82,-56.33 254.56,-56.33 254.56,-20.33 322.82,-20.33 322.82,-56.33"></polygon> <text text-anchor="middle" x="288.69" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- nutrients&#45;&gt;biomass --> <g id="edge5" class="edge">
+<title>
+nutrients-&gt;biomass
+</title>
+<path fill="none" stroke="red" d="M69.75,-24.55C150.14,6.63 170.15,7.8 245.17,-21.05"></path> <polygon fill="red" stroke="red" points="244.01,-24.35 254.6,-24.72 246.55,-17.83 244.01,-24.35"></polygon> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M218.63,-79.09C238.26,-72.06 249.64,-67.4 258.74,-62.14"></path> <polygon fill="black" stroke="black" points="260.84,-64.95 267.3,-56.55 257.02,-59.08 260.84,-64.95"></polygon> </g> <!-- richness&#45;&gt;biomass --> <g id="edge4" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M214.74,-34.97C227.54,-33.78 236.87,-33.06 244.46,-32.82"></path> <polygon fill="black" stroke="black" points="244.55,-36.32 254.54,-32.81 244.54,-29.32 244.55,-36.32"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<p><code>lm(richness ~ nutrients)</code><br>
+<code>lm(evenness ~ nutrients)</code><br>
+<code>lm(biomass ~ richness + evenness + nutrients)</code><br>
+</p>
+<div>
+<ul>
+<li class="fragment">Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.<br>
+</li>
+<li class="fragment">Indirect effects can be quantified by the product of the compound path.</li>
+</ul>
+</div>
+</section>
+<section id="mediation" class="slide level2 smaller">
+<h2>Mediation</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="129" viewbox="0.00 0.00 285.96 64.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 60)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-60 281.96,-60 281.96,4 -4,4"></polygon> <text text-anchor="middle" x="138.98" y="-43" font-family="Times,serif" font-size="10.00">Full mediation</text> <!-- nutrients --> <g id="node1" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="black" points="69.55,-36 0.15,-36 0.15,0 69.55,0 69.55,-36"></polygon> <text text-anchor="middle" x="34.85" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="black" points="173.89,-36 105.63,-36 105.63,0 173.89,0 173.89,-36"></polygon> <text text-anchor="middle" x="139.76" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M69.76,-18C76.39,-18 84.29,-18 95.34,-18"></path> <polygon fill="black" stroke="black" points="95.42,-21.5 105.42,-18 95.42,-14.5 95.42,-21.5"></polygon> </g> <!-- biomass --> <g id="node3" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="black" points="278.02,-36 209.76,-36 209.76,0 278.02,0 278.02,-36"></polygon> <text text-anchor="middle" x="243.89" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- richness&#45;&gt;biomass --> <g id="edge2" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M174.05,-18C184.59,-18 192.67,-18 199.32,-18"></path> <polygon fill="black" stroke="black" points="199.37,-21.5 209.37,-18 199.37,-14.5 199.37,-21.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="203" viewbox="0.00 0.00 285.96 100.59" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 96.59)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-96.59 281.96,-96.59 281.96,4 -4,4"></polygon> <text text-anchor="middle" x="138.98" y="-79.59" font-family="Times,serif" font-size="10.00">Partial mediation</text> <!-- nutrients --> <g id="node1" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="black" points="69.55,-49.59 0.15,-49.59 0.15,-13.59 69.55,-13.59 69.55,-49.59"></polygon> <text text-anchor="middle" x="34.85" y="-27.39" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="black" points="173.89,-72.59 105.63,-72.59 105.63,-36.59 173.89,-36.59 173.89,-72.59"></polygon> <text text-anchor="middle" x="139.76" y="-50.39" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M69.68,-42.75C76.29,-44.25 84.22,-45.72 95.3,-47.56"></path> <polygon fill="black" stroke="black" points="94.96,-51.05 105.4,-49.2 96.09,-44.14 94.96,-51.05"></polygon> </g> <!-- biomass --> <g id="node3" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="black" points="278.02,-49.59 209.76,-49.59 209.76,-13.59 278.02,-13.59 278.02,-49.59"></polygon> <text text-anchor="middle" x="243.89" y="-27.39" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- nutrients&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+nutrients-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M70.02,-17.88C128.69,4.35 147.21,5.56 200.16,-14.25"></path> <polygon fill="black" stroke="black" points="199.12,-17.6 209.71,-17.9 201.62,-11.06 199.12,-17.6"></polygon> </g> <!-- richness&#45;&gt;biomass --> <g id="edge2" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M173.99,-49.18C184.67,-47.46 192.84,-46.07 199.55,-44.78"></path> <polygon fill="black" stroke="black" points="200.58,-48.14 209.66,-42.68 199.15,-41.29 200.58,-48.14"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<div>
+<ul>
+<li class="fragment">Tests whether a particular variable has a mediating effect on a path.<br>
+</li>
+<li class="fragment">Often used to test underlying mechanisms.</li>
+<li class="fragment">In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.</li>
+<li class="fragment">Possibilities: complete mediation, partial mediation, no mediation.</li>
+</ul>
+</div>
+</div>
+</section></section>
+<section>
+<section id="model-identification" class="title-slide slide level1 center">
+<h1>Model identification</h1>
+
+</section>
+<section id="model-identification-1" class="slide level2">
+<h2>Model identification</h2>
+<div>
+<ul>
+<li class="fragment">Underidentified: not enough pieces of information to identify parameters uniquely (df &lt; 0).<br>
+</li>
+<li class="fragment">Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).<br>
+</li>
+<li class="fragment">Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df &gt; 0).</li>
+</ul>
+</div>
+</section>
+<section id="model-identification-2" class="slide level2">
+<h2>Model identification</h2>
+<p>“t-rule” to quickly gauge whether a model is under-, just, or overidentified:</p>
+<p><span class="math display">\[ t \leq \frac{n (n + 1 )}{2} \]</span></p>
+<p><em>t</em> = number of unknowns (parameters to be estimated, i.e.&nbsp;variances &amp; covariances)<br>
+<em>n</em> = number of knowns (observed variables).</p>
+<p>The LHS is how many pieces of information we want to know.<br>
+RHS: information we have (number of unique cells in the observed variance-covariance matrix).</p>
+</section>
+<section id="data-requirements" class="slide level2">
+<h2>Data requirements</h2>
+<div>
+<ul>
+<li class="fragment">Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).</li>
+<li class="fragment">To estimate two relationships, at least n = 10 required to fit model.</li>
+<li class="fragment">Ideally, replication is 5-20x the number of estimated parameters.</li>
+<li class="fragment">The larger the sample size, the more precise (unbiased) are the estimates.</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="model-estimation" class="title-slide slide level1 center">
+<h1>Model estimation</h1>
+
+</section>
+<section id="how-to-estimate-sems" class="slide level2">
+<h2>How to estimate SEMs?</h2>
+<div>
+<ul>
+<li class="fragment">Structural equation modelling is a framework rather than a statistical technique.<br>
+</li>
+<li class="fragment">Different estimation procedures possible.<br>
+</li>
+<li class="fragment">Lavaan uses Maximum likelihood estimation (ML).<br>
+</li>
+<li class="fragment">Variance-covariance matrix used for global estimation of SEM, de-separation for local estimation (piecewiseSEM).<br>
+</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="global-estimation-in-a-nutshell" class="title-slide slide level1 center">
+<h1>Global estimation in a nutshell</h1>
+
+</section>
+<section id="sem-scatterplot-of-observed-variables" class="slide level2">
+<h2>SEM: scatterplot of observed variables</h2>
+
+<img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-14-1.png" style="width:90.0%" class="r-stretch quarto-figure-center"></section>
+<section id="sem-variance-covariance-matrix" class="slide level2 smaller">
+<h2>SEM: variance-covariance matrix</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">var 1</th>
+<th style="text-align: right;">var 2</th>
+<th style="text-align: right;">var 3</th>
+<th style="text-align: right;">var 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">var 1</td>
+<td style="text-align: right;">974.56969</td>
+<td style="text-align: right;">60.32800</td>
+<td style="text-align: right;">524.28441</td>
+<td style="text-align: right;">23.78134</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">var 2</td>
+<td style="text-align: right;">60.32800</td>
+<td style="text-align: right;">942.59070</td>
+<td style="text-align: right;">-71.66805</td>
+<td style="text-align: right;">547.40241</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">var 3</td>
+<td style="text-align: right;">524.28441</td>
+<td style="text-align: right;">-71.66805</td>
+<td style="text-align: right;">1140.97110</td>
+<td style="text-align: right;">40.06272</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">var 4</td>
+<td style="text-align: right;">23.78134</td>
+<td style="text-align: right;">547.40241</td>
+<td style="text-align: right;">40.06272</td>
+<td style="text-align: right;">1167.94670</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>Variances on the diagonal, covariances on the off-diagonal elements</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Variance: <span class="math inline">\(VAR_{x}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})}{N-1}\)</span>
+<ul>
+<li>Variance is the degree of spread in a set of data.</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Covariance: <span class="math inline">\(COV_{x,y}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})(y_{i}-\bar{y})}{N-1}\)</span>
+<ul>
+<li>Covariance measures how much two variables are moving together.</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="sem-correlation-matrix" class="slide level2 smaller">
+<h2>SEM: correlation matrix</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">var 1</th>
+<th style="text-align: right;">var 2</th>
+<th style="text-align: right;">var 3</th>
+<th style="text-align: right;">var 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">var 1</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0629435</td>
+<td style="text-align: right;">0.4971909</td>
+<td style="text-align: right;">0.0222904</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">var 2</td>
+<td style="text-align: right;">0.0629435</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">-0.0691077</td>
+<td style="text-align: right;">0.5217154</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">var 3</td>
+<td style="text-align: right;">0.4971909</td>
+<td style="text-align: right;">-0.0691077</td>
+<td style="text-align: right;">1.0000000</td>
+<td style="text-align: right;">0.0347050</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">var 4</td>
+<td style="text-align: right;">0.0222904</td>
+<td style="text-align: right;">0.5217154</td>
+<td style="text-align: right;">0.0347050</td>
+<td style="text-align: right;">1.0000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>Correlation: <span class="math inline">\(COR_{x,y}=\frac{COV_{x,y}}{\sigma_x*\sigma_y}\)</span>
+<ul>
+<li>Correlation matrix is standardized variance-covariance matrix</li>
+</ul></li>
+</ul>
+</section>
+<section id="graces-8-rules-of-path-coefficients" class="slide level2">
+<h2>Grace’s 8 rules of path coefficients</h2>
+<!-- https://jslefche.github.io/sem_book/global-estimation.html -->
+<ul>
+<li>The inferential heart of structural equation modeling are the model coefficients (parameters)</li>
+</ul>
+</section>
+<section id="rule-1" class="slide level2 smaller">
+<h2>Rule 1</h2>
+<blockquote>
+<p>Unspecified relationships among exogenous variables are their bivariate correlations.</p>
+</blockquote>
+<p>If there is no directed path between two exogenous variables, their relationship is their correlation</p>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="330" viewbox="0.00 0.00 171.01 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-94 167.01,-94 167.01,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<title>
+X
+</title>
+<polygon fill="none" stroke="black" points="73.01,-90 19.01,-90 19.01,-54 73.01,-54 73.01,-90"></polygon> <text text-anchor="middle" x="46.01" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> </g> <!-- Y1 --> <g id="node2" class="node">
+<title>
+Y1
+</title>
+<polygon fill="none" stroke="black" points="73.01,-36 19.01,-36 19.01,0 73.01,0 73.01,-36"></polygon> <text text-anchor="middle" x="46.01" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y1</text> </g> <!-- X&#45;&gt;Y1 --> <g id="edge3" class="edge">
+<title>
+X:w-&gt;Y1:w
+</title>
+<path fill="none" stroke="black" d="M8.42,-21.63C-2.83,-31.49 -2.8,-58.7 8.52,-68.46"></path> <polygon fill="black" stroke="black" points="9.89,-24.81 18.01,-18 7.42,-18.26 9.89,-24.81"></polygon> <polygon fill="black" stroke="black" points="7.42,-71.78 18.01,-72 9.86,-65.22 7.42,-71.78"></polygon> </g> <!-- Y2 --> <g id="node3" class="node">
+<title>
+Y2
+</title>
+<polygon fill="none" stroke="black" points="163.01,-63 109.01,-63 109.01,-27 163.01,-27 163.01,-63"></polygon> <text text-anchor="middle" x="136.01" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y2</text> </g> <!-- X&#45;&gt;Y2 --> <g id="edge1" class="edge">
+<title>
+X-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M73.41,-63.9C81.49,-61.42 90.51,-58.65 99.11,-56.01"></path> <polygon fill="black" stroke="black" points="100.39,-59.28 108.93,-53 98.34,-52.59 100.39,-59.28"></polygon> </g> <!-- Y1&#45;&gt;Y2 --> <g id="edge2" class="edge">
+<title>
+Y1-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M73.41,-26.1C81.49,-28.58 90.51,-31.35 99.11,-33.99"></path> <polygon fill="black" stroke="black" points="98.34,-37.41 108.93,-37 100.39,-30.72 98.34,-37.41"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rule-2" class="slide level2 smaller">
+<h2>Rule 2</h2>
+<blockquote>
+<p>When two variables are connected by a single path, the coefficient of that path is the regression coefficient.</p>
+</blockquote>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="78" viewbox="0.00 0.00 324.44 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-40 320.44,-40 320.44,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<title>
+X
+</title>
+<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="middle" x="27" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> </g> <!-- Y1 --> <g id="node2" class="node">
+<title>
+Y1
+</title>
+<polygon fill="none" stroke="black" points="181.72,-36 127.72,-36 127.72,0 181.72,0 181.72,-36"></polygon> <text text-anchor="middle" x="154.72" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y1</text> </g> <!-- X&#45;&gt;Y1 --> <g id="edge1" class="edge">
+<title>
+X-&gt;Y1
+</title>
+<path fill="none" stroke="black" d="M54.05,-18C72.42,-18 97.28,-18 117.57,-18"></path> <polygon fill="black" stroke="black" points="117.7,-21.5 127.7,-18 117.7,-14.5 117.7,-21.5"></polygon> <text text-anchor="start" x="72" y="-23.2" font-family="Times,serif" font-size="14.00">γ</text> <text text-anchor="start" x="79" y="-23.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y1</text> </g> <!-- Y2 --> <g id="node3" class="node">
+<title>
+Y2
+</title>
+<polygon fill="none" stroke="black" points="316.44,-36 262.44,-36 262.44,0 316.44,0 316.44,-36"></polygon> <text text-anchor="middle" x="289.44" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y2</text> </g> <!-- Y1&#45;&gt;Y2 --> <g id="edge2" class="edge">
+<title>
+Y1-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M181.94,-18C202.03,-18 229.97,-18 252.2,-18"></path> <polygon fill="black" stroke="black" points="252.27,-21.5 262.27,-18 252.27,-14.5 252.27,-21.5"></polygon> <text text-anchor="start" x="199.72" y="-23.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="206.72" y="-23.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">Y1,Y2</text> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rule-3" class="slide level2 smaller">
+<h2>Rule 3</h2>
+<blockquote>
+<p>The strength of a compound path (one that includes multiple links) is the product of the individual coefficients.</p>
+</blockquote>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="205" viewbox="0.00 0.00 248.00 88.40" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 84.4)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-84.4 244,-84.4 244,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<title>
+X
+</title>
+<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="middle" x="27" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> </g> <!-- Y1 --> <g id="node2" class="node">
+<title>
+Y1
+</title>
+<polygon fill="none" stroke="black" points="147,-36 93,-36 93,0 147,0 147,-36"></polygon> <text text-anchor="middle" x="120" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y1</text> </g> <!-- X&#45;&gt;Y1 --> <g id="edge2" class="edge">
+<title>
+X-&gt;Y1
+</title>
+<path fill="none" stroke="black" d="M54.4,-18C54.4,-18 82.8,-18 82.8,-18"></path> <polygon fill="black" stroke="black" points="82.8,-21.5 92.8,-18 82.8,-14.5 82.8,-21.5"></polygon> </g> <!-- Y2 --> <g id="node3" class="node">
+<title>
+Y2
+</title>
+<polygon fill="none" stroke="black" points="240,-36 186,-36 186,0 240,0 240,-36"></polygon> <text text-anchor="middle" x="213" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y2</text> </g> <!-- X&#45;&gt;Y2 --> <g id="edge1" class="edge">
+<title>
+X-&gt;Y2
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M27,-36.42C27,-45.28 27,-54 27,-54 27,-54 213,-54 213,-54 213,-54 213,-46.42 213,-46.42"></path> <polygon fill="black" stroke="black" points="216.5,-46.42 213,-36.42 209.5,-46.42 216.5,-46.42"></polygon> <text text-anchor="start" x="71.78" y="-59.2" font-family="Times,serif" font-size="14.00">γ</text> <text text-anchor="start" x="78.78" y="-59.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y1</text> <text text-anchor="start" x="109.5" y="-59.2" font-family="Times,serif" font-size="14.00"> * β</text> <text text-anchor="start" x="130.5" y="-59.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">Y1,Y2</text> </g> <!-- Y1&#45;&gt;Y2 --> <g id="edge3" class="edge">
+<title>
+Y1-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M147.4,-18C147.4,-18 175.8,-18 175.8,-18"></path> <polygon fill="black" stroke="black" points="175.8,-21.5 185.8,-18 175.8,-14.5 175.8,-21.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rule-4" class="slide level2 smaller">
+<h2>Rule 4</h2>
+<blockquote>
+<p>When variables are connected by more than one pathway, each pathway is the ‘partial’ regression coefficient.</p>
+</blockquote>
+<div>
+<ul>
+<li class="fragment">The partial regression coefficient accounts for influence of more than one variable on the response<br>
+</li>
+<li class="fragment">In other words, the coefficient for one predictor controls for the influence of other predictors in the model<br>
+</li>
+<li class="fragment">The coefficients of multiple regression are partial coefficients</li>
+</ul>
+</div>
+<div class="cell" data-fig-width="5">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="480" height="177" viewbox="0.00 0.00 265.72 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-94 261.72,-94 261.72,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="54,-90 0,-90 0,-54 54,-54 54,-90"></polygon> <text text-anchor="middle" x="27" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">X1</text> </g> <!-- Y --> <g id="node3" class="node">
+<title>
+Y
+</title>
+<polygon fill="none" stroke="black" points="257.72,-63 203.72,-63 203.72,-27 257.72,-27 257.72,-63"></polygon> <text text-anchor="middle" x="230.72" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
+<title>
+X1-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M54.37,-68.47C89.96,-63.71 153.5,-55.2 193.53,-49.84"></path> <polygon fill="black" stroke="black" points="194.22,-53.28 203.66,-48.49 193.29,-46.35 194.22,-53.28"></polygon> <text text-anchor="start" x="110" y="-65.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="117" y="-65.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y1</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="middle" x="27" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X2</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
+<title>
+X2-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M54.37,-21.53C89.96,-26.29 153.5,-34.8 193.53,-40.16"></path> <polygon fill="black" stroke="black" points="193.29,-43.65 203.66,-41.51 194.22,-36.72 193.29,-43.65"></polygon> <text text-anchor="start" x="110" y="-39.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="117" y="-39.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y2</text> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rule-5" class="slide level2 smaller">
+<h2>Rule 5</h2>
+<blockquote>
+<p>Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables.</p>
+</blockquote>
+<div>
+<ul>
+<li class="fragment"><span class="math inline">\(R^{2}\)</span>: ratio of explained to total variation in response (here Y1)<br>
+</li>
+<li class="fragment">Unexplained or residual variance = <span class="math inline">\(1 - R^{2}\)</span></li>
+<li class="fragment">Captures other (unknown) sources causing correlation between Y1 and other variables to deviate from 1.</li>
+<li class="fragment">In a path diagram, error variances are often represented as <span class="math inline">\(\zeta\)</span> with an arrow leading into the endogenous variable.</li>
+</ul>
+</div>
+<div class="cell" data-fig-width="5">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="480" height="234" viewbox="0.00 0.00 290.76 142.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 138)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-138 286.76,-138 286.76,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<title>
+X
+</title>
+<polygon fill="none" stroke="black" points="54,-63 0,-63 0,-27 54,-27 54,-63"></polygon> <text text-anchor="middle" x="27" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> </g> <!-- Y1 --> <g id="node2" class="node">
+<title>
+Y1
+</title>
+<polygon fill="none" stroke="black" points="144,-90 90,-90 90,-54 144,-54 144,-90"></polygon> <text text-anchor="middle" x="117" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y1</text> </g> <!-- X&#45;&gt;Y1 --> <g id="edge1" class="edge">
+<title>
+X-&gt;Y1
+</title>
+<path fill="none" stroke="black" d="M54.4,-53.1C62.48,-55.58 71.51,-58.35 80.1,-60.99"></path> <polygon fill="black" stroke="black" points="79.33,-64.41 89.92,-64 81.39,-57.72 79.33,-64.41"></polygon> </g> <!-- Y2 --> <g id="node3" class="node">
+<title>
+Y2
+</title>
+<polygon fill="none" stroke="black" points="144,-36 90,-36 90,0 144,0 144,-36"></polygon> <text text-anchor="middle" x="117" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y2</text> </g> <!-- X&#45;&gt;Y2 --> <g id="edge2" class="edge">
+<title>
+X-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M54.4,-36.9C62.48,-34.42 71.51,-31.65 80.1,-29.01"></path> <polygon fill="black" stroke="black" points="81.39,-32.28 89.92,-26 79.33,-25.59 81.39,-32.28"></polygon> </g> <!-- E3 --> <g id="node4" class="node">
+<title>
+E3
+</title>
+<polygon fill="none" stroke="black" points="282.64,-134 180.12,-134 180.12,-98 282.64,-98 282.64,-134"></polygon> <text text-anchor="start" x="188" y="-112.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ζ</text> <text text-anchor="start" x="199.67" y="-112.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">Y1</text> <text text-anchor="start" x="216.79" y="-112.8" font-family="Helvetica,sans-Serif" font-size="14.00"> = 1 - R</text> <text text-anchor="start" x="263.09" y="-112.8" font-family="Helvetica,sans-Serif" baseline-shift="super" font-size="14.00">2</text> <text text-anchor="start" x="270.87" y="-112.8" font-family="Helvetica,sans-Serif" font-size="14.00"> </text> </g> <!-- E1 --> <g id="node5" class="node">
+<title>
+E1
+</title>
+<text text-anchor="start" x="218.93" y="-68.8" font-family="Helvetica,sans-Serif" font-size="14.00">ζ</text> <text text-anchor="start" x="226.71" y="-68.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">Y1</text> </g> <!-- E1&#45;&gt;Y1 --> <g id="edge3" class="edge">
+<title>
+E1-&gt;Y1
+</title>
+<path fill="none" stroke="black" d="M218.83,-72C203.73,-72 176.57,-72 154.24,-72"></path> <polygon fill="black" stroke="black" points="154.06,-68.5 144.06,-72 154.06,-75.5 154.06,-68.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rule-6" class="slide level2 smaller">
+<h2>Rule 6</h2>
+<blockquote>
+<p>Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.</p>
+</blockquote>
+<div>
+<ul>
+<li class="fragment">Imagine we remove the path from Y to Y1<br>
+</li>
+<li class="fragment">If they were exogenous variables, the relationship would be their bivariate correlation (Rule #1)<br>
+</li>
+<li class="fragment">Here we have we have to remove the effects of X on both variables.<br>
+</li>
+<li class="fragment">These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.</li>
+</ul>
+</div>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="248" viewbox="0.00 0.00 227.79 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-94 223.79,-94 223.79,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<title>
+X
+</title>
+<polygon fill="none" stroke="black" points="54,-63 0,-63 0,-27 54,-27 54,-63"></polygon> <text text-anchor="middle" x="27" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> </g> <!-- Y1 --> <g id="node2" class="node">
+<title>
+Y1
+</title>
+<polygon fill="none" stroke="black" points="144,-90 90,-90 90,-54 144,-54 144,-90"></polygon> <text text-anchor="middle" x="117" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y1</text> </g> <!-- X&#45;&gt;Y1 --> <g id="edge1" class="edge">
+<title>
+X-&gt;Y1
+</title>
+<path fill="none" stroke="black" d="M54.4,-53.1C62.48,-55.58 71.51,-58.35 80.1,-60.99"></path> <polygon fill="black" stroke="black" points="79.33,-64.41 89.92,-64 81.39,-57.72 79.33,-64.41"></polygon> </g> <!-- Y2 --> <g id="node3" class="node">
+<title>
+Y2
+</title>
+<polygon fill="none" stroke="black" points="144,-36 90,-36 90,0 144,0 144,-36"></polygon> <text text-anchor="middle" x="117" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y2</text> </g> <!-- X&#45;&gt;Y2 --> <g id="edge2" class="edge">
+<title>
+X-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M54.4,-36.9C62.48,-34.42 71.51,-31.65 80.1,-29.01"></path> <polygon fill="black" stroke="black" points="81.39,-32.28 89.92,-26 79.33,-25.59 81.39,-32.28"></polygon> </g> <!-- E1 --> <g id="node4" class="node">
+<title>
+E1
+</title>
+<text text-anchor="start" x="180" y="-63.8" font-family="Helvetica,sans-Serif" font-size="14.00">ζ</text> <text text-anchor="start" x="187.78" y="-63.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">Y1</text> </g> <!-- E1&#45;&gt;Y1 --> <g id="edge3" class="edge">
+<title>
+E1-&gt;Y1
+</title>
+<path fill="none" stroke="black" d="M179.8,-67.79C172.84,-68.27 163.6,-68.9 154.38,-69.52"></path> <polygon fill="black" stroke="black" points="153.84,-66.05 144.1,-70.22 154.32,-73.04 153.84,-66.05"></polygon> </g> <!-- E2 --> <g id="node5" class="node">
+<title>
+E2
+</title>
+<text text-anchor="start" x="180" y="-23.8" font-family="Helvetica,sans-Serif" font-size="14.00">ζ</text> <text text-anchor="start" x="187.78" y="-23.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">Y2</text> </g> <!-- E1&#45;&gt;E2 --> <g id="edge5" class="edge">
+<title>
+E1:e-&gt;E2:e
+</title>
+<path fill="none" stroke="black" d="M215.6,-31.94C221.19,-39.65 221.18,-54.42 215.57,-62.1"></path> <polygon fill="black" stroke="black" points="216.91,-28.68 206.45,-27 213.58,-34.84 216.91,-28.68"></polygon> <polygon fill="black" stroke="black" points="213.6,-59.18 206.45,-67 216.92,-65.34 213.6,-59.18"></polygon> </g> <!-- E2&#45;&gt;Y2 --> <g id="edge4" class="edge">
+<title>
+E2-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M179.8,-25.57C172.77,-24.71 163.4,-23.56 154.08,-22.42"></path> <polygon fill="black" stroke="black" points="154.45,-18.94 144.1,-21.2 153.6,-25.89 154.45,-18.94"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rule-7" class="slide level2 smaller">
+<h2>Rule 7</h2>
+<blockquote>
+<p>The total effect one variable has on another is the sum of its direct and indirect effects.</p>
+</blockquote>
+<p><span class="math display">\[ total = \gamma_{X, Y1} + \gamma_{Y1, Y2} + \beta_{X, Y2}\]</span></p>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="118" viewbox="0.00 0.00 386.00 78.80" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 74.8)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-74.8 382,-74.8 382,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<title>
+X
+</title>
+<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="middle" x="27" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> </g> <!-- Y1 --> <g id="node2" class="node">
+<title>
+Y1
+</title>
+<polygon fill="none" stroke="black" points="216,-36 162,-36 162,0 216,0 216,-36"></polygon> <text text-anchor="middle" x="189" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y1</text> </g> <!-- X&#45;&gt;Y1 --> <g id="edge1" class="edge">
+<title>
+X-&gt;Y1
+</title>
+<path fill="none" stroke="black" d="M54.12,-18C54.12,-18 151.8,-18 151.8,-18"></path> <polygon fill="black" stroke="black" points="151.8,-21.5 161.8,-18 151.8,-14.5 151.8,-21.5"></polygon> <text text-anchor="start" x="65.24" y="-23.2" font-family="Times,serif" font-size="14.00">γ</text> <text text-anchor="start" x="72.24" y="-23.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y1</text> </g> <!-- Y2 --> <g id="node3" class="node">
+<title>
+Y2
+</title>
+<polygon fill="none" stroke="black" points="378,-36 324,-36 324,0 378,0 378,-36"></polygon> <text text-anchor="middle" x="351" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y2</text> </g> <!-- X&#45;&gt;Y2 --> <g id="edge3" class="edge">
+<title>
+X-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M27,-36.42C27,-45.28 27,-54 27,-54 27,-54 351,-54 351,-54 351,-54 351,-46.42 351,-46.42"></path> <polygon fill="black" stroke="black" points="354.5,-46.42 351,-36.42 347.5,-46.42 354.5,-46.42"></polygon> <text text-anchor="start" x="146.28" y="-59.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="153.28" y="-59.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y2</text> </g> <!-- Y1&#45;&gt;Y2 --> <g id="edge2" class="edge">
+<title>
+Y1-&gt;Y2
+</title>
+<path fill="none" stroke="black" d="M216.12,-18C216.12,-18 313.8,-18 313.8,-18"></path> <polygon fill="black" stroke="black" points="313.8,-21.5 323.8,-18 313.8,-14.5 313.8,-21.5"></polygon> <text text-anchor="start" x="220.24" y="-23.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="227.24" y="-23.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">Y1,Y2</text> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="rule-8" class="slide level2">
+<h2>Rule 8</h2>
+<blockquote>
+<p>The total effect (including undirected paths) is equivalent to the total correlation.</p>
+</blockquote>
+</section>
+<section id="regression-anatomy" class="slide level2">
+<h2>Regression anatomy</h2>
+<p><img data-src="Anatomy_linear_model.jpeg" class="absolute" style="width: 800px; "></p>
+</section></section>
+<section>
+<section id="model-evaluation" class="title-slide slide level1 center">
+<h1>Model evaluation</h1>
+
+</section>
+<section id="model-fit-measures" class="slide level2 smaller">
+<h2>Model fit measures</h2>
+<ul>
+<li><em><span class="math inline">\(\chi^2\)</span> statistic</em>
+<ul>
+<li>compare the model-implied to the observed variance-covariance</li>
+<li>good fit when failing to reject the null hypothesis that the <span class="math inline">\(\chi^2\)</span> statistic is different from 0 (P &gt; 0.05)<br>
+</li>
+<li>sample-size dependent</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><em>Comparative fit index (CFI)</em>:
+<ul>
+<li>quantifies deviation from a ‘null’ model, where variances are estimated but covariances set to 0.</li>
+<li>higher is better, &gt; 0.95 is considered good.</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Root-mean squared error of approximation (RMSEA)</em>
+<ul>
+<li>statistic penalizes models based on sample size</li>
+<li>&lt; 0.10 is acceptable, and anything &lt; 0.06 is good</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Standardized root-mean squared residual (SRMR)</em>
+<ul>
+<li>standardized difference between the observed and predicted correlations</li>
+<li>&lt; 0.08 is considered good :::</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="assumptions-of-sem-with-lavaan" class="slide level2">
+<h2>Assumptions of SEM with lavaan</h2>
+<div>
+<ul>
+<li class="fragment">(Multivariate) normality of endogenous variables</li>
+<li class="fragment">Global estimation based on variance-covariance matrix</li>
+<li class="fragment">Directed (acyclic) relationships</li>
+<li class="fragment">Linear relationships</li>
+</ul>
+</div>
+</section>
+<section id="sem-workflow-in-a-nutshell" class="slide level2 smaller">
+<h2>SEM workflow in a nutshell</h2>
+<ol type="1">
+<li>Review the relevant theory and research literature to support model specification</li>
+<li>Specify a model (e.g., diagram)</li>
+<li>Determine model identification</li>
+<li>Select measures for the variables represented in the model</li>
+<li>Collect data</li>
+<li>Conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)</li>
+<li>Estimate parameters in the model</li>
+<li>Assess model goodness-of-fit</li>
+<li>Check for missing or unnecessary links</li>
+<li>Interpret and present results visually</li>
+</ol>
+</section></section>
+<section>
+<section id="lavaan-syntax" class="title-slide slide level1 center">
+<h1>Lavaan syntax</h1>
+
+</section>
+<section id="lavaan-syntax-1" class="slide level2">
+<h2>Lavaan syntax</h2>
+<p>Define model:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>simple <span class="ot">&lt;-</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="st">"mass.above ~ nadd + rich + even + precip.mm + disk</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="st">rich ~ nadd + precip.mm</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="st">even ~ nadd + precip.mm"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Fit model:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>fit.simple <span class="ot">&lt;-</span> <span class="fu">sem</span>(simple, <span class="at">data =</span> seabloom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="lavaan-syntax-2" class="slide level2 smaller">
+<h2>Lavaan syntax</h2>
+<table>
+<colgroup>
+<col style="width: 18%">
+<col style="width: 9%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Formula type</th>
+<th style="text-align: left;">R</th>
+<th style="text-align: left;">Meaning</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">regression</td>
+<td style="text-align: left;"><code>~</code></td>
+<td style="text-align: left;">is regressed on</td>
+<td style="text-align: left;"><code>y ~ x</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">correlation</td>
+<td style="text-align: left;"><code>~~</code></td>
+<td style="text-align: left;">correlate errors for</td>
+<td style="text-align: left;"><code>y1 ~~ y2</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">latent</td>
+<td style="text-align: left;"><code>=~</code></td>
+<td style="text-align: left;">set reflective indicators</td>
+<td style="text-align: left;"><code>Height =~ y1 + y2 + y3</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">composite</td>
+<td style="text-align: left;"><code>&lt;~</code></td>
+<td style="text-align: left;">set formative indicators</td>
+<td style="text-align: left;"><code>Comp1 &lt;~ 1*x1 + x2 + x3</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">intercept</td>
+<td style="text-align: left;"><code>~ 1</code></td>
+<td style="text-align: left;">estimate mean for <code>y</code></td>
+<td style="text-align: left;"><code>y ~ 1</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">labelling</td>
+<td style="text-align: left;"><code>*</code></td>
+<td style="text-align: left;">name coefficients</td>
+<td style="text-align: left;"><code>y ~ b1*x1 + b2*x2</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">defining</td>
+<td style="text-align: left;"><code>:=</code></td>
+<td style="text-align: left;">define quantity</td>
+<td style="text-align: left;"><code>Total := b1*b3 + b2</code></td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section id="questions-1" class="title-slide slide level1 center">
+<h1>Questions?</h1>
+
+</section>
+
+<section id="live-coding-session" class="title-slide slide level1 center">
+<h1>Live coding session</h1>
+
+</section>
+
+<section>
+<section id="your-turn-working-with-the-seabloom-dataset" class="title-slide slide level1 center">
+<h1>Your turn: working with the Seabloom dataset</h1>
+
+</section>
+<section id="exercise-1" class="slide level2 smaller">
+<h2>Exercise 1</h2>
+<ul>
+<li>Exploration of dataset (variables and treatments)</li>
+<li>Check collinearity and normality</li>
+<li>Fit linear models to estimate coefficients
+<ul>
+<li>Multiple regression (direct effects of predictors on AGB)</li>
+<li>Multiple regression (indirect effects on richness and evenness)</li>
+</ul></li>
+<li>What do you conclude?</li>
+</ul>
+</section>
+<section id="exercise-2" class="slide level2 smaller">
+<h2>Exercise 2</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="278" viewbox="0.00 0.00 384.44 185.69" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 181.69)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-181.69 380.44,-181.69 380.44,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="gray" points="236.27,-177.69 160.41,-177.69 160.41,-141.69 236.27,-141.69 236.27,-177.69"></polygon> <text text-anchor="middle" x="198.34" y="-155.49" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="232.48,-87.69 164.21,-87.69 164.21,-51.69 232.48,-51.69 232.48,-87.69"></polygon> <text text-anchor="middle" x="198.34" y="-65.49" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- evenness&#45;&gt;richness --> <g id="edge4" class="edge">
+<title>
+evenness:e-&gt;richness:e
+</title>
+<path fill="none" stroke="black" d="M235.59,-79.21C248.93,-118.51 249.58,-124.23 239.94,-150.2"></path> <polygon fill="black" stroke="black" points="238.88,-78.03 232.34,-69.69 232.26,-80.28 238.88,-78.03"></polygon> <polygon fill="black" stroke="black" points="236.61,-149.1 236.34,-159.69 243.16,-151.58 236.61,-149.1"></polygon> </g> <!-- biomass --> <g id="node5" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="376.51,-87.69 308.24,-87.69 308.24,-51.69 376.51,-51.69 376.51,-87.69"></polygon> <text text-anchor="middle" x="342.38" y="-65.49" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge5" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M236.71,-146.45C288.52,-128.18 303.18,-120.11 322.69,-95.99"></path> <polygon fill="black" stroke="black" points="325.57,-98 328.95,-87.96 320.04,-93.7 325.57,-98"></polygon> </g> <!-- richness&#45;&gt;biomass --> <g id="edge6" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M232.73,-67.15C266.03,-64.74 283.85,-63.76 298.23,-64.2"></path> <polygon fill="black" stroke="black" points="298.08,-67.7 308.26,-64.78 298.48,-60.71 298.08,-67.7"></polygon> </g> <!-- nutrients --> <g id="node3" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="78.89,-136.69 9.49,-136.69 9.49,-100.69 78.89,-100.69 78.89,-136.69"></polygon> <text text-anchor="middle" x="44.19" y="-114.49" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M68.54,-136.77C91.89,-152.9 106.57,-156.79 150.29,-158.49"></path> <polygon fill="black" stroke="black" points="150.28,-161.99 160.4,-158.83 150.52,-155 150.28,-161.99"></polygon> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M79.23,-101.55C95.7,-94.71 113.72,-89.79 154.33,-80.08"></path> <polygon fill="black" stroke="black" points="155.32,-83.44 164.24,-77.72 153.7,-76.63 155.32,-83.44"></polygon> </g> <!-- disturbance --> <g id="node4" class="node">
+<title>
+disturbance
+</title>
+<polygon fill="none" stroke="gray" points="88.57,-41.69 -0.19,-41.69 -0.19,-5.69 88.57,-5.69 88.57,-41.69"></polygon> <text text-anchor="middle" x="44.19" y="-19.49" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- disturbance&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+disturbance-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M88.65,-13.28C188.56,9.39 210.61,5.89 302.48,-46.58"></path> <polygon fill="black" stroke="black" points="300.88,-49.7 311.3,-51.64 304.36,-43.63 300.88,-49.7"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Fit the above DAG to the Seabloom data:
+<ul>
+<li>Assess model goodness of fit.</li>
+<li>Investigate the modification indices. Are there paths to add that are reasonable?</li>
+<li>Check model summary.</li>
+</ul></li>
+<li>What do you conclude?</li>
+</ul>
+</section>
+<section id="exercise-3" class="slide level2 smaller">
+<h2>Exercise 3</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="225" viewbox="0.00 0.00 528.44 206.71" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 202.71)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-202.71 524.44,-202.71 524.44,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="gray" points="308.27,-198.71 232.41,-198.71 232.41,-162.71 308.27,-162.71 308.27,-198.71"></polygon> <text text-anchor="middle" x="270.34" y="-176.51" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="304.48,-108.71 236.21,-108.71 236.21,-72.71 304.48,-72.71 304.48,-108.71"></polygon> <text text-anchor="middle" x="270.34" y="-86.51" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- evenness&#45;&gt;richness --> <g id="edge4" class="edge">
+<title>
+evenness:e-&gt;richness:e
+</title>
+<path fill="none" stroke="black" d="M307.59,-100.23C320.93,-139.53 321.58,-145.25 311.94,-171.21"></path> <polygon fill="black" stroke="black" points="310.88,-99.04 304.34,-90.71 304.26,-101.3 310.88,-99.04"></polygon> <polygon fill="black" stroke="black" points="308.61,-170.12 308.34,-180.71 315.16,-172.6 308.61,-170.12"></polygon> </g> <!-- biomass --> <g id="node5" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="520.51,-108.71 452.24,-108.71 452.24,-72.71 520.51,-72.71 520.51,-108.71"></polygon> <text text-anchor="middle" x="486.38" y="-86.51" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge5" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M308.64,-171.71C401.67,-149.69 423.49,-142.44 457.47,-115.25"></path> <polygon fill="black" stroke="black" points="459.91,-117.77 465.42,-108.72 455.47,-112.36 459.91,-117.77"></polygon> </g> <!-- richness&#45;&gt;biomass --> <g id="edge6" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M304.46,-88.92C385.84,-84.69 412.92,-83.7 442.2,-85.94"></path> <polygon fill="black" stroke="black" points="442.03,-89.44 452.3,-86.83 442.64,-82.47 442.03,-89.44"></polygon> </g> <!-- nutrients --> <g id="node3" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="78.89,-157.71 9.49,-157.71 9.49,-121.71 78.89,-121.71 78.89,-157.71"></polygon> <text text-anchor="middle" x="44.19" y="-135.51" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M77.67,-157.84C114.57,-176.4 136.89,-179.2 221.98,-180.26"></path> <polygon fill="black" stroke="black" points="222.07,-183.76 232.11,-180.37 222.15,-176.76 222.07,-183.76"></polygon> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M79.1,-127.76C112.82,-116.86 137.01,-112.26 226.09,-97.84"></path> <polygon fill="black" stroke="black" points="226.77,-101.27 236.09,-96.22 225.66,-94.36 226.77,-101.27"></polygon> </g> <!-- disturbance --> <g id="node4" class="node">
+<title>
+disturbance
+</title>
+<polygon fill="none" stroke="gray" points="88.57,-62.71 -0.19,-62.71 -0.19,-26.71 88.57,-26.71 88.57,-62.71"></polygon> <text text-anchor="middle" x="44.19" y="-40.51" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- disturbance&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+disturbance-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M88.47,-32.24C261.39,15.99 286.45,13.78 443.04,-67.93"></path> <polygon fill="black" stroke="black" points="441.58,-71.12 452.06,-72.65 444.83,-64.91 441.58,-71.12"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<p>After finding a model with good fit:</p>
+<ul>
+<li>Model analysis:
+<ul>
+<li>Calculate the standardized coefficients.</li>
+<li>Add derived quantities (direct and indirect effects of nutrients and disturbance).</li>
+</ul></li>
+</ul>
+</section>
+<section id="exercise-4" class="slide level2 smaller">
+<h2>Exercise 4</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="198" viewbox="0.00 0.00 528.44 181.97" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 177.97)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-177.97 524.44,-177.97 524.44,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="gray" points="308.27,-173.97 232.41,-173.97 232.41,-137.97 308.27,-137.97 308.27,-173.97"></polygon> <text text-anchor="middle" x="270.34" y="-151.77" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="304.48,-83.97 236.21,-83.97 236.21,-47.97 304.48,-47.97 304.48,-83.97"></polygon> <text text-anchor="middle" x="270.34" y="-61.77" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- evenness&#45;&gt;richness --> <g id="edge6" class="edge">
+<title>
+evenness:e-&gt;richness:e
+</title>
+<path fill="none" stroke="black" d="M308.54,-75.44C322.94,-108.2 323.22,-113.6 311.8,-146.2"></path> <polygon fill="black" stroke="black" points="311.6,-73.69 304.34,-65.97 305.2,-76.53 311.6,-73.69"></polygon> <polygon fill="black" stroke="black" points="308.38,-145.37 308.34,-155.97 314.98,-147.71 308.38,-145.37"></polygon> </g> <!-- biomass --> <g id="node5" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="520.51,-83.97 452.24,-83.97 452.24,-47.97 520.51,-47.97 520.51,-83.97"></polygon> <text text-anchor="middle" x="486.38" y="-61.77" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge7" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M308.48,-144.86C397.56,-118.82 421.81,-110.45 452.8,-89.94"></path> <polygon fill="black" stroke="black" points="455.03,-92.65 461.32,-84.13 451.08,-86.87 455.03,-92.65"></polygon> </g> <!-- richness&#45;&gt;biomass --> <g id="edge8" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M304.72,-62.42C385.43,-54.15 411.83,-52.3 442.09,-56.87"></path> <polygon fill="black" stroke="black" points="441.68,-60.35 452.12,-58.57 442.85,-53.45 441.68,-60.35"></polygon> </g> <!-- nutrients --> <g id="node3" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="78.89,-155.97 9.49,-155.97 9.49,-119.97 78.89,-119.97 78.89,-155.97"></polygon> <text text-anchor="middle" x="44.19" y="-133.77" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M79,-149.41C114.45,-159.95 137.51,-160.77 222.26,-157.77"></path> <polygon fill="black" stroke="black" points="222.47,-161.26 232.34,-157.4 222.22,-154.27 222.47,-161.26"></polygon> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M74.3,-119.97C110,-99.69 132.41,-93.61 226.1,-74.79"></path> <polygon fill="black" stroke="black" points="226.9,-78.2 236.01,-72.8 225.52,-71.33 226.9,-78.2"></polygon> </g> <!-- disturbance --> <g id="node4" class="node">
+<title>
+disturbance
+</title>
+<polygon fill="none" stroke="gray" points="88.57,-83.97 -0.19,-83.97 -0.19,-47.97 88.57,-47.97 88.57,-83.97"></polygon> <text text-anchor="middle" x="44.19" y="-61.77" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- disturbance&#45;&gt;evenness --> <g id="edge5" class="edge">
+<title>
+disturbance-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M70.52,-84.11C107.05,-108.42 127.94,-116.07 222.49,-142.62"></path> <polygon fill="black" stroke="black" points="221.61,-146.01 232.18,-145.33 223.5,-139.26 221.61,-146.01"></polygon> </g> <!-- disturbance&#45;&gt;richness --> <g id="edge4" class="edge">
+<title>
+disturbance-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M88.6,-55.67C120.49,-49.97 146.57,-51.68 226.09,-60.81"></path> <polygon fill="black" stroke="black" points="225.72,-64.29 236.05,-61.96 226.52,-57.34 225.72,-64.29"></polygon> </g> <!-- disturbance&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+disturbance-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M88.46,-49.18C261.17,15.86 286.35,16.32 442.56,-47.81"></path> <polygon fill="black" stroke="black" points="441.48,-51.15 452.06,-51.72 444.14,-44.68 441.48,-51.15"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Saturated model:
+<ul>
+<li>Model comparison with simpler models used previously.</li>
+<li>Perform model pruning.</li>
+<li>Decide on most parsimonious model and summarize model.</li>
+</ul></li>
+<li>What do you conclude?</li>
+</ul>
+</section>
+<section id="exercise-5" class="slide level2 smaller">
+<h2>Exercise 5</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="198" viewbox="0.00 0.00 528.44 181.97" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 177.97)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-177.97 524.44,-177.97 524.44,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="gray" points="308.27,-173.97 232.41,-173.97 232.41,-137.97 308.27,-137.97 308.27,-173.97"></polygon> <text text-anchor="middle" x="270.34" y="-151.77" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="304.48,-83.97 236.21,-83.97 236.21,-47.97 304.48,-47.97 304.48,-83.97"></polygon> <text text-anchor="middle" x="270.34" y="-61.77" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- evenness&#45;&gt;richness --> <g id="edge6" class="edge">
+<title>
+evenness:e-&gt;richness:e
+</title>
+<path fill="none" stroke="black" d="M308.54,-75.44C322.94,-108.2 323.22,-113.6 311.8,-146.2"></path> <polygon fill="black" stroke="black" points="311.6,-73.69 304.34,-65.97 305.2,-76.53 311.6,-73.69"></polygon> <polygon fill="black" stroke="black" points="308.38,-145.37 308.34,-155.97 314.98,-147.71 308.38,-145.37"></polygon> </g> <!-- biomass --> <g id="node5" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="520.51,-83.97 452.24,-83.97 452.24,-47.97 520.51,-47.97 520.51,-83.97"></polygon> <text text-anchor="middle" x="486.38" y="-61.77" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge7" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M308.48,-144.86C397.56,-118.82 421.81,-110.45 452.8,-89.94"></path> <polygon fill="black" stroke="black" points="455.03,-92.65 461.32,-84.13 451.08,-86.87 455.03,-92.65"></polygon> </g> <!-- richness&#45;&gt;biomass --> <g id="edge8" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M304.72,-62.42C385.43,-54.15 411.83,-52.3 442.09,-56.87"></path> <polygon fill="black" stroke="black" points="441.68,-60.35 452.12,-58.57 442.85,-53.45 441.68,-60.35"></polygon> </g> <!-- nutrients --> <g id="node3" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="78.89,-155.97 9.49,-155.97 9.49,-119.97 78.89,-119.97 78.89,-155.97"></polygon> <text text-anchor="middle" x="44.19" y="-133.77" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M79,-149.41C114.45,-159.95 137.51,-160.77 222.26,-157.77"></path> <polygon fill="black" stroke="black" points="222.47,-161.26 232.34,-157.4 222.22,-154.27 222.47,-161.26"></polygon> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M74.3,-119.97C110,-99.69 132.41,-93.61 226.1,-74.79"></path> <polygon fill="black" stroke="black" points="226.9,-78.2 236.01,-72.8 225.52,-71.33 226.9,-78.2"></polygon> </g> <!-- disturbance --> <g id="node4" class="node">
+<title>
+disturbance
+</title>
+<polygon fill="none" stroke="gray" points="88.57,-83.97 -0.19,-83.97 -0.19,-47.97 88.57,-47.97 88.57,-83.97"></polygon> <text text-anchor="middle" x="44.19" y="-61.77" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- disturbance&#45;&gt;evenness --> <g id="edge5" class="edge">
+<title>
+disturbance-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M70.52,-84.11C107.05,-108.42 127.94,-116.07 222.49,-142.62"></path> <polygon fill="black" stroke="black" points="221.61,-146.01 232.18,-145.33 223.5,-139.26 221.61,-146.01"></polygon> </g> <!-- disturbance&#45;&gt;richness --> <g id="edge4" class="edge">
+<title>
+disturbance-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M88.6,-55.67C120.49,-49.97 146.57,-51.68 226.09,-60.81"></path> <polygon fill="black" stroke="black" points="225.72,-64.29 236.05,-61.96 226.52,-57.34 225.72,-64.29"></polygon> </g> <!-- disturbance&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+disturbance-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M88.46,-49.18C261.17,15.86 286.35,16.32 442.56,-47.81"></path> <polygon fill="black" stroke="black" points="441.48,-51.15 452.06,-51.72 444.14,-44.68 441.48,-51.15"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Perform mediation analysis:
+<ul>
+<li>Is the effect of disturbance mediated via its effect on richness and eveness, rather than directly on biomass?</li>
+<li>Add paths from disturbance to richness and evenness, remove the direct paths to AGB (both nutrients and disturbance).</li>
+<li>Compare model fit to simple model.</li>
+</ul></li>
+<li>What do you conclude?</li>
+</ul>
+<div class="footer footer-default">
+<p>Introduction to SEM (2022)</p>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="Intro_to_SEM_part1_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          let href = ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>
