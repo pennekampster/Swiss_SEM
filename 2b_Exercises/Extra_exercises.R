@@ -1,35 +1,3 @@
-library(lavaan)
-library(visreg)
-library(ggplot2)
-library(AICcmodavg)
-
-# Exercise: derived quantities
-#
-# Add variables that calculate the total, direct and indirect effect of each variable
-
-# Exercise: Mediation 
-
-# Let's test whether the effect of disturbance is mediated via its
-# effect on richness and evenness, rather than directly on biomass
-# Add paths from disk to rich and even, remove the path to mass.above
-# Compare model fit to simple model
-# What do you conclude?
-
-modindices(fit.simple.up, minimum.value = 0.01)
-
-simple.exc <-
-"mass.above ~ nadd + rich + even + precip.mm 
-rich ~ nadd + precip.mm + disk
-even ~ nadd + precip.mm +  disk
-rich ~~ even"
-
-fit.simple.exc <- sem(simple.exc, data = seabloom, estimator = "MLM")
-summary(fit.simple.exc, fit.measures = TRUE, rsq = TRUE)
-modindices(fit.simple.exc, minimum.value = 0.01)
-
-AIC(fit.simple.up, fit.simple.exc)
-
-
 # Exercise 2 indicator latent variables
 cor.test(seabloom$precip.gs, seabloom$precip.mm)
 plot(seabloom$precip.gs, seabloom$precip.mm)
@@ -175,6 +143,3 @@ rich ~~ even"
 
 fit.comp2 <- sem(comp2, data = seabloom)
 summary(fit.comp2, standardize = T, fit.measures=T)
-
-
-
