@@ -1230,9 +1230,9 @@ fit.simple <- sem(simple, data = seabloom)
 
 - Exploration of dataset (variables and treatments)
 - Check collinearity and normality
-- Fit linear models to estimate coefficients
-    -   Multiple regression (direct effects of predictors on AGB)
-    -   Multiple regression (indirect effects on richness and evenness)
+- Fit multiple linear regression models to estimate coefficients
+    -   direct effects of environmental predictors on above ground biomass (AGB)
+    -   (in)direct effects of environmental predictors on richness and evenness
 - What do you conclude?
 
 ## Exercise 2 {.smaller}
@@ -1251,14 +1251,16 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
+        precipitation;
 
     nutrients->richness;
     nutrients->evenness;
+    precipitation->richness;
+    precipitation->evenness;
     disturbance -> biomass;
+    precipitation -> biomass;
 
-     biomass; 
-
-    evenness:e-> richness:e [dir=both; minlen=3] ;
+   # evenness:e-> richness:e [dir=both; minlen=3] ;
 
     evenness->biomass ;
     richness->biomass ;
@@ -1282,7 +1284,7 @@ digraph  {
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=2, splines=curved]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
 
   # several 'node' statements
   node [shape = box,
@@ -1291,12 +1293,14 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
+        precipitation;
 
     nutrients->richness;
     nutrients->evenness;
+    precipitation->richness;
+    precipitation->evenness;
     disturbance -> biomass;
-
-     biomass; 
+    precipitation -> biomass;
 
     evenness:e-> richness:e [dir=both; minlen=3] ;
 
@@ -1323,24 +1327,25 @@ After finding a model with good fit:
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=2, splines=curved]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
 
   # several 'node' statements
   node [shape = box,
         fontname = Helvetica, color="gray"]
   
-        evenness;
-        richness;
+        evenness, richness;
         nutrients;
-        disturbance; 
-        biomass; 
+        disturbance;
+        precipitation;
 
+    disturbance->richness;
+    disturbance->evenness;
     nutrients->richness;
     nutrients->evenness;
+    precipitation->richness;
+    precipitation->evenness;
     disturbance -> biomass;
-
-   disturbance -> richness;
-   disturbance-> evenness;
+    precipitation -> biomass;
 
     evenness:e-> richness:e [dir=both; minlen=3] ;
 
@@ -1361,28 +1366,64 @@ digraph  {
 ## Exercise 5 {.smaller}
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 4
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=2, splines=curved]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
 
   # several 'node' statements
   node [shape = box,
         fontname = Helvetica, color="gray"]
   
-        evenness;
-        richness;
+        evenness, richness;
         nutrients;
-        disturbance; 
-        biomass; 
+        disturbance;
+        precipitation;
 
+    disturbance->richness;
+    disturbance->evenness;
     nutrients->richness;
     nutrients->evenness;
-    disturbance -> biomass;
+    precipitation->richness;
+    precipitation->evenness;
+    disturbance -> biomass [color=red];
+    precipitation -> biomass;
 
-   disturbance -> richness;
-   disturbance-> evenness;
+    evenness:e-> richness:e [dir=both; minlen=3] ;
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+ { rank="same"; nutrients; disturbance}
+ { rank="same"; evenness; richness}
+}
+```
+
+```{dot}
+//| fig-width: 4
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+        disturbance;
+        precipitation;
+
+    disturbance->richness;
+    disturbance->evenness;
+    nutrients->richness;
+    nutrients->evenness;
+    precipitation->richness;
+    precipitation->evenness;
+   # disturbance -> biomass;
+    precipitation -> biomass;
 
     evenness:e-> richness:e [dir=both; minlen=3] ;
 
