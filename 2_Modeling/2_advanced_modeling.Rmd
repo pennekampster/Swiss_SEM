@@ -1,6 +1,6 @@
 ---
 title: "Avanced structural equation modeling"
-date: "10.11.2021"
+date: "9.11.2022"
 output:
   html_document:
     toc: true
@@ -373,7 +373,7 @@ summary(fit.int.mg, standardized = TRUE, rsq = TRUE)
 The default option is to let all coefficients vary between groups, but have the same structure of direct and indirect effects. Let's visualize the estimated coefficients:
 
 ```{r, results=F}
-fit_tab <- (summary(fit.int.mg, standardized = TRUE, rsq = TRUE))$PE
+fit_tab <- (summary(fit.int.mg, standardized = TRUE, rsq = TRUE))$pe
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
 fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
                             ifelse(fit_tab$group == 2, "dist", NA))
@@ -419,7 +419,7 @@ summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
 Let's visualize again the coefficients to see the effect:
 
 ```{r, results=F}
-fit_tab <- (summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE))$PE
+fit_tab <- (summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE))$pe
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
 fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
                             ifelse(fit_tab$group == 2, "dist", NA))
