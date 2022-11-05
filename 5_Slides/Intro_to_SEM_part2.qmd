@@ -32,7 +32,7 @@ library(ggplot2)
     -   Fitting SEMs to data (live demo)
     -   Model pruning, visualization and reporting
     -   Discussion with James Grace
--   *Day 2*: 
+-   *Day 2*:
     -   Latent and composite variables
     -   Interactions
     -   Complex sampling designs
@@ -40,7 +40,7 @@ library(ggplot2)
 -   *Day 3*:
     -   Self-study with possibility to meet with instructor(s)
 
-## Revisiting the meta-model  {.smaller}
+## Revisiting the meta-model {.smaller}
 
 ```{dot}
 //| fig-width: 6
@@ -88,12 +88,12 @@ digraph  {
 }
 ```
 
-::: {.incremental}
-- Meta-model = conceptual model to link data with theory. 
-- So far, only manifest (measured) variables were considered.   
-- However, some aspects of a meta-model may be difficult to quantify and measure directly.  
-- This is because they represent an abstract, multifaceted concept (e.g.,  "biodiversity").
-- Latent and composite variables can help with these situations.   
+::: incremental
+-   Meta-model = conceptual model to link data with theory.
+-   So far, only manifest (measured) variables were considered.\
+-   However, some aspects of a meta-model may be difficult to quantify and measure directly.\
+-   This is because they represent an abstract, multifaceted concept (e.g., "biodiversity").
+-   Latent and composite variables can help with these situations.\
 :::
 
 # Latent variables
@@ -127,15 +127,14 @@ digraph  {
 }
 ```
 
-::: {.incremental}
-- Latent variables are unobserved
-- Their influence is captured by one or more indicator variable(s).  
-- Direction of causality flows from latent variables to the observed variables (reflective indicators). 
-- Graphically, latent variables are represented by oval node shape.  
-::: 
+::: incremental
+-   Latent variables are unobserved
+-   Their influence is captured by one or more indicator variable(s).\
+-   Direction of causality flows from latent variables to the observed variables (reflective indicators).
+-   Graphically, latent variables are represented by oval node shape.\
+:::
 
 ## Latent variables
-
 
 ```{dot}
 //| fig-width: 6
@@ -164,45 +163,46 @@ digraph  {
 }
 ```
 
-::: {.incremental}
-- Indicator variables "emergent" from the latent variable.   
-- Latent variables free of random or systematic measurement errors (unlike their indicators).
-- All indicators should be positively correlated to the latent variable (i.e., driver).
+::: incremental
+-   Indicator variables "emergent" from the latent variable.\
+-   Latent variables free of random or systematic measurement errors (unlike their indicators).
+-   All indicators should be positively correlated to the latent variable (i.e., driver).
 :::
 
 ## Latent variables
 
-::: {.incremental}
-- Latents can be both endogenous and exogenous.
-- *Measurement model* focuses solely on relating indicators to latent variables.
-- *Structural model* is one with directed paths between latent variables.
+::: incremental
+-   Latents can be both endogenous and exogenous.
+-   *Measurement model* focuses solely on relating indicators to latent variables.
+-   *Structural model* is one with directed paths between latent variables.
 :::
 
 ## Latent variables
 
-Latents often fitted in two steps:  
+Latents often fitted in two steps:
 
 . . .
 
-1) Confirmatory factor analysis
-  - Multi-indicator latent variables: the same process generated multiple indicator variables.    
-  - Precursor to evaluation of any structural models in which the latent variables appear.
+1)  Confirmatory factor analysis
 
-.  .  .
+-   Multi-indicator latent variables: the same process generated multiple indicator variables.\
+-   Precursor to evaluation of any structural models in which the latent variables appear.
 
-2) Full model including latent variable
-  - To estimate effect of latent variable on other variables.
+. . .
+
+2)  Full model including latent variable
+
+-   To estimate effect of latent variable on other variables.
 
 ## Using latents to adjust for measurement error in the explanatory variables
 
-::: {.incremental}
-- Variables are often measured with error.  
-- Regression approaches assume that explanatory variables are measured without error.  
-- What difference does it make?
+::: incremental
+-   Variables are often measured with error.\
+-   Regression approaches assume that explanatory variables are measured without error.\
+-   What difference does it make?
 :::
 
 ## Regression dilution {.smaller}
-
 
 ```{r}
 #| echo: false
@@ -213,19 +213,18 @@ stat_smooth( aes(x=x2,y=y), method="lm", se=F, colour="blue") +
 geom_abline(intercept=0,slope=2, colour="red")
 ```
 
-
-::: {.incremental}
-- Red = true slope, blue = OLS slope.
-- Measurement error biases the slope towards zero. 
-- How to account for regression dilution?
+::: incremental
+-   Red = true slope, blue = OLS slope.
+-   Measurement error biases the slope towards zero.
+-   How to account for regression dilution?
 :::
 
 ## Latents to adjust for noise in the explanatory variables
 
-::: {.incremental}
-- Possible to account for measurement error when multiple measurements were made.
-- Latent variable with multiple indicator variables.
-- Will lead to better slope estimate and higher R^2^.
+::: incremental
+-   Possible to account for measurement error when multiple measurements were made.
+-   Latent variable with multiple indicator variables.
+-   Will lead to better slope estimate and higher R^2^.
 :::
 
 # Composite variables
@@ -261,24 +260,24 @@ digraph boxes_and_circles {
 }
 ```
 
-::: {.incremental} 
-- Composites to specify the collective influence of a set of variables (e.g., land use).
-- Composites arise from the indicators (in contrast to latents).  
-- Values are determined by causes (i.e., indicators), thus error variance is set to 0.  
-- Arrows pointing from the indicators to the composite (formative or causal indicators).
-- Composites are shown as hexangular shapes.
+::: incremental
+-   Composites to specify the collective influence of a set of variables (e.g., land use).
+-   Composites arise from the indicators (in contrast to latents).\
+-   Values are determined by causes (i.e., indicators), thus error variance is set to 0.\
+-   Arrows pointing from the indicators to the composite (formative or causal indicators).
+-   Composites are shown as hexangular shapes.
 :::
 
 ## Key differences between latent and composite variables {.smaller}
 
 ::: columns
 ::: {.column width="60%"}
-::: {.incremental}
-- Flow of causation: 
-  - *Latents*: from construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.
-  - Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.   
-  - *Composites*: flow of causation is reversed and the indicators are independent entities.   
-  - There is no assumption about the relation between the indicators (can be positive/negative). 
+::: incremental
+-   Flow of causation:
+    -   *Latents*: from construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.
+    -   Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.\
+    -   *Composites*: flow of causation is reversed and the indicators are independent entities.\
+    -   There is no assumption about the relation between the indicators (can be positive/negative).
 :::
 :::
 
@@ -320,23 +319,22 @@ digraph boxes_and_circles {
 :::
 :::
 
-
 ## Key differences between latent and composite variables
 
 How distinguish latent and composites:
 
-::: {.incremental}
-- Rule of thumb 1: if the indicators are redundant, they likely belong to a latent variable.   
-- Rule of thumb 2: If the meaning of the construct changes after dropping one of the indicators, the construct likely is a composite.  
+::: incremental
+-   Rule of thumb 1: if the indicators are redundant, they likely belong to a latent variable.\
+-   Rule of thumb 2: If the meaning of the construct changes after dropping one of the indicators, the construct likely is a composite.\
 :::
 
 # Exercise
 
 ## Exercise:
 
-- Revisit the meta-model you have drawn yesterday:
-  - Which contructs could be modelled with a latent or composite variable?
-  - Adapt your meta-model accordingly.
+-   Revisit the meta-model you have drawn yesterday:
+    -   Which contructs could be modelled with a latent or composite variable?
+    -   Adapt your meta-model accordingly.
 
 # Interactions
 
@@ -367,55 +365,54 @@ digraph boxes_and_circles {
 }
 ```
 
-::: {.incremental}
-- In nature, things often are contingent on each other.
-- For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.  
-- Moderation: effects are different when combined.  
-- In regression, the interaction coefficient estimates the effect of the product of the two predictors.  
-- Interaction coefficient estimates the deviation from additivity. 
+::: incremental
+-   In nature, things often are contingent on each other.
+-   For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.\
+-   Moderation: effects are different when combined.\
+-   In regression, the interaction coefficient estimates the effect of the product of the two predictors.\
+-   Interaction coefficient estimates the deviation from additivity.
 :::
-
 
 ## Interactions
 
 Interactions can be modelled in different ways in lavaan:
 
-1) Multiple groups
-2) Composites
+1)  Multiple groups
+2)  Composites
 
 ## Interactions (multi group)
 
-```r
+``` r
 sem(model, group = "age_class", data = dd)
 ```
 
-::: {.incremental}
-- Multigroup fitting allows coefficients to vary among groups.  
-- Lavaan offers the “group” argument to specify for which groups coefficients should be estimated.   
-- Importantly, groups have to be categorical (e.g., sex, age class). 
+::: incremental
+-   Multigroup fitting allows coefficients to vary among groups.\
+-   Lavaan offers the "group" argument to specify for which groups coefficients should be estimated.\
+-   Importantly, groups have to be categorical (e.g., sex, age class).
 :::
 
 ## Interactions (multi group)
 
 Lavaan allows to introduce equality constraints on various aspects via the `group.equal` argument:
 
-```r
+``` r
 sem(model, group = "age_class", group.equal = c("regressions"), data = dd)
 ```
 
-. . . 
+. . .
 
 Adding constraints via `group.equal`:
 
-```r
+``` r
 group.equal=c("intercepts", "means", "regressions", "residuals")
 ```
 
 ## Interactions (multi group)
 
-Even more control by having the same name for different parameters: 
+Even more control by having the same name for different parameters:
 
-```r 
+``` r
 model <- ' 
 y ~ c("b1", "b1") * x1 + c("b2", "b2") * x3
 x2 ~ c("b3", "b4") * x1
@@ -424,53 +421,52 @@ x3 ~ c("b5", "b5") * x2'
 
 Same coefficients for all but the effect of x1 on x2.
 
-
 # Heywood cases: when things go wrong
 
 ## Heywood cases : when things go wrong
 
-- Improper solutions:  
-  - Negative variances  
-  - Correlations larger than 1  
+-   Improper solutions:
+    -   Negative variances\
+    -   Correlations larger than 1
 
 . . .
 
-- Reasons for the warnings can be:
-  1) Slightly negative error estimates (not really a problem)   
-  2) Indicators for latent variables need to be positively correlated   
-  3) Local non-identification   
-  4) General model misspecification   
+-   Reasons for the warnings can be:
+    1)  Slightly negative error estimates (not really a problem)\
+    2)  Indicators for latent variables need to be positively correlated\
+    3)  Local non-identification\
+    4)  General model misspecification
 
 # Complex sampling structure
 
 ## Complex sampling structure
 
-::: {.incremental}
-- Needed when data is nested, e.g.,
-  - within sites.
-  - within groups such as families, nests. 
-- Nesting violates the principle of independent and identically distributed observations.  
-- Necessary to account for data structure in the model.
+::: incremental
+-   Needed when data is nested, e.g.,
+    -   within sites.
+    -   within groups such as families, nests.
+-   Nesting violates the principle of independent and identically distributed observations.\
+-   Necessary to account for data structure in the model.
 :::
 
 ## Complex sampling structure
 
-```r
+``` r
 library("lavaan.survey")
 ```
 
-- The add-on package lavaan.survey allows the analysis of stratified, clustered or weighted data.  
+-   The add-on package lavaan.survey allows the analysis of stratified, clustered or weighted data.
 
 . . .
 
-- Lavaan objects are processed with a specific data structure:
-  1) Initialize the design   
-  2) Post-process the lavaan object and compute the adjusted results.
-  3) Corrected lavaan object as result.
+-   Lavaan objects are processed with a specific data structure:
+    1)  Initialize the design\
+    2)  Post-process the lavaan object and compute the adjusted results.
+    3)  Corrected lavaan object as result.
 
 ## Complex sampling structure
 
-```r
+``` r
 design <- svydesign(ids = ~ plot, strata = ~ field, 
 nest = TRUE, data = dat)
 summary(design)
@@ -479,17 +475,20 @@ fit.nested <- lavaan.survey(lavaan.fit = model,
 survey.design = design)
 ```
 
-- Needed to specify the study design
-- Here we have plots (`ids`) nested in fields (`strata`)
-- Next, we can refit the `simple` model from before with `lavaan.survey` using the specified study design as an argument.
+-   Needed to specify the study design
+-   Here we have plots (`ids`) nested in fields (`strata`)
+-   Next, we can refit the `simple` model from before with `lavaan.survey` using the specified study design as an argument.
 
 <!-- # Spatial autocorrelation -->
 
 <!-- ## Spatial autocorrelation -->
 
 <!-- - Why is autocorrelation problematic? -->
+
 <!-- - Autocorrelation is a sign of non-independence, violating assumptions of linear models that data points are independent. -->
+
 <!-- - Does not influence estimates, but their standard errors and p values. -->
+
 <!-- - You think you have more information than you actually have. -->
 
 # Questions?
@@ -502,7 +501,7 @@ survey.design = design)
 
 Start with the following model:
 
-```r
+``` r
 library("lavaan")
 
 simple <-
@@ -518,39 +517,37 @@ summary(fit.simple)
 
 ## Exercise 2
 
-- Construct latent variable diversity based on richness, evenness and ens.pie:
-  - Run confirmatory factor analysis
-  - What do you conclude?
-  
+-   Construct latent variable diversity based on richness, evenness and ens.pie:
+    -   Run confirmatory factor analysis
+    -   What do you conclude?
+
 ## Exercise 3
 
-- Construct latent variable diversity only based on richness and evenness:
-  - Run confirmatory factor analysis
-  - Include latent variable into full model
-  - What do you conclude?
-  
+-   Construct latent variable diversity only based on richness and evenness:
+    -   Run confirmatory factor analysis
+    -   Include latent variable into full model
+    -   What do you conclude?
+
 ## Exercise 4
 
-- Construct composite variable landuse based on nutrients and disturbance (disk):
-  - What do you conclude?
-  - Build composite manually.
+-   Construct composite variable landuse based on nutrients and disturbance (disk):
+    -   What do you conclude?
+    -   Build composite manually.
 
 ## Exercise 5
 
-- Investigate possible interaction between disturbance and nutrient addition on AGB:
-  - Construct composite variable to capture a possible interaction:
-  - What do you conclude?
-  - Incorporate composite into full model
-  
+-   Investigate possible interaction between disturbance and nutrient addition on AGB:
+    -   Construct composite variable to capture a possible interaction:
+    -   What do you conclude?
+    -   Incorporate composite into full model
+
 ## Exercise 6
 
-- Investigate possible interaction between disturbance and nutrient addition on AGB:
-  - Use multi-group fitting to explore interaction.
-  - What do you conclude?
-  
+-   Investigate possible interaction between disturbance and nutrient addition on AGB:
+    -   Use multi-group fitting to explore interaction.
+    -   What do you conclude?
+
 ## Exercise 7
 
-- Account for nested experimental design with the `lavaan.survey` package:
-  - Add individual plots nested in fields.
-
-
+-   Account for nested experimental design with the `lavaan.survey` package:
+    -   Add individual plots nested in fields.
