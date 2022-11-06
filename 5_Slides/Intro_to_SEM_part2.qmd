@@ -14,6 +14,8 @@ format:
     show-slide-number: all
     code-overflow: wrap
     footer: Introduction to SEM (2022)
+    width: 1200
+    height: 800
 editor:
   render-on-save: true
 ---
@@ -421,22 +423,6 @@ x3 ~ c("b5", "b5") * x2'
 
 Same coefficients for all but the effect of x1 on x2.
 
-# Heywood cases: when things go wrong
-
-## Heywood cases : when things go wrong
-
--   Improper solutions:
-    -   Negative variances\
-    -   Correlations larger than 1
-
-. . .
-
--   Reasons for the warnings can be:
-    1)  Slightly negative error estimates (not really a problem)\
-    2)  Indicators for latent variables need to be positively correlated\
-    3)  Local non-identification\
-    4)  General model misspecification
-
 # Complex sampling structure
 
 ## Complex sampling structure
@@ -517,11 +503,68 @@ summary(fit.simple)
 
 ## Exercise 2
 
+```{dot}
+//| fig-width: 4
+
+digraph  {
+
+  graph [rankdir = TB, ranksep=.5]
+   
+   node [shape=box, fontname = Helvetica]
+   X1 [label="evenness"];
+   X2 [label="richness"];
+   X3 [label="ens.pie"];
+
+   
+   node [shape=oval]
+    Y [label="diversity"]
+    
+    Y -> X1;
+    Y -> X2;
+    Y -> X3;
+    
+  {rank = min; X1;X2; X3}
+}
+```
+
+
 -   Construct latent variable diversity based on richness, evenness and ens.pie:
     -   Run confirmatory factor analysis
     -   What do you conclude?
 
 ## Exercise 3
+
+```{dot}
+//| fig-width: 6
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5, splines=curved]
+
+    node [shape=oval, fontname = Helvetica]
+    diversity
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+        disturbance;
+        precipitation;
+
+    disturbance->diversity;
+    nutrients->diversity;
+    disturbance -> biomass;
+    precipitation -> biomass;
+    diversity->biomass ;
+
+    diversity -> evenness;
+    diversity -> richness;
+  
+ { rank="same"; nutrients; disturbance, precipitation}
+}
+```
 
 -   Construct latent variable diversity only based on richness and evenness:
     -   Run confirmatory factor analysis
@@ -529,6 +572,44 @@ summary(fit.simple)
     -   What do you conclude?
 
 ## Exercise 4
+
+```{dot}
+//| fig-width: 5
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5, splines=curved]
+
+    node [shape=oval, fontname = Helvetica]
+    diversity
+
+    node [shape=hexagon, fontname = Helvetica]
+    landuse
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+        disturbance;
+        precipitation;
+
+    landuse->diversity;
+    landuse -> biomass;
+    precipitation -> biomass;
+    diversity->biomass ;
+
+    nutrients -> landuse;
+    disturbance -> landuse;
+
+    diversity -> evenness;
+    diversity -> richness;
+  
+ #{ rank="same"; precipitation, nutrients, disturbance}
+}
+```
+
 
 -   Construct composite variable landuse based on nutrients and disturbance (disk):
     -   What do you conclude?

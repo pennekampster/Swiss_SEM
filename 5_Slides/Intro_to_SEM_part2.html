@@ -420,11 +420,7 @@
 <div>
 <p>
 <svg width="576" height="366" viewbox="0.00 0.00 344.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust1" class="cluster">
-<title>
-cluster_bio
-</title>
-<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <g id="clust2" class="cluster">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust2" class="cluster">
 <title>
 cluster_env
 </title>
@@ -432,7 +428,11 @@ cluster_env
 <title>
 cluster_prod
 </title>
-<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <!-- evenness --> <g id="node1" class="node">
+<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <g id="clust1" class="cluster">
+<title>
+cluster_bio
+</title>
+<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
 </title>
@@ -951,36 +951,6 @@ middleman-&gt;Y
 <p>Same coefficients for all but the effect of x1 on x2.</p>
 </section></section>
 <section>
-<section id="heywood-cases-when-things-go-wrong" class="title-slide slide level1 center">
-<h1>Heywood cases: when things go wrong</h1>
-
-</section>
-<section id="heywood-cases-when-things-go-wrong-1" class="slide level2">
-<h2>Heywood cases : when things go wrong</h2>
-<ul>
-<li>Improper solutions:
-<ul>
-<li>Negative variances<br>
-</li>
-<li>Correlations larger than 1</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Reasons for the warnings can be:
-<ol type="1">
-<li>Slightly negative error estimates (not really a problem)<br>
-</li>
-<li>Indicators for latent variables need to be positively correlated<br>
-</li>
-<li>Local non-identification<br>
-</li>
-<li>General model misspecification</li>
-</ol></li>
-</ul>
-</div>
-</section></section>
-<section>
 <section id="complex-sampling-structure" class="title-slide slide level1 center">
 <h1>Complex sampling structure</h1>
 
@@ -1070,6 +1040,45 @@ middleman-&gt;Y
 </section>
 <section id="exercise-2" class="slide level2">
 <h2>Exercise 2</h2>
+<div class="cell" data-fig-width="4">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="384" height="179" viewbox="0.00 0.00 249.54 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-112 245.54,-112 245.54,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="75.9,-108 0.03,-108 0.03,-72 75.9,-72 75.9,-108"></polygon> <text text-anchor="middle" x="37.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="162.1,-108 93.83,-108 93.83,-72 162.1,-72 162.1,-108"></polygon> <text text-anchor="middle" x="127.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- X3 --> <g id="node3" class="node">
+<title>
+X3
+</title>
+<polygon fill="none" stroke="black" points="241.61,-108 180.32,-108 180.32,-72 241.61,-72 241.61,-108"></polygon> <text text-anchor="middle" x="210.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">ens.pie</text> </g> <!-- Y --> <g id="node4" class="node">
+<title>
+Y
+</title>
+<ellipse fill="none" stroke="black" cx="127.97" cy="-18" rx="46.41" ry="18"></ellipse> <text text-anchor="middle" x="127.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">diversity</text> </g> <!-- Y&#45;&gt;X1 --> <g id="edge1" class="edge">
+<title>
+Y-&gt;X1
+</title>
+<path fill="none" stroke="black" d="M108.12,-34.44C96.39,-43.56 81.3,-55.3 68.12,-65.54"></path> <polygon fill="black" stroke="black" points="65.96,-62.79 60.21,-71.7 70.25,-68.32 65.96,-62.79"></polygon> </g> <!-- Y&#45;&gt;X2 --> <g id="edge2" class="edge">
+<title>
+Y-&gt;X2
+</title>
+<path fill="none" stroke="black" d="M127.97,-36.1C127.97,-43.79 127.97,-53.05 127.97,-61.67"></path> <polygon fill="black" stroke="black" points="124.47,-61.7 127.97,-71.7 131.47,-61.7 124.47,-61.7"></polygon> </g> <!-- Y&#45;&gt;X3 --> <g id="edge3" class="edge">
+<title>
+Y-&gt;X3
+</title>
+<path fill="none" stroke="black" d="M146.55,-34.67C157.14,-43.6 170.63,-54.98 182.52,-65.01"></path> <polygon fill="black" stroke="black" points="180.55,-67.93 190.45,-71.7 185.06,-62.57 180.55,-67.93"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
 <ul>
 <li>Construct latent variable diversity based on richness, evenness and ens.pie:
 <ul>
@@ -1080,6 +1089,73 @@ middleman-&gt;Y
 </section>
 <section id="exercise-3" class="slide level2">
 <h2>Exercise 3</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="576" height="324" viewbox="0.00 0.00 334.71 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-184 330.71,-184 330.71,4 -4,4"></polygon> <!-- diversity --> <g id="node1" class="node">
+<title>
+diversity
+</title>
+<ellipse fill="none" stroke="black" cx="127.97" cy="-90" rx="46.41" ry="18"></ellipse> <text text-anchor="middle" x="127.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">diversity</text> </g> <!-- evenness --> <g id="node2" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="gray" points="75.9,-36 0.03,-36 0.03,0 75.9,0 75.9,-36"></polygon> <text text-anchor="middle" x="37.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- diversity&#45;&gt;evenness --> <g id="edge6" class="edge">
+<title>
+diversity-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M104.94,-74.14C82.85,-58.87 71.29,-50.57 62.52,-43.08"></path> <polygon fill="black" stroke="black" points="64.78,-40.4 55.03,-36.24 60.06,-45.57 64.78,-40.4"></polygon> </g> <!-- richness --> <g id="node3" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="162.1,-36 93.83,-36 93.83,0 162.1,0 162.1,-36"></polygon> <text text-anchor="middle" x="127.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- diversity&#45;&gt;richness --> <g id="edge7" class="edge">
+<title>
+diversity-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M124.05,-71.82C121.58,-59.9 120.36,-52.36 120.39,-46.06"></path> <polygon fill="black" stroke="black" points="123.88,-46.41 121.63,-36.05 116.93,-45.55 123.88,-46.41"></polygon> </g> <!-- biomass --> <g id="node7" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="248.1,-36 179.83,-36 179.83,0 248.1,0 248.1,-36"></polygon> <text text-anchor="middle" x="213.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- diversity&#45;&gt;biomass --> <g id="edge5" class="edge">
+<title>
+diversity-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M142.22,-72.7C155.43,-56.78 164.07,-46.85 171.71,-39.93"></path> <polygon fill="black" stroke="black" points="174.17,-42.44 179.78,-33.45 169.79,-36.98 174.17,-42.44"></polygon> </g> <!-- nutrients --> <g id="node4" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="110.66,-180 41.27,-180 41.27,-144 110.66,-144 110.66,-180"></polygon> <text text-anchor="middle" x="75.97" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;diversity --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;diversity
+</title>
+<path fill="none" stroke="black" d="M83.8,-143.61C88.05,-135.25 93.3,-128.32 105.31,-114.85"></path> <polygon fill="black" stroke="black" points="108.14,-116.94 112.24,-107.17 102.94,-112.25 108.14,-116.94"></polygon> </g> <!-- disturbance --> <g id="node5" class="node">
+<title>
+disturbance
+</title>
+<polygon fill="none" stroke="gray" points="217.35,-180 128.59,-180 128.59,-144 217.35,-144 217.35,-180"></polygon> <text text-anchor="middle" x="172.97" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- disturbance&#45;&gt;diversity --> <g id="edge1" class="edge">
+<title>
+disturbance-&gt;diversity
+</title>
+<path fill="none" stroke="black" d="M150.44,-143.78C145.23,-137.77 141.74,-130.6 137.2,-117.87"></path> <polygon fill="black" stroke="black" points="140.41,-116.43 133.86,-108.11 133.79,-118.7 140.41,-116.43"></polygon> </g> <!-- disturbance&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+disturbance-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M185.61,-143.88C217.05,-98.46 221.74,-86.73 217.46,-46.22"></path> <polygon fill="black" stroke="black" points="220.93,-45.73 216.31,-36.2 213.97,-46.53 220.93,-45.73"></polygon> </g> <!-- precipitation --> <g id="node6" class="node">
+<title>
+precipitation
+</title>
+<polygon fill="none" stroke="gray" points="326.96,-180 234.97,-180 234.97,-144 326.96,-144 326.96,-180"></polygon> <text text-anchor="middle" x="280.97" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">precipitation</text> </g> <!-- precipitation&#45;&gt;biomass --> <g id="edge4" class="edge">
+<title>
+precipitation-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M280.48,-143.88C278.95,-97.6 274.8,-86.3 237.27,-43.89"></path> <polygon fill="black" stroke="black" points="239.68,-41.33 230.41,-36.2 234.46,-45.99 239.68,-41.33"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
 <ul>
 <li>Construct latent variable diversity only based on richness and evenness:
 <ul>
@@ -1091,6 +1167,81 @@ middleman-&gt;Y
 </section>
 <section id="exercise-4" class="slide level2">
 <h2>Exercise 4</h2>
+<div class="cell" data-fig-width="5">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="480" height="379" viewbox="0.00 0.00 329.71 260.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-256 325.71,-256 325.71,4 -4,4"></polygon> <!-- diversity --> <g id="node1" class="node">
+<title>
+diversity
+</title>
+<ellipse fill="none" stroke="black" cx="127.97" cy="-90" rx="46.41" ry="18"></ellipse> <text text-anchor="middle" x="127.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">diversity</text> </g> <!-- evenness --> <g id="node3" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="gray" points="75.9,-36 0.03,-36 0.03,0 75.9,0 75.9,-36"></polygon> <text text-anchor="middle" x="37.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- diversity&#45;&gt;evenness --> <g id="edge7" class="edge">
+<title>
+diversity-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M108.32,-73.62C90.06,-58.41 79.08,-49.32 70.55,-42.49"></path> <polygon fill="black" stroke="black" points="72.68,-39.71 62.66,-36.27 68.34,-45.21 72.68,-39.71"></polygon> </g> <!-- richness --> <g id="node4" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="162.1,-36 93.83,-36 93.83,0 162.1,0 162.1,-36"></polygon> <text text-anchor="middle" x="127.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- diversity&#45;&gt;richness --> <g id="edge8" class="edge">
+<title>
+diversity-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M125.8,-72C124.42,-60.28 123.66,-52.54 123.51,-46.42"></path> <polygon fill="black" stroke="black" points="127.02,-46.19 123.96,-36.05 120.03,-45.88 127.02,-46.19"></polygon> </g> <!-- biomass --> <g id="node8" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="248.1,-36 179.83,-36 179.83,0 248.1,0 248.1,-36"></polygon> <text text-anchor="middle" x="213.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- diversity&#45;&gt;biomass --> <g id="edge4" class="edge">
+<title>
+diversity-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M141.77,-72.62C154.95,-56.15 163.47,-46.08 171.24,-39.12"></path> <polygon fill="black" stroke="black" points="173.83,-41.55 179.57,-32.65 169.53,-36.02 173.83,-41.55"></polygon> </g> <!-- landuse --> <g id="node2" class="node">
+<title>
+landuse
+</title>
+<polygon fill="none" stroke="black" points="216.58,-162 190.77,-180 139.16,-180 113.36,-162 139.16,-144 190.77,-144 216.58,-162"></polygon> <text text-anchor="middle" x="164.97" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">landuse</text> </g> <!-- landuse&#45;&gt;diversity --> <g id="edge1" class="edge">
+<title>
+landuse-&gt;diversity
+</title>
+<path fill="none" stroke="black" d="M147.81,-143.92C138.1,-133.23 133.62,-126.66 131.25,-118.12"></path> <polygon fill="black" stroke="black" points="134.69,-117.44 129.42,-108.25 127.81,-118.73 134.69,-117.44"></polygon> </g> <!-- landuse&#45;&gt;biomass --> <g id="edge2" class="edge">
+<title>
+landuse-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M173.28,-143.65C199.46,-85.77 206.33,-69.31 210.28,-46.11"></path> <polygon fill="black" stroke="black" points="213.77,-46.42 211.79,-36.02 206.85,-45.39 213.77,-46.42"></polygon> </g> <!-- nutrients --> <g id="node5" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="151.66,-252 82.27,-252 82.27,-216 151.66,-216 151.66,-252"></polygon> <text text-anchor="middle" x="116.97" y="-229.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;landuse --> <g id="edge5" class="edge">
+<title>
+nutrients-&gt;landuse
+</title>
+<path fill="none" stroke="black" d="M133.67,-215.91C138.26,-209.89 142.74,-202.48 150.11,-189.2"></path> <polygon fill="black" stroke="black" points="153.34,-190.59 155.09,-180.14 147.2,-187.22 153.34,-190.59"></polygon> </g> <!-- disturbance --> <g id="node6" class="node">
+<title>
+disturbance
+</title>
+<polygon fill="none" stroke="gray" points="258.35,-252 169.59,-252 169.59,-216 258.35,-216 258.35,-252"></polygon> <text text-anchor="middle" x="213.97" y="-229.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- disturbance&#45;&gt;landuse --> <g id="edge6" class="edge">
+<title>
+disturbance-&gt;landuse
+</title>
+<path fill="none" stroke="black" d="M198.41,-215.92C193.79,-209.76 189.05,-202.34 180.94,-188.85"></path> <polygon fill="black" stroke="black" points="183.89,-186.96 175.75,-180.18 177.88,-190.55 183.89,-186.96"></polygon> </g> <!-- precipitation --> <g id="node7" class="node">
+<title>
+precipitation
+</title>
+<polygon fill="none" stroke="gray" points="321.96,-108 229.97,-108 229.97,-72 321.96,-72 321.96,-108"></polygon> <text text-anchor="middle" x="275.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">precipitation</text> </g> <!-- precipitation&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+precipitation-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M269.63,-71.85C264.46,-57.64 260.47,-49.38 253.83,-42.6"></path> <polygon fill="black" stroke="black" points="256.07,-39.91 246.16,-36.15 251.56,-45.26 256.07,-39.91"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
 <ul>
 <li>Construct composite variable landuse based on nutrients and disturbance (disk):
 <ul>
@@ -1309,9 +1460,9 @@ middleman-&gt;Y
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1200,
 
-        height: 700,
+        height: 800,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,

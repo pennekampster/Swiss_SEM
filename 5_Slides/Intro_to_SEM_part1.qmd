@@ -13,6 +13,8 @@ format:
     slide-number: true
     show-slide-number: all
     footer: Introduction to SEM (2022)
+    width: 1200
+    height: 800
 editor:
   render-on-save: true
 ---
@@ -1139,19 +1141,33 @@ digraph {
 
 ![](Anatomy_linear_model.jpeg){.absolute width="800"}
 
+## Heywood cases : when things go wrong
+
+-   Improper solutions:
+    -   Negative variances\
+    -   Correlations larger than 1
+
+. . .
+
+-   Reasons for the warnings can be:
+    1)  Slightly negative error estimates (not really a problem)\
+    2)  Indicators for latent variables need to be positively correlated\
+    3)  Local non-identification\
+    4)  General model misspecification
+
 # Model evaluation
 
 ## Model fit measures {.smaller}
 
 + *$\chi^2$ statistic*
   - compare the model-implied to the observed variance-covariance
-  - good fit when failing to reject the null hypothesis that the $\chi^2$ statistic is different from 0 (P > 0.05)   
+  - good fit when $\chi^2$ statistic is small (P > 0.05)   
   - sample-size dependent
 
 . . .
 
 + *Comparative fit index (CFI)*: 
-  - quantifies deviation from a 'null' model, where variances are estimated but covariances set to 0.
+  - deviation from a 'null' model (variances estimated but covariances set to 0).
   - higher is better, \> 0.95 is considered good.
 
 . . .
@@ -1165,7 +1181,6 @@ digraph {
 + *Standardized root-mean squared residual (SRMR)*
   - standardized difference between the observed and predicted correlations
   - \< 0.08 is considered good
-:::
 
 ## Assumptions of SEM with lavaan
 

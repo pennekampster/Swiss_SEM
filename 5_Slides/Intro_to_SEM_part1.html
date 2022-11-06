@@ -2021,6 +2021,31 @@ Y1-&gt;Y2
 <section id="regression-anatomy" class="slide level2">
 <h2>Regression anatomy</h2>
 <p><img data-src="Anatomy_linear_model.jpeg" class="absolute" style="width: 800px; "></p>
+</section>
+<section id="heywood-cases-when-things-go-wrong" class="slide level2">
+<h2>Heywood cases : when things go wrong</h2>
+<ul>
+<li>Improper solutions:
+<ul>
+<li>Negative variances<br>
+</li>
+<li>Correlations larger than 1</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Reasons for the warnings can be:
+<ol type="1">
+<li>Slightly negative error estimates (not really a problem)<br>
+</li>
+<li>Indicators for latent variables need to be positively correlated<br>
+</li>
+<li>Local non-identification<br>
+</li>
+<li>General model misspecification</li>
+</ol></li>
+</ul>
+</div>
 </section></section>
 <section>
 <section id="model-evaluation" class="title-slide slide level1 center">
@@ -2033,7 +2058,7 @@ Y1-&gt;Y2
 <li><em><span class="math inline">\(\chi^2\)</span> statistic</em>
 <ul>
 <li>compare the model-implied to the observed variance-covariance</li>
-<li>good fit when failing to reject the null hypothesis that the <span class="math inline">\(\chi^2\)</span> statistic is different from 0 (P &gt; 0.05)<br>
+<li>good fit when <span class="math inline">\(\chi^2\)</span> statistic is small (P &gt; 0.05)<br>
 </li>
 <li>sample-size dependent</li>
 </ul></li>
@@ -2042,7 +2067,7 @@ Y1-&gt;Y2
 <ul>
 <li><em>Comparative fit index (CFI)</em>:
 <ul>
-<li>quantifies deviation from a ‘null’ model, where variances are estimated but covariances set to 0.</li>
+<li>deviation from a ‘null’ model (variances estimated but covariances set to 0).</li>
 <li>higher is better, &gt; 0.95 is considered good.</li>
 </ul></li>
 </ul>
@@ -2061,7 +2086,7 @@ Y1-&gt;Y2
 <li><em>Standardized root-mean squared residual (SRMR)</em>
 <ul>
 <li>standardized difference between the observed and predicted correlations</li>
-<li>&lt; 0.08 is considered good :::</li>
+<li>&lt; 0.08 is considered good</li>
 </ul></li>
 </ul>
 </div>
@@ -2796,9 +2821,9 @@ precipitation-&gt;biomass
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1200,
 
-        height: 700,
+        height: 800,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,

@@ -14,6 +14,8 @@ format:
     slide-number: true
     show-slide-number: all
     footer: Introduction to SEM (2022)
+    width: 1200
+    height: 800
 editor:
   render-on-save: true
 ---
