@@ -57,12 +57,12 @@ library(knitr)
 -   *Day 1*:
     -   General introduction to SEM to model ecological systems
     -   Fitting SEMs to data (live demo)
-    -   Model pruning, visualization and reporting
+    -   Model evaluation and reporting (exercises)
     -   Discussion with James Grace
 -   *Day 2*: 
-    -   Latent and composite variables
-    -   Interactions
-    -   Complex sampling designs
+    -   Latent and composite variables, interactions, complex sampling designs
+    -   Fitting SEMs to data (live demo & exercises)
+    -   Model visualization
     -   Discussion with James Grace
 -   *Day 3*:
     -   Self-study with possibility to meet with instructor(s)
@@ -81,7 +81,7 @@ library(knitr)
     - Advanced topics:
       + random effects
       + feedback loops
-      + temporal autocorrelation
+      + dealing with spatial and temporal autocorrelation
 
 ## Learning objectives
 
@@ -127,9 +127,9 @@ Ask students about their research questions
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
-- Causation: everything else being equal, variation in X leading to variation in Y (=X causes Y).
+- Causation: everything else being equal, causing variation in X leading to variation in Y (=X causes Y).
 - Experiments required to isolate effect of X on Y.
-- Drawing causal insights from observational data possible, but additional (strong) assumptions required.
+- Drawing causal insights from observational is data possible, but additional (strong) assumptions required.
 :::
 
 ::: {.column width="40%"}
@@ -203,7 +203,7 @@ digraph {
 :::
 
 
-## SEM models {.smaller}
+## Structural equation models {.smaller}
 
 ::: {.incremental}
 -   Allow testing multivariate causal relationship. 
@@ -307,20 +307,11 @@ digraph {
 ## Motivations to use SEM:
 
 ::: {.incremental}
-1) Driver-focused: Understand which drivers influence a system 
-2) Response-focused: Understand and explain a particular property of a system  
-3) Mediation-focused: Understand causal pathways  
-4) Theory-focused: Evaluate available theory 
+1) Driver-focused: Understand how drivers influence a system 
+2) Response-focused: Understand and explain a particular response of a system  
+3) Mediation-focused: Understand underlying causal pathways  
+4) Theory-focused: compare observations of a system to available theory 
 ::: 
-
-## Explanatory modelling with SEM
-
-![](images/Explanatory_modelling.png){width="60%"}
-
-::: aside
-[Grace, James B., and Kathryn M. Irvine. 2020. “Scientist’s Guide to Developing Explanatory Statistical Models Using Causal Analysis Principles.” Ecology 101 (4): e02962.]{style="font-size: 5mm; text-align: center"}
-:::
-
 
 ## SEM modelling philosophy
 
@@ -403,6 +394,14 @@ digraph {
 -   Show the difference between direct effects and correlation together with the graphical representation.
 :::
 
+## Explanatory modelling with SEM
+
+![](images/Explanatory_modelling.png){width="60%"}
+
+::: aside
+[Grace, James B., and Kathryn M. Irvine. 2020. “Scientist’s Guide to Developing Explanatory Statistical Models Using Causal Analysis Principles.” Ecology 101 (4): e02962.]{style="font-size: 5mm; text-align: center"}
+:::
+
 # Questions?
 
 # Introduction to the dataset
@@ -411,18 +410,11 @@ digraph {
 
 ![](images/CedarCreek.jpg)
 
-- Experimental grassland dataset
-- Long-term consequences of human-driven environmental changes ecosystem responses to:
-  + Disturbance\
-  + Nitrogen deposition\
+- Experimental grassland study (started in 1982)
+- Long-term consequences of human-driven environmental changes on grasslands:
+  + Soil disturbance
+  + Nitrogen deposition
   + Changes in precipitation
-
-## Introduction to the dataset
-
-Potential Research questions:
-
-1)  How has aboveground biomass changed as a function of disturbance (disking) and nutrient addition?
-2)  How are these effects mediated by biodiversity?
 
 ## Introduction to the dataset 
 
@@ -432,26 +424,26 @@ Potential Research questions:
 :::
 
 ::: {.column width="50%"}
-- Location of the study site (Cedar Creek Ecosystem Science Reserve)
+- Study site located in Minnesota (Cedar Creek Ecosystem Science Reserve).
 - Design:
-  + location of the three study fields within the reserve
-  + location of the 35 x 55 m intact (black) and disturbed (red) plots within each field.
+  + three study fields within the reserve.
+  + 35 x 55 m intact (black) and disturbed (red) plots within each field.
 :::
 :::
 
 
 ## Introduction to the dataset {.smaller}
 
-![](images/CedarCreek_exp_design.png){.relative width="700" right=200}
+![](images/CedarCreek_exp_design.png){.relative width="800" right=200}
 
-- 4 x 4 m nutrient treatment plots within each 35 x 55 m Intact or Disturbed plot (within fields A-C). 
+- 4 x 4 m nutrient treatment plots within the intact or disturbed plots (within fields A-C). 
 - Letters indicate the nutrient treatments.
 
 ## Introduction to the dataset {.smaller}
 
 ![](images/AGB_disturbance.png)
 
-- Effect of soil disturbance (disking) and nutrient enrichment on aboveground plant biomass. 
+- Effect of soil disturbance and nutrient enrichment on aboveground plant biomass. 
 - Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).
 
 ## Introduction to the dataset {.smaller}
@@ -464,12 +456,12 @@ Potential Research questions:
   A) richness (S, species 0.3 m−2)
   A) Simpsons's evenness 
 
-  ::: aside
+::: aside
 ENS~PIE~ equivalent to $1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass represented by species $i$.
-  :::
+:::
 
   
-## Question of interest: what is the effect of richness on biomass?
+## Potential research questions
 
 ```{dot}
 //| fig-width: 8
@@ -482,16 +474,20 @@ digraph  {
   node [shape = box,
         fontname = Helvetica]
   
-   biodiversity -> biomass;
+   environment -> biodiversity -> biomass;
+   environment -> biomass;
   
 }
 ```
+
+1)  How has aboveground biomass changed as a function of soil disturbance and nutrient addition?
+2)  How are these effects mediated by biodiversity?
 
 ::: notes
 Ask students about how they would address this question.
 :::
 
-## Meta-model {.smaller}
+## Design meta-model {.smaller}
 
 ```{dot}
 //| fig-width: 6
@@ -505,7 +501,7 @@ digraph  {
         fontname = Helvetica]
   
    subgraph cluster_bio {
-        label="Biotic"
+        label="Biodiversity"
         fontname = Helvetica
 		    color=lightgrey;
         evenness, richness;
@@ -555,8 +551,9 @@ Meta-model are conceptual models that allow to link data with theory.
 -   Include a graphical representation of the meta-model as what is missing in the model.
 :::
 
-## Exercise:
+## Exercise
 
+-   Your turn!
 -   Draw a meta-model of the dataset you want to understand.
 -   Make a table with putative causal relationships.
 
@@ -836,7 +833,7 @@ RHS: information we have (number of unique cells in the observed variance-covari
 - Structural equation modelling is a framework rather than a statistical technique.   
 - Different estimation procedures possible.   
 - Lavaan uses Maximum likelihood estimation (ML).   
-- Variance-covariance matrix used for global estimation of SEM, de-separation for local estimation (piecewiseSEM).    
+- Variance-covariance matrix used for global estimation of SEM, d-separation for local estimation (piecewiseSEM).    
 :::
 
 # Global estimation in a nutshell
@@ -902,8 +899,6 @@ kable(cov2cor(V))
 ## Rule 1 {.smaller}
 
 > Unspecified relationships among exogenous variables are their bivariate correlations.
-
-If there is no directed path between two exogenous variables, their relationship is their correlation
 
 ```{dot}
 //| fig-width: 6
@@ -1009,13 +1004,13 @@ digraph {
   # 'node' statements
   node [shape = box, fontname = Helvetica];
   
-  X1; 
-  X2; 
-  Y;
+  X; 
+  Y1; 
+  Y2;
   
   # 'edge' statements
-  X1 -> Y [label = <&beta;<SUB>X,Y1</SUB>> minlen=3 ];
-  X2 -> Y [label = <&beta;<SUB>X,Y2</SUB>> minlen=3 ];
+  X -> Y2 [label = <&beta;<SUB>X,Y2</SUB>> minlen=3 ];
+  Y1 -> Y2 [label = <&beta;<SUB>Y1,Y2</SUB>> minlen=3 ];
 
 }
 ```
@@ -1046,7 +1041,7 @@ digraph {
   Y1; 
   Y2;
 
-  E3 [label = < &zeta;<SUB>Y1</SUB> = 1 - R<SUP>2</SUP> >];
+  E3 [label = < &zeta;<SUB>Y1</SUB> = 1 - R<SUP>2</SUP>>];
 
     node [shape = plain,
         fontname = Helvetica];
@@ -1069,10 +1064,10 @@ E1 [label = <&zeta;<SUB>Y1</SUB>>];
 > Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.
 
 ::: {.incremental}
--   Imagine we remove the path from Y to Y1\
--   If they were exogenous variables, the relationship would be their bivariate correlation (Rule #1)\
--   Here we have we have to remove the effects of X on both variables.\
--   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.
+-   Imagine we remove the path from Y1 to Y2.
+-   If they were exogenous variables, the relationship would be their bivariate correlation (Rule #1).
+-   Here we have we have to remove the effects of X on both variables.
+-   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous.variables.
 :::
 
 ```{dot}
@@ -1151,14 +1146,14 @@ digraph {
 ![](Anatomy_linear_model.jpeg){.absolute width="800"}
 
 
-## (Un)standardized coefficients
+## Unstandardized vs standardized coefficients
 
 ::: incremental
-- Global estimation based on covariance / correlation matrices
-- Results in unstandardized and standardized coefficients
-- Significance tests on unstandardized (raw) coefficients
-- Standardized coefficients for interpretation only (relative strength of paths)
-- Only allow for comparisons within the same dataset
+- Global estimation based on covariance / correlation matrices.
+- Results in unstandardized / standardized coefficients.
+- Significance tests on unstandardized (raw) coefficients.
+- Standardized coefficients for interpretation only (relative strength of paths).
+- Only allow for comparisons within the same dataset.
 :::
 
 ::: aside
@@ -1177,8 +1172,8 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 -   Reasons for the warnings can be:
     1)  Slightly negative error estimates (not really a problem)\
     2)  Indicators for latent variables need to be positively correlated\
-    3)  Local non-identification\
-    4)  General model misspecification
+    3)  Local non-identification of parameters\
+    4)  Model misspecification
 
 # Model evaluation
 

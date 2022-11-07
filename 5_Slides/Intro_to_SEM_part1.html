@@ -428,14 +428,14 @@
 <ul>
 <li>General introduction to SEM to model ecological systems</li>
 <li>Fitting SEMs to data (live demo)</li>
-<li>Model pruning, visualization and reporting</li>
+<li>Model evaluation and reporting (exercises)</li>
 <li>Discussion with James Grace</li>
 </ul></li>
 <li><em>Day 2</em>:
 <ul>
-<li>Latent and composite variables</li>
-<li>Interactions</li>
-<li>Complex sampling designs</li>
+<li>Latent and composite variables, interactions, complex sampling designs</li>
+<li>Fitting SEMs to data (live demo &amp; exercises)</li>
+<li>Model visualization</li>
 <li>Discussion with James Grace</li>
 </ul></li>
 <li><em>Day 3</em>:
@@ -463,7 +463,7 @@
 <ul>
 <li>random effects</li>
 <li>feedback loops</li>
-<li>temporal autocorrelation</li>
+<li>dealing with spatial and temporal autocorrelation</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -524,9 +524,9 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Causation: everything else being equal, variation in X leading to variation in Y (=X causes Y).</li>
+<li class="fragment">Causation: everything else being equal, causing variation in X leading to variation in Y (=X causes Y).</li>
 <li class="fragment">Experiments required to isolate effect of X on Y.</li>
-<li class="fragment">Drawing causal insights from observational data possible, but additional (strong) assumptions required.</li>
+<li class="fragment">Drawing causal insights from observational is data possible, but additional (strong) assumptions required.</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="images/correlation.jpg"></p>
@@ -644,8 +644,8 @@ E-&gt;Y
           display:block!important;
       }</style></aside>
 </section>
-<section id="sem-models" class="slide level2 smaller">
-<h2>SEM models</h2>
+<section id="structural-equation-models" class="slide level2 smaller">
+<h2>Structural equation models</h2>
 <div>
 <ul>
 <li class="fragment">Allow testing multivariate causal relationship.</li>
@@ -784,22 +784,15 @@ U1-&gt;X3
 <h2>Motivations to use SEM:</h2>
 <div>
 <ol type="1">
-<li class="fragment">Driver-focused: Understand which drivers influence a system</li>
-<li class="fragment">Response-focused: Understand and explain a particular property of a system<br>
+<li class="fragment">Driver-focused: Understand how drivers influence a system</li>
+<li class="fragment">Response-focused: Understand and explain a particular response of a system<br>
 </li>
-<li class="fragment">Mediation-focused: Understand causal pathways<br>
+<li class="fragment">Mediation-focused: Understand underlying causal pathways<br>
 </li>
-<li class="fragment">Theory-focused: Evaluate available theory</li>
+<li class="fragment">Theory-focused: compare observations of a system to available theory</li>
 </ol>
 </div>
 </section>
-<section id="explanatory-modelling-with-sem" class="slide level2">
-<h2>Explanatory modelling with SEM</h2>
-<p><img data-src="images/Explanatory_modelling.png" style="width:60.0%"></p>
-
-<aside><div>
-<p><span style="font-size: 5mm; text-align: center">Grace, James B., and Kathryn M. Irvine. 2020. “Scientist’s Guide to Developing Explanatory Statistical Models Using Causal Analysis Principles.” Ecology 101 (4): e02962.</span></p>
-</div></aside></section>
 <section id="sem-modelling-philosophy" class="slide level2">
 <h2>SEM modelling philosophy</h2>
 <div>
@@ -933,7 +926,14 @@ U_z-&gt;Z
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section></section>
+</section>
+<section id="explanatory-modelling-with-sem" class="slide level2">
+<h2>Explanatory modelling with SEM</h2>
+<p><img data-src="images/Explanatory_modelling.png" style="width:60.0%"></p>
+
+<aside><div>
+<p><span style="font-size: 5mm; text-align: center">Grace, James B., and Kathryn M. Irvine. 2020. “Scientist’s Guide to Developing Explanatory Statistical Models Using Causal Analysis Principles.” Ecology 101 (4): e02962.</span></p>
+</div></aside></section></section>
 <section id="questions" class="title-slide slide level1 center">
 <h1>Questions?</h1>
 
@@ -948,59 +948,49 @@ U_z-&gt;Z
 <h2>Introduction to the dataset</h2>
 
 <img data-src="images/CedarCreek.jpg" class="r-stretch"><ul>
-<li>Experimental grassland dataset</li>
-<li>Long-term consequences of human-driven environmental changes ecosystem responses to:
+<li>Experimental grassland study (started in 1982)</li>
+<li>Long-term consequences of human-driven environmental changes on grasslands:
 <ul>
-<li>Disturbance<br>
-</li>
-<li>Nitrogen deposition<br>
-</li>
+<li>Soil disturbance</li>
+<li>Nitrogen deposition</li>
 <li>Changes in precipitation</li>
 </ul></li>
 </ul>
 </section>
 <section id="introduction-to-the-dataset-2" class="slide level2">
 <h2>Introduction to the dataset</h2>
-<p>Potential Research questions:</p>
-<ol type="1">
-<li>How has aboveground biomass changed as a function of disturbance (disking) and nutrient addition?</li>
-<li>How are these effects mediated by biodiversity?</li>
-</ol>
-</section>
-<section id="introduction-to-the-dataset-3" class="slide level2">
-<h2>Introduction to the dataset</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><img data-src="images/CedarCreek_map.png" style="width:100.0%"></p>
 </div><div class="column" style="width:50%;">
 <ul>
-<li>Location of the study site (Cedar Creek Ecosystem Science Reserve)</li>
+<li>Study site located in Minnesota (Cedar Creek Ecosystem Science Reserve).</li>
 <li>Design:
 <ul>
-<li>location of the three study fields within the reserve</li>
-<li>location of the 35 x 55 m intact (black) and disturbed (red) plots within each field.</li>
+<li>three study fields within the reserve.</li>
+<li>35 x 55 m intact (black) and disturbed (red) plots within each field.</li>
 </ul></li>
 </ul>
 </div>
 </div>
 </section>
-<section id="introduction-to-the-dataset-4" class="slide level2 smaller">
+<section id="introduction-to-the-dataset-3" class="slide level2 smaller">
 <h2>Introduction to the dataset</h2>
 
-<img data-src="images/CedarCreek_exp_design.png" class="relative r-stretch" data-right="200" width="700"><ul>
-<li>4 x 4 m nutrient treatment plots within each 35 x 55 m Intact or Disturbed plot (within fields A-C).</li>
+<img data-src="images/CedarCreek_exp_design.png" class="relative r-stretch" data-right="200" width="800"><ul>
+<li>4 x 4 m nutrient treatment plots within the intact or disturbed plots (within fields A-C).</li>
 <li>Letters indicate the nutrient treatments.</li>
 </ul>
 </section>
-<section id="introduction-to-the-dataset-5" class="slide level2 smaller">
+<section id="introduction-to-the-dataset-4" class="slide level2 smaller">
 <h2>Introduction to the dataset</h2>
 
 <img data-src="images/AGB_disturbance.png" class="r-stretch"><ul>
-<li>Effect of soil disturbance (disking) and nutrient enrichment on aboveground plant biomass.</li>
+<li>Effect of soil disturbance and nutrient enrichment on aboveground plant biomass.</li>
 <li>Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).</li>
 </ul>
 </section>
-<section id="introduction-to-the-dataset-6" class="slide level2 smaller">
+<section id="introduction-to-the-dataset-5" class="slide level2 smaller">
 <h2>Introduction to the dataset</h2>
 <p><img data-src="images/AGB_diversity.png" class="relative" data-right="200" width="700"></p>
 <ul>
@@ -1009,37 +999,53 @@ U_z-&gt;Z
 <li>effective number of species (ENS<sub>PIE</sub>)</li>
 <li>richness (S, species 0.3 m−2)</li>
 <li>Simpsons’s evenness</li>
-</ol>
-</li>
+</ol></li>
 </ul>
+
 <aside><div>
 <p>ENS<sub>PIE</sub> equivalent to <span class="math inline">\(1 / \sum_{i=1}^{S} p_i^2\)</span> where <span class="math inline">\(S\)</span> is the total number of species and <span class="math inline">\(p_i\)</span> is the proportion of the community biomass represented by species <span class="math inline">\(i\)</span>.</p>
 </div></aside></section>
-<section id="question-of-interest-what-is-the-effect-of-richness-on-biomass" class="slide level2">
-<h2>Question of interest: what is the effect of richness on biomass?</h2>
+<section id="potential-research-questions" class="slide level2">
+<h2>Potential research questions</h2>
 <div class="cell" data-fig-width="8">
 <div class="cell-output-display">
 <div>
 <p>
-<svg width="768" height="171" viewbox="0.00 0.00 198.16 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-40 194.16,-40 194.16,4 -4,4"></polygon> <!-- biodiversity --> <g id="node1" class="node">
+<svg width="768" height="190" viewbox="0.00 0.00 327.20 80.77" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 76.77)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-76.77 323.2,-76.77 323.2,4 -4,4"></polygon> <!-- environment --> <g id="node1" class="node">
+<title>
+environment
+</title>
+<polygon fill="none" stroke="black" points="93.06,-49.77 -0.02,-49.77 -0.02,-13.77 93.06,-13.77 93.06,-49.77"></polygon> <text text-anchor="middle" x="46.52" y="-27.57" font-family="Helvetica,sans-Serif" font-size="14.00">environment</text> </g> <!-- biodiversity --> <g id="node2" class="node">
 <title>
 biodiversity
 </title>
-<polygon fill="none" stroke="black" points="86.04,-36 -0.01,-36 -0.01,0 86.04,0 86.04,-36"></polygon> <text text-anchor="middle" x="43.01" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biodiversity</text> </g> <!-- biomass --> <g id="node2" class="node">
+<polygon fill="none" stroke="black" points="215.08,-72.77 129.03,-72.77 129.03,-36.77 215.08,-36.77 215.08,-72.77"></polygon> <text text-anchor="middle" x="172.05" y="-50.57" font-family="Helvetica,sans-Serif" font-size="14.00">biodiversity</text> </g> <!-- environment&#45;&gt;biodiversity --> <g id="edge1" class="edge">
+<title>
+environment-&gt;biodiversity
+</title>
+<path fill="none" stroke="black" d="M93.16,-43.81C100.06,-45.01 108.22,-46.25 118.8,-47.72"></path> <polygon fill="black" stroke="black" points="118.36,-51.19 128.74,-49.08 119.31,-44.26 118.36,-51.19"></polygon> </g> <!-- biomass --> <g id="node3" class="node">
 <title>
 biomass
 </title>
-<polygon fill="none" stroke="black" points="190.22,-36 121.96,-36 121.96,0 190.22,0 190.22,-36"></polygon> <text text-anchor="middle" x="156.09" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- biodiversity&#45;&gt;biomass --> <g id="edge1" class="edge">
+<polygon fill="none" stroke="black" points="319.26,-49.77 251,-49.77 251,-13.77 319.26,-13.77 319.26,-49.77"></polygon> <text text-anchor="middle" x="285.13" y="-27.57" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- environment&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+environment-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M93.27,-18.1C170.49,3.96 192.77,5.51 241.61,-13.44"></path> <polygon fill="black" stroke="black" points="240.48,-16.75 251.06,-17.22 243.07,-10.25 240.48,-16.75"></polygon> </g> <!-- biodiversity&#45;&gt;biomass --> <g id="edge2" class="edge">
 <title>
 biodiversity-&gt;biomass
 </title>
-<path fill="none" stroke="black" d="M86.23,-18C96.8,-18 104.87,-18 111.6,-18"></path> <polygon fill="black" stroke="black" points="111.85,-21.5 121.85,-18 111.85,-14.5 111.85,-21.5"></polygon> </g> </g>
+<path fill="none" stroke="black" d="M215.22,-48.46C225.73,-46.87 233.79,-45.56 240.49,-44.32"></path> <polygon fill="black" stroke="black" points="241.58,-47.67 250.68,-42.25 240.18,-40.81 241.58,-47.67"></polygon> </g> </g>
 </svg>
 </p>
 </div>
 </div>
 </div>
+<ol type="1">
+<li>How has aboveground biomass changed as a function of soil disturbance and nutrient addition?</li>
+<li>How are these effects mediated by biodiversity?</li>
+</ol>
 <aside class="notes">
 <p>Ask students about how they would address this question.</p>
 <style type="text/css">
@@ -1054,22 +1060,22 @@ biodiversity-&gt;biomass
           display:block!important;
       }</style></aside>
 </section>
-<section id="meta-model" class="slide level2 smaller">
-<h2>Meta-model</h2>
+<section id="design-meta-model" class="slide level2 smaller">
+<h2>Design meta-model</h2>
 <div class="cell" data-fig-width="6">
 <div class="cell-output-display">
 <div>
 <p>
 <svg width="576" height="366" viewbox="0.00 0.00 344.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust3" class="cluster">
-<title>
-cluster_prod
-</title>
-<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <g id="clust1" class="cluster">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust1" class="cluster">
 <title>
 cluster_bio
 </title>
-<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biotic</text> </g> <g id="clust2" class="cluster">
+<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <g id="clust3" class="cluster">
+<title>
+cluster_prod
+</title>
+<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <g id="clust2" class="cluster">
 <title>
 cluster_env
 </title>
@@ -1151,8 +1157,9 @@ disturbance-&gt;biomass
       }</style></aside>
 </section>
 <section id="exercise" class="slide level2">
-<h2>Exercise:</h2>
+<h2>Exercise</h2>
 <ul>
+<li>Your turn!</li>
 <li>Draw a meta-model of the dataset you want to understand.</li>
 <li>Make a table with putative causal relationships.</li>
 </ul>
@@ -1543,7 +1550,7 @@ RHS: information we have (number of unique cells in the observed variance-covari
 </li>
 <li class="fragment">Lavaan uses Maximum likelihood estimation (ML).<br>
 </li>
-<li class="fragment">Variance-covariance matrix used for global estimation of SEM, de-separation for local estimation (piecewiseSEM).<br>
+<li class="fragment">Variance-covariance matrix used for global estimation of SEM, d-separation for local estimation (piecewiseSEM).<br>
 </li>
 </ul>
 </div>
@@ -1690,7 +1697,6 @@ RHS: information we have (number of unique cells in the observed variance-covari
 <blockquote>
 <p>Unspecified relationships among exogenous variables are their bivariate correlations.</p>
 </blockquote>
-<p>If there is no directed path between two exogenous variables, their relationship is their correlation</p>
 <div class="cell" data-fig-width="6">
 <div class="cell-output-display">
 <div>
@@ -1823,28 +1829,28 @@ Y1-&gt;Y2
 <div class="cell-output-display">
 <div>
 <p>
-<svg width="480" height="177" viewbox="0.00 0.00 265.72 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-94 261.72,-94 261.72,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<svg width="480" height="172" viewbox="0.00 0.00 272.72 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-94 268.72,-94 268.72,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
 <title>
-X1
+X
 </title>
-<polygon fill="none" stroke="black" points="54,-90 0,-90 0,-54 54,-54 54,-90"></polygon> <text text-anchor="middle" x="27" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">X1</text> </g> <!-- Y --> <g id="node3" class="node">
+<polygon fill="none" stroke="black" points="54,-90 0,-90 0,-54 54,-54 54,-90"></polygon> <text text-anchor="middle" x="27" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text> </g> <!-- Y2 --> <g id="node3" class="node">
 <title>
-Y
+Y2
 </title>
-<polygon fill="none" stroke="black" points="257.72,-63 203.72,-63 203.72,-27 257.72,-27 257.72,-63"></polygon> <text text-anchor="middle" x="230.72" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
+<polygon fill="none" stroke="black" points="264.72,-63 210.72,-63 210.72,-27 264.72,-27 264.72,-63"></polygon> <text text-anchor="middle" x="237.72" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y2</text> </g> <!-- X&#45;&gt;Y2 --> <g id="edge1" class="edge">
 <title>
-X1-&gt;Y
+X-&gt;Y2
 </title>
-<path fill="none" stroke="black" d="M54.37,-68.47C89.96,-63.71 153.5,-55.2 193.53,-49.84"></path> <polygon fill="black" stroke="black" points="194.22,-53.28 203.66,-48.49 193.29,-46.35 194.22,-53.28"></polygon> <text text-anchor="start" x="110" y="-65.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="117" y="-65.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y1</text> </g> <!-- X2 --> <g id="node2" class="node">
+<path fill="none" stroke="black" d="M54.01,-68.64C90.99,-63.85 158.87,-55.07 200.68,-49.66"></path> <polygon fill="black" stroke="black" points="201.24,-53.12 210.71,-48.36 200.34,-46.18 201.24,-53.12"></polygon> <text text-anchor="start" x="113.5" y="-66.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="120.5" y="-66.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y2</text> </g> <!-- Y1 --> <g id="node2" class="node">
 <title>
-X2
+Y1
 </title>
-<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="middle" x="27" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X2</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
+<polygon fill="none" stroke="black" points="54,-36 0,-36 0,0 54,0 54,-36"></polygon> <text text-anchor="middle" x="27" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y1</text> </g> <!-- Y1&#45;&gt;Y2 --> <g id="edge2" class="edge">
 <title>
-X2-&gt;Y
+Y1-&gt;Y2
 </title>
-<path fill="none" stroke="black" d="M54.37,-21.53C89.96,-26.29 153.5,-34.8 193.53,-40.16"></path> <polygon fill="black" stroke="black" points="193.29,-43.65 203.66,-41.51 194.22,-36.72 193.29,-43.65"></polygon> <text text-anchor="start" x="110" y="-39.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="117" y="-39.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y2</text> </g> </g>
+<path fill="none" stroke="black" d="M54.22,-21.32C79.84,-24.58 119.97,-29.69 154.72,-34.2 169.73,-36.15 186.28,-38.32 200.56,-40.21"></path> <polygon fill="black" stroke="black" points="200.13,-43.68 210.5,-41.52 201.05,-36.74 200.13,-43.68"></polygon> <text text-anchor="start" x="110" y="-40.2" font-family="Times,serif" font-size="14.00">β</text> <text text-anchor="start" x="117" y="-40.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">Y1,Y2</text> </g> </g>
 </svg>
 </p>
 </div>
@@ -1869,8 +1875,8 @@ X2-&gt;Y
 <div class="cell-output-display">
 <div>
 <p>
-<svg width="480" height="234" viewbox="0.00 0.00 290.76 142.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 138)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-138 286.76,-138 286.76,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<svg width="480" height="238" viewbox="0.00 0.00 286.87 142.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 138)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-138 282.87,-138 282.87,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
 <title>
 X
 </title>
@@ -1894,15 +1900,15 @@ X-&gt;Y2
 <title>
 E3
 </title>
-<polygon fill="none" stroke="black" points="282.64,-134 180.12,-134 180.12,-98 282.64,-98 282.64,-134"></polygon> <text text-anchor="start" x="188" y="-112.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ζ</text> <text text-anchor="start" x="199.67" y="-112.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">Y1</text> <text text-anchor="start" x="216.79" y="-112.8" font-family="Helvetica,sans-Serif" font-size="14.00"> = 1 - R</text> <text text-anchor="start" x="263.09" y="-112.8" font-family="Helvetica,sans-Serif" baseline-shift="super" font-size="14.00">2</text> <text text-anchor="start" x="270.87" y="-112.8" font-family="Helvetica,sans-Serif" font-size="14.00"> </text> </g> <!-- E1 --> <g id="node5" class="node">
+<polygon fill="none" stroke="black" points="278.81,-134 180.06,-134 180.06,-98 278.81,-98 278.81,-134"></polygon> <text text-anchor="start" x="188" y="-112.8" font-family="Helvetica,sans-Serif" font-size="14.00"> ζ</text> <text text-anchor="start" x="199.67" y="-112.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">Y1</text> <text text-anchor="start" x="216.79" y="-112.8" font-family="Helvetica,sans-Serif" font-size="14.00"> = 1 - R</text> <text text-anchor="start" x="263.09" y="-112.8" font-family="Helvetica,sans-Serif" baseline-shift="super" font-size="14.00">2</text> </g> <!-- E1 --> <g id="node5" class="node">
 <title>
 E1
 </title>
-<text text-anchor="start" x="218.93" y="-68.8" font-family="Helvetica,sans-Serif" font-size="14.00">ζ</text> <text text-anchor="start" x="226.71" y="-68.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">Y1</text> </g> <!-- E1&#45;&gt;Y1 --> <g id="edge3" class="edge">
+<text text-anchor="start" x="216.98" y="-68.8" font-family="Helvetica,sans-Serif" font-size="14.00">ζ</text> <text text-anchor="start" x="224.76" y="-68.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">Y1</text> </g> <!-- E1&#45;&gt;Y1 --> <g id="edge3" class="edge">
 <title>
 E1-&gt;Y1
 </title>
-<path fill="none" stroke="black" d="M218.83,-72C203.73,-72 176.57,-72 154.24,-72"></path> <polygon fill="black" stroke="black" points="154.06,-68.5 144.06,-72 154.06,-75.5 154.06,-68.5"></polygon> </g> </g>
+<path fill="none" stroke="black" d="M216.92,-72C202.23,-72 176.11,-72 154.41,-72"></path> <polygon fill="black" stroke="black" points="154.17,-68.5 144.17,-72 154.17,-75.5 154.17,-68.5"></polygon> </g> </g>
 </svg>
 </p>
 </div>
@@ -1916,13 +1922,10 @@ E1-&gt;Y1
 </blockquote>
 <div>
 <ul>
-<li class="fragment">Imagine we remove the path from Y to Y1<br>
-</li>
-<li class="fragment">If they were exogenous variables, the relationship would be their bivariate correlation (Rule #1)<br>
-</li>
-<li class="fragment">Here we have we have to remove the effects of X on both variables.<br>
-</li>
-<li class="fragment">These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.</li>
+<li class="fragment">Imagine we remove the path from Y1 to Y2.</li>
+<li class="fragment">If they were exogenous variables, the relationship would be their bivariate correlation (Rule #1).</li>
+<li class="fragment">Here we have we have to remove the effects of X on both variables.</li>
+<li class="fragment">These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous.variables.</li>
 </ul>
 </div>
 <div class="cell" data-fig-width="6">
@@ -2029,15 +2032,15 @@ Y1-&gt;Y2
 <h2>Regression anatomy</h2>
 <p><img data-src="Anatomy_linear_model.jpeg" class="absolute" style="width: 800px; "></p>
 </section>
-<section id="unstandardized-coefficients" class="slide level2">
-<h2>(Un)standardized coefficients</h2>
+<section id="unstandardized-vs-standardized-coefficients" class="slide level2">
+<h2>Unstandardized vs standardized coefficients</h2>
 <div>
 <ul>
-<li class="fragment">Global estimation based on covariance / correlation matrices</li>
-<li class="fragment">Results in unstandardized and standardized coefficients</li>
-<li class="fragment">Significance tests on unstandardized (raw) coefficients</li>
-<li class="fragment">Standardized coefficients for interpretation only (relative strength of paths)</li>
-<li class="fragment">Only allow for comparisons within the same dataset</li>
+<li class="fragment">Global estimation based on covariance / correlation matrices.</li>
+<li class="fragment">Results in unstandardized / standardized coefficients.</li>
+<li class="fragment">Significance tests on unstandardized (raw) coefficients.</li>
+<li class="fragment">Standardized coefficients for interpretation only (relative strength of paths).</li>
+<li class="fragment">Only allow for comparisons within the same dataset.</li>
 </ul>
 </div>
 
@@ -2062,9 +2065,9 @@ Y1-&gt;Y2
 </li>
 <li>Indicators for latent variables need to be positively correlated<br>
 </li>
-<li>Local non-identification<br>
+<li>Local non-identification of parameters<br>
 </li>
-<li>General model misspecification</li>
+<li>Model misspecification</li>
 </ol></li>
 </ul>
 </div>
