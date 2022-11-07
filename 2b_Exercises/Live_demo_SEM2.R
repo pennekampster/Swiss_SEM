@@ -155,7 +155,7 @@ y ~ b1 * x1 +  b2 * x2 + b3 * x1x2
 '
 
 fit2c <- sem(model2c, data=dat)
-summary(fit2c, fit.measures = TRUE, standardized=T)
+summary(fit2c, standardized=T)
 modindices(fit2c)
 
 

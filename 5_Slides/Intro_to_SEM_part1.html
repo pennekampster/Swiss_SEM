@@ -776,6 +776,10 @@ U1-&gt;X3
 </div>
 </div>
 </section>
+<section id="regression-anatomy" class="slide level2">
+<h2>Regression anatomy</h2>
+<p><img data-src="Anatomy_linear_model.jpeg" class="absolute" style="width: 800px; "></p>
+</section>
 <section id="motivations-to-use-sem" class="slide level2">
 <h2>Motivations to use SEM:</h2>
 <div>
@@ -998,16 +1002,19 @@ U_z-&gt;Z
 </section>
 <section id="introduction-to-the-dataset-6" class="slide level2 smaller">
 <h2>Introduction to the dataset</h2>
-
-<img data-src="images/AGB_diversity.png" class="relative r-stretch" data-right="200" width="700"><ul>
+<p><img data-src="images/AGB_diversity.png" class="relative" data-right="200" width="700"></p>
+<ul>
 <li>Effect of soil disturbance (disking) and nutrient enrichment on:
-<ol type="a">
-<li>diversity (ENSPIE)</li>
+<ol type="A">
+<li>effective number of species (ENS<sub>PIE</sub>)</li>
 <li>richness (S, species 0.3 m−2)</li>
-<li>evenness (ENSPIE S−1)</li>
-</ol></li>
+<li>Simpsons’s evenness</li>
+</ol>
+</li>
 </ul>
-</section>
+<aside><div>
+<p>ENS<sub>PIE</sub> equivalent to <span class="math inline">\(1 / \sum_{i=1}^{S} p_i^2\)</span> where <span class="math inline">\(S\)</span> is the total number of species and <span class="math inline">\(p_i\)</span> is the proportion of the community biomass represented by species <span class="math inline">\(i\)</span>.</p>
+</div></aside></section>
 <section id="question-of-interest-what-is-the-effect-of-richness-on-biomass" class="slide level2">
 <h2>Question of interest: what is the effect of richness on biomass?</h2>
 <div class="cell" data-fig-width="8">
@@ -1054,19 +1061,19 @@ biodiversity-&gt;biomass
 <div>
 <p>
 <svg width="576" height="366" viewbox="0.00 0.00 344.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust2" class="cluster">
-<title>
-cluster_env
-</title>
-<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <g id="clust1" class="cluster">
-<title>
-cluster_bio
-</title>
-<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biotic</text> </g> <g id="clust3" class="cluster">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust3" class="cluster">
 <title>
 cluster_prod
 </title>
-<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <!-- evenness --> <g id="node1" class="node">
+<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <g id="clust1" class="cluster">
+<title>
+cluster_bio
+</title>
+<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biotic</text> </g> <g id="clust2" class="cluster">
+<title>
+cluster_env
+</title>
+<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
 </title>
@@ -2018,10 +2025,25 @@ Y1-&gt;Y2
 <p>The total effect (including undirected paths) is equivalent to the total correlation.</p>
 </blockquote>
 </section>
-<section id="regression-anatomy" class="slide level2">
+<section id="regression-anatomy-1" class="slide level2">
 <h2>Regression anatomy</h2>
 <p><img data-src="Anatomy_linear_model.jpeg" class="absolute" style="width: 800px; "></p>
 </section>
+<section id="unstandardized-coefficients" class="slide level2">
+<h2>(Un)standardized coefficients</h2>
+<div>
+<ul>
+<li class="fragment">Global estimation based on covariance / correlation matrices</li>
+<li class="fragment">Results in unstandardized and standardized coefficients</li>
+<li class="fragment">Significance tests on unstandardized (raw) coefficients</li>
+<li class="fragment">Standardized coefficients for interpretation only (relative strength of paths)</li>
+<li class="fragment">Only allow for comparisons within the same dataset</li>
+</ul>
+</div>
+
+<aside><div>
+<p><span class="math inline">\(r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}\)</span> where <span class="math inline">\(r_{xy}\)</span> are the correlations, <span class="math inline">\(cov_{xy}\)</span> the covariances and <span class="math inline">\(SD_x\)</span> and <span class="math inline">\(SD_y\)</span> the respective standard deviations (the square roots of the respective variance <span class="math inline">\(= \sqrt{var_x}\)</span> and <span class="math inline">\(= \sqrt{var_y}\)</span>)</p>
+</div></aside></section>
 <section id="heywood-cases-when-things-go-wrong" class="slide level2">
 <h2>Heywood cases : when things go wrong</h2>
 <ul>
@@ -2095,7 +2117,7 @@ Y1-&gt;Y2
 <h2>Assumptions of SEM with lavaan</h2>
 <div>
 <ul>
-<li class="fragment">(Multivariate) normality of endogenous variables</li>
+<li class="fragment">(Multivariate) normality of endogenous (but not exogenous!) variables required</li>
 <li class="fragment">Global estimation based on variance-covariance matrix</li>
 <li class="fragment">Directed (acyclic) relationships</li>
 <li class="fragment">Linear relationships</li>

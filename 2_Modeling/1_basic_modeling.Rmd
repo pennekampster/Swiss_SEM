@@ -52,7 +52,7 @@ Within each of the 6 large plots, the 54 small plots were arrayed in 6 × 9 grid
 
 
 The **nutrient treatments** were replicated six times in a completely randomised design in each of the 35 × 55 m plots (54 4 × 4 m small plots) yielding `r 6 * 54` (6 x 54) plots.
-The analyses focuses on two nutrient treatments:
+The Seabloom analysis focuses on two nutrient treatments:
 
 1) Control (no nutrients; Treatment I) and
 2) Other Nutrients and 9.5 g of N (Treatment F)
@@ -156,7 +156,7 @@ ggpairs(seabloom[, c(7, 11:16)], upper=NULL, lower = list(continuous = wrap("poi
 # Metamodel
 A [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind a model and links it to theory.
 Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
-productivity (biomass) is directly influence on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
+productivity (biomass) is directly influenced on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
 
 
 ![](Figures/Metamodel.svg){width=70%}
@@ -479,11 +479,6 @@ With the function `update()` it is possible to directly incorporate the missing 
 ```{r}
 fit.simple.up <- update(fit.simple, add = "rich ~~ even")
 summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE)
-
-# modindices(fit.simple.up, minimum.value = 3.84)
-# fit.simple.up <- update(fit.simple.up, add = "rich ~~ even")
-## Seems to fail as the call is assembled wrongly:
-# getCall(fit.simple); getCall(fit.simple.up)
 ```
 
 Now, the model has a decent fit with a ratio of test statistic and degrees of freedom smaller than two (i.e. `r round(fitmeasures(fit.simple.up, "chisq") / fitmeasures(fit.simple.up, "df"), digits = 2)`) and a $p$-value of `r round(fitmeasures(fit.simple.up, "pvalue"), digits = 2)`. Further, also the robust CFI is now `r round(fitmeasures(fit.simple.up, "cfi.robust"), digits = 2)`.
@@ -657,8 +652,6 @@ inspect(fit.simple.up, what = "r2")
 ## Visualize the results
 
 The package [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot) allows to simply and straight-forwardly visualize diagrams from `lavaan` objects.
-Since it was removed from [CRAN](https://cran.r-project.org/) beginning of 2021, it needs to be downloaded and installed from the archive.
-The code below first tests, if `lavaanPlot` is missing in the local library and if so, installs it from the latest archived repository on CRAN.
 
 Another library that handles `lavaan` objects would be [`semPlot`](https://cran.r-project.org/web/packages/semPlot/index.html). 
 
@@ -666,16 +659,10 @@ Another library that handles `lavaan` objects would be [`semPlot`](https://cran.
 
 ```{r}
 suppressMessages(lavaanPlot_installed <- require(lavaanPlot))
-if (!lavaanPlot_installed) {
-  install.packages("https://cran.r-project.org/src/contrib/Archive/lavaanPlot/lavaanPlot_0.6.0.tar.gz",
-                   repos = NULL, type = "source")
-    }
+if (!lavaanPlot_installed) {install.packages("lavaanPlot")}
 ```
 
-
-
 Then, we can plot the results with significance levels displayed as asterisks.
-
 
 ```{r}
 library("lavaanPlot")
@@ -687,6 +674,7 @@ lavaanPlot(model = fit.simple.up,
            coefs = TRUE, covs = FALSE, stars = "regress")
 ```
 
+For more customization, check out the [`lavaanPlot` documentation](https://lavaanplot.alexlishinski.com/index.html). 
 
 
 ```{r}

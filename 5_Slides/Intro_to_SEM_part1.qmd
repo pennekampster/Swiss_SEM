@@ -300,6 +300,10 @@ digraph {
 :::
 :::
 
+## Regression anatomy
+![](Anatomy_linear_model.jpeg){.absolute width="800"}
+
+
 ## Motivations to use SEM:
 
 ::: {.incremental}
@@ -456,10 +460,15 @@ Potential Research questions:
 ![](images/AGB_diversity.png){.relative width="700" right=200}
 
 - Effect of soil disturbance (disking) and nutrient enrichment on:
-  a) diversity (ENSPIE)
-  b) richness (S, species 0.3 m−2)
-  c) evenness (ENSPIE S−1)
+  A) effective number of species (ENS~PIE~)
+  A) richness (S, species 0.3 m−2)
+  A) Simpsons's evenness 
 
+  ::: aside
+ENS~PIE~ equivalent to $1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass represented by species $i$.
+  :::
+
+  
 ## Question of interest: what is the effect of richness on biomass?
 
 ```{dot}
@@ -1141,6 +1150,22 @@ digraph {
 
 ![](Anatomy_linear_model.jpeg){.absolute width="800"}
 
+
+## (Un)standardized coefficients
+
+::: incremental
+- Global estimation based on covariance / correlation matrices
+- Results in unstandardized and standardized coefficients
+- Significance tests on unstandardized (raw) coefficients
+- Standardized coefficients for interpretation only (relative strength of paths)
+- Only allow for comparisons within the same dataset
+:::
+
+::: aside
+$r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
+where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)
+:::
+
 ## Heywood cases : when things go wrong
 
 -   Improper solutions:
@@ -1185,7 +1210,7 @@ digraph {
 ## Assumptions of SEM with lavaan
 
 ::: {.incremental}
--   (Multivariate) normality of endogenous variables
+-   (Multivariate) normality of endogenous (but not exogenous!) variables required
 -   Global estimation based on variance-covariance matrix
 -   Directed (acyclic) relationships
 -   Linear relationships

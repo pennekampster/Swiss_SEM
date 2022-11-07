@@ -130,7 +130,8 @@ digraph  {
 ```
 
 ::: incremental
--   Latent variables are unobserved
+-   Latent variables are unobserved.
+-   Bridge between observed data and theory.
 -   Their influence is captured by one or more indicator variable(s).\
 -   Direction of causality flows from latent variables to the observed variables (reflective indicators).
 -   Graphically, latent variables are represented by oval node shape.\
@@ -166,7 +167,7 @@ digraph  {
 ```
 
 ::: incremental
--   Indicator variables "emergent" from the latent variable.\
+-   Indicator variables "emerge" from the latent variable.\
 -   Latent variables free of random or systematic measurement errors (unlike their indicators).
 -   All indicators should be positively correlated to the latent variable (i.e., driver).
 :::
@@ -617,16 +618,17 @@ digraph  {
 
 ## Exercise 5
 
--   Investigate possible interaction between disturbance and nutrient addition on AGB:
-    -   Construct composite variable to capture a possible interaction:
-    -   What do you conclude?
+-   Investigate possible interaction between disturbance and nutrient addition on AGB
+    -   Construct composite to model an interaction
     -   Incorporate composite into full model
+- What do you conclude?
+
 
 ## Exercise 6
 
 -   Investigate possible interaction between disturbance and nutrient addition on AGB:
     -   Use multi-group fitting to explore interaction.
-    -   What do you conclude?
+-   What do you conclude?
 
 ## Exercise 7
 
