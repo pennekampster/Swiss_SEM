@@ -2,26 +2,36 @@ library(lavaan)
 library(visreg)
 library(ggplot2)
 library(AICcmodavg)
+library(here)
 
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
 
-seabloom$mass.above <- seabloom$mass.above / 100
-seabloom$precip.mm <- seabloom$precip.mm / 100
-seabloom$precip.gs <- seabloom$precip.gs / 100
-
+# seabloom$mass.above <- seabloom$mass.above / 100
+# seabloom$precip.mm <- seabloom$precip.mm / 100
+# seabloom$precip.gs <- seabloom$precip.gs / 100
 
 # Day 1:
 # Exercise 1:
 
 lm.dir <- lm(mass.above ~ nadd + precip.mm + rich + even, data = seabloom)
 summary(lm.dir)
+par(mfrow=c(2,2))
+plot(lm.dir)
+par(mfrow=c(1,1))
 
 lm.rich <- lm(rich ~ nadd + precip.mm, data = seabloom)
 summary(lm.rich)
+par(mfrow=c(2,2))
+plot(lm.rich)
+par(mfrow=c(1,1))
 
 lm.even <- lm(even ~ nadd + precip.mm, data = seabloom)
 summary(lm.even)
+par(mfrow=c(2,2))
+plot(lm.even)
+par(mfrow=c(1,1))
+
 
 # Exercise 2:
 
@@ -48,7 +58,7 @@ mvn(data = data.frame(log.mass.above, log.even, log.rich), mvnTest = "hz", univa
 
 
 simple <-
-  "mass.above ~ nadd + rich + even + precip.mm + disk
+"mass.above ~ nadd + rich + even + precip.mm + disk
 rich ~ nadd + precip.mm
 even ~ nadd + precip.mm"
 
@@ -81,9 +91,9 @@ standardizedsolution(fit.simple.up, type = "std.all")
 # Add variables that calculate the total, direct and indirect effect of each variable
 
 derived <-
-"mass.above ~ b1 * nadd + b2 * rich + b3 * even + disk
-rich ~ b4 * nadd + disk
-even ~ b5 * nadd
+"mass.above ~ b1 * nadd + b2 * rich + b3 * even + disk +  precip.mm
+rich ~ b4 * nadd + precip.mm
+even ~ b5 * nadd + precip.mm
 
 dir.nut.effect   := b1
 indir.nut.effect := b2 * b4 + b3 * b5

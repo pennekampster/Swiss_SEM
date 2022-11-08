@@ -71,13 +71,6 @@ x2 ~ x1
 x3 ~ x2
 '
 
-# let's include additional path (x2 on y)
-model3 <- ' 
-y ~ x1 + x2 + x3
-x2 ~ x1 
-x3 ~ x2
-'
-
 dagify(y ~ x1 + x2 + x3,
        x2 ~ x1,
        x3 ~ x2) %>% 
@@ -85,7 +78,7 @@ dagify(y ~ x1 + x2 + x3,
 
 
 fit3 <- sem(model3, data=dat)
-summary(fit3)
+summary(fit3, fit.measures = T)
 
 summary(fit3, fit.measures = T)
 
@@ -172,7 +165,7 @@ fit1a <- sem(model1a, data=dat)
 summary(fit1a, fit.measures = F, standardized=T)
 
 
-fit1a <- sem(model1a, data=dat, se = "bootstrap", bootstrap = 1000)
+fit1a <- sem(model1a, data=dat, se = "bootstrap", bootstrap = 100)
 summary(fit1a, fit.measures = F, standardized=T)
 
 

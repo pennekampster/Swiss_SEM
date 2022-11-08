@@ -1107,7 +1107,7 @@ digraph {
 
 > The total effect one variable has on another is the sum of its direct and indirect effects.
 
-$$ total = \gamma_{X, Y1} + \gamma_{Y1, Y2} + \beta_{X, Y2}$$
+$$ total = \gamma_{X, Y1} * \gamma_{Y1, Y2} + \beta_{X, Y2}$$
 
 ```{dot}
 //| fig-width: 6
@@ -1290,6 +1290,7 @@ digraph  {
 
     nutrients->richness;
     nutrients->evenness;
+    nutrients -> biomass;
     precipitation->richness;
     precipitation->evenness;
     disturbance -> biomass;
@@ -1332,6 +1333,7 @@ digraph  {
 
     nutrients->richness;
     nutrients->evenness;
+     nutrients -> biomass;
     precipitation->richness;
     precipitation->evenness;
     disturbance -> biomass;

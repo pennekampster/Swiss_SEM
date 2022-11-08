@@ -60,8 +60,6 @@ This is one of the most well cited empirical papers using SEM in ecology. It's i
 
 ## What can you expect to see out in nature?
 
-Lots of exogenous variables. red = negative, black = positive. no non-significant paths?
-
 ![](images/Duffy_sem.png){.absolute .absolute width="600" right=200}
 
 
@@ -83,7 +81,7 @@ There is a lot of information, including path coefficients, r2, goodness of fit.
 ![](images/Lefcheck_sem.jpg){.absolute .absolute width="700" right=200}
 
 ::: notes
-<!-- Use of color to highlight important paths. -->
+Use of color to highlight important paths.
 ::: 
 
 
@@ -91,31 +89,43 @@ There is a lot of information, including path coefficients, r2, goodness of fit.
 
 ![](images/Jones_sem.jpg){.absolute .absolute width="700" right=200}
 
-<!-- Lots of information. The gray, solid line is "marginally significant" (0.1 > p > 0.05) -->
+::: notes
+Lots of information. The gray, solid line is "marginally significant" (0.1 > p > 0.05)
+:::
 
 ## What can you expect to see out in nature?
 
 ![](images/Poorter_sem.jpg){.absolute .absolute width="700" right=200}
 
-<!-- Use of color. Showing a conceptual model in the same figure as the data-model. Unusual way of showing a composite. -->
+::: notes
+Use of color. Showing a conceptual model in the same figure as the data-model. Unusual way of showing a composite.
+::: 
+
 
 ## What can you expect to see out in nature?
 
 ![](images/Mazancourt_sem.jpg){.absolute .absolute width="700" right=200}
 
-<!-- Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it's four separate models -->
+::: notes
+Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it's four separate models
+:::
 
 ## What can you expect to see out in nature?
 
 ![](images/Mazziotta_sem.jpg){.absolute .absolute width="1000" right=0}
 
-<!-- I love the use of color here, but why does it go from bottom to top? -->
+::: notes
+I like the use of color here, but why does it go from bottom to top?
+:::
 
 ## What can you expect to see out in nature?
 
 ![](images/Tabi_SEM.png){.absolute .absolute width="900" right=100}
 
-<!-- Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so. -->
+::: notes
+Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.
+:::
+
 
 # What makes a good data visualization?
 
@@ -135,7 +145,7 @@ There is a lot of information, including path coefficients, r2, goodness of fit.
 ## What is a good SEM drawing?
 
 ::: {.incremental}
-- Starting from what your drawing and what you just saw, what is missing in your drawing?
+- Starting from your drawing and what you just saw, what is missing in your drawing?
 - What is the minimum necessary information to include in an SEM?   
 :::
 
@@ -157,8 +167,8 @@ Guidelines to help drawing an informative, interpretable and reproducible SEM di
 ::: {.incremental}
 :::::::::::::: {.columns}
 ::: {.column}
-- Squares are manifest (measured) variables  
-- Ellipses are latent variables   
+- Squares for measured variables  
+- Ellipses for latent variables   
 - Hexagons for composite variables 
 :::
 ::: {.column}
@@ -176,7 +186,7 @@ Guidelines to help drawing an informative, interpretable and reproducible SEM di
   - Linetype or color for direction   
   - Dashed vs solid for significance   
   - Arrow width for magnitude   
-  - Labelling with coefficient
+  - Labelling with coefficient (in simple diagrams)
 :::
 ::: {.column}
 ![](images/Hodapp_sem.jpg){height=80%}
@@ -251,10 +261,10 @@ Direct, indirect and total effects:
 ## Data presentation
 
 ::: {.incremental}
-- Showing the underlying data
+- Show the underlying data:
   - Plots of raw correlations
   - Correlation tables
-  - Show data distributions
+  - Distributions of raw data
   - Partial plots
 :::
 
@@ -265,8 +275,12 @@ Direct, indirect and total effects:
   - Is this a paper?
   - Is this a presentation?
   - What is the narrative structure?
-  - Design the figure accordingly.
 :::
+
+. . .
+
+Design the figure accordingly! 
+
 
 ## Room for artistry {.smaller}
 

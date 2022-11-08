@@ -32,12 +32,12 @@ library(ggplot2)
 -   *Day 1*:
     -   General introduction to SEM to model ecological systems
     -   Fitting SEMs to data (live demo)
-    -   Model pruning, visualization and reporting
+    -   Model evaluation and reporting (exercises)
     -   Discussion with James Grace
--   *Day 2*:
-    -   Latent and composite variables
-    -   Interactions
-    -   Complex sampling designs
+-   *Day 2*: 
+    -   Latent and composite variables, interactions, complex sampling designs
+    -   Fitting SEMs to data (live demo & exercises)
+    -   Model visualization
     -   Discussion with James Grace
 -   *Day 3*:
     -   Self-study with possibility to meet with instructor(s)
@@ -201,7 +201,7 @@ Latents often fitted in two steps:
 
 ::: incremental
 -   Variables are often measured with error.\
--   Regression approaches assume that explanatory variables are measured without error.\
+-   Regression approaches assume that predictor variables are measured without error.\
 -   What difference does it make?
 :::
 
@@ -226,8 +226,8 @@ geom_abline(intercept=0,slope=2, colour="red")
 
 ::: incremental
 -   Possible to account for measurement error when multiple measurements were made.
--   Latent variable with multiple indicator variables.
--   Will lead to better slope estimate and higher R^2^.
+-   Latent variable captures the underlying process giving rise to the indicator variables.
+-   Estimating relationship between latent and response will lead to better slope estimate and higher R^2^.
 :::
 
 # Composite variables
@@ -267,8 +267,45 @@ digraph boxes_and_circles {
 -   Composites to specify the collective influence of a set of variables (e.g., land use).
 -   Composites arise from the indicators (in contrast to latents).\
 -   Values are determined by causes (i.e., indicators), thus error variance is set to 0.\
--   Arrows pointing from the indicators to the composite (formative or causal indicators).
+-   Arrows point from the indicators to the composite (i.e., formative or causal indicators).
 -   Composites are shown as hexangular shapes.
+:::
+
+## Composite variables
+
+```{dot}
+//| fig-width: 5
+
+digraph boxes_and_circles {
+   
+   graph [overlap = false, fontsize = 10, rankdir = LR, fontname = Helvetica]
+   
+   node [shape=box, fontname = Helvetica]
+   X1 [label="disturbance"];
+   X2 [label="nutrients"];
+   Z [label="biomass"];
+
+   
+   node [shape=hexagon, fontname = Helvetica]
+  Y [label="land use"]
+
+  node [shape=plain, fontname = Helvetica]
+  E [label="0"]
+  E -> Y [constraint=false];
+
+  X1 -> Y;
+  X2 -> Y;
+  Y -> Z;
+
+  {rank = "max"; Z}
+  {rank = "same"; X1;X2;}
+}
+```
+
+::: incremental
+- Composites are very flexible constructs
+- Allow to model interactions and nonlinear relationships
+- Technically they are predictions
 :::
 
 ## Key differences between latent and composite variables {.smaller}
