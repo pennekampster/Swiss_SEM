@@ -5,7 +5,7 @@ author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences
 - University of Zurich
-date: "08.11.2022"
+date: "08.11.2021"
 output:
   beamer_presentation:
     latex_engine: xelatex
@@ -718,7 +718,7 @@ digraph boxes_and_circles {
 ```
 
 
-## Rule 2: When two variables are connected by a single path, the coefficient of that path is the regression coefficient.\
+## Rule 2: When two variables are connected by a single path, the coefficient of that path is the regression coefficient.
 
 
 
@@ -746,7 +746,7 @@ digraph boxes_and_circles {
 ```
 
 
-## Rule 3: The strength of a compound path (one that includes multiple links) is the product of the individual coefficients.\
+## Rule 3: The strength of a compound path (one that includes multiple links) is the product of the individual coefficients.
 
 
 
