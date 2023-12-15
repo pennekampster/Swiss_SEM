@@ -4,7 +4,8 @@ subtitle: "Day 1: Basic modelling"
 author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
-date: "08.11.2022"
+date: "1/16/2024"
+date-format: long
 format:
   revealjs: 
     smaller: false
@@ -31,7 +32,7 @@ library(knitr)
 
 -   Who are you?
 -   Why do you want to learn about SEM?
--   What is your research question for day 3?
+-   What is your research question?
 
 # General information
 
@@ -40,7 +41,6 @@ library(knitr)
 ::: columns
 ::: {.column width="40%"}
 -   Dr. Frank Pennekamp (main instructor)\
--   Dr. James Grace (advanced topics and model clinic)\
 -   Dr. Rachel Korn (course development)\
 -   Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course development)
 :::
@@ -58,14 +58,14 @@ library(knitr)
     -   General introduction to SEM to model ecological systems
     -   Fitting SEMs to data (live demo)
     -   Model evaluation and reporting (exercises)
-    -   Discussion with James Grace
+    -   Work on your research question
 -   *Day 2*: 
     -   Latent and composite variables, interactions, complex sampling designs
     -   Fitting SEMs to data (live demo & exercises)
     -   Model visualization
-    -   Discussion with James Grace
+    -   Work on your research question
 -   *Day 3*:
-    -   Self-study with possibility to meet with instructor(s)
+    -   Self-study / discussion with instructor and peers
 
 ## Overview {.smaller}
 
@@ -73,6 +73,7 @@ library(knitr)
     -   Global estimation with R package lavaan
     -   Hands-on exercises and live coding
     -   All exercises about one ecological dataset (Seabloom et al. 2020)
+    -   Work on your own dataset
 
 .  .  .  
 
@@ -122,14 +123,36 @@ library(knitr)
 Ask students about their research questions
 :::
 
-## "Correlation does not imply causation"
+
+## Understanding causes 
+
+::: {.incremental}
+::: columns
+::: {.column width="50%"}
+- Why is understanding causes important?
+  + Justify costly management interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
+- What is the problem?
+  + Confounding of cause with non-cause (interventions with no or detrimental effects)
+:::
+
+::: {.column width="40%"}
+![](images/quagga.jpeg)
+:::
+:::
+:::
+
+
+## Causality
+
+> "Correlation does not imply causation"
 
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
 - Causation: everything else being equal, causing variation in X leading to variation in Y (=X causes Y).
 - Experiments required to isolate effect of X on Y.
-- Drawing causal insights from observational is data possible, but additional (strong) assumptions required.
+- Randomized controlled trials as gold standard to infer causes
+- Experiments sometimes unethical or unfeasible.
 :::
 
 ::: {.column width="40%"}
@@ -142,7 +165,96 @@ Ask students about their research questions
 -   Example shown: is this correlation or causation? 
 :::
 
-# From regression models to SEM
+
+
+## "Correlation can indicate causation" 
+
+
+> A simple correlation implies an unresolved causal structure, since we cannot know which is the cause, which is the effect, or even if both are common effects of some third, unmeasured variable.    
+Bill Shipley (Cause and correlation in biology, 2004)
+
+::: {.incremental}
+::: columns
+::: {.column width="100%"}
+- Inferring causes from observations is possible, but requires well justified assumptions.
+- Necessary to rule out confounding (i.e., backdoor paths).
+:::
+
+::: {.column width="0%"}
+:::
+:::
+:::
+
+::: notes
+-   Example shown: is this correlation or causation? 
+:::
+
+
+
+
+
+
+
+## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
+
+```{dot}
+//| fig-width: 10
+digraph G {
+
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
+       rankdir = TB]
+
+
+  bgcolor="transparent"
+  resources -> function;
+  diversity -> function;
+  environment -> function;
+  
+}
+```
+
+## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
+
+```{dot}
+//| fig-width: 10
+digraph G {
+
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
+       rankdir = TB]
+
+
+  bgcolor="transparent"
+  resources -> function;
+  diversity -> function;
+  environment -> diversity;
+  environment -> resources;
+  
+  
+}
+```
+
+## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
+
+```{dot}
+//| fig-width: 10
+digraph G {
+
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .9,
+       rankdir = TB nodesep=1]
+
+
+  bgcolor="transparent"
+  resources -> function;
+  diversity -> function;
+  diversity:e -> resources:w [dir=both style="dashed"]
+  environment -> diversity;
+  environment -> resources;
+
+  
+   {rank=same; resources; diversity;}
+  
+}
+```
 
 ## Regression models
 
@@ -179,9 +291,9 @@ digraph {
   X3 -> Y
   E -> Y  [minlen = .1]
   
-  X1:n -> X2:n [dir=both, minlen = 5]
-  X2:n -> X3:n [dir=both, minlen = 5]
-  X1:n -> X3:n [dir=both, minlen = 10]
+  X1:n -> X2:n [dir=both, minlen = 5 style="dashed"]
+  X2:n -> X3:n [dir=both, minlen = 5 style="dashed"]
+  X1:n -> X3:n [dir=both, minlen = 10 style="dashed"]
   
  # control the placement of elements on the graph 
 {rank = same; X1 ; X2; X3}
@@ -300,9 +412,10 @@ digraph {
 :::
 :::
 
+<!-- your comment x
 ## Regression anatomy
 ![](Anatomy_linear_model.jpeg){.absolute width="800"}
-
+-->
 
 ## Motivations to use SEM:
 
@@ -728,13 +841,24 @@ digraph  {
 
 ## Mediation {.smaller}
 
+::: {.incremental}
+-   Tests whether a particular variable has a mediating effect on a path.\
+-   Often used to test underlying mechanisms.
+-   In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.
+-   Possibilities: complete mediation, partial mediation, no mediation.
+:::
+
+.  .  .  
+
+::: columns
+::: {.column width="50%"}
 ```{dot}
-//| fig-width: 6
+//| fig-width: 5
 digraph  {
 
    label     = "Full mediation"
    labelloc  =  t // t: Place the graph's title on top.
-   fontsize  = 10 // Make title stand out by giving a large font size
+   fontsize  = 20 // Make title stand out by giving a large font size
 
   # a 'graph' statement
   graph [overlap = false, layout = dot, splines = curved,
@@ -755,19 +879,19 @@ digraph  {
     {rank=same; richness;}
 }
 ```
+:::
 
-.  .  .
-
+::: {.column width="50%"}
 ```{dot}
-//| fig-width: 6
+//| fig-width: 5
 digraph  {
 
    label     = "Partial mediation"
    labelloc  =  t // t: Place the graph's title on top.
-   fontsize  = 10 // Make title stand out by giving a large font size
+   fontsize  = 20 // Make title stand out by giving a large font size
 
   # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, splines = curved,
+  graph [overlap = false, layout = dot, splines = curved,
        rankdir = LR]
 
   # several 'node' statements
@@ -787,12 +911,12 @@ digraph  {
 }
 ```
 
-::: {.incremental}
--   Tests whether a particular variable has a mediating effect on a path.\
--   Often used to test underlying mechanisms.
--   In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.
--   Possibilities: complete mediation, partial mediation, no mediation.
 :::
+:::
+
+
+
+
 
 # Model identification
 

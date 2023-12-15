@@ -9,10 +9,10 @@ library(ggdag)
 # simulate a dataset with known causal structure (make drawing)
 set.seed(2397348)
 N <- 50
-dat <- data.frame(x1 = runif(N))
-dat$x2 = 0.9 * dat$x1 + runif(N)
-dat$x3 = -0.5 * dat$x2 + runif(N)
-dat$y = 1.7 * dat$x1 + 0.8 * dat$x2 + runif(N) 
+dat <- data.frame(x1 = rnorm(N))
+dat$x2 = 0.9 * dat$x1 + rnorm(N)
+dat$x3 = -0.5 * dat$x2 + rnorm(N)
+dat$y = 1.7 * dat$x1 + 0.8 * dat$x2 + rnorm(N) 
 
 dagify(y ~ x2 + x1,
        x2 ~ x1,
@@ -37,16 +37,15 @@ dagify(y ~ x1,
 summary(lm(y~x1+x2+x3, data=dat))
 
 # same in lavaan
-model <- ' 
-y ~ x1 + x2 + x3
-'
+model <- '
+y ~ x1 + x2 + x3'
 
 fit <- sem(model, meanstructure=T, data=dat)
-summary(fit, rsq=T)
+summary(fit)
 
 
 # Fit first SEM
-model2 <- ' 
+model2 <- '
 y ~ x1 + x3
 x2 ~ x1
 x3 ~ x2
@@ -78,7 +77,7 @@ dagify(y ~ x1 + x2 + x3,
 
 
 fit3 <- sem(model3, data=dat)
-summary(fit3, fit.measures = T)
+summary(fit3)
 
 summary(fit3, fit.measures = T)
 
@@ -95,7 +94,7 @@ dagify(y ~ x1 + x2,
   ggdag()
 
 fit_true <- sem(model_true, data=dat)
-summary(fit_true, fit.measures = T)
+summary(fit_true)
 
 # any more paths to include?
 subset(modindices(fit_true))
@@ -105,9 +104,9 @@ anova(fit2, fit_true)
 aictab(list(fit2, fit_true), c("fit 2", "fit true"))
 
 # look at the underlying representations
-lavInspect(fit3, what = "observed")
-lavInspect(fit3, what = "implied")
-lavInspect(fit3, what = "resid")
+lavInspect(fit2, what = "observed")
+lavInspect(fit2, what = "implied")
+lavInspect(fit2, what = "resid")
 
 
 model4 <- ' 
@@ -120,7 +119,7 @@ y ~~ 0*x3
 '
 
 fit4 <- sem(model4, data=dat)
-summary(fit4, fit.measures = T)
+summary(fit4)
 
 # compare nested fits
 anova(fit3, fit4)

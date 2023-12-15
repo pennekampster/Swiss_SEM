@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Frank Pennekamp">
-  <meta name="dcterms.date" content="2022-08-11">
+  <meta name="dcterms.date" content="2024-01-16">
   <title>Introduction to structural equation modelling</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -405,14 +405,14 @@ Frank Pennekamp
     </div>
 </div>
 
-  <p class="date">2022-08-11</p>
+  <p class="date">January 16, 2024</p>
 </section>
 <section id="quick-introduction-of-participants" class="slide level2">
 <h2>Quick introduction of participants</h2>
 <ul>
 <li>Who are you?</li>
 <li>Why do you want to learn about SEM?</li>
-<li>What is your research question for day 3?</li>
+<li>What is your research question?</li>
 </ul>
 </section>
 <section>
@@ -426,8 +426,6 @@ Frank Pennekamp
 <div class="column" style="width:40%;">
 <ul>
 <li>Dr.&nbsp;Frank Pennekamp (main instructor)<br>
-</li>
-<li>Dr.&nbsp;James Grace (advanced topics and model clinic)<br>
 </li>
 <li>Dr.&nbsp;Rachel Korn (course development)<br>
 </li>
@@ -446,18 +444,18 @@ Frank Pennekamp
 <li>General introduction to SEM to model ecological systems</li>
 <li>Fitting SEMs to data (live demo)</li>
 <li>Model evaluation and reporting (exercises)</li>
-<li>Discussion with James Grace</li>
+<li>Work on your research question</li>
 </ul></li>
 <li><em>Day 2</em>:
 <ul>
 <li>Latent and composite variables, interactions, complex sampling designs</li>
 <li>Fitting SEMs to data (live demo &amp; exercises)</li>
 <li>Model visualization</li>
-<li>Discussion with James Grace</li>
+<li>Work on your research question</li>
 </ul></li>
 <li><em>Day 3</em>:
 <ul>
-<li>Self-study with possibility to meet with instructor(s)</li>
+<li>Self-study / discussion with instructor and peers</li>
 </ul></li>
 </ul>
 </section>
@@ -469,6 +467,7 @@ Frank Pennekamp
 <li>Global estimation with R package lavaan</li>
 <li>Hands-on exercises and live coding</li>
 <li>All exercises about one ecological dataset (Seabloom et al.&nbsp;2020)</li>
+<li>Work on your own dataset</li>
 </ul></li>
 </ul>
 <div class="fragment">
@@ -535,15 +534,40 @@ Frank Pennekamp
           display:block!important;
       }</style></aside>
 </section>
-<section id="correlation-does-not-imply-causation" class="slide level2">
-<h2>“Correlation does not imply causation”</h2>
+<section id="understanding-causes" class="slide level2">
+<h2>Understanding causes</h2>
+<div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment">Why is understanding causes important?
+<ul>
+<li class="fragment">Justify costly management interventions (e.g., eradication of invasive species, habitat restoration for threatened species)</li>
+</ul></li>
+<li class="fragment">What is the problem?
+<ul>
+<li class="fragment">Confounding of cause with non-cause (interventions with no or detrimental effects)</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/quagga.jpeg"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="causality" class="slide level2">
+<h2>Causality</h2>
+<blockquote>
+<p>“Correlation does not imply causation”</p>
+</blockquote>
 <div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
 <li class="fragment">Causation: everything else being equal, causing variation in X leading to variation in Y (=X causes Y).</li>
 <li class="fragment">Experiments required to isolate effect of X on Y.</li>
-<li class="fragment">Drawing causal insights from observational is data possible, but additional (strong) assumptions required.</li>
+<li class="fragment">Randomized controlled trials as gold standard to infer causes</li>
+<li class="fragment">Experiments sometimes unethical or unfeasible.</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="images/correlation.jpg"></p>
@@ -565,11 +589,193 @@ Frank Pennekamp
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section></section>
-<section>
-<section id="from-regression-models-to-sem" class="title-slide slide level1 center">
-<h1>From regression models to SEM</h1>
+</section>
+<section id="correlation-can-indicate-causation" class="slide level2">
+<h2>“Correlation can indicate causation”</h2>
+<blockquote>
+<p>A simple correlation implies an unresolved causal structure, since we cannot know which is the cause, which is the effect, or even if both are common effects of some third, unmeasured variable.<br>
+Bill Shipley (Cause and correlation in biology, 2004)</p>
+</blockquote>
+<div>
+<div class="columns">
+<div class="column" style="width:100%;">
+<ul>
+<li class="fragment">Inferring causes from observations is possible, but requires well justified assumptions.</li>
+<li class="fragment">Necessary to rule out confounding (i.e., backdoor paths).</li>
+</ul>
+</div><div class="column" style="width:0%;">
 
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Example shown: is this correlation or causation?</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="biodiversity-ecosystem-functioning" class="slide level2" data-background-image="images/meadow.JPG" data-background-opacity="0.4">
+<h2>Biodiversity-ecosystem functioning</h2>
+<div class="cell" data-fig-width="10">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 348.34 130.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 126)">
+<title>
+G
+</title>
+<!-- resources -->
+<g id="node1" class="node">
+<title>
+resources
+</title>
+<ellipse fill="none" stroke="black" cx="47.5" cy="-104" rx="47.5" ry="18"></ellipse> <text text-anchor="middle" x="47.5" y="-99.8" font-family="Times,serif" font-size="14.00">resources</text> </g> <!-- function --> <g id="node2" class="node">
+<title>
+function
+</title>
+<ellipse fill="none" stroke="black" cx="157.5" cy="-18" rx="43.44" ry="18"></ellipse> <text text-anchor="middle" x="157.5" y="-13.8" font-family="Times,serif" font-size="14.00">function</text> </g> <!-- resources&#45;&gt;function --> <g id="edge1" class="edge">
+<title>
+resources-&gt;function
+</title>
+<path fill="none" stroke="black" d="M67.68,-87.59C85.07,-74.31 110.37,-54.99 129.68,-40.24"></path> <polygon fill="black" stroke="black" points="132,-42.88 137.82,-34.03 127.75,-37.31 132,-42.88"></polygon> </g> <!-- diversity --> <g id="node3" class="node">
+<title>
+diversity
+</title>
+<ellipse fill="none" stroke="black" cx="157.5" cy="-104" rx="44.66" ry="18"></ellipse> <text text-anchor="middle" x="157.5" y="-99.8" font-family="Times,serif" font-size="14.00">diversity</text> </g> <!-- diversity&#45;&gt;function --> <g id="edge2" class="edge">
+<title>
+diversity-&gt;function
+</title>
+<path fill="none" stroke="black" d="M157.5,-85.6C157.5,-74.26 157.5,-59.23 157.5,-46.32"></path> <polygon fill="black" stroke="black" points="161,-46.1 157.5,-36.1 154,-46.1 161,-46.1"></polygon> </g> <!-- environment --> <g id="node4" class="node">
+<title>
+environment
+</title>
+<ellipse fill="none" stroke="black" cx="280.5" cy="-104" rx="59.69" ry="18"></ellipse> <text text-anchor="middle" x="280.5" y="-99.8" font-family="Times,serif" font-size="14.00">environment</text> </g> <!-- environment&#45;&gt;function --> <g id="edge3" class="edge">
+<title>
+environment-&gt;function
+</title>
+<path fill="none" stroke="black" d="M257.36,-87.2C237.67,-73.75 209.24,-54.33 187.74,-39.65"></path> <polygon fill="black" stroke="black" points="189.52,-36.63 179.29,-33.88 185.58,-42.41 189.52,-36.63"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="biodiversity-ecosystem-functioning-1" class="slide level2" data-background-image="images/meadow.JPG" data-background-opacity="0.4">
+<h2>Biodiversity-ecosystem functioning</h2>
+<div class="cell" data-fig-width="10">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 210.33 216.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 212)">
+<title>
+G
+</title>
+<!-- resources -->
+<g id="node1" class="node">
+<title>
+resources
+</title>
+<ellipse fill="none" stroke="black" cx="47.5" cy="-104" rx="47.5" ry="18"></ellipse> <text text-anchor="middle" x="47.5" y="-99.8" font-family="Times,serif" font-size="14.00">resources</text> </g> <!-- function --> <g id="node2" class="node">
+<title>
+function
+</title>
+<ellipse fill="none" stroke="black" cx="102.5" cy="-18" rx="43.44" ry="18"></ellipse> <text text-anchor="middle" x="102.5" y="-13.8" font-family="Times,serif" font-size="14.00">function</text> </g> <!-- resources&#45;&gt;function --> <g id="edge1" class="edge">
+<title>
+resources-&gt;function
+</title>
+<path fill="none" stroke="black" d="M58.37,-86.4C66.28,-74.32 77.13,-57.75 86.09,-44.06"></path> <polygon fill="black" stroke="black" points="89.11,-45.84 91.66,-35.56 83.25,-42.01 89.11,-45.84"></polygon> </g> <!-- diversity --> <g id="node3" class="node">
+<title>
+diversity
+</title>
+<ellipse fill="none" stroke="black" cx="157.5" cy="-104" rx="44.66" ry="18"></ellipse> <text text-anchor="middle" x="157.5" y="-99.8" font-family="Times,serif" font-size="14.00">diversity</text> </g> <!-- diversity&#45;&gt;function --> <g id="edge2" class="edge">
+<title>
+diversity-&gt;function
+</title>
+<path fill="none" stroke="black" d="M146.63,-86.4C138.72,-74.32 127.87,-57.75 118.91,-44.06"></path> <polygon fill="black" stroke="black" points="121.75,-42.01 113.34,-35.56 115.89,-45.84 121.75,-42.01"></polygon> </g> <!-- environment --> <g id="node4" class="node">
+<title>
+environment
+</title>
+<ellipse fill="none" stroke="black" cx="102.5" cy="-190" rx="59.69" ry="18"></ellipse> <text text-anchor="middle" x="102.5" y="-185.8" font-family="Times,serif" font-size="14.00">environment</text> </g> <!-- environment&#45;&gt;resources --> <g id="edge4" class="edge">
+<title>
+environment-&gt;resources
+</title>
+<path fill="none" stroke="black" d="M91.37,-172C83.49,-159.97 72.79,-143.63 63.93,-130.1"></path> <polygon fill="black" stroke="black" points="66.83,-128.14 58.43,-121.69 60.98,-131.97 66.83,-128.14"></polygon> </g> <!-- environment&#45;&gt;diversity --> <g id="edge3" class="edge">
+<title>
+environment-&gt;diversity
+</title>
+<path fill="none" stroke="black" d="M113.63,-172C121.51,-159.97 132.21,-143.63 141.07,-130.1"></path> <polygon fill="black" stroke="black" points="144.02,-131.97 146.57,-121.69 138.17,-128.14 144.02,-131.97"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="biodiversity-ecosystem-functioning-2" class="slide level2" data-background-image="images/meadow.JPG" data-background-opacity="0.4">
+<h2>Biodiversity-ecosystem functioning</h2>
+<div class="cell" data-fig-width="10">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 264.33 246.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 242)">
+<title>
+G
+</title>
+<!-- resources -->
+<g id="node1" class="node">
+<title>
+resources
+</title>
+<ellipse fill="none" stroke="black" cx="208.83" cy="-119" rx="47.5" ry="18"></ellipse> <text text-anchor="middle" x="208.83" y="-114.8" font-family="Times,serif" font-size="14.00">resources</text> </g> <!-- function --> <g id="node2" class="node">
+<title>
+function
+</title>
+<ellipse fill="none" stroke="black" cx="126.83" cy="-18" rx="43.44" ry="18"></ellipse> <text text-anchor="middle" x="126.83" y="-13.8" font-family="Times,serif" font-size="14.00">function</text> </g> <!-- resources&#45;&gt;function --> <g id="edge1" class="edge">
+<title>
+resources-&gt;function
+</title>
+<path fill="none" stroke="black" d="M195.29,-101.65C182.12,-85.75 161.94,-61.39 146.9,-43.23"></path> <polygon fill="black" stroke="black" points="149.47,-40.84 140.39,-35.37 144.08,-45.31 149.47,-40.84"></polygon> </g> <!-- diversity --> <g id="node3" class="node">
+<title>
+diversity
+</title>
+<ellipse fill="none" stroke="black" cx="44.83" cy="-119" rx="44.66" ry="18"></ellipse> <text text-anchor="middle" x="44.83" y="-114.8" font-family="Times,serif" font-size="14.00">diversity</text> </g> <!-- diversity&#45;&gt;resources --> <g id="edge3" class="edge">
+<title>
+diversity:e-&gt;resources:w
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M99.95,-119C120.65,-119 130.52,-119 151.31,-119"></path> <polygon fill="black" stroke="black" points="99.66,-115.5 89.66,-119 99.66,-122.5 99.66,-115.5"></polygon> <polygon fill="black" stroke="black" points="151.33,-122.5 161.33,-119 151.33,-115.5 151.33,-122.5"></polygon> </g> <!-- diversity&#45;&gt;function --> <g id="edge2" class="edge">
+<title>
+diversity-&gt;function
+</title>
+<path fill="none" stroke="black" d="M58.37,-101.65C71.55,-85.75 91.72,-61.39 106.76,-43.23"></path> <polygon fill="black" stroke="black" points="109.59,-45.31 113.27,-35.37 104.2,-40.84 109.59,-45.31"></polygon> </g> <!-- environment --> <g id="node4" class="node">
+<title>
+environment
+</title>
+<ellipse fill="none" stroke="black" cx="126.83" cy="-220" rx="59.69" ry="18"></ellipse> <text text-anchor="middle" x="126.83" y="-215.8" font-family="Times,serif" font-size="14.00">environment</text> </g> <!-- environment&#45;&gt;resources --> <g id="edge5" class="edge">
+<title>
+environment-&gt;resources
+</title>
+<path fill="none" stroke="black" d="M140.74,-202.21C153.9,-186.32 173.79,-162.31 188.68,-144.33"></path> <polygon fill="black" stroke="black" points="191.44,-146.48 195.13,-136.55 186.05,-142.01 191.44,-146.48"></polygon> </g> <!-- environment&#45;&gt;diversity --> <g id="edge4" class="edge">
+<title>
+environment-&gt;diversity
+</title>
+<path fill="none" stroke="black" d="M112.92,-202.21C99.69,-186.23 79.64,-162.02 64.72,-144.01"></path> <polygon fill="black" stroke="black" points="67.34,-141.69 58.26,-136.22 61.95,-146.15 67.34,-141.69"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="regression-models" class="slide level2">
 <h2>Regression models</h2>
@@ -599,7 +805,7 @@ X2
 <title>
 X1:n-&gt;X2:n
 </title>
-<path fill="none" stroke="black" d="M27,-209C27,-237.62 142.23,-240.64 166.53,-218.06"></path> <polygon fill="black" stroke="black" points="169.72,-219.52 171,-209 163.44,-216.42 169.72,-219.52"></polygon> </g> <!-- X3 --> <g id="node3" class="node">
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M27,-209C27,-237.62 142.23,-240.64 166.53,-218.06"></path> <polygon fill="black" stroke="black" points="169.72,-219.52 171,-209 163.44,-216.42 169.72,-219.52"></polygon> </g> <!-- X3 --> <g id="node3" class="node">
 <title>
 X3
 </title>
@@ -607,7 +813,7 @@ X3
 <title>
 X1:n-&gt;X3:n
 </title>
-<path fill="none" stroke="black" d="M29.49,-217.93C56.04,-268.76 286.58,-268.69 312.61,-217.73"></path> <polygon fill="black" stroke="black" points="32.83,-216.85 27,-208 26.04,-218.55 32.83,-216.85"></polygon> <polygon fill="black" stroke="black" points="316.01,-218.55 315,-208 309.22,-216.88 316.01,-218.55"></polygon> </g> <!-- Y --> <g id="node4" class="node">
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M29.49,-217.93C56.04,-268.76 286.58,-268.69 312.61,-217.73"></path> <polygon fill="black" stroke="black" points="32.83,-216.85 27,-208 26.04,-218.55 32.83,-216.85"></polygon> <polygon fill="black" stroke="black" points="316.01,-218.55 315,-208 309.22,-216.88 316.01,-218.55"></polygon> </g> <!-- Y --> <g id="node4" class="node">
 <title>
 Y
 </title>
@@ -619,7 +825,7 @@ X1-&gt;Y
 <title>
 X2:n-&gt;X3:n
 </title>
-<path fill="none" stroke="black" d="M171,-209C171,-237.62 286.23,-240.64 310.53,-218.06"></path> <polygon fill="black" stroke="black" points="313.72,-219.52 315,-209 307.44,-216.42 313.72,-219.52"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M171,-209C171,-237.62 286.23,-240.64 310.53,-218.06"></path> <polygon fill="black" stroke="black" points="313.72,-219.52 315,-209 307.44,-216.42 313.72,-219.52"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
 <title>
 X2-&gt;Y
 </title>
@@ -792,10 +998,10 @@ U1-&gt;X3
 </div>
 </div>
 </div>
-</section>
-<section id="regression-anatomy" class="slide level2">
-<h2>Regression anatomy</h2>
-<p><img data-src="Anatomy_linear_model.jpeg" class="absolute" style="width: 800px; "></p>
+<!-- your comment x
+## Regression anatomy
+![](Anatomy_linear_model.jpeg){.absolute width="800"}
+-->
 </section>
 <section id="motivations-to-use-sem" class="slide level2">
 <h2>Motivations to use SEM:</h2>
@@ -1084,15 +1290,15 @@ biodiversity-&gt;biomass
 <div>
 <div>
 <svg width="576" height="480" viewbox="0.00 0.00 344.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust1" class="cluster">
-<title>
-cluster_bio
-</title>
-<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <g id="clust3" class="cluster">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 340.44,-215 340.44,4 -4,4"></polygon> <g id="clust3" class="cluster">
 <title>
 cluster_prod
 </title>
-<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <g id="clust2" class="cluster">
+<polygon fill="none" stroke="lightgrey" points="244.31,-54 244.31,-126 328.44,-126 328.44,-54 244.31,-54"></polygon> <text text-anchor="middle" x="286.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Productivity</text> </g> <g id="clust1" class="cluster">
+<title>
+cluster_bio
+</title>
+<polygon fill="none" stroke="lightgrey" points="132.38,-77 132.38,-203 224.31,-203 224.31,-77 132.38,-77"></polygon> <text text-anchor="middle" x="178.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <g id="clust2" class="cluster">
 <title>
 cluster_env
 </title>
@@ -1437,12 +1643,24 @@ richness-&gt;biomass
 </section>
 <section id="mediation" class="slide level2 smaller">
 <h2>Mediation</h2>
-<div class="cell" data-fig-width="6">
+<div>
+<ul>
+<li class="fragment">Tests whether a particular variable has a mediating effect on a path.<br>
+</li>
+<li class="fragment">Often used to test underlying mechanisms.</li>
+<li class="fragment">In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.</li>
+<li class="fragment">Possibilities: complete mediation, partial mediation, no mediation.</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-fig-width="5">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="576" height="480" viewbox="0.00 0.00 285.96 64.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 60)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-60 281.96,-60 281.96,4 -4,4"></polygon> <text text-anchor="middle" x="138.98" y="-43" font-family="Times,serif" font-size="10.00">Full mediation</text> <!-- nutrients --> <g id="node1" class="node">
+<svg width="480" height="480" viewbox="0.00 0.00 285.96 76.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 72)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-72 281.96,-72 281.96,4 -4,4"></polygon> <text text-anchor="middle" x="138.98" y="-46" font-family="Times,serif" font-size="20.00">Full mediation</text> <!-- nutrients --> <g id="node1" class="node">
 <title>
 nutrients
 </title>
@@ -1468,13 +1686,13 @@ richness-&gt;biomass
 </div>
 </div>
 </div>
-<div class="fragment">
-<div class="cell" data-fig-width="6">
+</div><div class="column" style="width:50%;">
+<div class="cell" data-fig-width="5">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="576" height="480" viewbox="0.00 0.00 285.96 100.59" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 96.59)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-96.59 281.96,-96.59 281.96,4 -4,4"></polygon> <text text-anchor="middle" x="138.98" y="-79.59" font-family="Times,serif" font-size="10.00">Partial mediation</text> <!-- nutrients --> <g id="node1" class="node">
+<svg width="480" height="480" viewbox="0.00 0.00 285.96 112.59" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108.59)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-108.59 281.96,-108.59 281.96,4 -4,4"></polygon> <text text-anchor="middle" x="138.98" y="-82.59" font-family="Times,serif" font-size="20.00">Partial mediation</text> <!-- nutrients --> <g id="node1" class="node">
 <title>
 nutrients
 </title>
@@ -1504,14 +1722,7 @@ richness-&gt;biomass
 </div>
 </div>
 </div>
-<div>
-<ul>
-<li class="fragment">Tests whether a particular variable has a mediating effect on a path.<br>
-</li>
-<li class="fragment">Often used to test underlying mechanisms.</li>
-<li class="fragment">In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.</li>
-<li class="fragment">Possibilities: complete mediation, partial mediation, no mediation.</li>
-</ul>
+</div>
 </div>
 </div>
 </section></section>
@@ -1580,7 +1791,7 @@ RHS: information we have (number of unique cells in the observed variance-covari
 <section id="sem-scatterplot-of-observed-variables" class="slide level2">
 <h2>SEM: scatterplot of observed variables</h2>
 
-<img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-14-1.png" style="width:90.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-17-1.png" style="width:90.0%" class="r-stretch quarto-figure-center"></section>
 <section id="sem-variance-covariance-matrix" class="slide level2 smaller">
 <h2>SEM: variance-covariance matrix</h2>
 <div class="cell" data-layout-align="center">
@@ -2045,7 +2256,7 @@ Y1-&gt;Y2
 <p>The total effect (including undirected paths) is equivalent to the total correlation.</p>
 </blockquote>
 </section>
-<section id="regression-anatomy-1" class="slide level2">
+<section id="regression-anatomy" class="slide level2">
 <h2>Regression anatomy</h2>
 <p><img data-src="Anatomy_linear_model.jpeg" class="absolute" style="width: 800px; "></p>
 </section>
