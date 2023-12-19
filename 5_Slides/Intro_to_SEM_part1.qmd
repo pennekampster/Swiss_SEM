@@ -13,7 +13,7 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
-    footer: Introduction to SEM (2022)
+    footer: Introduction to SEM (2024)
     width: 1200
     height: 800
 editor:
@@ -185,15 +185,49 @@ Bill Shipley (Cause and correlation in biology, 2004)
 :::
 :::
 
-::: notes
--   Example shown: is this correlation or causation? 
+
+
+## How can we determine causality? 
+> The combination of knowledge of correlations with knowledge of causal relations, to obtain certain results, is a different thing from the deduction of causal relations from correlations.”    
+Sewell Wright, 1923
+
+::: {.incremental}
+::: columns
+::: {.column width="100%"}
+- Design and conduct experiments
+- Develop theory 
+- Build knowledge from past observation
+- Test hypotheses
+:::
+
+::: {.column width="0%"}
+:::
+:::
 :::
 
 
 
 
+## How can we evaluate causality? 
+- Build a hypothesized causal structure
+![](images/A_priori_SEM.jpg){width="50%"}
 
+## How can we evaluate causality? 
+- Build a hypothesized causal structure
+- Collect data
 
+## How can we evaluate causality? 
+- Build a hypothesized causal structure
+- Collect data
+- Test data against structure, extract inferences
+![](images/Final_SEM.jpg){width="50%"}
+
+## How can we evaluate causality? 
+- Build a hypothesized causal structure
+- Collect data
+- Test data against structure, extract inferences
+![](images/Final_SEM.jpg){width="50%"}
+- Repeat!
 
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
 
@@ -213,57 +247,14 @@ digraph G {
 }
 ```
 
-## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
-
-```{dot}
-//| fig-width: 10
-digraph G {
-
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
-       rankdir = TB]
-
-
-  bgcolor="transparent"
-  resources -> function;
-  diversity -> function;
-  environment -> diversity;
-  environment -> resources;
-  
-  
-}
-```
-
-## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
-
-```{dot}
-//| fig-width: 10
-digraph G {
-
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .9,
-       rankdir = TB nodesep=1]
-
-
-  bgcolor="transparent"
-  resources -> function;
-  diversity -> function;
-  diversity:e -> resources:w [dir=both style="dashed"]
-  environment -> diversity;
-  environment -> resources;
-
-  
-   {rank=same; resources; diversity;}
-  
-}
-```
-
-## Regression models
+## Regressions
 
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
--   Multiple observed variables.
--   Only direct effects can be modelled with regression models.
+-   Only observed variables.
 -   Correlations between predictors usually ignored (up to threshold).
+-   Only direct effects. 
 :::
 
 ::: {.column width="50%"}
@@ -315,13 +306,144 @@ digraph {
 :::
 
 
-## Structural equation models {.smaller}
+## A simple linear regression
+
+```{dot}
+//| fig-width: 4
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
+       rankdir = TB]
+
+   # 'node' statements
+  node [shape = box,
+        fontname = Helvetica];
+        
+  X1 [label = precipitation]
+  X2 [label = biomass]
+
+  # 'edge' statements
+  X1 -> X2
+ # control the placement of elements on the graph 
+{rank = same; X1 ; X2}
+}
+
+}
+```
+
+::: {.incremental}
+-    `lm(biomass ~ precipitation)`
+-   Regression coefficient quantifies the direction and strength of relationship.\
+-   How much change in Y for one unit change in X.
+::: 
+
+## Multiple regression {.smaller}
+
+```{dot}
+//| fig-width: 4
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 15, layout = neato, rankdir = LR, splines = curved]
+
+  # 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  X1 [pos = "0,-1!", label = nutrients]
+  X2 [pos = "0,-2!",label = precipitation]
+  X3 [pos = "0,-3!",label = richness]
+  X4 [pos = "0,-4!",label = evenness]
+  Y  [pos = "2,-2.5!",label = biomass]
+
+  # 'edge' statements
+  X1 -> Y:w 
+  X2 -> Y:w
+  X3 -> Y:w
+  X4 -> Y:w
+  
+  X1:w -> X2:w [constraint=false, dir=both]
+  X2:w -> X3:w [dir=both]
+  X1:w -> X3:w [dir=both]
+  X1:w -> X4:w [dir=both]
+  X2:w -> X4:w [dir=both]
+  X3:w -> X4:w [dir=both]
+  
+}
+
+```
+
+::: {.incremental}
+-   `lm(biomass ~ precipitation + nutrients + ...)`
+-   More than one independent variable\
+-   Estimates partial effects (i.e. effect of precipitation on biomass when nutrient addition is fixed)\
+:::
+
+<!-- - Discuss with students other variables that may affect B.   -->
+
+<!-- - Introduce a new variable and the question that it answers.  -->
+
+<!-- - Add nutrient variable.  -->
+
+<!-- - Show the graphical model (X1 -> Y, X2 -> Y).  -->
+
+<!-- - Include the equation and the two partial plots.  -->
+
+<!-- - Be clear this is a multiple regression model.  -->
+
+
+## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
+
+```{dot}
+//| fig-width: 10
+digraph G {
+
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
+       rankdir = TB]
+
+
+  bgcolor="transparent"
+  resources -> function;
+  diversity -> function;
+  environment -> diversity;
+  environment -> resources;
+  
+  
+}
+```
+
+## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
+
+```{dot}
+//| fig-width: 10
+digraph G {
+
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .9,
+       rankdir = TB nodesep=1]
+
+
+  bgcolor="transparent"
+  resources -> function;
+  diversity -> function;
+  diversity:e -> resources:w [dir=both style="dashed"]
+  environment -> diversity;
+  environment -> resources;
+
+  
+   {rank=same; resources; diversity;}
+  
+}
+```
+
+
+## Structural equation model {.smaller}
 
 ::: {.incremental}
 -   Allow testing multivariate causal relationship. 
--   SEM embraces relationships between variables (system thinking).
+-   System thinking = causal relationships between multiple variables.
 -   Allow testing both direct and indirect effects.
--   Incorporate observed and unobserved ('latent / composite') variables.
+-   Incorporate observed and unobserved variables (i.e., 'latent / composite').
 
 ::: {layout-ncol="3"}
 ```{dot}
@@ -411,6 +533,166 @@ digraph {
 ```
 :::
 :::
+
+
+## Structural equation model {.smaller}
+
+```{dot}
+//| fig-width: 6
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 10, layout = dot, splines = curved,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  nutrients; evenness, richness; biomass;
+
+  # several 'edge' statements
+    nutrients->richness [style=dashed];
+    nutrients->evenness [style=dashed];
+    evenness->biomass [style=dashed];
+    richness->biomass [style=dashed];
+    nutrients->biomass [color=red, minlen=3];
+    
+    {rank=min; nutrients;}
+    {rank=max; biomass;}
+    {rank=same; richness evenness;}
+}
+```
+
+`lm(richness ~ nutrients)`\
+`lm(evenness ~ nutrients)`\
+`lm(biomass ~ richness + evenness + nutrients)`\
+
+::: {.incremental}
+- Multiple independent and dependent variables
+- Exogenous variables: only have paths emanating from them, not going into them.   
+:::
+
+
+## Structural equation model {.smaller}
+
+
+```{dot}
+//| fig-width: 6
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 10, layout = dot, splines = curved,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  nutrients; evenness, richness; biomass;
+
+  # several 'edge' statements
+    nutrients->richness [style=dashed];
+    nutrients->evenness [style=dashed];
+    evenness->biomass [style=dashed];
+    richness->biomass [style=dashed];
+    nutrients->biomass [color=red, minlen=3];
+    
+    {rank=min; nutrients;}
+    {rank=max; biomass;}
+    {rank=same; richness evenness;}
+}
+```
+
+`lm(richness ~ nutrients)`\
+`lm(evenness ~ nutrients)`\
+`lm(biomass ~ richness + evenness + nutrients)`\
+
+::: {.incremental}
+- Endogenous variables have paths directed into them.  
+  + An endogenous variable can also have arrows directing out of it.  
+  + Endogenous variables must be predicted.  
+-   Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.\
+:::
+
+
+## Mediation {.smaller}
+
+::: {.incremental}
+-   Tests whether a particular variable has a mediating effect on a path.\
+-   Often used to test underlying mechanisms.
+-   In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.
+-   Possibilities: complete mediation, partial mediation, no mediation.
+:::
+
+.  .  .  
+
+::: columns
+::: {.column width="50%"}
+```{dot}
+//| fig-width: 5
+digraph  {
+
+   label     = "Full mediation"
+   labelloc  =  t // t: Place the graph's title on top.
+   fontsize  = 20 // Make title stand out by giving a large font size
+
+  # a 'graph' statement
+  graph [overlap = false, layout = dot, splines = curved,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  nutrients; richness; biomass;
+
+  # several 'edge' statements
+    nutrients->richness [style=solid];
+    richness->biomass [style=solid];
+    
+    {rank=min; nutrients;}
+    {rank=max; biomass;}
+    {rank=same; richness;}
+}
+```
+:::
+
+::: {.column width="50%"}
+```{dot}
+//| fig-width: 5
+digraph  {
+
+   label     = "Partial mediation"
+   labelloc  =  t // t: Place the graph's title on top.
+   fontsize  = 20 // Make title stand out by giving a large font size
+
+  # a 'graph' statement
+  graph [overlap = false, layout = dot, splines = curved,
+       rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+        
+  nutrients; richness; biomass;
+
+  # several 'edge' statements
+    nutrients->richness [style=solid];
+    richness->biomass [style=solid];
+    nutrients->biomass [style=solid];
+
+    {rank=min; nutrients;}
+    {rank=max; biomass;}
+    {rank=same; richness;}
+}
+```
+
+:::
+:::
+
+
+
 
 <!-- your comment x
 ## Regression anatomy
@@ -502,11 +784,6 @@ digraph {
 :::
 :::
 
-::: notes
--   Explain the concept and discuss with students the topic.
--   Show the difference between direct effects and correlation together with the graphical representation.
-:::
-
 ## Explanatory modelling with SEM
 
 ![](images/Explanatory_modelling.png){width="60%"}
@@ -517,408 +794,21 @@ digraph {
 
 # Questions?
 
-# Introduction to the dataset
-
-## Introduction to the dataset 
-
-![](images/CedarCreek.jpg)
-
-- Experimental grassland study (started in 1982)
-- Long-term consequences of human-driven environmental changes on grasslands:
-  + Soil disturbance
-  + Nitrogen deposition
-  + Changes in precipitation
-
-## Introduction to the dataset 
-
-::: columns
-::: {.column width="50%"}
-![](images/CedarCreek_map.png){width="100%"}
-:::
-
-::: {.column width="50%"}
-- Study site located in Minnesota (Cedar Creek Ecosystem Science Reserve).
-- Design:
-  + three study fields within the reserve.
-  + 35 x 55 m intact (black) and disturbed (red) plots within each field.
-:::
-:::
-
-
-## Introduction to the dataset {.smaller}
-
-![](images/CedarCreek_exp_design.png){.relative width="800" right=200}
-
-- 4 x 4 m nutrient treatment plots within the intact or disturbed plots (within fields A-C). 
-- Letters indicate the nutrient treatments.
-
-## Introduction to the dataset {.smaller}
-
-![](images/AGB_disturbance.png)
-
-- Effect of soil disturbance and nutrient enrichment on aboveground plant biomass. 
-- Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).
-
-## Introduction to the dataset {.smaller}
-
-
-![](images/AGB_diversity.png){.relative width="700" right=200}
-
-- Effect of soil disturbance (disking) and nutrient enrichment on:
-  A) effective number of species (ENS~PIE~)
-  A) richness (S, species 0.3 m−2)
-  A) Simpsons's evenness 
-
-::: aside
-ENS~PIE~ equivalent to $1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass represented by species $i$.
-:::
-
-  
-## Potential research questions
-
-```{dot}
-//| fig-width: 8
-digraph  {
-
-   # a 'graph' statement
-  graph [overlap = false, fontsize = 10, splines = curved, rankdir = LR]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  
-   environment -> biodiversity -> biomass;
-   environment -> biomass;
-  
-}
-```
-
-1)  How has aboveground biomass changed as a function of soil disturbance and nutrient addition?
-2)  How are these effects mediated by biodiversity?
-
-::: notes
-Ask students about how they would address this question.
-:::
-
-## Design meta-model {.smaller}
-
-```{dot}
-//| fig-width: 6
-digraph  {
-
-   # a 'graph' statement
-  graph [overlap = false, fontsize = 10, splines = curved, rankdir = LR]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  
-   subgraph cluster_bio {
-        label="Biodiversity"
-        fontname = Helvetica
-		    color=lightgrey;
-        evenness, richness;
-        }
-
-
-   subgraph cluster_env {
-        label="Environment"
-        fontname = Helvetica
-     		color=lightgrey;
-
-        nutrients;
-        disturbance;
-        }
-
-    nutrients->richness;
-    nutrients->evenness;
-    nutrients->biomass;
-    disturbance -> biomass;
-
-   subgraph cluster_prod {
-     label="Productivity";
-     fontname = Helvetica;
-     color=lightgrey;
-     biomass; 
-     }
-
-    evenness->biomass ;
-    richness->biomass ;
-  
-}
-```
-
-Meta-model are conceptual models that allow to link data with theory.
-
-::: {.incremental}
-1)  Productivity (biomass) is directly influenced by the environment (nutrients and disturbance)
-2)  Productivity (biomass) is directly influenced by biodiversity (richness and evenness).
-3)  The environment also influences biodiversity and thus, have an indirect effect on productivity via biodiversity.
-:::
-
-
-::: notes
--   Ask students about how they would address this question.
--   Thinking about what is missing in the model, measurement errors etc.
--   Present the concept of meta-model and impications for research.
--   Include a graphical representation of the meta-model as what is missing in the model.
-:::
-
 ## Exercise
 
 -   Your turn!
--   Draw a meta-model of the dataset you want to understand.
+-   What type is your SEM (response, driver, mediation, theory focused)?
+-   Draw a causal diagram of the dataset you want to understand.
 -   Make a table with putative causal relationships.
 
-## A simple bivariate model.
-
-```{dot}
-//| fig-width: 4
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
-       rankdir = TB]
-
-   # 'node' statements
-  node [shape = box,
-        fontname = Helvetica];
-        
-  X1 [label = precipitation]
-  X2 [label = biomass]
-
-  # 'edge' statements
-  X1 -> X2
- # control the placement of elements on the graph 
-{rank = same; X1 ; X2}
-}
-
-}
-```
-
-::: {.incremental}
--    `lm(biomass ~ precipitation)`
--   Linear regression\
--   Regression coefficient quantifies the strength of relationship\
--   Change in Y for one unit change in X
-::: 
-
-## Multiple independent variables {.smaller}
-
-```{dot}
-//| fig-width: 4
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 15, layout = neato, rankdir = LR, splines = curved]
-
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-        
-  X1 [pos = "0,-1!", label = nutrients]
-  X2 [pos = "0,-2!",label = precipitation]
-  X3 [pos = "0,-3!",label = richness]
-  X4 [pos = "0,-4!",label = evenness]
-  Y  [pos = "2,-2.5!",label = biomass]
-
-  # 'edge' statements
-  X1 -> Y:w 
-  X2 -> Y:w
-  X3 -> Y:w
-  X4 -> Y:w
-  
-  X1:w -> X2:w [constraint=false, dir=both]
-  X2:w -> X3:w [dir=both]
-  X1:w -> X3:w [dir=both]
-  X1:w -> X4:w [dir=both]
-  X2:w -> X4:w [dir=both]
-  X3:w -> X4:w [dir=both]
-  
-}
-
-```
-
-::: {.incremental}
--   `lm(biomass ~ precipitation + nutrients + ...)`
--   More than one independent variable = multiple regression\
--   Estimates partial effects (i.e. effect of precipitation on biomass when nutrient addition is fixed)\
--   Only direct effects.
-:::
-
-<!-- - Discuss with students other variables that may affect B.   -->
-
-<!-- - Introduce a new variable and the question that it answers.  -->
-
-<!-- - Add nutrient variable.  -->
-
-<!-- - Show the graphical model (X1 -> Y, X2 -> Y).  -->
-
-<!-- - Include the equation and the two partial plots.  -->
-
-<!-- - Be clear this is a multiple regression model.  -->
-
-## Multiple independent and dependent variables {.smaller}
-
-```{dot}
-//| fig-width: 6
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, splines = curved,
-       rankdir = LR]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-        
-  nutrients; evenness, richness; biomass;
-
-  # several 'edge' statements
-    nutrients->richness [style=dashed];
-    nutrients->evenness [style=dashed];
-    evenness->biomass [style=dashed];
-    richness->biomass [style=dashed];
-    nutrients->biomass [color=red, minlen=3];
-    
-    {rank=min; nutrients;}
-    {rank=max; biomass;}
-    {rank=same; richness evenness;}
-}
-```
-
-`lm(richness ~ nutrients)`\
-`lm(evenness ~ nutrients)`\
-`lm(biomass ~ richness + evenness + nutrients)`\
-
-::: {.incremental}
-- Exogenous variables: only have paths emanating from them, not going into them.   
-- Endogenous variables have paths directed into them.  
-  + An endogenous variable can also have arrows directing out of it.  
-  + Endogenous variables must be predicted.  
-:::
 
 
-## Multiple independent and dependent variables {.smaller}
+# SEM model fitting
 
 
-```{dot}
-//| fig-width: 6
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, splines = curved,
-       rankdir = LR]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-        
-  nutrients; evenness, richness; biomass;
-
-  # several 'edge' statements
-    nutrients->richness [style=dashed];
-    nutrients->evenness [style=dashed];
-    evenness->biomass [style=dashed];
-    richness->biomass [style=dashed];
-    nutrients->biomass [color=red, minlen=3];
-    
-    {rank=min; nutrients;}
-    {rank=max; biomass;}
-    {rank=same; richness evenness;}
-}
-```
-
-`lm(richness ~ nutrients)`\
-`lm(evenness ~ nutrients)`\
-`lm(biomass ~ richness + evenness + nutrients)`\
-
-::: {.incremental}
--   Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.\
--   Indirect effects can be quantified by the product of the compound path.
-:::
+## A SEM example
 
 
-## Mediation {.smaller}
-
-::: {.incremental}
--   Tests whether a particular variable has a mediating effect on a path.\
--   Often used to test underlying mechanisms.
--   In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.
--   Possibilities: complete mediation, partial mediation, no mediation.
-:::
-
-.  .  .  
-
-::: columns
-::: {.column width="50%"}
-```{dot}
-//| fig-width: 5
-digraph  {
-
-   label     = "Full mediation"
-   labelloc  =  t // t: Place the graph's title on top.
-   fontsize  = 20 // Make title stand out by giving a large font size
-
-  # a 'graph' statement
-  graph [overlap = false, layout = dot, splines = curved,
-       rankdir = LR]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-        
-  nutrients; richness; biomass;
-
-  # several 'edge' statements
-    nutrients->richness [style=solid];
-    richness->biomass [style=solid];
-    
-    {rank=min; nutrients;}
-    {rank=max; biomass;}
-    {rank=same; richness;}
-}
-```
-:::
-
-::: {.column width="50%"}
-```{dot}
-//| fig-width: 5
-digraph  {
-
-   label     = "Partial mediation"
-   labelloc  =  t // t: Place the graph's title on top.
-   fontsize  = 20 // Make title stand out by giving a large font size
-
-  # a 'graph' statement
-  graph [overlap = false, layout = dot, splines = curved,
-       rankdir = LR]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-        
-  nutrients; richness; biomass;
-
-  # several 'edge' statements
-    nutrients->richness [style=solid];
-    richness->biomass [style=solid];
-    nutrients->biomass [style=solid];
-
-    {rank=min; nutrients;}
-    {rank=max; biomass;}
-    {rank=same; richness;}
-}
-```
-
-:::
-:::
-
-
-
-
-
-# Model identification
 
 ## Model identification
 
@@ -939,15 +829,6 @@ $$ t \leq \frac{n (n + 1 )}{2} $$
 
 The LHS is how many pieces of information we want to know.\
 RHS: information we have (number of unique cells in the observed variance-covariance matrix).
-
-## Data requirements
-
-::: {.incremental}
--   Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).
--   To estimate two relationships, at least n = 10 required to fit model.
--   Ideally, replication is 5-20x the number of estimated parameters.
--   The larger the sample size, the more precise (unbiased) are the estimates.
-:::
 
 # Model estimation
 
@@ -1285,20 +1166,6 @@ $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
 where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)
 :::
 
-## Heywood cases : when things go wrong
-
--   Improper solutions:
-    -   Negative variances\
-    -   Correlations larger than 1
-
-. . .
-
--   Reasons for the warnings can be:
-    1)  Slightly negative error estimates (not really a problem)\
-    2)  Indicators for latent variables need to be positively correlated\
-    3)  Local non-identification of parameters\
-    4)  Model misspecification
-
 # Model evaluation
 
 ## Model fit measures {.smaller}
@@ -1335,6 +1202,29 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 -   Linear relationships
 ::: 
 
+## Data requirements
+
+::: {.incremental}
+-   Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).
+-   To estimate two relationships, at least n = 10 required to fit model.
+-   Ideally, replication is 5-20x the number of estimated parameters.
+-   The larger the sample size, the more precise (unbiased) are the estimates.
+:::
+
+## Heywood cases : when things go wrong
+
+-   Improper solutions:
+    -   Negative variances\
+    -   Correlations larger than 1
+
+. . .
+
+-   Reasons for the warnings can be:
+    1)  Slightly negative error estimates (not really a problem)\
+    2)  Indicators for latent variables need to be positively correlated\
+    3)  Local non-identification of parameters\
+    4)  Model misspecification
+
 ## SEM workflow in a nutshell {.smaller}
 
 1)  Review the relevant theory and research literature to support model specification
@@ -1348,7 +1238,9 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 9)  Check for missing or unnecessary links
 10) Interpret and present results visually
 
-# Lavaan syntax
+# Questions?
+
+# Live coding session
 
 ## Lavaan syntax
 
@@ -1379,11 +1271,151 @@ fit.simple <- sem(simple, data = seabloom)
 | labelling    | `*`   | name coefficients         | `y ~ b1*x1 + b2*x2`       |
 | defining     | `:=`  | define quantity           | `Total := b1*b3 + b2`     |
 
-# Questions?
-
-# Live coding session
-
 # Your turn: working with the Seabloom dataset
+
+## Introduction to the dataset 
+
+![](images/CedarCreek.jpg)
+
+- Experimental grassland study (started in 1982)
+- Long-term consequences of human-driven environmental changes on grasslands:
+  + Soil disturbance
+  + Nitrogen deposition
+  + Changes in precipitation
+
+## Introduction to the dataset 
+
+::: columns
+::: {.column width="50%"}
+![](images/CedarCreek_map.png){width="100%"}
+:::
+
+::: {.column width="50%"}
+- Study site located in Minnesota (Cedar Creek Ecosystem Science Reserve).
+- Design:
+  + three study fields within the reserve.
+  + 35 x 55 m intact (black) and disturbed (red) plots within each field.
+:::
+:::
+
+
+## Introduction to the dataset {.smaller}
+
+![](images/CedarCreek_exp_design.png){.relative width="800" right=200}
+
+- 4 x 4 m nutrient treatment plots within the intact or disturbed plots (within fields A-C). 
+- Letters indicate the nutrient treatments.
+
+## Introduction to the dataset {.smaller}
+
+![](images/AGB_disturbance.png)
+
+- Effect of soil disturbance and nutrient enrichment on aboveground plant biomass. 
+- Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).
+
+## Introduction to the dataset {.smaller}
+
+
+![](images/AGB_diversity.png){.relative width="700" right=200}
+
+- Effect of soil disturbance (disking) and nutrient enrichment on:
+  A) effective number of species (ENS~PIE~)
+  A) richness (S, species 0.3 m−2)
+  A) Simpsons's evenness 
+
+::: aside
+ENS~PIE~ equivalent to $1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass represented by species $i$.
+:::
+
+  
+## Potential research questions
+
+```{dot}
+//| fig-width: 8
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, splines = curved, rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  
+   environment -> biodiversity -> biomass;
+   environment -> biomass;
+  
+}
+```
+
+1)  How has aboveground biomass changed as a function of soil disturbance and nutrient addition?
+2)  How are these effects mediated by biodiversity?
+
+::: notes
+Ask students about how they would address this question.
+:::
+
+## Design meta-model {.smaller}
+
+```{dot}
+//| fig-width: 6
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, splines = curved, rankdir = LR]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  
+   subgraph cluster_bio {
+        label="Biodiversity"
+        fontname = Helvetica
+		    color=lightgrey;
+        evenness, richness;
+        }
+
+
+   subgraph cluster_env {
+        label="Environment"
+        fontname = Helvetica
+     		color=lightgrey;
+
+        nutrients;
+        disturbance;
+        }
+
+    nutrients->richness;
+    nutrients->evenness;
+    nutrients->biomass;
+    disturbance -> biomass;
+
+   subgraph cluster_prod {
+     label="Productivity";
+     fontname = Helvetica;
+     color=lightgrey;
+     biomass; 
+     }
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+}
+```
+
+::: {.incremental}
+1)  Productivity (biomass) is directly influenced by the environment (nutrients and disturbance)
+2)  Productivity (biomass) is directly influenced by biodiversity (richness and evenness).
+3)  The environment also influences biodiversity and thus, have an indirect effect on productivity via biodiversity.
+:::
+
+
+::: notes
+-   Ask students about how they would address this question.
+-   Thinking about what is missing in the model, measurement errors etc.
+-   Present the concept of meta-model and impications for research.
+-   Include a graphical representation of the meta-model as what is missing in the model.
+:::
+
 
 ## Exercise 1 {.smaller}
 
