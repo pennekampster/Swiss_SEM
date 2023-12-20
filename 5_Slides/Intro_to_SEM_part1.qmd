@@ -15,7 +15,7 @@ format:
     show-slide-number: all
     footer: Introduction to SEM (2024)
     width: 1200
-    height: 800
+    height: 900
 editor:
   render-on-save: true
 ---
@@ -229,6 +229,81 @@ Sewell Wright, 1923
 ![](images/Final_SEM.jpg){width="50%"}
 - Repeat!
 
+
+:::notes
+https://www.nature.com/articles/ncomms10541
+:::
+
+
+
+## Causal diagram
+
+::: {.incremental}
+-   Graph specifying putative cause-effect relationships.
+-   Data-generating mechanisms leading to a set of observational expectations.
+-   Causal diagrams are based on directed acyclic graphs (DAGs).
+:::
+
+## Directed acyclic graphs {.smaller}
+
+::: {.incremental}
+::: columns
+::: {.column width="50%"}
+- Variables are nodes (boxes). 
+- Edges (one-headed arrows) are causal relationships such as X affects Y.  
+- Directed = unidirectional.  
+- Edges can have any functional shape. 
+- Acyclic = no causal loops permitted.  
+- Omitted links and nodes have empirical implications (= assumptions about the causal diagram)
+- U variables represent unmeasured causes.
+:::
+
+::: {.column width="50%"}
+```{dot}
+//| fig-width: 4
+digraph {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 15, layout = dot, ranksep = equally,
+       rankdir = Tb];
+
+  # 'node' statements
+  node [shape = box,
+        fontname = Helvetica];
+  X; Y;
+
+  # 'edge' statements
+  X -> W;
+  X -> Z;
+  W -> Y;
+  Z -> Y;
+  
+ node [shape = plaintext,
+        fontname = Helvetica];
+  U_w  -> W;
+  U_x -> X;
+  U_y -> Y;
+  U_z -> Z;
+  
+  U_w [label = <U<SUB>w</SUB>>];
+  U_x [label = <U<SUB>x</SUB>>];
+  U_y [label = <U<SUB>y</SUB>>];
+  U_z [label = <U<SUB>z</SUB>>];
+ 
+ 
+ # control the placement of elements on the graph 
+ {rank = min; U_x };
+ {rank = same; Z ; W;};
+ {rank = max; U_y};
+
+  }
+
+```
+:::
+:::
+:::
+
+
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
 
 ```{dot}
@@ -440,7 +515,7 @@ digraph G {
 ## Structural equation model {.smaller}
 
 ::: {.incremental}
--   Allow testing multivariate causal relationship. 
+-   A series of equations united in a single causal network.
 -   System thinking = causal relationships between multiple variables.
 -   Allow testing both direct and indirect effects.
 -   Incorporate observed and unobserved variables (i.e., 'latent / composite').
@@ -717,72 +792,6 @@ digraph  {
 - Causal diagram to specify relationships of actual variables (using meta-model).
 :::
 
-## Causal diagram
-
-::: {.incremental}
--   Graph specifying putative cause-effect relationships.
--   Data-generating mechanisms leading to a set of observational expectations.
--   Causal diagrams are based on directed acyclic graphs (DAGs).
-:::
-
-## Directed acyclic graphs {.smaller}
-
-::: {.incremental}
-::: columns
-::: {.column width="50%"}
-- Variables are nodes (boxes). 
-- Edges (one-headed arrows) are causal relationships such as X affects Y.  
-- Directed = unidirectional.  
-- Edges can have any functional shape. 
-- Acyclic = no causal loops permitted.  
-- Omitted links and nodes have empirical implications (= assumptions about the causal diagram)
-- U variables represent unmeasured causes.
-:::
-
-::: {.column width="50%"}
-```{dot}
-//| fig-width: 4
-digraph {
-
-  # a 'graph' statement
-  graph [overlap = true, fontsize = 15, layout = dot, ranksep = equally,
-       rankdir = Tb];
-
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica];
-  X; Y;
-
-  # 'edge' statements
-  X -> W;
-  X -> Z;
-  W -> Y;
-  Z -> Y;
-  
- node [shape = plaintext,
-        fontname = Helvetica];
-  U_w  -> W;
-  U_x -> X;
-  U_y -> Y;
-  U_z -> Z;
-  
-  U_w [label = <U<SUB>w</SUB>>];
-  U_x [label = <U<SUB>x</SUB>>];
-  U_y [label = <U<SUB>y</SUB>>];
-  U_z [label = <U<SUB>z</SUB>>];
- 
- 
- # control the placement of elements on the graph 
- {rank = min; U_x };
- {rank = same; Z ; W;};
- {rank = max; U_y};
-
-  }
-
-```
-:::
-:::
-:::
 
 ## Explanatory modelling with SEM
 
@@ -807,28 +816,6 @@ digraph {
 
 
 ## A SEM example
-
-
-
-## Model identification
-
-::: {.incremental}
--   Underidentified: not enough pieces of information to identify parameters uniquely (df \< 0).\
--   Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
--   Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
-:::
-
-## Model identification
-
-"t-rule" to quickly gauge whether a model is under-, just, or overidentified:
-
-$$ t \leq \frac{n (n + 1 )}{2} $$
-
-*t* = number of unknowns (parameters to be estimated, i.e. variances & covariances)\
-*n* = number of knowns (observed variables).
-
-The LHS is how many pieces of information we want to know.\
-RHS: information we have (number of unique cells in the observed variance-covariance matrix).
 
 # Model estimation
 
@@ -899,7 +886,8 @@ kable(cov2cor(V))
 
 <!-- https://jslefche.github.io/sem_book/global-estimation.html -->
 
--   The inferential heart of structural equation modeling are the model coefficients (parameters)
+- The inferential heart of structural equation modeling are the model coefficients.
+- Understanding the meaning of the model coefficients needed to interpret SEM.
 
 ## Rule 1 {.smaller}
 
@@ -1069,10 +1057,9 @@ E1 [label = <&zeta;<SUB>Y1</SUB>>];
 > Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.
 
 ::: {.incremental}
--   Imagine we remove the path from Y1 to Y2.
 -   If they were exogenous variables, the relationship would be their bivariate correlation (Rule #1).
 -   Here we have we have to remove the effects of X on both variables.
--   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous.variables.
+-   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.
 :::
 
 ```{dot}
@@ -1112,7 +1099,7 @@ digraph {
 
 > The total effect one variable has on another is the sum of its direct and indirect effects.
 
-$$ total = \gamma_{X, Y1} * \gamma_{Y1, Y2} + \beta_{X, Y2}$$
+$$ total = \gamma_{X, Y1} * \beta_{Y1, Y2} + \gamma_{X, Y2}$$
 
 ```{dot}
 //| fig-width: 6
@@ -1133,7 +1120,7 @@ digraph {
   
   X -> Y1 [label = <&gamma;<SUB>X,Y1</SUB>> minlen=3];
   Y1 -> Y2 [xlabel = <&beta;<SUB>Y1,Y2</SUB>> minlen=3];  
-  X -> Y2 [xlabel = <&beta;<SUB>X,Y2</SUB>>];
+  X -> Y2 [xlabel = <&gamma;<SUB>X,Y2</SUB>>];
 
   {rank=same X; Y1, Y2};
 
@@ -1201,6 +1188,27 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 -   Directed (acyclic) relationships
 -   Linear relationships
 ::: 
+
+## Model identification
+
+::: {.incremental}
+-   Underidentified: not enough pieces of information to identify parameters uniquely (df \< 0).\
+-   Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
+-   Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
+:::
+
+## Model identification
+
+"t-rule" to quickly gauge whether a model is under-, just, or overidentified:
+
+$$ t \leq \frac{n (n + 1 )}{2} $$
+
+*t* = number of unknowns (parameters to be estimated, i.e. variances & covariances)\
+*n* = number of knowns (observed variables).
+
+The LHS is how many pieces of information we want to know.\
+RHS: information we have (number of unique cells in the observed variance-covariance matrix).
+
 
 ## Data requirements
 
@@ -1347,21 +1355,21 @@ digraph  {
 }
 ```
 
-1)  How has aboveground biomass changed as a function of soil disturbance and nutrient addition?
+1)  How has aboveground biomass changed as a function of soil disturbance, nutrient addition and precipitation?
 2)  How are these effects mediated by biodiversity?
 
 ::: notes
 Ask students about how they would address this question.
 :::
 
-## Design meta-model {.smaller}
+## A meta-model {.smaller}
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 9
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, splines = curved, rankdir = LR]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1.5]
 
   # several 'node' statements
   node [shape = box,
@@ -1379,18 +1387,21 @@ digraph  {
         label="Environment"
         fontname = Helvetica
      		color=lightgrey;
-
+        precipitation;
         nutrients;
         disturbance;
         }
 
+    precipitation->richness;
+    precipitation->evenness;
+    precipitation->biomass;
     nutrients->richness;
     nutrients->evenness;
     nutrients->biomass;
     disturbance -> biomass;
 
    subgraph cluster_prod {
-     label="Productivity";
+     label="Function";
      fontname = Helvetica;
      color=lightgrey;
      biomass; 
@@ -1403,9 +1414,9 @@ digraph  {
 ```
 
 ::: {.incremental}
-1)  Productivity (biomass) is directly influenced by the environment (nutrients and disturbance)
-2)  Productivity (biomass) is directly influenced by biodiversity (richness and evenness).
-3)  The environment also influences biodiversity and thus, have an indirect effect on productivity via biodiversity.
+1)  Function (biomass) is directly influenced by the environment (nutrients, precipitation, disturbance)
+2)  Function (biomass) is directly influenced by biodiversity (richness and evenness).
+3)  The environment also influences biodiversity and thus, have an indirect effect on function via biodiversity.
 :::
 
 
@@ -1417,7 +1428,7 @@ digraph  {
 :::
 
 
-## Exercise 1 {.smaller}
+## Exercise 1 
 
 - Exploration of dataset (variables and treatments)
 - Check collinearity and normality
@@ -1433,7 +1444,7 @@ digraph  {
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1]
 
   # several 'node' statements
   node [shape = box,
@@ -1457,11 +1468,10 @@ digraph  {
     evenness->biomass ;
     richness->biomass ;
   
- { rank="same"; nutrients; disturbance}
+ { rank="same"; nutrients; disturbance; precipitation}
  { rank="same"; evenness; richness}
 }
 ```
-
 
 -   Fit the above DAG to the Seabloom data:
     -   Assess model goodness of fit.
@@ -1476,7 +1486,7 @@ digraph  {
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1]
 
   # several 'node' statements
   node [shape = box,
@@ -1489,18 +1499,18 @@ digraph  {
 
     nutrients->richness;
     nutrients->evenness;
-     nutrients -> biomass;
+    nutrients -> biomass;
     precipitation->richness;
     precipitation->evenness;
     disturbance -> biomass;
     precipitation -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3] ;
+    evenness:e-> richness:e [dir=both; minlen=3, style="dashed"] ;
 
     evenness->biomass ;
     richness->biomass ;
   
- { rank="same"; nutrients; disturbance}
+ { rank="same"; nutrients; disturbance; precipitation}
  { rank="same"; evenness; richness}
 }
 ```
@@ -1520,7 +1530,7 @@ After finding a model with good fit:
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1]
 
   # several 'node' statements
   node [shape = box,
@@ -1540,12 +1550,12 @@ digraph  {
     disturbance -> biomass;
     precipitation -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3] ;
+    evenness:e-> richness:e [dir=both; minlen=3, style="dashed"] ;
 
     evenness->biomass ;
     richness->biomass ;
   
- { rank="same"; nutrients; disturbance}
+ { rank="same"; nutrients; disturbance; precipitation}
  { rank="same"; evenness; richness}
 }
 ```
@@ -1559,11 +1569,11 @@ digraph  {
 ## Exercise 5 {.smaller}
 
 ```{dot}
-//| fig-width: 4
+//| fig-width: 6
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1]
 
   # several 'node' statements
   node [shape = box,
@@ -1574,56 +1584,21 @@ digraph  {
         disturbance;
         precipitation;
 
-    disturbance->richness;
-    disturbance->evenness;
+    disturbance->richness [color="red"];
+    disturbance->evenness [color="red"];
     nutrients->richness;
     nutrients->evenness;
     precipitation->richness;
     precipitation->evenness;
-    disturbance -> biomass [color=red];
+    disturbance -> biomass [color="red"];
     precipitation -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3] ;
+    evenness:e-> richness:e [dir=both; minlen=3; style="dashed"];
 
     evenness->biomass ;
     richness->biomass ;
   
- { rank="same"; nutrients; disturbance}
- { rank="same"; evenness; richness}
-}
-```
-
-```{dot}
-//| fig-width: 4
-digraph  {
-
-   # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1, splines=curved]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica, color="gray"]
-  
-        evenness, richness;
-        nutrients;
-        disturbance;
-        precipitation;
-
-    disturbance->richness;
-    disturbance->evenness;
-    nutrients->richness;
-    nutrients->evenness;
-    precipitation->richness;
-    precipitation->evenness;
-   # disturbance -> biomass;
-    precipitation -> biomass;
-
-    evenness:e-> richness:e [dir=both; minlen=3] ;
-
-    evenness->biomass ;
-    richness->biomass ;
-  
- { rank="same"; nutrients; disturbance}
+ { rank="same"; nutrients; disturbance; precipitation}
  { rank="same"; evenness; richness}
 }
 ```
@@ -1633,3 +1608,4 @@ digraph  {
     -   Add paths from disturbance to richness and evenness, remove the direct paths to AGB (both nutrients and disturbance).
     -   Compare model fit to simple model. 
 - What do you conclude?
+ 
