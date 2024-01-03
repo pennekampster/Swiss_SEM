@@ -36,36 +36,32 @@ library(knitr)
 
 # General information
 
-## Introduction of the **Swiss SEM team** {.smaller}
+## Acknowledgements {.smaller}
 
-::: columns
-::: {.column width="40%"}
--   Dr. Frank Pennekamp (main instructor)\
--   Dr. Rachel Korn (course development)\
--   Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course development)
-:::
 
-::: {.column width="60%"}
 \centering
 
 ![](images/Swiss_SEM_team.png){width="100%"}
-:::
-:::
+
+-   Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course design)
+-  Dr. Rachel Korn (course development: exercises)
+-  Dr. Frank Pennekamp (course development: exercises and slides, instructor)
 
 ## Schedule & content {.smaller}
 
 -   *Day 1*:
-    -   General introduction to SEM to model ecological systems
-    -   Fitting SEMs to data (live demo)
-    -   Model evaluation and reporting (exercises)
-    -   Work on your research question
+    -  General introduction to SEM to model ecological systems (lecture)
+    -  Fitting SEMs to data (live demo)
+    -  Model evaluation and reporting (exercises)
+    -  Work on your research question /  SEM model (self-study)
 -   *Day 2*: 
-    -   Latent and composite variables, interactions, complex sampling designs
-    -   Fitting SEMs to data (live demo & exercises)
-    -   Model visualization
-    -   Work on your research question
+    -  Latent and composite variables, interactions, complex sampling designs (lecture)
+    -  Fitting SEMs to data (live demo & exercises)
+    -  Model visualization (lecture)
+    -  Work on your research question /  SEM model (self-study)
 -   *Day 3*:
-    -   Self-study / discussion with instructor and peers
+    -  Work on your research question /  SEM model (self-study)
+    -  Discussion with instructor and peers
 
 ## Overview {.smaller}
 
@@ -807,17 +803,12 @@ digraph  {
 
 -   Your turn!
 -   What type is your SEM (response, driver, mediation, theory focused)?
--   Draw a causal diagram of the dataset you want to understand.
+-   Draw a causal diagram of the dataset you want to understand (define nodes and edges).
 -   Make a table with putative causal relationships.
 
 
 
 # SEM model fitting
-
-
-## A SEM example
-
-# Model estimation
 
 ## How to estimate SEMs? 
 
@@ -830,7 +821,7 @@ digraph  {
 
 # Global estimation in a nutshell
 
-## SEM: scatterplot of observed variables
+## scatterplot of observed variables
 
 ```{r, out.width="90%", fig.align='center'}
 set.seed(5)
@@ -840,8 +831,7 @@ d <- matrix(c(x,x2), 250)
 pairs(d, pch = 19)
 ```
 
-
-## SEM: variance-covariance matrix {.smaller}
+## variance-covariance matrix estimated from data {.smaller}
 
 ```{r}
 set.seed(5)
@@ -866,7 +856,7 @@ kable(V)
 -   Covariance: $COV_{x,y}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})(y_{i}-\bar{y})}{N-1}$
     -   Covariance measures how much two variables are moving together.
 
-## SEM: correlation matrix {.smaller}
+## correlation matrix estimated from data {.smaller}
 
 ```{r}
 set.seed(5)
@@ -881,6 +871,75 @@ kable(cov2cor(V))
 
 - Correlation: $COR_{x,y}=\frac{COV_{x,y}}{\sigma_x*\sigma_y}$
   + Correlation matrix is standardized variance-covariance matrix
+
+
+## SEM: compare model-implied to observed covariance 
+
+
+::: columns
+::: {.column width="35%"}
+```{dot}
+//| fig-width: 4
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR]
+
+  # 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  Var1 
+  Var2 
+  Var3
+  Var4
+
+  # 'edge' statements
+  Var1 -> Var2 -> Var4;
+  Var1 -> Var3 -> Var4;  
+}
+```
+:::
+::: {.column width="65%"}
+```{r, out.width="90%", fig.align='center'}
+set.seed(5)
+x <- rnorm(500, sd=runif(500, 2, 50))
+x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
+d <- matrix(c(x,x2), 250)
+pairs(d, pch = 19)
+```
+:::
+:::
+
+
+# Model evaluation
+
+## Model fit measures {.smaller}
+
++ *$\chi^2$ statistic*
+  - compare the model-implied to the observed variance-covariance
+  - good fit when $\chi^2$ statistic is small (P > 0.05)   
+  - sample-size dependent
+
+. . .
+
++ *Comparative fit index (CFI)*: 
+  - deviation from a 'null' model (variances estimated but covariances set to 0).
+  - higher is better, \> 0.95 is considered good.
+
+. . .
+
++ *Root-mean squared error of approximation (RMSEA)*
+  - statistic penalizes models based on sample size
+  - \< 0.10 is acceptable, and anything \< 0.06 is good
+
+. . .
+
++ *Standardized root-mean squared residual (SRMR)*
+  - standardized difference between the observed and predicted correlations
+  - \< 0.08 is considered good
+
+
+
 
 ## Grace's 8 rules of path coefficients
 
@@ -1153,32 +1212,6 @@ $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
 where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)
 :::
 
-# Model evaluation
-
-## Model fit measures {.smaller}
-
-+ *$\chi^2$ statistic*
-  - compare the model-implied to the observed variance-covariance
-  - good fit when $\chi^2$ statistic is small (P > 0.05)   
-  - sample-size dependent
-
-. . .
-
-+ *Comparative fit index (CFI)*: 
-  - deviation from a 'null' model (variances estimated but covariances set to 0).
-  - higher is better, \> 0.95 is considered good.
-
-. . .
-
-+ *Root-mean squared error of approximation (RMSEA)*
-  - statistic penalizes models based on sample size
-  - \< 0.10 is acceptable, and anything \< 0.06 is good
-
-. . .
-
-+ *Standardized root-mean squared residual (SRMR)*
-  - standardized difference between the observed and predicted correlations
-  - \< 0.08 is considered good
 
 ## Assumptions of SEM with lavaan
 

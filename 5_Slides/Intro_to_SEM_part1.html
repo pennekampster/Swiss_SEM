@@ -420,42 +420,36 @@ Frank Pennekamp
 <h1>General information</h1>
 
 </section>
-<section id="introduction-of-the-swiss-sem-team" class="slide level2 smaller">
-<h2>Introduction of the <strong>Swiss SEM team</strong></h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<ul>
-<li>Dr.&nbsp;Frank Pennekamp (main instructor)<br>
-</li>
-<li>Dr.&nbsp;Rachel Korn (course development)<br>
-</li>
-<li>Dr.&nbsp;Noémie Pichon, Dr.&nbsp;Fletcher Halliday, Dr.&nbsp;Eliane Meier, Dr.&nbsp;Hugo Saiz, Dr.&nbsp;Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course development)</li>
+<section id="acknowledgements" class="slide level2 smaller">
+<h2>Acknowledgements</h2>
+
+<img data-src="images/Swiss_SEM_team.png" style="width:100.0%" class="r-stretch"><ul>
+<li>Dr.&nbsp;Noémie Pichon, Dr.&nbsp;Fletcher Halliday, Dr.&nbsp;Eliane Meier, Dr.&nbsp;Hugo Saiz, Dr.&nbsp;Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course design)</li>
+<li>Dr.&nbsp;Rachel Korn (course development: exercises)</li>
+<li>Dr.&nbsp;Frank Pennekamp (course development: exercises and slides, instructor)</li>
 </ul>
-</div><div class="column" style="width:60%;">
-<p><img data-src="images/Swiss_SEM_team.png" style="width:100.0%"></p>
-</div>
-</div>
 </section>
 <section id="schedule-content" class="slide level2 smaller">
 <h2>Schedule &amp; content</h2>
 <ul>
 <li><em>Day 1</em>:
 <ul>
-<li>General introduction to SEM to model ecological systems</li>
+<li>General introduction to SEM to model ecological systems (lecture)</li>
 <li>Fitting SEMs to data (live demo)</li>
 <li>Model evaluation and reporting (exercises)</li>
-<li>Work on your research question</li>
+<li>Work on your research question / SEM model (self-study)</li>
 </ul></li>
 <li><em>Day 2</em>:
 <ul>
-<li>Latent and composite variables, interactions, complex sampling designs</li>
+<li>Latent and composite variables, interactions, complex sampling designs (lecture)</li>
 <li>Fitting SEMs to data (live demo &amp; exercises)</li>
-<li>Model visualization</li>
-<li>Work on your research question</li>
+<li>Model visualization (lecture)</li>
+<li>Work on your research question / SEM model (self-study)</li>
 </ul></li>
 <li><em>Day 3</em>:
 <ul>
-<li>Self-study / discussion with instructor and peers</li>
+<li>Work on your research question / SEM model (self-study)</li>
+<li>Discussion with instructor and peers</li>
 </ul></li>
 </ul>
 </section>
@@ -1536,21 +1530,13 @@ richness-&gt;biomass
 <ul>
 <li>Your turn!</li>
 <li>What type is your SEM (response, driver, mediation, theory focused)?</li>
-<li>Draw a causal diagram of the dataset you want to understand.</li>
+<li>Draw a causal diagram of the dataset you want to understand (define nodes and edges).</li>
 <li>Make a table with putative causal relationships.</li>
 </ul>
 </section></section>
 <section>
 <section id="sem-model-fitting" class="title-slide slide level1 center">
 <h1>SEM model fitting</h1>
-
-</section>
-<section id="a-sem-example" class="slide level2">
-<h2>A SEM example</h2>
-</section></section>
-<section>
-<section id="model-estimation" class="title-slide slide level1 center">
-<h1>Model estimation</h1>
 
 </section>
 <section id="how-to-estimate-sems" class="slide level2">
@@ -1573,12 +1559,12 @@ richness-&gt;biomass
 <h1>Global estimation in a nutshell</h1>
 
 </section>
-<section id="sem-scatterplot-of-observed-variables" class="slide level2">
-<h2>SEM: scatterplot of observed variables</h2>
+<section id="scatterplot-of-observed-variables" class="slide level2">
+<h2>scatterplot of observed variables</h2>
 
 <img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:90.0%" class="r-stretch quarto-figure-center"></section>
-<section id="sem-variance-covariance-matrix" class="slide level2 smaller">
-<h2>SEM: variance-covariance matrix</h2>
+<section id="variance-covariance-matrix-estimated-from-data" class="slide level2 smaller">
+<h2>variance-covariance matrix estimated from data</h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table>
@@ -1644,8 +1630,8 @@ richness-&gt;biomass
 </ul>
 </div>
 </section>
-<section id="sem-correlation-matrix" class="slide level2 smaller">
-<h2>SEM: correlation matrix</h2>
+<section id="correlation-matrix-estimated-from-data" class="slide level2 smaller">
+<h2>correlation matrix estimated from data</h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table>
@@ -1697,6 +1683,110 @@ richness-&gt;biomass
 <li>Correlation matrix is standardized variance-covariance matrix</li>
 </ul></li>
 </ul>
+</section>
+<section id="sem-compare-model-implied-to-observed-covariance" class="slide level2">
+<h2>SEM: compare model-implied to observed covariance</h2>
+<div class="columns">
+<div class="column" style="width:35%;">
+<div class="cell" data-fig-width="4">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="384" height="480" viewbox="0.00 0.00 242.00 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-94 238,-94 238,4 -4,4"></polygon> <!-- Var1 --> <g id="node1" class="node">
+<title>
+Var1
+</title>
+<polygon fill="none" stroke="black" points="54,-63 0,-63 0,-27 54,-27 54,-63"></polygon> <text text-anchor="middle" x="27" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Var1</text> </g> <!-- Var2 --> <g id="node2" class="node">
+<title>
+Var2
+</title>
+<polygon fill="none" stroke="black" points="144,-90 90,-90 90,-54 144,-54 144,-90"></polygon> <text text-anchor="middle" x="117" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">Var2</text> </g> <!-- Var1&#45;&gt;Var2 --> <g id="edge1" class="edge">
+<title>
+Var1-&gt;Var2
+</title>
+<path fill="none" stroke="black" d="M54.4,-53.1C62.48,-55.58 71.51,-58.35 80.1,-60.99"></path> <polygon fill="black" stroke="black" points="79.33,-64.41 89.92,-64 81.39,-57.72 79.33,-64.41"></polygon> </g> <!-- Var3 --> <g id="node3" class="node">
+<title>
+Var3
+</title>
+<polygon fill="none" stroke="black" points="144,-36 90,-36 90,0 144,0 144,-36"></polygon> <text text-anchor="middle" x="117" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Var3</text> </g> <!-- Var1&#45;&gt;Var3 --> <g id="edge3" class="edge">
+<title>
+Var1-&gt;Var3
+</title>
+<path fill="none" stroke="black" d="M54.4,-36.9C62.48,-34.42 71.51,-31.65 80.1,-29.01"></path> <polygon fill="black" stroke="black" points="81.39,-32.28 89.92,-26 79.33,-25.59 81.39,-32.28"></polygon> </g> <!-- Var4 --> <g id="node4" class="node">
+<title>
+Var4
+</title>
+<polygon fill="none" stroke="black" points="234,-63 180,-63 180,-27 234,-27 234,-63"></polygon> <text text-anchor="middle" x="207" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Var4</text> </g> <!-- Var2&#45;&gt;Var4 --> <g id="edge2" class="edge">
+<title>
+Var2-&gt;Var4
+</title>
+<path fill="none" stroke="black" d="M144.4,-63.9C152.48,-61.42 161.51,-58.65 170.1,-56.01"></path> <polygon fill="black" stroke="black" points="171.39,-59.28 179.92,-53 169.33,-52.59 171.39,-59.28"></polygon> </g> <!-- Var3&#45;&gt;Var4 --> <g id="edge4" class="edge">
+<title>
+Var3-&gt;Var4
+</title>
+<path fill="none" stroke="black" d="M144.4,-26.1C152.48,-28.58 161.51,-31.35 170.1,-33.99"></path> <polygon fill="black" stroke="black" points="169.33,-37.41 179.92,-37 171.39,-30.72 169.33,-37.41"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:65%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-19-1.png" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="model-evaluation" class="title-slide slide level1 center">
+<h1>Model evaluation</h1>
+
+</section>
+<section id="model-fit-measures" class="slide level2 smaller">
+<h2>Model fit measures</h2>
+<ul>
+<li><em><span class="math inline">\(\chi^2\)</span> statistic</em>
+<ul>
+<li>compare the model-implied to the observed variance-covariance</li>
+<li>good fit when <span class="math inline">\(\chi^2\)</span> statistic is small (P &gt; 0.05)<br>
+</li>
+<li>sample-size dependent</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><em>Comparative fit index (CFI)</em>:
+<ul>
+<li>deviation from a ‘null’ model (variances estimated but covariances set to 0).</li>
+<li>higher is better, &gt; 0.95 is considered good.</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Root-mean squared error of approximation (RMSEA)</em>
+<ul>
+<li>statistic penalizes models based on sample size</li>
+<li>&lt; 0.10 is acceptable, and anything &lt; 0.06 is good</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Standardized root-mean squared residual (SRMR)</em>
+<ul>
+<li>standardized difference between the observed and predicted correlations</li>
+<li>&lt; 0.08 is considered good</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section id="graces-8-rules-of-path-coefficients" class="slide level2">
 <h2>Grace’s 8 rules of path coefficients</h2>
@@ -2059,51 +2149,7 @@ Y1-&gt;Y2
 
 <aside><div>
 <p><span class="math inline">\(r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}\)</span> where <span class="math inline">\(r_{xy}\)</span> are the correlations, <span class="math inline">\(cov_{xy}\)</span> the covariances and <span class="math inline">\(SD_x\)</span> and <span class="math inline">\(SD_y\)</span> the respective standard deviations (the square roots of the respective variance <span class="math inline">\(= \sqrt{var_x}\)</span> and <span class="math inline">\(= \sqrt{var_y}\)</span>)</p>
-</div></aside></section></section>
-<section>
-<section id="model-evaluation" class="title-slide slide level1 center">
-<h1>Model evaluation</h1>
-
-</section>
-<section id="model-fit-measures" class="slide level2 smaller">
-<h2>Model fit measures</h2>
-<ul>
-<li><em><span class="math inline">\(\chi^2\)</span> statistic</em>
-<ul>
-<li>compare the model-implied to the observed variance-covariance</li>
-<li>good fit when <span class="math inline">\(\chi^2\)</span> statistic is small (P &gt; 0.05)<br>
-</li>
-<li>sample-size dependent</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li><em>Comparative fit index (CFI)</em>:
-<ul>
-<li>deviation from a ‘null’ model (variances estimated but covariances set to 0).</li>
-<li>higher is better, &gt; 0.95 is considered good.</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li><em>Root-mean squared error of approximation (RMSEA)</em>
-<ul>
-<li>statistic penalizes models based on sample size</li>
-<li>&lt; 0.10 is acceptable, and anything &lt; 0.06 is good</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li><em>Standardized root-mean squared residual (SRMR)</em>
-<ul>
-<li>standardized difference between the observed and predicted correlations</li>
-<li>&lt; 0.08 is considered good</li>
-</ul></li>
-</ul>
-</div>
-</section>
+</div></aside></section>
 <section id="assumptions-of-sem-with-lavaan" class="slide level2">
 <h2>Assumptions of SEM with lavaan</h2>
 <div>
@@ -2398,15 +2444,15 @@ biodiversity-&gt;biomass
 <div>
 <div>
 <svg width="864" height="480" viewbox="0.00 0.00 491.55 258.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 254)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-254 487.55,-254 487.55,4 -4,4"></polygon> <g id="clust3" class="cluster">
-<title>
-cluster_prod
-</title>
-<polygon fill="none" stroke="lightgrey" points="391.42,-70 391.42,-142 475.55,-142 475.55,-70 391.42,-70"></polygon> <text text-anchor="middle" x="433.49" y="-129" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text> </g> <g id="clust1" class="cluster">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 254)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-254 487.55,-254 487.55,4 -4,4"></polygon> <g id="clust1" class="cluster">
 <title>
 cluster_bio
 </title>
-<polygon fill="none" stroke="lightgrey" points="207.49,-116 207.49,-242 299.42,-242 299.42,-116 207.49,-116"></polygon> <text text-anchor="middle" x="253.45" y="-229" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <g id="clust2" class="cluster">
+<polygon fill="none" stroke="lightgrey" points="207.49,-116 207.49,-242 299.42,-242 299.42,-116 207.49,-116"></polygon> <text text-anchor="middle" x="253.45" y="-229" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <g id="clust3" class="cluster">
+<title>
+cluster_prod
+</title>
+<polygon fill="none" stroke="lightgrey" points="391.42,-70 391.42,-142 475.55,-142 475.55,-70 391.42,-70"></polygon> <text text-anchor="middle" x="433.49" y="-129" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text> </g> <g id="clust2" class="cluster">
 <title>
 cluster_env
 </title>
