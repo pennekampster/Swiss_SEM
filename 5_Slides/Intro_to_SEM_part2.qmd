@@ -36,7 +36,7 @@ library(ggplot2)
     -  Model evaluation and reporting (exercises)
     -  Work on your research question /  SEM model (self-study)
 -   *Day 2*: 
-    -  Latent and composite variables, interactions, complex sampling designs (lecture)
+    -  Constructs: latent and composite variables (lecture)
     -  Fitting SEMs to data (live demo & exercises)
     -  Model visualization (lecture)
     -  Work on your research question /  SEM model (self-study)
@@ -469,7 +469,7 @@ x3 ~ c("b5", "b5") * x2'
 
 Same coefficients for all but the effect of x1 on x2.
 
-# Complex sampling structure
+<!-- # Complex sampling structure
 
 ## Complex sampling structure
 
@@ -510,7 +510,9 @@ survey.design = design)
 -   Needed to specify the study design
 -   Here we have plots (`ids`) nested in fields (`strata`)
 -   Next, we can refit the `simple` model from before with `lavaan.survey` using the specified study design as an argument.
+ -->
 
+ 
 <!-- # Spatial autocorrelation -->
 
 <!-- ## Spatial autocorrelation -->
@@ -675,7 +677,8 @@ digraph  {
     -   Use multi-group fitting to explore interaction.
 -   What do you conclude?
 
-## Exercise 7
+<!-- ## Exercise 7
 
 -   Account for nested experimental design with the `lavaan.survey` package:
     -   Add individual plots nested in fields.
+ -->

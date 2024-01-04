@@ -55,7 +55,7 @@ library(knitr)
     -  Model evaluation and reporting (exercises)
     -  Work on your research question /  SEM model (self-study)
 -   *Day 2*: 
-    -  Latent and composite variables, interactions, complex sampling designs (lecture)
+    -  Constructs: latent and composite variables (lecture)
     -  Fitting SEMs to data (live demo & exercises)
     -  Model visualization (lecture)
     -  Work on your research question /  SEM model (self-study)
