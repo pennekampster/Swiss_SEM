@@ -14,9 +14,9 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
-    footer: Introduction to SEM (2022)
+    footer: Introduction to SEM (2024)
     width: 1200
-    height: 800
+    height: 900
 editor:
   render-on-save: true
 ---

@@ -14,9 +14,9 @@ format:
     slide-number: true
     show-slide-number: all
     code-overflow: wrap
-    footer: Introduction to SEM (2022)
+    footer: Introduction to SEM (2024)
     width: 1200
-    height: 800
+    height: 900
 editor:
   render-on-save: true
 ---
@@ -31,26 +31,28 @@ library(ggplot2)
 ## Schedule & content {.smaller}
 
 -   *Day 1*:
-    -   General introduction to SEM to model ecological systems
-    -   Fitting SEMs to data (live demo)
-    -   Model evaluation and reporting (exercises)
-    -   Discussion with James Grace
+    -  General introduction to SEM to model ecological systems (lecture)
+    -  Fitting SEMs to data (live demo)
+    -  Model evaluation and reporting (exercises)
+    -  Work on your research question /  SEM model (self-study)
 -   *Day 2*: 
-    -   Latent and composite variables, interactions, complex sampling designs
-    -   Fitting SEMs to data (live demo & exercises)
-    -   Model visualization
-    -   Discussion with James Grace
+    -  Latent and composite variables, interactions, complex sampling designs (lecture)
+    -  Fitting SEMs to data (live demo & exercises)
+    -  Model visualization (lecture)
+    -  Work on your research question /  SEM model (self-study)
 -   *Day 3*:
-    -   Self-study with possibility to meet with instructor(s)
+    -  Work on your research question /  SEM model (self-study)
+    -  Discussion with instructor and peers
 
 ## Revisiting the meta-model {.smaller}
 
+
 ```{dot}
-//| fig-width: 6
+//| fig-width: 9
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, splines = curved, rankdir = LR]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1.5]
 
   # several 'node' statements
   node [shape = box,
@@ -68,18 +70,21 @@ digraph  {
         label="Environment"
         fontname = Helvetica
      		color=lightgrey;
-
+        precipitation;
         nutrients;
         disturbance;
         }
 
+    precipitation->richness;
+    precipitation->evenness;
+    precipitation->biomass;
     nutrients->richness;
     nutrients->evenness;
     nutrients->biomass;
     disturbance -> biomass;
 
    subgraph cluster_prod {
-     label="Productivity";
+     label="Function";
      fontname = Helvetica;
      color=lightgrey;
      biomass; 
@@ -92,11 +97,10 @@ digraph  {
 ```
 
 ::: incremental
--   Meta-model = conceptual model to link data with theory.
--   So far, only manifest (measured) variables were considered.\
--   However, some aspects of a meta-model may be difficult to quantify and measure directly.\
--   This is because they represent an abstract, multifaceted concept (e.g., "biodiversity").
--   Latent and composite variables can help with these situations.\
+-   Conceptual model to link data with theory.
+-   So far, only measured variables were considered.
+-   However, some components of a meta-model abstract, multifaceted concepts (e.g., "biodiversity") may be difficult to quantify and measure directly.
+-   SEM provides constructs such as latent and composite variables to address these situations.\
 :::
 
 # Latent variables
@@ -376,6 +380,9 @@ How distinguish latent and composites:
 -   Revisit the meta-model you have drawn yesterday:
     -   Which contructs could be modelled with a latent or composite variable?
     -   Adapt your meta-model accordingly.
+- Revisit the meta-model of your dataset:
+  - Are there concepts that could be modelled with a latent or composite variable?
+
 
 # Interactions
 
@@ -410,8 +417,8 @@ digraph boxes_and_circles {
 -   In nature, things often are contingent on each other.
 -   For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.\
 -   Moderation: effects are different when combined.\
--   In regression, the interaction coefficient estimates the effect of the product of the two predictors.\
--   Interaction coefficient estimates the deviation from additivity.
+-   In regression models, the coefficient for the interaction estimates the effect of the product of the two predictors.\
+-   The coefficient of the interaction describes the deviation from additivity (can be positive or negative).
 :::
 
 ## Interactions

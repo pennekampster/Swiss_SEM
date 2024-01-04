@@ -83,8 +83,8 @@ library(knitr)
 ## Learning objectives
 
 - Participants understand the capabilities and limits of SEMs to draw inference from data.
-- Participants are able to fit, evaluate, interpret and visualize a SEM with `lavaan`.
-- Participants are able to apply and assess SEMs fitted to their own datasets.
+- Participants are able to fit, assess, interpret and visualize a SEM.
+- Participants are able to apply the SEM approach to their datasets with the R package `lavaan`.
 
 # Getting started with Structural Equation Modeling
 
@@ -126,6 +126,7 @@ Ask students about their research questions
 ::: columns
 ::: {.column width="50%"}
 - Why is understanding causes important?
+  + Be able to predic the behaviour of a system
   + Justify costly management interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
 - What is the problem?
   + Confounding of cause with non-cause (interventions with no or detrimental effects)
@@ -190,10 +191,10 @@ Sewell Wright, 1923
 ::: {.incremental}
 ::: columns
 ::: {.column width="100%"}
-- Design and conduct experiments
-- Develop theory 
 - Build knowledge from past observation
+- Design and conduct experiments
 - Test hypotheses
+- Develop theory 
 :::
 
 ::: {.column width="0%"}
@@ -205,23 +206,23 @@ Sewell Wright, 1923
 
 
 ## How can we evaluate causality? 
-- Build a hypothesized causal structure
+- Build a hypothesized causal diagram
 ![](images/A_priori_SEM.jpg){width="50%"}
 
 ## How can we evaluate causality? 
-- Build a hypothesized causal structure
+- Build a hypothesized causal diagram
 - Collect data
 
 ## How can we evaluate causality? 
-- Build a hypothesized causal structure
+- Build a hypothesized causal diagram
 - Collect data
-- Test data against structure, extract inferences
+- Test data against diagram, extract inferences
 ![](images/Final_SEM.jpg){width="50%"}
 
 ## How can we evaluate causality? 
-- Build a hypothesized causal structure
+- Build a hypothesized causal diagram
 - Collect data
-- Test data against structure, extract inferences
+- Test data against diagram, extract inferences
 ![](images/Final_SEM.jpg){width="50%"}
 - Repeat!
 
@@ -814,24 +815,24 @@ digraph  {
 
 ::: {.incremental}
 - Structural equation modelling is a framework rather than a statistical technique.   
-- Different estimation procedures possible.   
 - Lavaan uses Maximum likelihood estimation (ML).   
-- Variance-covariance matrix used for global estimation of SEM, d-separation for local estimation (piecewiseSEM).    
+- Important: only variance-covariance matrix used for global estimation of SEM.    
 :::
 
 # Global estimation in a nutshell
 
-## scatterplot of observed variables
+## Scatterplot matrix of observed variables
 
 ```{r, out.width="90%", fig.align='center'}
 set.seed(5)
 x <- rnorm(500, sd=runif(500, 2, 50))
 x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
 d <- matrix(c(x,x2), 250)
+colnames(d) <-   c("X1","X2", "X3", "Y")
 pairs(d, pch = 19)
 ```
 
-## variance-covariance matrix estimated from data {.smaller}
+## Variance-covariance matrix estimated from data {.smaller}
 
 ```{r}
 set.seed(5)
@@ -839,8 +840,8 @@ x <- rnorm(500, sd=runif(500, 2, 50))
 x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
 d <- matrix(c(x,x2), 250)
 V <- cov(d)
-colnames(V)  <- c("var 1","var 2", "var 3", "var 4")
-rownames(V)  <- c("var 1","var 2", "var 3", "var 4")
+colnames(V)  <- c("X1","X2", "X3", "Y")
+rownames(V)  <- c("X","X2", "X3", "Y")
 kable(V)
 ```
 
@@ -856,7 +857,7 @@ kable(V)
 -   Covariance: $COV_{x,y}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})(y_{i}-\bar{y})}{N-1}$
     -   Covariance measures how much two variables are moving together.
 
-## correlation matrix estimated from data {.smaller}
+## Correlation matrix estimated from data {.smaller}
 
 ```{r}
 set.seed(5)
@@ -864,8 +865,8 @@ x <- rnorm(500, sd=runif(500, 2, 50))
 x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
 d <- matrix(c(x,x2), 250)
 V <- cov(d)
-colnames(V)  <- c("var 1","var 2", "var 3", "var 4")
-rownames(V)  <- c("var 1","var 2", "var 3", "var 4")
+colnames(V)  <- c("X1","X2", "X3", "Y")
+rownames(V)  <- c("X","X2", "X3", "Y")
 kable(cov2cor(V))
 ```
 
@@ -905,6 +906,7 @@ set.seed(5)
 x <- rnorm(500, sd=runif(500, 2, 50))
 x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
 d <- matrix(c(x,x2), 250)
+colnames(d) <-   c("X1","X2", "X3", "Y")
 pairs(d, pch = 19)
 ```
 :::
@@ -1192,10 +1194,69 @@ digraph {
 
 > The total effect (including undirected paths) is equivalent to the total correlation.
 
-## Regression anatomy
+## Example: applying Grace's rules to simple SEM model {.smaller}
 
-![](Anatomy_linear_model.jpeg){.absolute width="800"}
+::: columns
+::: {.column width="50%"}
+```{dot}
+//| fig-width: 4
+//| fig-height: 4
 
+digraph {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .5,
+       rankdir = RL]
+
+  # 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  Y
+  X1 [label = <X<SUB>1</SUB>>]
+  X2 [label = <X<SUB>2</SUB>>]
+  X3 [label = <X<SUB>3</SUB>>]
+  
+
+  # 'edge' statements
+  X1 -> Y [label = "0.133"]
+  X2 -> Y [label = "0.40"]
+  X3 -> Y [label = "0.167"]
+  
+  X1:w -> X2:w [dir=both, style="dashed", label = "0.5"]
+  X2:w -> X3:w [dir=both, style="dashed", label = "0.2"]
+  X1:e -> X3:e [dir=both, minlen = 4, style="dashed", label = "0.4"]
+  
+ # control the placement of elements on the graph 
+{rank = same; X1 ; X2; X3}
+
+}
+```
+:::
+
+::: {.column width="30%"}
+Correlation matrix:
+
+|  | X1 | X2 | X3 | Y |
+|:---|:---|:---|:---|:---|
+| X1  | 1  | .5   |  .4  | .4  |
+| X2  | .5  |  1  | .2   | .5  |
+| X3  | .4  |  .2  | 1   | .3  |
+| Y   | .4  |  .5  | .3   | 1  |
+:::
+:::
+
+.  .  .  
+
+- Path tracing for all X-Y correlations:
+  - r(X1, Y) = X1->Y + X1->X2->Y + X1->X3->Y \   
+  - r(X1, Y) = .133 + (.5 * .4) + (.4 * .167) = **.4**\
+
+.  .  .  
+
+
+- likewise for corr(X2, Y) and corr(X3, Y):
+  - r(X2, Y) = .4 + (.5 * .133) + (.2 * .167) = **.5** \   
+  - r(X3, Y) = .167 + (.4 * .133) + (.2 * .4) = **.3**\
 
 ## Unstandardized vs standardized coefficients
 
@@ -1222,6 +1283,32 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 -   Linear relationships
 ::: 
 
+## Troubleshooting pathological models (a.k.a. Heywood cases)
+
+-   Improper solutions:
+    -   Negative variances
+    -   Correlations larger than 1
+
+. . .
+
+-   Reasons for the warnings can be:
+    1)  Slightly negative error estimates (not really a problem)\
+    2)  Indicators for latent variables need to be positively correlated\
+    3)  Local non-identification of parameters\
+    4)  Model misspecification
+
+## Parameter identification
+
+::: {.incremental}
+- Identifiability is a common issue in SEM
+- Some of the free parameters you are trying to estimate are interchangeable (e.g., and and b in `y = a*x + b*x + c`)
+- High correlation of parameters indicates identifiability issues.
+- Even an infinite amount of data does not allow to identify parameters precisely (e.g. one could be high the other low or vice-versa)
+- The more complex a SEM is, the more likely issues of identifiability will become
+- Fixing parameters or their variance may be needed to achieve model convergence (especially when latents or composites are involved).
+::: 
+
+
 ## Model identification
 
 ::: {.incremental}
@@ -1242,7 +1329,6 @@ $$ t \leq \frac{n (n + 1 )}{2} $$
 The LHS is how many pieces of information we want to know.\
 RHS: information we have (number of unique cells in the observed variance-covariance matrix).
 
-
 ## Data requirements
 
 ::: {.incremental}
@@ -1252,52 +1338,34 @@ RHS: information we have (number of unique cells in the observed variance-covari
 -   The larger the sample size, the more precise (unbiased) are the estimates.
 :::
 
-## Heywood cases : when things go wrong
-
--   Improper solutions:
-    -   Negative variances\
-    -   Correlations larger than 1
-
-. . .
-
--   Reasons for the warnings can be:
-    1)  Slightly negative error estimates (not really a problem)\
-    2)  Indicators for latent variables need to be positively correlated\
-    3)  Local non-identification of parameters\
-    4)  Model misspecification
-
-## SEM workflow in a nutshell {.smaller}
+## SEM check list {.smaller}
 
 1)  Review the relevant theory and research literature to support model specification
-2)  Specify a model (e.g., diagram)
+2)  Specify a model (e.g., using causal diagram)
 3)  Determine model identification
-4)  Select measures for the variables represented in the model
+4)  Select measurements for the variables represented in the model
 5)  Collect data
 6)  Conduct preliminary descriptive statistical analysis (e.g., scaling, missing data, collinearity issues, outlier detection)
-7)  Estimate parameters in the model
+7)  Fit SEM
 8)  Assess model goodness-of-fit
-9)  Check for missing or unnecessary links
-10) Interpret and present results visually
+9) Check for missing or unnecessary links
+10) Interpret model coefficients
+11) Present results visually
 
-# Questions?
-
-# Live coding session
-
-## Lavaan syntax
+## Basic lavaan syntax
 
 Define model:
 
 ```r
-simple <-
-"mass.above ~ nadd + rich + even + precip.mm + disk
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm"
+mod.form  <-
+"Y ~ X1 + X2 + x3
+X3 ~ X1
 ````
 
 Fit model:
 
 ```r
-fit.simple <- sem(simple, data = seabloom)
+mod.fit <- sem(mod.form , data = dat1)
 ```
 
 ## Lavaan syntax {.smaller}
@@ -1305,12 +1373,16 @@ fit.simple <- sem(simple, data = seabloom)
 | Formula type | R     | Meaning                   | Example                   |
 |:-------------|:------|:--------------------------|:--------------------------|
 | regression   | `~`   | is regressed on           | `y ~ x`                   |
-| correlation  | `~~`  | correlate errors for      | `y1 ~~ y2`                |
-| latent       | `=~`  | set reflective indicators | `Height =~ y1 + y2 + y3`  |
-| composite    | `<~`  | set formative indicators  | `Comp1 <~ 1*x1 + x2 + x3` |
+| correlation  | `~~`  | correlate errors for      | `x1 ~~ x2`                |
 | intercept    | `~ 1` | estimate mean for `y`     | `y ~ 1`                   |
 | labelling    | `*`   | name coefficients         | `y ~ b1*x1 + b2*x2`       |
 | defining     | `:=`  | define quantity           | `Total := b1*b3 + b2`     |
+| latent       | `=~`  | set reflective indicators | `LV =~ x1 + x2 + x3`      |
+| composite    | `<~`  | set formative indicators  | `Comp <~ 1*x1 + x2 + x3`  |
+
+# Questions?
+
+# Live coding session
 
 # Your turn: working with the Seabloom dataset
 
