@@ -1,32 +1,31 @@
 library(lavaan)
 library(visreg)
-library(ggplot2)
+library(tidyverse)
 library(AICcmodavg)
 library(here)
 
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
+seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
 
 # seabloom$mass.above <- seabloom$mass.above / 100
-# seabloom$precip.mm <- seabloom$precip.mm / 100
-# seabloom$precip.gs <- seabloom$precip.gs / 100
 
 # Day 1:
 # Exercise 1:
 
-lm.dir <- lm(mass.above ~ nadd + precip.mm + rich + even, data = seabloom)
+lm.dir <- lm(mass.above ~ nadd  + rich + even, data = seabloom)
 summary(lm.dir)
 par(mfrow=c(2,2))
 plot(lm.dir)
 par(mfrow=c(1,1))
 
-lm.rich <- lm(rich ~ nadd + precip.mm, data = seabloom)
+lm.rich <- lm(rich ~ nadd, data = seabloom)
 summary(lm.rich)
 par(mfrow=c(2,2))
 plot(lm.rich)
 par(mfrow=c(1,1))
 
-lm.even <- lm(even ~ nadd + precip.mm, data = seabloom)
+lm.even <- lm(even ~ nadd, data = seabloom)
 summary(lm.even)
 par(mfrow=c(2,2))
 plot(lm.even)
@@ -58,15 +57,14 @@ mvn(data = data.frame(log.mass.above, log.even, log.rich), mvnTest = "hz", univa
 
 
 simple <-
-"mass.above ~ nadd + rich + even + precip.mm + disk
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm"
+"mass.above ~ nadd + rich + even + disk
+rich ~ nadd
+even ~ nadd"
 
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 
 #Rescale variables
 seabloom$mass.above <- seabloom$mass.above / 100
-seabloom$precip.mm <- seabloom$precip.mm / 100
 
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple, fit.measures = TRUE)
@@ -91,9 +89,9 @@ standardizedsolution(fit.simple.up, type = "std.all")
 # Add variables that calculate the total, direct and indirect effect of each variable
 
 derived <-
-"mass.above ~ b1 * nadd + b2 * rich + b3 * even + disk +  precip.mm
-rich ~ b4 * nadd + precip.mm
-even ~ b5 * nadd + precip.mm
+"mass.above ~ b1 * nadd + b2 * rich + b3 * even + disk
+rich ~ b4 * nadd 
+even ~ b5 * nadd 
 
 dir.nut.effect   := b1
 indir.nut.effect := b2 * b4 + b3 * b5
@@ -106,9 +104,9 @@ summary(fit.derived, rsq = TRUE)
 # Exercise 4: Saturated model
 
 satur <-
-"mass.above ~ nadd + rich + even + precip.mm + disk
-rich ~ nadd + precip.mm + disk
-even ~ nadd + precip.mm + disk
+"mass.above ~ nadd + rich + even +  disk
+rich ~ nadd + disk
+even ~ nadd + disk
 
 rich ~~ even"
 
@@ -117,9 +115,9 @@ summary(fit.satur, rsq = TRUE)
 
 # model pruning
 prune <-
-  "mass.above ~ nadd + rich + even + precip.mm + disk
-rich ~ nadd + precip.mm + disk
-even ~ nadd + precip.mm 
+  "mass.above ~ nadd + rich + even +  disk
+rich ~ nadd
+even ~ nadd   
 
 rich ~~ even"
 
@@ -139,25 +137,34 @@ aictab(list(fit.satur, fit.prune),
 # Compare model fit to simple model
 # What do you conclude?
 
+no.mediation <-
+  "mass.above ~ nadd + rich + even + disk
+rich ~ nadd
+even ~ nadd
+rich ~~ even"
+
+fit.no.mediation <- sem(no.mediation, data = seabloom, estimator = "MLM")
+summary(fit.no.mediation, rsq = TRUE)
+
 partial.mediation <-
-"mass.above ~ nadd + rich + even + precip.mm + disk
-rich ~ nadd + precip.mm + disk
-even ~ nadd + precip.mm +  disk
+"mass.above ~ nadd + rich + even + disk
+rich ~ nadd + disk
+even ~ nadd + disk
 rich ~~ even"
 
 fit.partial.mediation <- sem(partial.mediation, data = seabloom, estimator = "MLM")
 summary(fit.partial.mediation, rsq = TRUE)
 
 full.mediation <-
-"mass.above ~ nadd + rich + even + precip.mm 
-rich ~ nadd + precip.mm + disk
-even ~ nadd + precip.mm +  disk
+"mass.above ~ nadd + rich + even 
+rich ~ nadd + disk
+even ~ nadd + disk
 rich ~~ even"
 
 fit.full.mediation <- sem(full.mediation, data = seabloom, estimator = "MLM")
 summary(fit.full.mediation, rsq = TRUE)
 
-AIC(fit.partial.mediation, fit.full.mediation)
+AIC(fit.no.mediation, fit.partial.mediation, fit.full.mediation)
 
 
 # Day 2:
@@ -165,9 +172,9 @@ AIC(fit.partial.mediation, fit.full.mediation)
 # Exercise 1:
 
 simple <-
-"mass.above ~ nadd + disk + rich + even + precip.mm
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm
+"mass.above ~ nadd + disk + rich + even 
+rich ~ nadd 
+even ~ nadd
 
 rich ~~ even"
 
@@ -202,8 +209,8 @@ lv <- '
 # Latent variable definition
 diversity =~ lambda*even.rev_std + lambda*rich_std
 
-mass.above ~ nadd + disk + diversity + precip.mm
-diversity ~ nadd + precip.mm
+mass.above ~ nadd + disk + diversity
+diversity ~ nadd
 '
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
@@ -213,8 +220,8 @@ summary(fit.lv)
 
 
 lv <- '
-mass.above ~ nadd + disk + ens.pie + precip.mm
-ens.pie ~ nadd + precip.mm
+mass.above ~ nadd + disk + ens.pie
+ens.pie ~ nadd
 '
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
@@ -225,9 +232,9 @@ summary(fit.lv)
 comp <- "
 comp.landuse <~ 1 * disk + nadd
 
-rich ~ precip.mm + comp.landuse
-even ~ precip.mm + comp.landuse
-mass.above ~ comp.landuse + rich + even + precip.mm
+rich ~ comp.landuse
+even ~ comp.landuse
+mass.above ~ comp.landuse + rich + even
 
 rich ~~ even"
 
@@ -246,10 +253,10 @@ comp.man2 <- "mass.above ~ landuse"
 fit.comp.man2 <- sem(comp.man2, data = seabloom)
 
 comp <- "
-rich ~ precip.mm + landuse
-even ~ precip.mm + landuse
+rich ~ landuse
+even ~ landuse
 
-mass.above ~ landuse + rich + even + precip.mm
+mass.above ~ landuse + rich + even 
 
 rich ~~ even"
 
@@ -270,16 +277,16 @@ compint <-
 mass.above ~ comp.int"
 
 fit.compint <- sem(compint, data = seabloom)
-summary(fit.compint, standardized = TRUE, rsq = TRUE)
+summary(fit.compint, standardized = TRUE)
 
 # Full model:
 
 int.full <-
   "comp.int <~ 1 * disk + nadd + diskxnadd
 
-mass.above ~ comp.int + rich + even + precip.mm
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm
+mass.above ~ comp.int + rich + even 
+rich ~ nadd 
+even ~ nadd
 
 rich ~~ even"
 
@@ -290,9 +297,9 @@ summary(fit.int.full, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
 # Exercise 6:
 
 int.mg <-
-  "mass.above ~ rich + even + precip.mm
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm
+  "mass.above ~ rich + even 
+rich ~ nadd 
+even ~ nadd 
 
 rich ~~ even"
 
@@ -313,9 +320,9 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
   theme_bw() 
 
 int.mg.constrain <-
-  "mass.above ~  c('b1', 'b1') * rich + c('b2', 'b2') * even + c('b3', 'b3') * precip.mm
-rich ~ c('b4a', 'b4b') * nadd + c('b5', 'b5') * precip.mm
-even ~ c('b6a', 'b6b') *  nadd + c('b7', 'b7') * precip.mm
+  "mass.above ~  c('b1', 'b1') * rich + c('b2', 'b2') * even 
+rich ~ c('b4a', 'b4b') * nadd 
+even ~ c('b6a', 'b6b') *  nadd
 
 rich ~~ even"
 
@@ -338,20 +345,6 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
 
 library(AICcmodavg)
 aictab(list(fit.int.mg, fit.int.mg.constrain))
-
-# Exercise 7:
-
-library("lavaan.survey")
-
-design <- svydesign(ids = ~ plot, strata = ~ field, nest = TRUE, 
-                    data = seabloom)
-summary(design)
-
-fit.simple.nest <- lavaan.survey(lavaan.fit = fit.simple,
-                                 survey.design = design)
-summary(fit.simple.nest, rsq = TRUE)
-
-
 
 
 
