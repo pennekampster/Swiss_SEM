@@ -28,10 +28,13 @@ text-align: justify}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library("here")
+library(here)
 library(tidyverse)
 library(GGally)
 library(AICcmodavg)
+
+library(lavaanPlot)
+library(semPlot)
 
 ```
 
@@ -127,11 +130,9 @@ str(seabloom$ntrt)
 
 
 ### Subset dataset
-To simplify the analysis, we will take only the first 5 years of the dataset
+To simplify the analysis, we will take the average across all the years in the dataset for our analysis.
 
 ```{r}
-#seabloom <- seabloom %>% filter(year %in% c(1982, 1983, 1984, 1985))
-
 seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
 ```
 
@@ -150,18 +151,9 @@ Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en
 productivity (biomass) is directly influenced on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
 
 
-![](Figures/Metamodel.svg){width=70%}
+![](Figures/Metamodel_simple.svg){width=70%}
 
 
-<!-- ## Subset to one year -->
-<!-- For simplicity, set the focus on only one year. -->
-<!-- Then, `r dim(seabloom[seabloom$year == 2000, ])[1]` observations remain. -->
-
-<!-- NOT: -->
-<!-- ```{r} -->
-<!-- # seabloom <- seabloom[seabloom$year == 2000, ] -->
-<!-- # dim(seabloom) -->
-<!-- ``` -->
 
 
 # Linear model
@@ -177,7 +169,7 @@ Further, they make it nearly impossible to create a proper causal model, since t
 associations" which hinders interpretations [@grace21].
 
 
-![](Figures/LMdir.svg){width=45%}
+![](Figures/LMdir_simple.svg){width=45%}
 
 
 <div class="alert alert-info">
@@ -186,7 +178,7 @@ associations" which hinders interpretations [@grace21].
 
 
 ```{r class.source = 'fold-hide'}
-# lm.dir <- lm(mass.above ~ nadd + precip.mm + rich + even, data = seabloom)
+# lm.dir <- lm(mass.above ~ nadd + rich + even, data = seabloom)
 # summary(lm.dir)
 ```
 
@@ -195,7 +187,7 @@ associations" which hinders interpretations [@grace21].
 ## Indirect effects
 To account for the indirect effects, two additional LMs are necessary: one with richness and one with evenness as response.
 
-![](Figures/LMind.svg){width=37%}
+![](Figures/LMind_simple.svg){width=37%}
 
 
 ```{r}
@@ -294,7 +286,7 @@ The package [`MVN`](https://cran.r-project.org/web/packages/MVN/index.html) allo
 ```{r}
 library("MVN")
 
-mvn(data = seabloom[, c(10:12)], mvnTest = "hz", univariatePlot = "qqplot")
+mvn(data = seabloom[, c(9:11)], mvnTest = "hz", univariatePlot = "qqplot")
 ```
 
 
@@ -646,13 +638,6 @@ The package [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot) a
 
 Another library that handles `lavaan` objects would be [`semPlot`](https://cran.r-project.org/web/packages/semPlot/index.html). 
 
-
-
-```{r}
-suppressMessages(lavaanPlot_installed <- require(lavaanPlot))
-if (!lavaanPlot_installed) {install.packages("lavaanPlot")}
-```
-
 Then, we can plot the results with significance levels displayed as asterisks.
 
 ```{r}
@@ -669,8 +654,6 @@ For more customization, check out the [`lavaanPlot` documentation](https://lavaa
 
 
 ```{r}
-library("semPlot")
-
 # Add p-values and R^2: https://stackoverflow.com/questions/60706206/how-do-i-include-p-value-and-r-square-for-the-estimates-in-sempaths
 # thePlot <- semPlotModel(fit.simple.up)
 
