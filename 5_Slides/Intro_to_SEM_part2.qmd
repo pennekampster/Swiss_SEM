@@ -70,14 +70,10 @@ digraph  {
         label="Environment"
         fontname = Helvetica
      		color=lightgrey;
-        precipitation;
         nutrients;
         disturbance;
         }
 
-    precipitation->richness;
-    precipitation->evenness;
-    precipitation->biomass;
     nutrients->richness;
     nutrients->evenness;
     nutrients->biomass;
@@ -539,9 +535,9 @@ Start with the following model:
 library("lavaan")
 
 simple <-
-"mass.above ~ nadd + disk + rich + even + precip.mm
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm
+"mass.above ~ nadd + disk + rich + even
+rich ~ nadd 
+even ~ nadd
 
 rich ~~ even"
 
@@ -587,7 +583,7 @@ digraph  {
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5, splines=curved]
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5]
 
     node [shape=oval, fontname = Helvetica]
     diversity
@@ -599,18 +595,18 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
-        precipitation;
 
     disturbance->diversity;
     nutrients->diversity;
     disturbance -> biomass;
-    precipitation -> biomass;
     diversity->biomass ;
 
     diversity -> evenness;
     diversity -> richness;
-  
- { rank="same"; nutrients; disturbance, precipitation}
+
+ { rank="max"; nutrients; disturbance}
+
+ { rank="min"; evenness; richness}
 }
 ```
 
@@ -626,10 +622,7 @@ digraph  {
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5, splines=curved]
-
-    node [shape=oval, fontname = Helvetica]
-    diversity
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5]
 
     node [shape=hexagon, fontname = Helvetica]
     landuse
@@ -641,18 +634,16 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
-        precipitation;
 
-    landuse->diversity;
+    landuse->richness;
+    landuse -> evenness;
     landuse -> biomass;
-    precipitation -> biomass;
-    diversity->biomass ;
+
+    evenness-> biomass;
+    richness->biomass;
 
     nutrients -> landuse;
     disturbance -> landuse;
-
-    diversity -> evenness;
-    diversity -> richness;
   
  #{ rank="same"; precipitation, nutrients, disturbance}
 }
@@ -665,6 +656,39 @@ digraph  {
 
 ## Exercise 5
 
+```{dot}
+//| fig-width: 5
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+        disturbance;
+        middleman
+
+  middleman[shape=none width=0 height=0 label="" style=invis]
+disturbance->middleman [constraint=false, arrowhead=diamond];
+
+    middleman->richness;
+    middleman -> evenness;
+
+    evenness-> biomass;
+    richness->biomass;
+
+    nutrients -> middleman[arrowhead=none];
+     
+ #{ rank="same"; precipitation, nutrients, disturbance}
+}
+```
+
+
+
 -   Investigate possible interaction between disturbance and nutrient addition on AGB
     -   Construct composite to model an interaction
     -   Incorporate composite into full model
@@ -672,6 +696,68 @@ digraph  {
 
 
 ## Exercise 6
+
+
+
+::: {.column width="40%"}
+Group = Disturbed
+```{dot}
+//| fig-width: 5
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+
+    nutrients->richness;
+    nutrients -> evenness;
+    nutrients -> biomass;
+
+    evenness-> biomass;
+    richness->biomass;
+
+  
+ #{ rank="same"; precipitation, nutrients, disturbance}
+}
+```
+:::
+
+::: {.column width="40%"}
+Group = Undisturbed
+```{dot}
+//| fig-width: 5
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+
+    nutrients->richness;
+    nutrients -> evenness;
+    nutrients -> biomass;
+
+    evenness-> biomass;
+    richness->biomass;
+
+  
+ #{ rank="same"; precipitation, nutrients, disturbance}
+}
+```
+
+:::
+
 
 -   Investigate possible interaction between disturbance and nutrient addition on AGB:
     -   Use multi-group fitting to explore interaction.

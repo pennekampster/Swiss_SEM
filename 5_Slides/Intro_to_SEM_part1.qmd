@@ -294,7 +294,6 @@ digraph {
  {rank = max; U_y};
 
   }
-
 ```
 :::
 :::
@@ -1394,7 +1393,6 @@ mod.fit <- sem(mod.form , data = dat1)
 - Long-term consequences of human-driven environmental changes on grasslands:
   + Soil disturbance
   + Nitrogen deposition
-  + Changes in precipitation
 
 ## Introduction to the dataset 
 
@@ -1467,14 +1465,16 @@ digraph  {
 Ask students about how they would address this question.
 :::
 
-## A meta-model {.smaller}
+## The meta-model {.smaller}
 
 ```{dot}
-//| fig-width: 9
+//| fig-width: 6
+//| fig-height: 6
+
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1.5]
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=.8]
 
   # several 'node' statements
   node [shape = box,
@@ -1492,14 +1492,10 @@ digraph  {
         label="Environment"
         fontname = Helvetica
      		color=lightgrey;
-        precipitation;
         nutrients;
         disturbance;
         }
 
-    precipitation->richness;
-    precipitation->evenness;
-    precipitation->biomass;
     nutrients->richness;
     nutrients->evenness;
     nutrients->biomass;
@@ -1519,7 +1515,7 @@ digraph  {
 ```
 
 ::: {.incremental}
-1)  Function (biomass) is directly influenced by the environment (nutrients, precipitation, disturbance)
+1)  Function (biomass) is directly influenced by the environment (nutrients, disturbance)
 2)  Function (biomass) is directly influenced by biodiversity (richness and evenness).
 3)  The environment also influences biodiversity and thus, have an indirect effect on function via biodiversity.
 :::
@@ -1558,22 +1554,18 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
-        precipitation;
 
     nutrients->richness;
     nutrients->evenness;
     nutrients -> biomass;
-    precipitation->richness;
-    precipitation->evenness;
     disturbance -> biomass;
-    precipitation -> biomass;
 
    # evenness:e-> richness:e [dir=both; minlen=3] ;
 
     evenness->biomass ;
     richness->biomass ;
   
- { rank="same"; nutrients; disturbance; precipitation}
+ { rank="same"; nutrients; disturbance}
  { rank="same"; evenness; richness}
 }
 ```
@@ -1600,22 +1592,18 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
-        precipitation;
 
     nutrients->richness;
     nutrients->evenness;
     nutrients -> biomass;
-    precipitation->richness;
-    precipitation->evenness;
     disturbance -> biomass;
-    precipitation -> biomass;
 
     evenness:e-> richness:e [dir=both; minlen=3, style="dashed"] ;
 
     evenness->biomass ;
     richness->biomass ;
   
- { rank="same"; nutrients; disturbance; precipitation}
+ { rank="same"; nutrients; disturbance}
  { rank="same"; evenness; richness}
 }
 ```
@@ -1644,29 +1632,25 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
-        precipitation;
 
     disturbance->richness;
     disturbance->evenness;
     nutrients->richness;
     nutrients->evenness;
-    precipitation->richness;
-    precipitation->evenness;
     disturbance -> biomass;
-    precipitation -> biomass;
 
     evenness:e-> richness:e [dir=both; minlen=3, style="dashed"] ;
 
     evenness->biomass ;
     richness->biomass ;
   
- { rank="same"; nutrients; disturbance; precipitation}
+ { rank="same"; nutrients; disturbance}
  { rank="same"; evenness; richness}
 }
 ```
 
 -   Saturated model:
-    -   Model comparison with simpler models used previously.
+    -   Model comparison with simpler model used in exercise 3.
     -   Perform model pruning.
     -   Decide on most parsimonious model and summarize model.
 - What do you conclude?
@@ -1687,29 +1671,25 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
-        precipitation;
 
     disturbance->richness [color="red"];
     disturbance->evenness [color="red"];
     nutrients->richness;
     nutrients->evenness;
-    precipitation->richness;
-    precipitation->evenness;
     disturbance -> biomass [color="red"];
-    precipitation -> biomass;
 
     evenness:e-> richness:e [dir=both; minlen=3; style="dashed"];
 
     evenness->biomass ;
     richness->biomass ;
   
- { rank="same"; nutrients; disturbance; precipitation}
+ { rank="same"; nutrients; disturbance}
  { rank="same"; evenness; richness}
 }
 ```
 
 -   Perform mediation analysis:
-    -   Is the effect of disturbance mediated via its effect on richness and eveness, rather than directly on biomass?
+    -   Is there no, partial, or full mediation of disturbance on biomass via richness and eveness?
     -   Add paths from disturbance to richness and evenness, remove the direct paths to AGB (both nutrients and disturbance).
     -   Compare model fit to simple model. 
 - What do you conclude?
