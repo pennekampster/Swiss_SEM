@@ -35,34 +35,12 @@ Also, we rescale the biomass and precipitation so that they are in approximately
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
 
+# take average across all years to avoid pseude-replication issues
+seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
 
-### take only the first 5 years of the dataset
-seabloom <- seabloom %>% filter(year %in% c(1982, 1983, 1984, 1985))
-
-# rescale variables to facilitate model convergence
+# rescale AGB variable to faciliate convergence
 seabloom$mass.above <- seabloom$mass.above / 100
-seabloom$precip.mm <- seabloom$precip.mm / 100
-seabloom$precip.gs <- seabloom$precip.gs / 100
 ```
-
-
-```{r echo=F, include=F}
-# remove_outliers <- function(x, na.rm = TRUE, ...) {
-#   qnt <- quantile(x, probs=c(.25, .75), na.rm = na.rm, ...)
-#   H <- 1.5 * IQR(x, na.rm = na.rm)
-#   y <- x
-#   y[x < (qnt[1] - H)] <- NA
-#   y[x > (qnt[2] + H)] <- NA
-#   y
-# }
-# 
-# library(tidyverse)
-# 
-# seabloom <- seabloom %>% mutate(across(c(mass.above, precip.gs, precip.mm, rich, even), remove_outliers))
-# seabloom <- na.omit(seabloom) 
-```
-
-
 
 ## Rerun the model
 First, we run the model as before.
@@ -75,9 +53,9 @@ First, we run the model as before.
 library("lavaan")
 
 simple <-
-"mass.above ~ nadd + disk + rich + even 
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm 
+"mass.above ~ nadd + rich + even + disk
+rich ~ nadd 
+even ~ nadd
 
 rich ~~ even"
 
@@ -192,29 +170,29 @@ lv <- '
 # Latent variable definition
 diversity =~ lambda*even.rev_std + lambda*rich_std
 
-mass.above ~ nadd + disk + diversity + precip.mm
-diversity ~ nadd + precip.mm
+mass.above ~ nadd + disk + diversity 
+diversity ~ nadd 
 '
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
 ```
 
-The model converged, but the model fit is not great. The coefficients suggest effects of nutrient addition and precipitation on diversity. However, we would expect a negative effect of nutrient addition, while the effect is positive. Can you explain why this is the case?
+The model converged and the fit is good. The coefficients suggest effects of nutrient addition and precipitation on diversity. However, we would expect a negative effect of nutrient addition on diversity, while the effect is positive. The opposite expectation would hold for diversity on AGB, but here we see a negative effect. Can you explain why this is the case?
 
 Right, it has to do with reversing the direction of the evenness effect. As both richness and reversed evenness influence AGB, the meaning of the latent diversity effect is reversed. We can see this when we fit a model that just contains the ens.pie variable:
 
 ```{r}
 lv <- '
-mass.above ~ nadd + disk + ens.pie + precip.mm
-ens.pie ~ nadd + precip.mm
+mass.above ~ nadd + disk + ens.pie 
+ens.pie ~ nadd
 '
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
 ```
 
-As you can see, now the joint effect of evenness and richness is negatively influenced by nutrient addition and precipitation. The model is also fitting the data pretty well.
+As you can see, now the joint effect of evenness and richness is negatively influenced by nutrient addition and AGB is positivelyaffected by diversity. The model is also fitting the data pretty well.
 
 
 # Composite variable
@@ -229,16 +207,14 @@ To save one parameter, we fix the `disk` at one--now the model is just identifie
 comp <- "
 comp.landuse <~ 1 * disk + nadd
 
-rich ~ precip.mm + comp.landuse
-even ~ precip.mm + comp.landuse
-
-mass.above ~ comp.landuse + rich + even 
+rich ~  comp.landuse
+even ~  comp.landuse
+mass.above ~ comp.landuse + rich + even
 
 rich ~~ even"
 
 fit.comp <- sem(comp, data = seabloom)
 summary(fit.comp, standardized=T)
-modificationIndices(fit.comp)
 ```
 
 
@@ -281,10 +257,10 @@ Finally, we can integrate the composite `landuse` into the `simple` model from b
 
 ```{r}
 comp <- "
-rich ~ precip.mm + landuse
-even ~ precip.mm + landuse
+rich ~  landuse
+even ~ landuse
 
-mass.above ~ landuse + rich + even + precip.mm
+mass.above ~ landuse + rich + even
 
 rich ~~ even"
 
@@ -350,9 +326,9 @@ The combined effect of the predictors is the `std.all` value for the regression 
 int.full <-
 "comp.int <~ 1 * disk + nadd + diskxnadd
 
-mass.above ~ comp.int + rich + even + precip.mm
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm
+mass.above ~ comp.int + rich + even
+rich ~ nadd
+even ~ nadd 
 
 rich ~~ even"
 
@@ -368,9 +344,9 @@ Another way to incorporate interactions is to fit SEMs where coefficients can va
 
 ```{r}
 int.mg <-
-"mass.above ~ rich + even + precip.mm
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm
+"mass.above ~ rich + even 
+rich ~ nadd 
+even ~ nadd
 
 rich ~~ even"
 
@@ -414,9 +390,9 @@ Furthermore, we can test equality constraints by labeling parameters. To do so, 
 
 ```{r}
 int.mg.constrain <-
-"mass.above ~  c('b1', 'b1') * rich + c('b2', 'b2') * even + c('b3', 'b3') * precip.mm
-rich ~ c('b4a', 'b4b') * nadd + c('b5', 'b5') * precip.mm
-even ~ c('b6a', 'b6b') *  nadd + c('b7', 'b7') * precip.mm
+"mass.above ~  c('b1', 'b1') * rich + c('b2', 'b2') * even
+rich ~ c('b4a', 'b4b') * nadd 
+even ~ c('b6a', 'b6b') *  nadd 
 
 rich ~~ even"
 
@@ -447,6 +423,201 @@ Model comparison with AICc indicates that the disturbance effect probably intera
 library(AICcmodavg)
 aictab(list(fit.int.mg, fit.int.mg.constrain))
 ```
+
+<!-- # Complex sampling structure -->
+<!-- Often, we encounter more complex sampling or experimental schemes, e.g. the data is nested within sites or contains groups with non-random differences such as sexes or lifestages. -->
+<!-- As a result, these data violate the principle of being [*i.i.d.* (independent and identically distributed)](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables). -->
+<!-- Thus, it is necessary to account for this structure in the data in the model. -->
+
+
+<!-- The add-on package [`lavaan.survey`](https://cran.r-project.org/web/packages/lavaan.survey/index.html) allows the analysis of stratified, clustered or weighted data with the help of the package [`survey`](https://r-survey.r-forge.r-project.org/survey/). -->
+<!-- With this, `lavaan` objects can be processed further with a specific data structure: -->
+<!-- first, we initialize the design and then, post-process the `lavaan` object and compute the adjusted results. -->
+<!-- The result is a corrected `lavaan` object. -->
+
+<!-- ```{r, message=FALSE} -->
+<!-- library("lavaan.survey") -->
+<!-- ``` -->
+
+<!-- As sampling was performed in `r length(unique(seabloom$plot))` plots nested in three  different fields (`A`, `B` and `C`), let's adjust for this structure. -->
+<!-- For this, we first specify the study design as plots (`ids`) to be nested within fields (`strata`). -->
+
+<!-- ```{r} -->
+<!-- design <- svydesign(ids = ~ plot, strata = ~ field, nest = TRUE,  -->
+<!--                     data = seabloom) -->
+<!-- summary(design) -->
+<!-- ``` -->
+
+<!-- Next, we can refit the `simple` model from before with `lavaan.survey` using the specified study design as an argument. -->
+
+<!-- ```{r} -->
+<!-- fit.simple.nest <- lavaan.survey(lavaan.fit = fit.simple, -->
+<!--                                  survey.design = design) -->
+<!-- summary(fit.simple.nest, rsq = TRUE) -->
+<!-- ``` -->
+
+<!-- We see that the robust $p$-value increased substantially from `r round(fitmeasures(fit.simple, "pvalue.scaled"), digits = 2)` to `r round(fitmeasures(fit.simple.nest, "pvalue.scaled"), digits = 2)`, while the R^2^, the estimates and their standard errors remained basically the same. -->
+
+
+<!-- # Spatial autocorrelation -->
+<!-- We can detect spatial autocorrelation in this analysis with the help of a script developped by Jarret Byrnes... -->
+
+<!-- First, download the script if absent and load it. -->
+<!-- ```{r} -->
+<!-- if(!file.exists("lavSpatialCorrect.R")) -->
+<!--   {system("wget https://raw.githubusercontent.com/jebyrnes/spatial_correction_lavaan/master/lavSpatialCorrect.R")} -->
+
+<!-- if(!file.exists("lavSpatialCorrect.R")) -->
+<!--   {system("wget https://raw.githubusercontent.com/jebyrnes/spatial_correction_lavaan/master/predict_lavaan.R")} -->
+
+<!-- source(here("lavSpatialCorrect.R")) -->
+<!-- source(here("predict_lavaan.R")) -->
+<!-- ``` -->
+
+<!-- ## Geographical coordinates -->
+<!-- To account for spatial autocorrelation, we first need the coordinates of the respective fields. As none are given in the publication, we use approximated location inferred from the map in the supplementary. -->
+
+<!-- ```{r} -->
+<!-- library(tidyverse) -->
+<!-- seabloom_A <- seabloom %>% filter(field == "A") %>% mutate(lat = 45.4232 + rnorm(n(), mean=0, .1), -->
+<!--                                                lon = -93.197 + rnorm(n(), mean=0, .001)) -->
+
+<!-- seabloom_B <- seabloom %>% filter(field == "B") %>% mutate(lat = 45.4258 + rnorm(n(), mean=0, .1), -->
+<!--                                                lon = -93.2102 + rnorm(n(), mean=0, .001)) -->
+
+<!-- seabloom_C <- seabloom %>% filter(field == "C") %>% mutate(lat = 45.3969 + rnorm(n(), mean=0, .1), -->
+<!--                                                lon = -93.1933 + rnorm(n(), mean=0, .001)) -->
+
+<!-- seabloom <- bind_rows(seabloom_A, seabloom_B, seabloom_C) -->
+<!-- ``` -->
+
+
+<!-- ## Correct for spatial autocorrelation -->
+<!-- "lavSpatialCorrect calculates Moran's I for the residuals of all endogenous variables, and then spatially corrects them via Moran's I. If they are spatially independent, the effective sample size = the true sample size." -->
+
+<!-- ```{r} -->
+
+
+<!-- predict_lavaan <- function(fit, newdata = NULL){ -->
+<!--   stopifnot(inherits(fit, "lavaan")) -->
+
+<!--   #Make sure we can use this -->
+<!--   if(!inspect(fit, "meanstructure")) stop("Need to supply meanstructure = TRUE in fit\n") -->
+<!--   if(is.null(newdata)){ -->
+<!--     newdata <- data.frame(inspect(fit, "data")) -->
+<!--     names(newdata) <- lavNames(fit) -->
+<!--   } -->
+
+<!--   if(length(lavNames(fit, type="lv"))!=0) stop("Does not currently work with latent variables\n") -->
+
+<!--   #check for new data -->
+<!--   if(sum(!(lavNames(fit, type="ov.x") %in% names(newdata)))>0) stop("Not all exogenous variables supplied!") -->
+
+<!--   #Add some new columns to newdata -->
+<!--   newdata$Intercept <- 1 -->
+<!--   newdata[lavNames(fit, "ov.nox")] <- 0 -->
+
+
+<!--   mod_df <- data.frame(lhs = fit@ParTable$lhs, -->
+<!--                        op = fit@ParTable$op, -->
+<!--                        rhs = fit@ParTable$rhs, -->
+<!--                        exo = fit@ParTable$exo, -->
+<!--                        est = fit@ParTable$est, -->
+<!--                        se = fit@ParTable$se, -->
+<!--                        stringsAsFactors=FALSE) -->
+
+<!--   #Drop covariances -->
+<!--   mod_df <- mod_df[-which(mod_df$op=="~~"),] -->
+<!--   mod_df[which(mod_df$op=="~1"),]$rhs <- "Intercept" -->
+
+<!--   #get rid of exogenous on lhs -->
+<!--   mod_df <- mod_df[-which(mod_df$exo==1),] -->
+
+<!--   #Order by lhs -->
+<!--   mod_df <- mod_df[sort(mod_df$lhs, index.return=TRUE)$ix,] -->
+
+<!--   #let us know which variables on the rhs are exogenous -->
+<!--   mod_df$ord <- 0 -->
+<!--   mod_df[which(!(mod_df$rhs %in% mod_df$lhs)),]$ord <- 1 -->
+
+<!--   #Make a "order" -->
+<!--   ord_current <- 1 -->
+<!--   while(sum(mod_df$ord==0)>0){ -->
+<!--     for(r in unique(mod_df$lhs)){ -->
+<!--       val <-  sum(mod_df[which(mod_df$lhs==r),]$ord==0) -->
+<!--       if(val==0) { -->
+<!--         mod_df[which(mod_df$lhs==r),]$ord <- ord_current -->
+
+<!--         if(sum(mod_df$rhs==r)>0) -->
+<!--           mod_df[which(mod_df$rhs==r),]$ord <- ord_current+1 -->
+<!--       } -->
+<!--     } -->
+<!--   ord_current <- ord_current +1 -->
+<!--   } -->
+
+<!--   #correct for ragged ordering -->
+<!--   for(r in unique(mod_df$lhs)){ -->
+<!--     mod_df[which(mod_df$lhs==r),]$ord <- max(mod_df[which(mod_df$lhs==r),]$ord) -->
+<!--   } -->
+
+<!--   #sort by order  -->
+<!--   mod_df <- mod_df[sort(mod_df$ord, index.return=TRUE)$ix,] -->
+
+<!--   #now do the fitting in order -->
+<!--   fit_df <- data.frame(base = rep(1, nrow(newdata))) -->
+
+<!--   for(r in unique(mod_df$lhs)){ -->
+<!--     subdf <- subset(mod_df, mod_df$lhs==r) -->
+<!--     #make a formula -->
+<!--     rhs <- paste0(subdf$rhs, collapse=" + ") -->
+<!--     form <- as.formula(paste0(r, " ~ ", rhs)) -->
+
+<!--     #use formula to get right part of the data in right format -->
+<!--     mod_mat <- model.matrix(form, newdata)[,-1] -->
+<!--     new_val = mod_mat %*% subdf$est -->
+
+<!--     fit_df[[r]] <- new_val -->
+<!--     newdata[[r]] <- new_val -->
+<!--   } -->
+
+<!--   return(fit_df[,-1]) -->
+
+<!-- } -->
+
+<!-- fitted_lavaan <- function(fit){ -->
+<!--   predict_lavaan(fit) -->
+<!-- } -->
+
+<!-- residuals_lavaan <- function(fit){ -->
+<!--   fitted_vals <- fitted_lavaan(fit) -->
+
+<!--   rawdata <- data.frame(inspect(fit, "data")) -->
+<!--   names(rawdata) <- lavNames(fit) -->
+
+<!--   res <- data.frame(base = rep(1, nrow(rawdata))) -->
+<!--   for(vals in names(fitted_vals)){ -->
+<!--     res[[vals]] <- rawdata[[vals]] - fitted_vals[[vals]]  -->
+<!--   } -->
+
+<!--   return(res[,-1]) -->
+<!-- } -->
+
+
+<!-- fit.simple2 <- sem(simple, data = seabloom, meanstructure=T) -->
+<!-- summary(fit.simple2) -->
+
+<!-- library(ggplot2) -->
+
+<!-- # residuals are key for the analysis -->
+<!-- fitRes <- as.data.frame(residuals_lavaan(fit.simple2)) -->
+
+<!-- seabloom$fitted.value <- fitted.values(fit.simple2, "casewise")[1] -->
+<!-- seabloom$resid <- as.numeric(seabloom$mass.above - seabloom$fitted.value) -->
+
+<!-- #raw visualization of NDVI residuals -->
+<!-- ggplot(data=seabloom, aes(lat, lon, colour=resid)) + geom_point() -->
+<!-- lavSpatialCorrect(fit.simple2, seabloom$lon, seabloom$lat) -->
+<!-- ``` -->
 
 # References
 
