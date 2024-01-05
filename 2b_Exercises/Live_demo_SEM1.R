@@ -81,7 +81,7 @@ summary(fit3)
 
 summary(fit3, fit.measures = T)
 
-# model pruning
+# after a fitting model is found, let's do some pruning
 model_true <- ' 
 y ~ x1 + x2 
 x2 ~ x1

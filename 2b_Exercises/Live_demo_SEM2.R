@@ -27,7 +27,7 @@ lm <- '
 y ~ noisy1 # exogenous latent
 '
 fit <- sem(lm, data=dat)
-summary(fit, standardized=T, rsq=T)
+summary(fit, standardized=T)
 
 # use latent variable to model underlying cause
 latent <- '
