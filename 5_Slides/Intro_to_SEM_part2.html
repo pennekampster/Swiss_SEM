@@ -438,11 +438,7 @@ Frank Pennekamp
 <div>
 <div>
 <svg width="864" height="480" viewbox="0.00 0.00 488.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 484.44,-215 484.44,4 -4,4"></polygon> <g id="clust2" class="cluster">
-<title>
-cluster_env
-</title>
-<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <g id="clust3" class="cluster">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 484.44,-215 484.44,4 -4,4"></polygon> <g id="clust3" class="cluster">
 <title>
 cluster_prod
 </title>
@@ -450,7 +446,11 @@ cluster_prod
 <title>
 cluster_bio
 </title>
-<polygon fill="none" stroke="lightgrey" points="204.38,-77 204.38,-203 296.31,-203 296.31,-77 204.38,-77"></polygon> <text text-anchor="middle" x="250.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <!-- evenness --> <g id="node1" class="node">
+<polygon fill="none" stroke="lightgrey" points="204.38,-77 204.38,-203 296.31,-203 296.31,-77 204.38,-77"></polygon> <text text-anchor="middle" x="250.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <g id="clust2" class="cluster">
+<title>
+cluster_env
+</title>
+<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
 </title>
@@ -504,9 +504,9 @@ disturbance-&gt;biomass
 <ul>
 <li class="fragment">Conceptual model to link data with theory.</li>
 <li class="fragment">So far, only measured variables were considered.</li>
-<li class="fragment">However, some components of a meta-model abstract, multifaceted concepts (e.g., “biodiversity”) may be difficult to quantify and measure directly.</li>
-<li class="fragment">SEM provides constructs such as latent and composite variables to address these situations.<br>
-</li>
+<li class="fragment">Some components of a meta-model may be abstract and difficult to quantify and measure directly.</li>
+<li class="fragment">Some components may be convenient to summarize as a single cause.</li>
+<li class="fragment">SEM provides constructs to address these situations: 1) latent and 2) composite variables.</li>
 </ul>
 </div>
 </section>
@@ -559,12 +559,12 @@ Y-&gt;Z
 <div>
 <ul>
 <li class="fragment">Latent variables are unobserved.</li>
+<li class="fragment">In diagrams, latent variables are represented by oval node shape.<br>
+</li>
 <li class="fragment">Bridge between observed data and theory.</li>
 <li class="fragment">Their influence is captured by one or more indicator variable(s).<br>
 </li>
 <li class="fragment">Direction of causality flows from latent variables to the observed variables (reflective indicators).</li>
-<li class="fragment">Graphically, latent variables are represented by oval node shape.<br>
-</li>
 </ul>
 </div>
 </section>
@@ -614,67 +614,120 @@ Y-&gt;Z
 <li class="fragment">Indicator variables “emerge” from the latent variable.<br>
 </li>
 <li class="fragment">Latent variables free of random or systematic measurement errors (unlike their indicators).</li>
-<li class="fragment">All indicators should be positively correlated to the latent variable (i.e., driver).</li>
+<li class="fragment">All indicators need to be positively correlated to the latent variable (i.e., driver).</li>
+<li class="fragment">Latents can be both endogenous and exogenous.</li>
 </ul>
 </div>
 </section>
 <section id="latent-variables-3" class="slide level2">
 <h2>Latent variables</h2>
-<div>
-<ul>
-<li class="fragment">Latents can be both endogenous and exogenous.</li>
-<li class="fragment"><em>Measurement model</em> focuses solely on relating indicators to latent variables.</li>
-<li class="fragment"><em>Structural model</em> is one with directed paths between latent variables.</li>
-</ul>
-</div>
-</section>
-<section id="latent-variables-4" class="slide level2">
-<h2>Latent variables</h2>
-<p>Latents often fitted in two steps:</p>
+<p>Latents fitted in two steps:</p>
 <div class="fragment">
 <ol type="1">
-<li>Confirmatory factor analysis</li>
-</ol>
+<li>Confirmatory factor analysis
 <ul>
 <li>Multi-indicator latent variables: the same process generated multiple indicator variables.<br>
 </li>
 <li>Precursor to evaluation of any structural models in which the latent variables appear.</li>
-</ul>
+</ul></li>
+</ol>
 </div>
 <div class="fragment">
 <ol start="2" type="1">
-<li>Full model including latent variable</li>
-</ol>
+<li>Full model including latent variable
 <ul>
 <li>To estimate effect of latent variable on other variables.</li>
-</ul>
+</ul></li>
+</ol>
 </div>
 </section>
-<section id="using-latents-to-adjust-for-measurement-error-in-the-explanatory-variables" class="slide level2">
-<h2>Using latents to adjust for measurement error in the explanatory variables</h2>
+<section id="latents-to-adjust-for-measurement-error-in-predictors" class="slide level2">
+<h2>Latents to adjust for measurement error in predictors</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="576" height="480" viewbox="0.00 0.00 185.57 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-40 181.57,-40 181.57,4 -4,4"></polygon> <!-- X --> <g id="node1" class="node">
+<title>
+X
+</title>
+<polygon fill="none" stroke="black" points="87.36,-36 0.21,-36 0.21,0 87.36,0 87.36,-36"></polygon> <text text-anchor="middle" x="43.79" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X with error</text> </g> <!-- Y --> <g id="node2" class="node">
+<title>
+Y
+</title>
+<polygon fill="none" stroke="black" points="177.57,-36 123.57,-36 123.57,0 177.57,0 177.57,-36"></polygon> <text text-anchor="middle" x="150.57" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text> </g> <!-- X&#45;&gt;Y --> <g id="edge1" class="edge">
+<title>
+X-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M87.41,-18C96.01,-18 104.98,-18 113.34,-18"></path> <polygon fill="black" stroke="black" points="113.54,-21.5 123.54,-18 113.54,-14.5 113.54,-21.5"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
 <div>
 <ul>
-<li class="fragment">Variables are often measured with error.<br>
+<li class="fragment">Predictors are often measured with error.<br>
 </li>
-<li class="fragment">Regression approaches assume that predictor variables are measured without error.<br>
+<li class="fragment">Regression assume that predictors are measured without error.<br>
 </li>
 <li class="fragment">What difference does it make?</li>
 </ul>
 </div>
 </section>
-<section id="regression-dilution" class="slide level2 smaller">
-<h2>Regression dilution</h2>
+<section id="latents-to-adjust-for-measurement-error-in-predictors-1" class="slide level2">
+<h2>Latents to adjust for measurement error in predictors</h2>
 
-<img data-src="Intro_to_SEM_part2_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><div>
+<img data-src="Intro_to_SEM_part2_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"><p>Red = true slope, blue = OLS slope.</p>
+<div>
 <ul>
-<li class="fragment">Red = true slope, blue = OLS slope.</li>
-<li class="fragment">Measurement error biases the slope towards zero.</li>
+<li class="fragment">Measurement error biases the slope towards zero = regression dilution.</li>
 <li class="fragment">How to account for regression dilution?</li>
 </ul>
 </div>
 </section>
-<section id="latents-to-adjust-for-noise-in-the-explanatory-variables" class="slide level2">
-<h2>Latents to adjust for noise in the explanatory variables</h2>
+<section id="latents-to-adjust-for-measurement-error-in-predictors-2" class="slide level2">
+<h2>Latents to adjust for measurement error in predictors</h2>
+<div class="cell" data-fig-width="6">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="576" height="480" viewbox="0.00 0.00 323.59 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-94 319.59,-94 319.59,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="120.4,-90 -0.13,-90 -0.13,-54 120.4,-54 120.4,-90"></polygon> <text text-anchor="middle" x="60.13" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">measurements 1</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="116.9,-36 3.37,-36 3.37,0 116.9,0 116.9,-36"></polygon> <text text-anchor="middle" x="60.13" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">measurement 2</text> </g> <!-- Z --> <g id="node3" class="node">
+<title>
+Z
+</title>
+<ellipse fill="none" stroke="black" cx="190.93" cy="-45" rx="34.82" ry="18"></ellipse> <text text-anchor="middle" x="190.93" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">latent</text> </g> <!-- Z&#45;&gt;X1 --> <g id="edge1" class="edge">
+<title>
+Z-&gt;X1
+</title>
+<path fill="none" stroke="black" d="M158.43,-51.6C149.86,-53.4 140.22,-55.42 130.44,-57.47"></path> <polygon fill="black" stroke="black" points="129.7,-54.05 120.63,-59.53 131.14,-60.9 129.7,-54.05"></polygon> </g> <!-- Z&#45;&gt;X2 --> <g id="edge2" class="edge">
+<title>
+Z-&gt;X2
+</title>
+<path fill="none" stroke="black" d="M158.56,-38.43C148.95,-36.41 137.99,-34.11 126.97,-31.8"></path> <polygon fill="black" stroke="black" points="127.38,-28.31 116.88,-29.69 125.95,-35.16 127.38,-28.31"></polygon> </g> <!-- Y --> <g id="node4" class="node">
+<title>
+Y
+</title>
+<ellipse fill="none" stroke="black" cx="288.59" cy="-45" rx="27" ry="18"></ellipse> <text text-anchor="middle" x="288.59" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text> </g> <!-- Z&#45;&gt;Y --> <g id="edge3" class="edge">
+<title>
+Z-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M225.65,-45C233.9,-45 242.76,-45 251.13,-45"></path> <polygon fill="black" stroke="black" points="251.38,-48.5 261.38,-45 251.38,-41.5 251.38,-48.5"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
 <div>
 <ul>
 <li class="fragment">Possible to account for measurement error when multiple measurements were made.</li>
@@ -816,16 +869,20 @@ E-&gt;Y
 </section>
 <section id="key-differences-between-latent-and-composite-variables" class="slide level2 smaller">
 <h2>Key differences between latent and composite variables</h2>
+<p>Flow of causation!</p>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div>
 <ul>
-<li class="fragment">Flow of causation:
+<li class="fragment"><em>Latents</em>:
 <ul>
-<li class="fragment"><em>Latents</em>: from construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.</li>
+<li class="fragment">From construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.</li>
 <li class="fragment">Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.<br>
 </li>
-<li class="fragment"><em>Composites</em>: flow of causation is reversed and the indicators are independent entities.<br>
+</ul></li>
+<li class="fragment"><em>Composites</em>:
+<ul>
+<li class="fragment">flow of causation is reversed and the indicators are independent entities.<br>
 </li>
 <li class="fragment">There is no assumption about the relation between the indicators (can be positive/negative).</li>
 </ul></li>

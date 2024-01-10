@@ -66,7 +66,7 @@ library(knitr)
 ## Overview {.smaller}
 
 -   What the course is about:
-    -   Global estimation with R package lavaan
+    -   Global estimation of SEMs with R package lavaan (including latents and composites)
     -   Hands-on exercises and live coding
     -   All exercises about one ecological dataset (Seabloom et al. 2020)
     -   Work on your own dataset
@@ -82,9 +82,10 @@ library(knitr)
 
 ## Learning objectives
 
-- Participants understand the capabilities and limits of SEMs to draw inference from data.
-- Participants are able to fit, assess, interpret and visualize a SEM.
-- Participants are able to apply the SEM approach to their datasets with the R package `lavaan`.
+- Participants understand the pros and cons of SEMs to draw inference from data.
+- Participants understand path models, as well as latent and composites variables.
+- Participants can assess and interpret SEMs reported in the literature.
+- Participants are able to fit SEMs to their datasets with the R package `lavaan` and present them graphically.
 
 # Getting started with Structural Equation Modeling
 

@@ -95,8 +95,9 @@ digraph  {
 ::: incremental
 -   Conceptual model to link data with theory.
 -   So far, only measured variables were considered.
--   However, some components of a meta-model abstract, multifaceted concepts (e.g., "biodiversity") may be difficult to quantify and measure directly.
--   SEM provides constructs such as latent and composite variables to address these situations.\
+-   Some components of a meta-model may be abstract and difficult to quantify and measure directly.
+-   Some components may be convenient to summarize as a single cause.
+-   SEM provides constructs to address these situations: 1) latent and 2) composite variables.
 :::
 
 # Latent variables
@@ -132,10 +133,10 @@ digraph  {
 
 ::: incremental
 -   Latent variables are unobserved.
+-   In diagrams, latent variables are represented by oval node shape.\
 -   Bridge between observed data and theory.
 -   Their influence is captured by one or more indicator variable(s).\
 -   Direction of causality flows from latent variables to the observed variables (reflective indicators).
--   Graphically, latent variables are represented by oval node shape.\
 :::
 
 ## Latent variables
@@ -170,60 +171,98 @@ digraph  {
 ::: incremental
 -   Indicator variables "emerge" from the latent variable.\
 -   Latent variables free of random or systematic measurement errors (unlike their indicators).
--   All indicators should be positively correlated to the latent variable (i.e., driver).
-:::
-
-## Latent variables
-
-::: incremental
+-   All indicators need to be positively correlated to the latent variable (i.e., driver).
 -   Latents can be both endogenous and exogenous.
--   *Measurement model* focuses solely on relating indicators to latent variables.
--   *Structural model* is one with directed paths between latent variables.
 :::
+
 
 ## Latent variables
 
-Latents often fitted in two steps:
+Latents fitted in two steps:
 
 . . .
 
 1)  Confirmatory factor analysis
-
--   Multi-indicator latent variables: the same process generated multiple indicator variables.\
--   Precursor to evaluation of any structural models in which the latent variables appear.
+    -   Multi-indicator latent variables: the same process generated multiple indicator variables.\
+    -   Precursor to evaluation of any structural models in which the latent variables appear.
 
 . . .
 
 2)  Full model including latent variable
+    -   To estimate effect of latent variable on other variables.
 
--   To estimate effect of latent variable on other variables.
+## Latents to adjust for measurement error in predictors
 
-## Using latents to adjust for measurement error in the explanatory variables
+```{dot}
+//| fig-width: 6
+
+digraph  {
+
+    graph [rankdir = LR, fontname = Helvetica]
+   
+   node [shape=box, fontname = Helvetica]
+   X [label="X with error"];
+   Y [label="Y"];
+
+    
+    X -> Y;
+
+    
+}
+```
 
 ::: incremental
--   Variables are often measured with error.\
--   Regression approaches assume that predictor variables are measured without error.\
+-   Predictors are often measured with error.\
+-   Regression assume that predictors are measured without error.\
 -   What difference does it make?
 :::
 
-## Regression dilution {.smaller}
+## Latents to adjust for measurement error in predictors
 
 ```{r}
 #| echo: false
 library(ggplot2); set.seed(1981981)
-x <- rnorm(50); x2 <- x + rnorm(50); y <- 2*x; 
-ggplot(data=NULL) + geom_point(aes(x=x2,y=y), colour="blue") +   
+x <- rnorm(50); x2 <- x + rnorm(50); y <- 2*x; resid <- x-x2;
+ggplot(data=NULL) + geom_point(aes(x=x2,y=y), colour="blue") +  
+geom_segment(aes(x=x, xend = x2, y=y, yend = y), linetype="dashed", colour="red")+
 stat_smooth( aes(x=x2,y=y), method="lm", se=F, colour="blue") + 
 geom_abline(intercept=0,slope=2, colour="red")
 ```
+Red = true slope, blue = OLS slope.
 
 ::: incremental
--   Red = true slope, blue = OLS slope.
--   Measurement error biases the slope towards zero.
+-   Measurement error biases the slope towards zero = regression dilution.
 -   How to account for regression dilution?
 :::
 
-## Latents to adjust for noise in the explanatory variables
+## Latents to adjust for measurement error in predictors
+
+ 
+
+```{dot}
+//| fig-width: 6
+
+digraph  {
+
+    graph [rankdir = LR, fontname = Helvetica]
+   
+   node [shape=box, fontname = Helvetica]
+   X1 [label="measurements 1"];
+   X2 [label="measurement 2"];
+    
+   node [shape=oval]
+   Z [label="latent"]
+    
+   Z -> X1;
+   Z -> X2;
+   Z -> Y;
+       
+  {rank = max; Y}
+  {rank = min; X1}
+  {rank = same; X1;X2}
+}
+```
+
 
 ::: incremental
 -   Possible to account for measurement error when multiple measurements were made.
@@ -311,14 +350,17 @@ digraph boxes_and_circles {
 
 ## Key differences between latent and composite variables {.smaller}
 
+Flow of causation!
+
 ::: columns
 ::: {.column width="60%"}
 ::: incremental
--   Flow of causation:
-    -   *Latents*: from construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.
-    -   Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.\
-    -   *Composites*: flow of causation is reversed and the indicators are independent entities.\
-    -   There is no assumption about the relation between the indicators (can be positive/negative).
+- *Latents*:
+  - From construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.
+  - Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.\
+- *Composites*: 
+  - flow of causation is reversed and the indicators are independent entities.\
+  - There is no assumption about the relation between the indicators (can be positive/negative).
 :::
 :::
 
