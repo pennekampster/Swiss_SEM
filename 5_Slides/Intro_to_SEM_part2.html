@@ -431,18 +431,25 @@ Frank Pennekamp
 </ul></li>
 </ul>
 </section>
-<section id="revisiting-the-meta-model" class="slide level2 smaller">
-<h2>Revisiting the meta-model</h2>
+<section id="motivation-for-sem-modelling" class="slide level2">
+<h2>Motivation for SEM modelling</h2>
+<div>
+<ul>
+<li class="fragment">System thinking to understand the direct and indirect cause-effect pathways in a system</li>
+<li class="fragment">Consideration of relevant theory via the meta-model</li>
+<li class="fragment">Theory is often more general than particular proxies used (e.g.&nbsp;climate change <span class="math inline">\(\neq\)</span> temperature change)</li>
+<li class="fragment">How to connect particular proxies with general concepts?</li>
+</ul>
+</div>
+</section>
+<section id="motivation-for-sem-modelling-1" class="slide level2 smaller">
+<h2>Motivation for SEM modelling</h2>
 <div class="cell" data-fig-width="9">
 <div class="cell-output-display">
 <div>
 <div>
 <svg width="864" height="480" viewbox="0.00 0.00 488.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 484.44,-215 484.44,4 -4,4"></polygon> <g id="clust3" class="cluster">
-<title>
-cluster_prod
-</title>
-<polygon fill="none" stroke="lightgrey" points="388.31,-54 388.31,-126 472.44,-126 472.44,-54 388.31,-54"></polygon> <text text-anchor="middle" x="430.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text> </g> <g id="clust1" class="cluster">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 484.44,-215 484.44,4 -4,4"></polygon> <g id="clust1" class="cluster">
 <title>
 cluster_bio
 </title>
@@ -450,7 +457,11 @@ cluster_bio
 <title>
 cluster_env
 </title>
-<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <!-- evenness --> <g id="node1" class="node">
+<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <g id="clust3" class="cluster">
+<title>
+cluster_prod
+</title>
+<polygon fill="none" stroke="lightgrey" points="388.31,-54 388.31,-126 472.44,-126 472.44,-54 388.31,-54"></polygon> <text text-anchor="middle" x="430.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text> </g> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
 </title>
@@ -502,11 +513,17 @@ disturbance-&gt;biomass
 </div>
 <div>
 <ul>
-<li class="fragment">Conceptual model to link data with theory.</li>
-<li class="fragment">So far, only measured variables were considered.</li>
+<li class="fragment">So far, only measured variables were considered (i.e.&nbsp;path modelling).</li>
+<li class="fragment">However:
+<ul>
 <li class="fragment">Some components of a meta-model may be abstract and difficult to quantify and measure directly.</li>
 <li class="fragment">Some components may be convenient to summarize as a single cause.</li>
-<li class="fragment">SEM provides constructs to address these situations: 1) latent and 2) composite variables.</li>
+</ul></li>
+<li class="fragment">SEM provides constructs to address these situations:
+<ol type="1">
+<li class="fragment">latent variables</li>
+<li class="fragment">composite variables</li>
+</ol></li>
 </ul>
 </div>
 </section>
@@ -561,10 +578,9 @@ Y-&gt;Z
 <li class="fragment">Latent variables are unobserved.</li>
 <li class="fragment">In diagrams, latent variables are represented by oval node shape.<br>
 </li>
-<li class="fragment">Bridge between observed data and theory.</li>
 <li class="fragment">Their influence is captured by one or more indicator variable(s).<br>
 </li>
-<li class="fragment">Direction of causality flows from latent variables to the observed variables (reflective indicators).</li>
+<li class="fragment">Direction of causality flows from latent variable to the observed variable(s) (reflective indicators).</li>
 </ul>
 </div>
 </section>
@@ -614,8 +630,17 @@ Y-&gt;Z
 <li class="fragment">Indicator variables “emerge” from the latent variable.<br>
 </li>
 <li class="fragment">Latent variables free of random or systematic measurement errors (unlike their indicators).</li>
-<li class="fragment">All indicators need to be positively correlated to the latent variable (i.e., driver).</li>
-<li class="fragment">Latents can be both endogenous and exogenous.</li>
+<li class="fragment">Identificability issues with two indicator variables require additional assumptions (e.g.&nbsp;similar effect of indicators on latent).</li>
+</ul>
+</div>
+</section>
+<section id="latent-variables---a-word-of-caution" class="slide level2">
+<h2>Latent variables - a word of caution</h2>
+<div>
+<ul>
+<li class="fragment">The design of latent variables requires deep thinking and justification</li>
+<li class="fragment">Just because you name a particular latent in a certain way, does not mean you capture the underling process (a.k.a. “naming fallacy”)</li>
+<li class="fragment">You have to justify the use of particular indicators to define a latent</li>
 </ul>
 </div>
 </section>
@@ -626,9 +651,9 @@ Y-&gt;Z
 <ol type="1">
 <li>Confirmatory factor analysis
 <ul>
-<li>Multi-indicator latent variables: the same process generated multiple indicator variables.<br>
-</li>
 <li>Precursor to evaluation of any structural models in which the latent variables appear.</li>
+<li>All indicators need to be positively correlated to the latent variable (i.e., driver).</li>
+<li>For multi-indicator latent variables: check that the same process generated multiple indicators.</li>
 </ul></li>
 </ol>
 </div>
@@ -639,6 +664,56 @@ Y-&gt;Z
 <li>To estimate effect of latent variable on other variables.</li>
 </ul></li>
 </ol>
+</div>
+</section>
+<section id="latent-variables-to-model-abstract-concept" class="slide level2">
+<h2>Latent variables to model abstract concept</h2>
+<div class="cell" data-fig-width="4">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="384" height="480" viewbox="0.00 0.00 201.81 152.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 148)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-148 197.81,-148 197.81,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="54.07,-144 0.07,-144 0.07,-108 54.07,-108 54.07,-144"></polygon> <text text-anchor="middle" x="27.07" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">mass</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="54.22,-90 -0.07,-90 -0.07,-54 54.22,-54 54.22,-90"></polygon> <text text-anchor="middle" x="27.07" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">length</text> </g> <!-- X3 --> <g id="node3" class="node">
+<title>
+X3
+</title>
+<polygon fill="none" stroke="black" points="54.07,-36 0.07,-36 0.07,0 54.07,0 54.07,-36"></polygon> <text text-anchor="middle" x="27.07" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">width</text> </g> <!-- Y --> <g id="node4" class="node">
+<title>
+Y
+</title>
+<ellipse fill="none" stroke="black" cx="141.98" cy="-72" rx="51.67" ry="18"></ellipse> <text text-anchor="middle" x="141.98" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">body size</text> </g> <!-- Y&#45;&gt;X1 --> <g id="edge1" class="edge">
+<title>
+Y-&gt;X1
+</title>
+<path fill="none" stroke="black" d="M110.54,-86.56C95.98,-93.52 78.46,-101.9 63.33,-109.14"></path> <polygon fill="black" stroke="black" points="61.77,-106 54.26,-113.48 64.79,-112.32 61.77,-106"></polygon> </g> <!-- Y&#45;&gt;X2 --> <g id="edge2" class="edge">
+<title>
+Y-&gt;X2
+</title>
+<path fill="none" stroke="black" d="M90.06,-72C81.45,-72 72.67,-72 64.53,-72"></path> <polygon fill="black" stroke="black" points="64.26,-68.5 54.26,-72 64.26,-75.5 64.26,-68.5"></polygon> </g> <!-- Y&#45;&gt;X3 --> <g id="edge3" class="edge">
+<title>
+Y-&gt;X3
+</title>
+<path fill="none" stroke="black" d="M110.54,-57.44C95.98,-50.48 78.46,-42.1 63.33,-34.86"></path> <polygon fill="black" stroke="black" points="64.79,-31.68 54.26,-30.52 61.77,-38 64.79,-31.68"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<p>Example body size</p>
+<div>
+<ul>
+<li class="fragment">multiple indicators of body size: mass, length, width</li>
+<li class="fragment">check for positive correlation among indicators</li>
+<li class="fragment">With three indicator variable, coefficient of first indicator set to 1 by lavaan; use standardized effect for interpretation.</li>
+</ul>
 </div>
 </section>
 <section id="latents-to-adjust-for-measurement-error-in-predictors" class="slide level2">
@@ -679,7 +754,7 @@ X-&gt;Y
 <section id="latents-to-adjust-for-measurement-error-in-predictors-1" class="slide level2">
 <h2>Latents to adjust for measurement error in predictors</h2>
 
-<img data-src="Intro_to_SEM_part2_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"><p>Red = true slope, blue = OLS slope.</p>
+<img data-src="Intro_to_SEM_part2_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><p>Red = true slope, blue = OLS slope.</p>
 <div>
 <ul>
 <li class="fragment">Measurement error biases the slope towards zero = regression dilution.</li>
@@ -861,114 +936,46 @@ E-&gt;Y
 </div>
 <div>
 <ul>
-<li class="fragment">Composites are very flexible constructs</li>
-<li class="fragment">Allow to model interactions and nonlinear relationships</li>
-<li class="fragment">Technically they are predictions</li>
+<li class="fragment">Composites are very flexible constructs.</li>
+<li class="fragment">Allow to model interactions and nonlinear relationships.</li>
+<li class="fragment">Allow to summarize multiple drivers into a single cause.</li>
+<li class="fragment">Technically they are predictions.</li>
+<li class="fragment">Can cause convergence issues, may need to be handcoded.</li>
 </ul>
 </div>
 </section>
-<section id="key-differences-between-latent-and-composite-variables" class="slide level2 smaller">
-<h2>Key differences between latent and composite variables</h2>
-<p>Flow of causation!</p>
-<div class="columns">
-<div class="column" style="width:60%;">
-<div>
+<section id="distinguishing-latent-and-composite-variables" class="slide level2">
+<h2>Distinguishing latent and composite variables</h2>
+<p>Pay attention to the flow of causation!</p>
+<div class="fragment">
+<ol type="1">
+<li>Latents</li>
+</ol>
 <ul>
-<li class="fragment"><em>Latents</em>:
-<ul>
-<li class="fragment">From construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.</li>
-<li class="fragment">Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.<br>
+<li>From construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.</li>
+<li>Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.<br>
 </li>
-</ul></li>
-<li class="fragment"><em>Composites</em>:
-<ul>
-<li class="fragment">flow of causation is reversed and the indicators are independent entities.<br>
-</li>
-<li class="fragment">There is no assumption about the relation between the indicators (can be positive/negative).</li>
-</ul></li>
 </ul>
 </div>
-</div><div class="column" style="width:40%;">
-<div class="cell" data-fig-width="4">
-<div class="cell-output-display">
-<div>
-<div>
-<svg width="384" height="480" viewbox="0.00 0.00 346.32 206.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 202)">
-<title>
-boxes_and_circles
-</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-202 342.32,-202 342.32,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
-<title>
-X1
-</title>
-<polygon fill="none" stroke="black" points="82.12,-198 6.26,-198 6.26,-162 82.12,-162 82.12,-198"></polygon> <text text-anchor="middle" x="44.19" y="-175.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- X2 --> <g id="node2" class="node">
-<title>
-X2
-</title>
-<polygon fill="none" stroke="black" points="78.32,-144 10.06,-144 10.06,-108 78.32,-108 78.32,-144"></polygon> <text text-anchor="middle" x="44.19" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- Z --> <g id="node3" class="node">
-<title>
-Z
-</title>
-<polygon fill="none" stroke="black" points="338.38,-117 270.12,-117 270.12,-81 338.38,-81 338.38,-117"></polygon> <text text-anchor="middle" x="304.25" y="-94.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- X3 --> <g id="node4" class="node">
-<title>
-X3
-</title>
-<polygon fill="none" stroke="black" points="88.57,-90 -0.19,-90 -0.19,-54 88.57,-54 88.57,-90"></polygon> <text text-anchor="middle" x="44.19" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- Y2 --> <g id="node7" class="node">
-<title>
-Y2
-</title>
-<polygon fill="none" stroke="black" points="234.09,-72 206.68,-90 151.88,-90 124.48,-72 151.88,-54 206.68,-54 234.09,-72"></polygon> <text text-anchor="middle" x="179.28" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">land use</text> </g> <!-- X3&#45;&gt;Y2 --> <g id="edge4" class="edge">
-<title>
-X3-&gt;Y2
-</title>
-<path fill="none" stroke="black" d="M88.42,-63.47C97.44,-63.13 107.89,-63.74 122.9,-65.27"></path> <polygon fill="black" stroke="black" points="122.54,-68.75 132.86,-66.35 123.3,-61.79 122.54,-68.75"></polygon> </g> <!-- X4 --> <g id="node5" class="node">
-<title>
-X4
-</title>
-<polygon fill="none" stroke="black" points="78.89,-36 9.49,-36 9.49,0 78.89,0 78.89,-36"></polygon> <text text-anchor="middle" x="44.19" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- X4&#45;&gt;Y2 --> <g id="edge5" class="edge">
-<title>
-X4-&gt;Y2
-</title>
-<path fill="none" stroke="black" d="M78.9,-24.39C94.23,-28.45 108.79,-35.09 139.69,-51.16"></path> <polygon fill="black" stroke="black" points="138.37,-54.42 148.85,-55.95 141.61,-48.21 138.37,-54.42"></polygon> </g> <!-- Y1 --> <g id="node6" class="node">
-<title>
-Y1
-</title>
-<ellipse fill="none" stroke="black" cx="179.28" cy="-126" rx="46.41" ry="18"></ellipse> <text text-anchor="middle" x="179.28" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">diversity</text> </g> <!-- Y1&#45;&gt;X1 --> <g id="edge1" class="edge">
-<title>
-Y1-&gt;X1
-</title>
-<path fill="none" stroke="black" d="M91.98,-169.44C105.61,-164.37 122.08,-156.12 151.52,-140.65"></path> <polygon fill="black" stroke="black" points="90.78,-166.15 82.4,-172.63 93,-172.79 90.78,-166.15"></polygon> </g> <!-- Y1&#45;&gt;X2 --> <g id="edge2" class="edge">
-<title>
-Y1-&gt;X2
-</title>
-<path fill="none" stroke="black" d="M88.7,-134.54C99.89,-134.93 113.32,-133.89 134.9,-131.42"></path> <polygon fill="black" stroke="black" points="88.71,-131.03 78.47,-133.73 88.16,-138.01 88.71,-131.03"></polygon> </g> <!-- Y1&#45;&gt;Z --> <g id="edge3" class="edge">
-<title>
-Y1-&gt;Z
-</title>
-<path fill="none" stroke="black" d="M224.21,-121.34C240.27,-119.54 251.34,-117.99 260.31,-116.07"></path> <polygon fill="black" stroke="black" points="261.23,-119.45 270.07,-113.61 259.51,-112.66 261.23,-119.45"></polygon> </g> <!-- Y2&#45;&gt;Z --> <g id="edge6" class="edge">
-<title>
-Y2-&gt;Z
-</title>
-<path fill="none" stroke="black" d="M226.8,-76.95C241.34,-78.62 251.64,-80.09 260.08,-81.88"></path> <polygon fill="black" stroke="black" points="259.41,-85.32 269.96,-84.36 261.11,-78.53 259.41,-85.32"></polygon> </g> </g>
-</svg>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Composites</li>
+</ol>
+<ul>
+<li>flow of causation is reversed and the indicators are independent entities.<br>
+</li>
+<li>There is no assumption about the relation between the indicators (can be positive/negative).</li>
+</ul>
 </div>
 </section>
-<section id="key-differences-between-latent-and-composite-variables-1" class="slide level2">
-<h2>Key differences between latent and composite variables</h2>
-<p>How distinguish latent and composites:</p>
+<section id="distinguishing-latent-and-composite-variables-1" class="slide level2">
+<h2>Distinguishing latent and composite variables</h2>
+<p>Rules of thumb:</p>
 <div>
-<ul>
-<li class="fragment">Rule of thumb 1: if the indicators are redundant, they likely belong to a latent variable.<br>
-</li>
-<li class="fragment">Rule of thumb 2: If the meaning of the construct changes after dropping one of the indicators, the construct likely is a composite.<br>
-</li>
-</ul>
+<ol type="1">
+<li class="fragment">Latent variable -&gt; indicators are redundant (e.g.&nbsp;multiple measurements)</li>
+<li class="fragment">Composite variable -&gt; the meaning of the construct changes after dropping one of the indicators</li>
+</ol>
 </div>
 </section></section>
 <section>
@@ -1053,39 +1060,183 @@ middleman-&gt;Y
 <h2>Interactions</h2>
 <p>Interactions can be modelled in different ways in lavaan:</p>
 <ol type="1">
-<li>Multiple groups</li>
 <li>Composites</li>
+<li>Multiple groups</li>
 </ol>
 </section>
-<section id="interactions-multi-group" class="slide level2">
-<h2>Interactions (multi group)</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sem</span>(model, <span class="at">group =</span> <span class="st">"age_class"</span>, <span class="at">data =</span> dd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="interactions-composite" class="slide level2">
+<h2>Interactions (composite)</h2>
+<div class="cell" data-fig-width="5">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="480" height="480" viewbox="0.00 0.00 184.04 225.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 221)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-221 180.04,-221 180.04,4 -4,4"></polygon> <!-- richness --> <g id="node1" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="68.98,-108 0.72,-108 0.72,-72 68.98,-72 68.98,-108"></polygon> <text text-anchor="middle" x="34.85" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- biomass --> <g id="node5" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="68.98,-36 0.72,-36 0.72,0 68.98,0 68.98,-36"></polygon> <text text-anchor="middle" x="34.85" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- richness&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M34.85,-71.7C34.85,-63.98 34.85,-54.71 34.85,-46.11"></path> <polygon fill="black" stroke="black" points="38.35,-46.1 34.85,-36.1 31.35,-46.1 38.35,-46.1"></polygon> </g> <!-- nutrients --> <g id="node2" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="69.55,-217 0.15,-217 0.15,-181 69.55,-181 69.55,-217"></polygon> <text text-anchor="middle" x="34.85" y="-194.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- middleman --> <!-- nutrients&#45;&gt;middleman --> <g id="edge4" class="edge">
+<title>
+nutrients-&gt;middleman
+</title>
+<path fill="none" stroke="black" d="M34.85,-180.94C34.85,-165.93 34.85,-146.27 34.85,-145.06"></path> </g> <!-- disturbance --> <g id="node3" class="node">
+<title>
+disturbance
+</title>
+<polygon fill="none" stroke="gray" points="176.23,-217 87.47,-217 87.47,-181 176.23,-181 176.23,-217"></polygon> <text text-anchor="middle" x="131.85" y="-194.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- disturbance&#45;&gt;middleman --> <g id="edge1" class="edge">
+<title>
+disturbance-&gt;middleman
+</title>
+<path fill="none" stroke="black" d="M100.62,-180.94C81.74,-170.62 58.83,-158.1 45.64,-150.9"></path> <polygon fill="black" stroke="black" points="45.49,-150.81 38.3,-151.45 34.96,-145.06 42.14,-144.43 45.49,-150.81"></polygon> </g> <!-- middleman&#45;&gt;richness --> <g id="edge2" class="edge">
+<title>
+middleman-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M34.85,-143.85C34.85,-142.37 34.85,-130.32 34.85,-118.1"></path> <polygon fill="black" stroke="black" points="38.35,-118.02 34.85,-108.02 31.35,-118.02 38.35,-118.02"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Interactions can also be modelled with composites.</li>
+<li>Preferable if only one or few interactions are considered.</li>
+</ul>
+</section>
+<section id="interactions-multiple-groups" class="slide level2">
+<h2>Interactions (multiple groups)</h2>
+<div class="column" style="width:40%;">
+<p>Group = Disturbed</p>
+<div class="cell" data-fig-width="5">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="480" height="480" viewbox="0.00 0.00 170.03 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-184 166.03,-184 166.03,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="gray" points="75.9,-108 0.03,-108 0.03,-72 75.9,-72 75.9,-108"></polygon> <text text-anchor="middle" x="37.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- biomass --> <g id="node4" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="117.1,-36 48.83,-36 48.83,0 117.1,0 117.1,-36"></polygon> <text text-anchor="middle" x="82.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M49.09,-71.7C54.32,-63.56 60.67,-53.69 66.44,-44.7"></path> <polygon fill="black" stroke="black" points="69.51,-46.41 71.97,-36.1 63.62,-42.62 69.51,-46.41"></polygon> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="162.1,-108 93.83,-108 93.83,-72 162.1,-72 162.1,-108"></polygon> <text text-anchor="middle" x="127.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- richness&#45;&gt;biomass --> <g id="edge4" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M116.84,-71.7C111.61,-63.56 105.27,-53.69 99.49,-44.7"></path> <polygon fill="black" stroke="black" points="102.31,-42.62 93.96,-36.1 96.42,-46.41 102.31,-42.62"></polygon> </g> <!-- nutrients --> <g id="node3" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="117.66,-180 48.27,-180 48.27,-144 117.66,-144 117.66,-180"></polygon> <text text-anchor="middle" x="82.97" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" d="M71.84,-143.7C66.61,-135.56 60.27,-125.69 54.49,-116.7"></path> <polygon fill="black" stroke="black" points="57.31,-114.62 48.96,-108.1 51.42,-118.41 57.31,-114.62"></polygon> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M94.09,-143.7C99.32,-135.56 105.67,-125.69 111.44,-116.7"></path> <polygon fill="black" stroke="black" points="114.51,-118.41 116.97,-108.1 108.62,-114.62 114.51,-118.41"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="column" style="width:40%;">
+<p>Group = Undisturbed</p>
+<div class="cell" data-fig-width="5">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="480" height="480" viewbox="0.00 0.00 182.98 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-184 178.98,-184 178.98,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
+<title>
+evenness
+</title>
+<polygon fill="none" stroke="gray" points="75.9,-108 0.03,-108 0.03,-72 75.9,-72 75.9,-108"></polygon> <text text-anchor="middle" x="37.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- biomass --> <g id="node4" class="node">
+<title>
+biomass
+</title>
+<polygon fill="none" stroke="gray" points="162.1,-36 93.83,-36 93.83,0 162.1,0 162.1,-36"></polygon> <text text-anchor="middle" x="127.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge4" class="edge">
+<title>
+evenness-&gt;biomass
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M60.21,-71.7C71.55,-62.88 85.5,-52.03 97.78,-42.47"></path> <polygon fill="black" stroke="black" points="100.23,-45.01 105.97,-36.1 95.93,-39.48 100.23,-45.01"></polygon> </g> <!-- richness --> <g id="node2" class="node">
+<title>
+richness
+</title>
+<polygon fill="none" stroke="gray" points="162.1,-108 93.83,-108 93.83,-72 162.1,-72 162.1,-108"></polygon> <text text-anchor="middle" x="127.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- richness&#45;&gt;biomass --> <g id="edge5" class="edge">
+<title>
+richness-&gt;biomass
+</title>
+<path fill="none" stroke="black" d="M127.97,-71.7C127.97,-63.98 127.97,-54.71 127.97,-46.11"></path> <polygon fill="black" stroke="black" points="131.47,-46.1 127.97,-36.1 124.47,-46.1 131.47,-46.1"></polygon> </g> <!-- nutrients --> <g id="node3" class="node">
+<title>
+nutrients
+</title>
+<polygon fill="none" stroke="gray" points="162.66,-180 93.27,-180 93.27,-144 162.66,-144 162.66,-180"></polygon> <text text-anchor="middle" x="127.97" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
+<title>
+nutrients-&gt;evenness
+</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M105.72,-143.7C94.38,-134.88 80.44,-124.03 68.15,-114.47"></path> <polygon fill="black" stroke="black" points="70,-111.48 59.96,-108.1 65.7,-117.01 70,-111.48"></polygon> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
+<title>
+nutrients-&gt;richness
+</title>
+<path fill="none" stroke="black" d="M127.97,-143.7C127.97,-135.98 127.97,-126.71 127.97,-118.11"></path> <polygon fill="black" stroke="black" points="131.47,-118.1 127.97,-108.1 124.47,-118.1 131.47,-118.1"></polygon> </g> <!-- nutrients&#45;&gt;biomass --> <g id="edge3" class="edge">
+<title>
+nutrients-&gt;biomass
+</title>
+<path fill="none" stroke="red" d="M147,-143.84C156.14,-134.3 166.13,-121.62 170.97,-108 176.31,-92.92 176.31,-87.08 170.97,-72 167.3,-61.68 160.68,-51.9 153.71,-43.61"></path> <polygon fill="red" stroke="red" points="156.3,-41.26 147,-36.16 151.09,-45.94 156.3,-41.26"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div>
 <ul>
-<li class="fragment">Multigroup fitting allows coefficients to vary among groups.<br>
-</li>
-<li class="fragment">Lavaan offers the “group” argument to specify for which groups coefficients should be estimated.<br>
-</li>
-<li class="fragment">Importantly, groups have to be categorical (e.g., sex, age class).</li>
+<li class="fragment">Multigroup fitting allows all coefficients to vary among groups.</li>
+<li class="fragment">Groups have to be categorical (e.g., treatment, age class).</li>
+<li class="fragment">Test interaction of group factor with many or all paths in the causal diagram.</li>
+<li class="fragment">Statistical comparison of two causal diagrams <span class="math inline">\(\neq\)</span> fitting two separate SEMs and compare coefficients.</li>
 </ul>
 </div>
 </section>
-<section id="interactions-multi-group-1" class="slide level2">
-<h2>Interactions (multi group)</h2>
+<section id="interactions-multiple-groups-1" class="slide level2">
+<h2>Interactions (multiple groups)</h2>
 <p>Lavaan allows to introduce equality constraints on various aspects via the <code>group.equal</code> argument:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">sem</span>(model, <span class="at">group =</span> <span class="st">"age_class"</span>, <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"regressions"</span>), <span class="at">data =</span> dd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sem</span>(model, <span class="at">group =</span> <span class="st">"age_class"</span>, <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"regressions"</span>), <span class="at">data =</span> dd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Adding constraints via <code>group.equal</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>group.equal<span class="ot">=</span><span class="fu">c</span>(<span class="st">"intercepts"</span>, <span class="st">"means"</span>, <span class="st">"regressions"</span>, <span class="st">"residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>group.equal<span class="ot">=</span><span class="fu">c</span>(<span class="st">"intercepts"</span>, <span class="st">"means"</span>, <span class="st">"regressions"</span>, <span class="st">"residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="interactions-multi-group-2" class="slide level2">
-<h2>Interactions (multi group)</h2>
+<section id="interactions-multiple-groups-2" class="slide level2">
+<h2>Interactions (multiple groups)</h2>
 <p>Even more control by having the same name for different parameters:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>model <span class="ot">&lt;-</span> <span class="st">' </span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="st">y ~ c("b1", "b1") * x1 + c("b2", "b2") * x3</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="st">x2 ~ c("b3", "b4") * x1</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="st">x3 ~ c("b5", "b5") * x2'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>model <span class="ot">&lt;-</span> <span class="st">' </span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="st">y ~ c("b1", "b1") * x1 + c("b2", "b2") * x3</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="st">x2 ~ c("b3", "b4") * x1</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">x3 ~ c("b5", "b5") * x2'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Same coefficients for all but the effect of x1 on x2.</p>
 <!-- # Complex sampling structure
 
@@ -1154,17 +1305,17 @@ survey.design = design)
 <section id="exercise-1-1" class="slide level2">
 <h2>Exercise 1</h2>
 <p>Start with the following model:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(<span class="st">"lavaan"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a>simple <span class="ot">&lt;-</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="st">"mass.above ~ nadd + disk + rich + even</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="st">rich ~ nadd </span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="st">even ~ nadd</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="st">rich ~~ even"</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a></span>
-<span id="cb5-10"><a href="#cb5-10"></a>fit.simple <span class="ot">&lt;-</span> <span class="fu">sem</span>(simple, <span class="at">data =</span> seabloom, <span class="at">estimator =</span> <span class="st">"MLM"</span>)</span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="fu">summary</span>(fit.simple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(<span class="st">"lavaan"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>simple <span class="ot">&lt;-</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="st">"mass.above ~ nadd + disk + rich + even</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="st">rich ~ nadd </span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="st">even ~ nadd</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="st">rich ~~ even"</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a>fit.simple <span class="ot">&lt;-</span> <span class="fu">sem</span>(simple, <span class="at">data =</span> seabloom, <span class="at">estimator =</span> <span class="st">"MLM"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="fu">summary</span>(fit.simple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="exercise-2" class="slide level2">
 <h2>Exercise 2</h2>

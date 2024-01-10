@@ -5,6 +5,24 @@ library(faux)
 
 ## Latent variables
 
+# CFA with more than two indicator variables
+set.seed(72643276)
+dat <- rnorm_multi(n = 100, 
+                   mu = c(4, 20, 1),
+                   sd = c(5, 5, 5),
+                   r = c(0.4, 0.5, 0.7), 
+                   varnames = c("length", "width", "mass"),
+                   empirical = F)
+
+pairs(dat)
+
+cfa <- "body_size =~ mass + width + length"
+fit <- cfa(cfa, data=dat)
+summary(fit, standardized=T, rsq=T)
+
+
+
+
 # Accounting for measurement error with 2 indicator variables
 set.seed(1)
 n = 1000
@@ -43,21 +61,6 @@ summary(fit, standardized=T, rsq=T)
 
 
 
-
-# example CFA with more than two indicator variables
-set.seed(72643276)
-dat <- rnorm_multi(n = 100, 
-                   mu = c(20, 20, 20),
-                   sd = c(5, 5, 5),
-                   r = c(0.4, 0.5, 0.7), 
-                   varnames = c("length", "width", "mass"),
-                   empirical = F)
-
-pairs(dat)
-
-cfa <- "body_size =~ mass + width + length"
-fit <- cfa(cfa, data=dat)
-summary(fit, standardized=T, rsq=T)
 
 
 
