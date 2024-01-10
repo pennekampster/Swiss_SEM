@@ -8,13 +8,13 @@ library(ggdag)
 
 # simulate a dataset with known causal structure (make drawing)
 set.seed(2397348)
-N <- 50
+N <- 100
 dat <- data.frame(x1 = rnorm(N))
-dat$x2 = 0.9 * dat$x1 + rnorm(N)
-dat$x3 = -0.5 * dat$x2 + rnorm(N)
-dat$y = 1.7 * dat$x1 + 0.8 * dat$x2 + rnorm(N) 
+dat$x2 = 0.2 * dat$x1 + rnorm(N)
+dat$x3 = 0.3 * dat$x2 + rnorm(N)
+dat$y = .7 * dat$x2 + 0.8 * dat$x3 + rnorm(N) 
 
-dagify(y ~ x2 + x1,
+dagify(y ~ x2 + x3,
        x2 ~ x1,
        x3 ~ x2) %>% 
   ggdag() 
@@ -44,6 +44,11 @@ fit <- sem(model, meanstructure=T, data=dat)
 summary(fit)
 
 
+# Summarize the results
+# no direct effect of X1, but we know there is an effect mediated by X2 and X3 on Y
+# Let's fit a SEM instead
+
+
 # Fit first SEM
 model2 <- '
 y ~ x1 + x3
@@ -53,7 +58,7 @@ x3 ~ x2
 
 dagify(y ~ x1 + x3,
        x2 ~ x1,
-       x3 ~ x2) %>% 
+       x3 ~ x1) %>% 
   ggdag() 
 
 fit2 <- sem(model2, data=dat)
@@ -72,23 +77,30 @@ x3 ~ x2
 
 dagify(y ~ x1 + x2 + x3,
        x2 ~ x1,
-       x3 ~ x2) %>% 
+       x3 ~ x1) %>% 
   ggdag() 
 
 
 fit3 <- sem(model3, data=dat)
 summary(fit3)
 
+# what do the other fit metrics say
 summary(fit3, fit.measures = T)
+
+# any more paths to include?
+subset(modindices(fit_true))
+
+
+
 
 # after a fitting model is found, let's do some pruning
 model_true <- ' 
-y ~ x1 + x2 
+y ~ x2 + x3 
 x2 ~ x1
 x3 ~ x2
 '
 
-dagify(y ~ x1 + x2,
+dagify(y ~ x2 + x3,
        x2 ~ x1,
        x3 ~ x2) %>% 
   ggdag()
@@ -96,12 +108,10 @@ dagify(y ~ x1 + x2,
 fit_true <- sem(model_true, data=dat)
 summary(fit_true)
 
-# any more paths to include?
-subset(modindices(fit_true))
 
-# compare nested fits
-anova(fit2, fit_true)
+# compare fits
 aictab(list(fit2, fit_true), c("fit 2", "fit true"))
+aictab(list(fit3, fit_true), c("fit 3", "fit true"))
 
 # look at the underlying representations
 lavInspect(fit2, what = "observed")
@@ -109,36 +119,18 @@ lavInspect(fit2, what = "implied")
 lavInspect(fit2, what = "resid")
 
 
-model4 <- ' 
-y ~ x1 + x2 
-x2 ~ x1
-x3 ~ x2
-
-# setting covariance to zero
-y ~~ 0*x3 
-'
-
-fit4 <- sem(model4, data=dat)
-summary(fit4)
-
-# compare nested fits
-anova(fit3, fit4)
-aictab(list(fit3, fit4), c("fit 3", "fit 4"))
-
-
 model2_wrong <- ' 
-y ~ x1 + x3 
+y ~ x2 + x3 
 x2 ~ x1
 x3 ~ x2
-y ~~ x3 
+y ~~ x1 
 '
 
 fit2_wrong <- sem(model2_wrong, data=dat)
-summary(fit2_wrong, fit.measures = T)
+summary(fit2_wrong)
 
-# compare nested fits
-anova(fit3, fit2_wrong)
-aictab(list(fit3, fit2_wrong), c("fit 3", "fit 2 wrong"))
+# compare fits
+aictab(list(fit_true, fit2_wrong), c("fit true", "fit wrong"))
 
 
 
@@ -150,14 +142,14 @@ aictab(list(fit3, fit2_wrong), c("fit 3", "fit 2 wrong"))
 
 # Parameter labelling and derived quantities
 model1a <- ' 
-y ~ b1 * x1 +  b2 * x2 
+y ~ b1 * x2 +  b2 * x3 
 x2 ~ b3 * x1
 x3 ~ b4 * x2
 
 
-dir.x1.y := b1
-indir.x1.y := b3 * b2
-tot.x1.y := b3 * b2 + b1 
+dir.x2.y := b1
+indir.x2.y := b4 * b2
+tot.x2.y := b4 * b2 + b1 
 '
 
 fit1a <- sem(model1a, data=dat)
@@ -171,7 +163,7 @@ summary(fit1a, fit.measures = F, standardized=T)
 # Fixing parameters
 
 model1b <- ' 
-y ~ b1 * x1 +  b2 * x2 
+y ~ b1 * x2 +  b2 * x3 
 x2 ~ b3 * x1
 x3 ~ b4 * x2
 

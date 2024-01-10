@@ -7,7 +7,7 @@ library(faux)
 
 # Accounting for measurement error with 2 indicator variables
 set.seed(1)
-n = 100
+n = 1000
 x = rnorm(n)
 
 eta1 = rnorm(n) # measurement error1
@@ -17,17 +17,21 @@ eta2 = rnorm(n) # measurement error2
 noisy2 = x + eta2
 
 u = rnorm(n)
-beta0=0; beta1 = .25
+# intercept
+beta0=0; 
+# true effect of x on y
+beta1 = .25
 y = beta0+beta1*x + u
 
 dat <- data.frame(y, eta1, eta2, noisy1, noisy2)
 
 # attenuation bias
 lm <- '
-y ~ noisy1 # exogenous latent
+y ~ noisy2 # exogenous latent
 '
 fit <- sem(lm, data=dat)
-summary(fit, standardized=T)
+summary(fit, standardized=T, rsq=T)
+
 
 # use latent variable to model underlying cause
 latent <- '
@@ -38,17 +42,6 @@ fit <- sem(latent, data=dat)
 summary(fit, standardized=T, rsq=T)
 
 
-# fully latent model
-latent <- '
-xi =~ lambda*noisy1 + lambda*noisy2 # exogenous latent
-
-eta =~ y # endogenous latent
-
-eta ~ xi # path model
-'
-
-fit <- sem(latent, data=dat)
-summary(fit, standardized=T, rsq=T)
 
 
 # example CFA with more than two indicator variables
