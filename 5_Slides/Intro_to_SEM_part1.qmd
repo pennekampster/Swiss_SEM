@@ -14,8 +14,8 @@ format:
     slide-number: true
     show-slide-number: all
     footer: Introduction to SEM (2024)
-    width: 1200
-    height: 900
+    width: 1050
+    height: 700
 editor:
   render-on-save: true
 ---
@@ -82,10 +82,17 @@ library(knitr)
 
 ## Learning objectives
 
-- Participants understand the pros and cons of SEMs to draw inference from data.
+::: incremental
+- Participants understand the pros and cons of SEMs for drawing inferences from data.
 - Participants understand path models, as well as latent and composites variables.
 - Participants can assess and interpret SEMs reported in the literature.
 - Participants are able to fit SEMs to their datasets with the R package `lavaan` and present them graphically.
+:::
+
+## Course materials
+
+[Slide decks and R code available on github](https://github.com/pennekampster/Swiss_SEM/)
+ 
 
 # Getting started with Structural Equation Modeling
 

@@ -30,6 +30,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="Intro_to_SEM_visualization_files/libs/revealjs/dist/theme/quarto.css">
   <link href="Intro_to_SEM_visualization_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -331,7 +396,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Introduction to structural equation modelling</h1>
-  <p class="subtitle">SEM presentation</p>
+  <p class="subtitle">How to effectively communicate your SEM analysis</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -541,9 +606,8 @@ Frank Pennekamp
           display:block!important;
       }</style></aside>
 </section>
-<section>
-<section id="what-makes-a-good-data-visualization" class="title-slide slide level1 center">
-<h1>What makes a good data visualization?</h1>
+<section id="what-makes-a-good-data-visualization" class="slide level2">
+<h2>What makes a good data visualization?</h2>
 <!-- ## Theory -->
 <!-- *Maybe one slide drawing on theory from people like Edward Tufte* -->
 <!-- *Information/ink ratio* -->
@@ -584,8 +648,8 @@ Frank Pennekamp
 </ol>
 </div>
 </section>
-<section id="show-the-relevant-variables" class="slide level2">
-<h2>Show the relevant variables</h2>
+<section id="variable-types" class="slide level2">
+<h2>Variable types</h2>
 <div>
 <div class="columns">
 <div class="column">
@@ -602,8 +666,25 @@ Frank Pennekamp
 </div>
 </div>
 </section>
-<section id="represent-causal-relationships-by-the-path-coefficients" class="slide level2 smaller">
-<h2>Represent causal relationships by the path coefficients</h2>
+<section id="relevant-paths" class="slide level2 smaller">
+<h2>Relevant paths</h2>
+<div>
+<div class="columns">
+<div class="column">
+<ul>
+<li class="fragment">Represent all causal paths included in your model regardless of significance.</li>
+<li class="fragment">Not necessarily in the same figure.</li>
+<li class="fragment">Represent important correlations (with double-headed arrows).</li>
+<li class="fragment">Good practice to include correlations among the errors of endogenous variables.</li>
+</ul>
+</div><div class="column">
+<p><img data-src="images/Poorter_sem.jpg" style="height:80.0%"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="path-coefficients" class="slide level2 smaller">
+<h2>Path coefficients</h2>
 <div>
 <div class="columns">
 <div class="column">
@@ -625,26 +706,8 @@ Frank Pennekamp
 </div>
 </div>
 </section>
-<section id="represent-all-relevant-paths-regardless-of-significance" class="slide level2 smaller">
-<h2>Represent all relevant paths (regardless of significance)</h2>
-<div>
-<div class="columns">
-<div class="column">
-<ul>
-<li class="fragment">Represent all causal paths included in your model regardless of significance.</li>
-<li class="fragment">Not necessarily in the same figure.</li>
-<li class="fragment">Represent important correlations.</li>
-<li class="fragment">Exogenous variables can be included.</li>
-<li class="fragment">Always include correlations among the errors of endogenous variables.</li>
-</ul>
-</div><div class="column">
-<p><img data-src="images/Poorter_sem.jpg" style="height:80.0%"></p>
-</div>
-</div>
-</div>
-</section>
-<section id="report-model-goodness-of-fit" class="slide level2">
-<h2>Report model goodness of fit</h2>
+<section id="model-goodness-of-fit" class="slide level2">
+<h2>Model goodness-of-fit</h2>
 <div>
 <div class="columns">
 <div class="column">
@@ -667,20 +730,20 @@ Frank Pennekamp
 </div>
 </div>
 </section>
-<section id="report-explanatory-power-for-endogenous-variables" class="slide level2">
-<h2>Report explanatory power for endogenous variables</h2>
+<section id="explanatory-power" class="slide level2">
+<h2>Explanatory power</h2>
 <div class="columns">
 <div class="column">
 <ul>
-<li>Residual error or <span class="math inline">\(R^2\)</span></li>
+<li>Residual error or <span class="math inline">\(R^2\)</span> for endogenous variables</li>
 </ul>
 </div><div class="column">
 <p><img data-src="images/R2_endogenous.png" style="height:50.0%"></p>
 </div>
 </div>
 </section>
-<section id="include-tables-with-additional-coefficients-and-derived-quantities" class="slide level2">
-<h2>Include tables with additional coefficients and derived quantities</h2>
+<section id="tablesfigures-with-coefficients-and-derived-quantities-appendix" class="slide level2">
+<h2>Tables/figures with coefficients and derived quantities (appendix)</h2>
 <div>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -693,8 +756,8 @@ Frank Pennekamp
 </div>
 </div>
 </section>
-<section id="data-presentation" class="slide level2">
-<h2>Data presentation</h2>
+<section id="raw-data-appendix" class="slide level2">
+<h2>Raw data (appendix)</h2>
 <div>
 <ul>
 <li class="fragment">Show the underlying data:
@@ -707,7 +770,58 @@ Frank Pennekamp
 </ul>
 </div>
 </section>
-<section id="room-for-artistry" class="slide level2">
+<section id="plotting-tools" class="slide level2">
+<h2>Plotting tools</h2>
+<ul>
+<li>Dedicated packages available in R</li>
+</ul>
+</section>
+<section id="plotting-tools-i-lavaanplot-package" class="slide level2">
+<h2>Plotting tools I: lavaanPlot package</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model =</span> fit.prune,</span>
+<span id="cb1-2"><a href="#cb1-2"></a>           <span class="at">node_options =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="st">"box"</span>, <span class="at">color =</span> <span class="st">"gray"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3"></a>                               <span class="at">fontname =</span> <span class="st">"Helvetica"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4"></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb1-5"><a href="#cb1-5"></a>           <span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">covs =</span> <span class="cn">FALSE</span>, <span class="at">stars =</span> <span class="st">"regress"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5e735b89dcabf09d1579" style="width:960px;height:6in;"></div>
+<script type="application/json" data-for="htmlwidget-5e735b89dcabf09d1579">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="plotting-tools-ii-semplot-package" class="slide level2">
+<h2>Plotting tools II: semPlot package</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">semPaths</span>(fit.prune, <span class="at">what =</span> <span class="st">"est"</span>, <span class="at">whatLabels =</span> <span class="st">"est"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2"></a>         <span class="at">residuals =</span> <span class="cn">FALSE</span>, <span class="at">intercepts =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="at">sizeMan2 =</span> <span class="dv">7</span>, <span class="at">edge.label.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb2-4"><a href="#cb2-4"></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">style =</span> <span class="st">"mx"</span>, <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb2-5"><a href="#cb2-5"></a>         <span class="at">posCol =</span> <span class="st">"#009e73ff"</span>, <span class="at">negCol =</span> <span class="st">"#d55e00ff"</span>, <span class="at">edge.label.color =</span> <span class="st">"black"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>         <span class="at">layoutSplit =</span> <span class="cn">TRUE</span>, <span class="at">curve =</span> <span class="dv">1</span>, <span class="at">curvature =</span> <span class="dv">1</span>, <span class="co">#fixedStyle = 1,</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>         <span class="at">exoCov =</span> <span class="cn">FALSE</span>, <span class="at">rotation =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="Intro_to_SEM_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="plotting-tools-1" class="slide level2">
+<h2>Plotting tools</h2>
+<ul>
+<li>Good for quick visualization but not ready for publication</li>
+<li>Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.</li>
+</ul>
+</section>
+<section id="room-for-artistry" class="slide level2 smaller">
+<h2>Room for artistry</h2>
+<ul>
+<li>Meta models:
+<ul>
+<li>Shows the core concepts and their relationships, ignoring the data.</li>
+<li>The most conceptual version of the causal network you try to capture.</li>
+</ul></li>
+</ul>
+<p><img data-src="images/Mazziotta_sem.jpg" style="height:60.0%"></p>
+</section>
+<section id="room-for-artistry-1" class="slide level2">
 <h2>Room for artistry</h2>
 <div>
 <ul>
@@ -723,43 +837,6 @@ Frank Pennekamp
 <p>Design the figure accordingly!</p>
 </div>
 </section>
-<section id="room-for-artistry-1" class="slide level2 smaller">
-<h2>Room for artistry</h2>
-<ul>
-<li>Meta models:
-<ul>
-<li>Shows the core concepts and their relationships, ignoring the data.</li>
-<li>The most conceptual version of the causal network you try to capture.</li>
-</ul></li>
-</ul>
-<p><img data-src="images/Mazziotta_sem.jpg" style="height:60.0%"></p>
-</section>
-<section id="plotting-tools" class="slide level2">
-<h2>Plotting tools</h2>
-<ul>
-<li>Dedicated packages available in R</li>
-</ul>
-</section>
-<section id="plotting-tools-i-lavaanplot-package" class="slide level2">
-<h2>Plotting tools I: lavaanPlot package</h2>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1cab8486cb2c5011302e" style="width:960px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-1cab8486cb2c5011302e">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-</section>
-<section id="plotting-tools-ii-semplot-package" class="slide level2">
-<h2>Plotting tools II: semPlot package</h2>
-
-<img data-src="Intro_to_SEM_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="plotting-tools-1" class="slide level2">
-<h2>Plotting tools</h2>
-<ul>
-<li>Good for quick visualization but not ready for publication</li>
-<li>Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.</li>
-</ul>
-</section></section>
 <section id="questions" class="title-slide slide level1 center">
 <h1>Questions?</h1>
 <div class="footer footer-default">

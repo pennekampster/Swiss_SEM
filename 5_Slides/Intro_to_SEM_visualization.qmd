@@ -1,7 +1,7 @@
 ---
 author: "Frank Pennekamp"
 title: "Introduction to structural equation modelling"
-subtitle: "SEM presentation"
+subtitle: "How to effectively communicate your SEM analysis"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences
 - University of Zurich
@@ -128,7 +128,7 @@ Very high data-to-information ratio. this is a multi-group model. I like the way
 :::
 
 
-# What makes a good data visualization?
+## What makes a good data visualization?
 
 <!-- ## Theory -->
 
@@ -163,7 +163,7 @@ Guidelines to help drawing an informative, interpretable and reproducible SEM di
 1) Include tables with additional coefficients and derived quantities  
 :::
 
-## Show the relevant variables 
+## Variable types
 
 ::: {.incremental}
 :::::::::::::: {.columns}
@@ -178,7 +178,24 @@ Guidelines to help drawing an informative, interpretable and reproducible SEM di
 ::::::::::::::
 :::
 
-## Represent causal relationships by the path coefficients  {.smaller}
+## Relevant paths {.smaller}
+
+::: {.incremental}
+:::::::::::::: {.columns}
+::: {.column}
+- Represent all causal paths included in your model regardless of significance. 
+- Not necessarily in the same figure.
+- Represent important correlations (with double-headed arrows).
+- Good practice to include correlations among the errors of endogenous variables.
+:::
+
+::: {.column}
+![](images/Poorter_sem.jpg){height=80%}
+:::
+::::::::::::::
+:::
+
+## Path coefficients  {.smaller}
 
 ::: {.incremental}
 :::::::::::::: {.columns}
@@ -195,26 +212,7 @@ Guidelines to help drawing an informative, interpretable and reproducible SEM di
 ::::::::::::::
 :::
 
-
-
-## Represent all relevant paths (regardless of significance) {.smaller}
-
-::: {.incremental}
-:::::::::::::: {.columns}
-::: {.column}
-- Represent all causal paths included in your model regardless of significance. 
-- Not necessarily in the same figure.
-- Represent important correlations.
-- Exogenous variables can be included.
-- Always include correlations among the errors of endogenous variables.
-:::
-::: {.column}
-![](images/Poorter_sem.jpg){height=80%}
-:::
-::::::::::::::
-:::
-
-## Report model goodness of fit
+## Model goodness-of-fit
 
 ::: {.incremental}
 :::::::::::::: {.columns}
@@ -231,18 +229,18 @@ Guidelines to help drawing an informative, interpretable and reproducible SEM di
 ::::::::::::::
 :::
 
-##  Report explanatory power for endogenous variables
+##  Explanatory power 
 
 :::::::::::::: {.columns}
 ::: {.column}
-- Residual error or $R^2$ 
+- Residual error or $R^2$ for endogenous variables
 :::
 ::: {.column}
 ![](images/R2_endogenous.png){height=50%}
 :::
 ::::::::::::::
 
-## Include tables with additional coefficients and derived quantities 
+## Tables/figures with coefficients and derived quantities (appendix)
 
 ::: {.incremental}
 :::::::::::::: {.columns}
@@ -259,7 +257,7 @@ Direct, indirect and total effects:
 ::::::::::::::
 :::
 
-## Data presentation
+## Raw data (appendix)
 
 ::: {.incremental}
 - Show the underlying data:
@@ -268,28 +266,6 @@ Direct, indirect and total effects:
   - Distributions of raw data
   - Partial plots
 :::
-
-## Room for artistry 
-
-::: {.incremental}
-- This will depend on the audience and the purpose:
-  - Is this a paper?
-  - Is this a presentation?
-  - What is the narrative structure?
-:::
-
-. . .
-
-Design the figure accordingly! 
-
-
-## Room for artistry {.smaller}
-
-- Meta models:
-  - Shows the core concepts and their relationships, ignoring the data.
-  - The most conceptual version of the causal network you try to capture.
-
-![](images/Mazziotta_sem.jpg){height=60%}
 
 ## Plotting tools
 
@@ -323,7 +299,7 @@ summary(fit.prune)
 ```
 
 
-```{r echo=F}
+```{r echo=T, out.height = '6in'}
 
 lavaanPlot(model = fit.prune,
            node_options = list(shape = "box", color = "gray",
@@ -334,7 +310,7 @@ lavaanPlot(model = fit.prune,
 
 ## Plotting tools II: semPlot package
 
-```{r echo=F}
+```{r echo=T}
 semPaths(fit.prune, what = "est", whatLabels = "est",
          residuals = FALSE, intercepts = FALSE,
          sizeMan = 10, sizeMan2 = 7, edge.label.cex = 1,
@@ -348,6 +324,31 @@ semPaths(fit.prune, what = "est", whatLabels = "est",
 
 - Good for quick visualization but not ready for publication
 - Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.
+
+## Room for artistry {.smaller}
+
+- Meta models:
+  - Shows the core concepts and their relationships, ignoring the data.
+  - The most conceptual version of the causal network you try to capture.
+
+![](images/Mazziotta_sem.jpg){height=60%}
+
+
+
+## Room for artistry 
+
+::: {.incremental}
+- This will depend on the audience and the purpose:
+  - Is this a paper?
+  - Is this a presentation?
+  - What is the narrative structure?
+:::
+
+. . .
+
+Design the figure accordingly! 
+
+
 
 
 

@@ -481,12 +481,18 @@ Frank Pennekamp
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning objectives</h2>
+<div>
 <ul>
-<li>Participants understand the pros and cons of SEMs to draw inference from data.</li>
-<li>Participants understand path models, as well as latent and composites variables.</li>
-<li>Participants can assess and interpret SEMs reported in the literature.</li>
-<li>Participants are able to fit SEMs to their datasets with the R package <code>lavaan</code> and present them graphically.</li>
+<li class="fragment">Participants understand the pros and cons of SEMs for drawing inferences from data.</li>
+<li class="fragment">Participants understand path models, as well as latent and composites variables.</li>
+<li class="fragment">Participants can assess and interpret SEMs reported in the literature.</li>
+<li class="fragment">Participants are able to fit SEMs to their datasets with the R package <code>lavaan</code> and present them graphically.</li>
 </ul>
+</div>
+</section>
+<section id="course-materials" class="slide level2">
+<h2>Course materials</h2>
+<p><a href="https://github.com/pennekampster/Swiss_SEM/">Slide decks and R code available on github</a></p>
 </section></section>
 <section>
 <section id="getting-started-with-structural-equation-modeling" class="title-slide slide level1 center">
@@ -2574,7 +2580,11 @@ biodiversity-&gt;biomass
 <div>
 <div>
 <svg width="576" height="576" viewbox="0.00 0.00 388.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 384.44,-215 384.44,4 -4,4"></polygon> <g id="clust3" class="cluster">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 384.44,-215 384.44,4 -4,4"></polygon> <g id="clust2" class="cluster">
+<title>
+cluster_env
+</title>
+<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <g id="clust3" class="cluster">
 <title>
 cluster_prod
 </title>
@@ -2582,11 +2592,7 @@ cluster_prod
 <title>
 cluster_bio
 </title>
-<polygon fill="none" stroke="lightgrey" points="154.38,-77 154.38,-203 246.31,-203 246.31,-77 154.38,-77"></polygon> <text text-anchor="middle" x="200.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <g id="clust2" class="cluster">
-<title>
-cluster_env
-</title>
-<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <!-- evenness --> <g id="node1" class="node">
+<polygon fill="none" stroke="lightgrey" points="154.38,-77 154.38,-203 246.31,-203 246.31,-77 154.38,-77"></polygon> <text text-anchor="middle" x="200.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text> </g> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
 </title>
@@ -3142,9 +3148,9 @@ disturbance-&gt;biomass
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1050,
 
-        height: 900,
+        height: 700,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
