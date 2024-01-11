@@ -1,6 +1,6 @@
 ---
 title: "Basics of structural equation modeling"
-date: "08.11.2022"
+date: "04.01.2024"
 output:
   html_document:
     toc: true
@@ -28,10 +28,14 @@ text-align: justify}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library("here")
-library(ggplot2)
+library(here)
+library(tidyverse)
 library(GGally)
 library(AICcmodavg)
+
+library(lavaanPlot)
+library(semPlot)
+
 ```
 
 
@@ -125,31 +129,19 @@ str(seabloom$ntrt)
 
 
 
-<!-- ### Aggregate -->
-<!-- To cirumvent the dilemma with the count data, the data were averaged by year, nutrient  and disturbance treatment and field. -->
+### Subset dataset
+To simplify the analysis, we will take the average across all the years in the dataset for our analysis.
 
-
-<!-- ```{r} -->
-<!-- seabloom.agg <- aggregate(list(rich = seabloom$rich, even = seabloom$even, -->
-<!--                                ens.pie = seabloom$ens.pie,  -->
-<!--                                mass.above = seabloom$mass.above,  -->
-<!--                                precip.mm = seabloom$precip.mm, -->
-<!--                                precip.gs = seabloom$precip.gs), -->
-<!--                           by = list(year = seabloom$year, nadd = seabloom$nadd, -->
-<!--                                     disk = seabloom$disk,  -->
-<!--                                     field = seabloom$field), -->
-<!--                           FUN = mean, data = seabloom) -->
-<!-- ``` -->
-
-
-
+```{r}
+seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
+```
 
 ### Overview
 The `pairs` function yields an overview over the numerical data that we will use for the following exercises.
 
 
 ```{r}
-ggpairs(seabloom[, c(7, 11:16)], upper=NULL, lower = list(continuous = wrap("points", alpha = 0.05)))  + theme_bw() + theme(panel.grid=element_blank())
+ggpairs(ungroup(seabloom[, c(7, 9:12)]), upper=NULL, lower = list(continuous = wrap("points", alpha = 0.05)))  + theme_bw() + theme(panel.grid=element_blank())
 ```
 
 
@@ -159,18 +151,9 @@ Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en
 productivity (biomass) is directly influenced on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
 
 
-![](Figures/Metamodel.svg){width=70%}
+![](Figures/Metamodel_simple.svg){width=70%}
 
 
-<!-- ## Subset to one year -->
-<!-- For simplicity, set the focus on only one year. -->
-<!-- Then, `r dim(seabloom[seabloom$year == 2000, ])[1]` observations remain. -->
-
-<!-- NOT: -->
-<!-- ```{r} -->
-<!-- # seabloom <- seabloom[seabloom$year == 2000, ] -->
-<!-- # dim(seabloom) -->
-<!-- ``` -->
 
 
 # Linear model
@@ -186,7 +169,7 @@ Further, they make it nearly impossible to create a proper causal model, since t
 associations" which hinders interpretations [@grace21].
 
 
-![](Figures/LMdir.svg){width=45%}
+![](Figures/LMdir_simple.svg){width=45%}
 
 
 <div class="alert alert-info">
@@ -195,8 +178,7 @@ associations" which hinders interpretations [@grace21].
 
 
 ```{r class.source = 'fold-hide'}
-# lm.dir <- lm(mass.above ~ nadd + precip.mm + rich + even,
-#              data = seabloom)
+# lm.dir <- lm(mass.above ~ nadd + rich + even, data = seabloom)
 # summary(lm.dir)
 ```
 
@@ -205,14 +187,14 @@ associations" which hinders interpretations [@grace21].
 ## Indirect effects
 To account for the indirect effects, two additional LMs are necessary: one with richness and one with evenness as response.
 
-![](Figures/LMind.svg){width=37%}
+![](Figures/LMind_simple.svg){width=37%}
 
 
 ```{r}
-lm.rich <- lm(rich ~ nadd + precip.mm, data = seabloom)
+lm.rich <- lm(rich ~ nadd, data = seabloom)
 summary(lm.rich)
 
-lm.even <- lm(even ~ nadd + precip.mm, data = seabloom)
+lm.even <- lm(even ~ nadd, data = seabloom)
 summary(lm.even)
 ```
 
@@ -242,7 +224,7 @@ library("lavaan")
 Inspecting our set of variables shows that correlations between all variables are rather weak except the precipitation throughout the year and those throughout the field season.
 
 ```{r}
-ggpairs(seabloom[, c(7, 11:16)], lower = list(continuous = wrap("points", alpha = 0.05)))  + theme_bw() + theme(panel.grid=element_blank())
+ggpairs(ungroup(seabloom[, c(7, 9:12)]), lower = list(continuous = wrap("points", alpha = 0.05)))  + theme_bw() + theme(panel.grid=element_blank())
 ```
 
 Variables that are highly correlated with $r > 0.85$ become redundant. Then, one of them can be dropped or they can be modeled summarized as a latent variable [@grace06].
@@ -283,9 +265,10 @@ For example, an arrow in a DAG is represented by a tilde.
 
 ```{r class.source = 'fold-hide'}
 simple <-
-"mass.above ~ nadd + rich + even + precip.mm + disk
-rich ~ nadd + precip.mm
-even ~ nadd + precip.mm"
+"mass.above ~ nadd + rich + even +  disk
+rich ~ nadd   
+even ~ nadd  
+"
 ```
 
 
@@ -303,7 +286,7 @@ The package [`MVN`](https://cran.r-project.org/web/packages/MVN/index.html) allo
 ```{r}
 library("MVN")
 
-mvn(data = seabloom[, c(14:16)], mvnTest = "hz", univariatePlot = "qqplot")
+mvn(data = seabloom[, c(9:11)], mvnTest = "hz", univariatePlot = "qqplot")
 ```
 
 
@@ -327,6 +310,7 @@ par(mfrow = c(1, 3))
 histWithDensity(seabloom$mass.above, "mass.above")
 histWithDensity(seabloom$rich, "rich")
 histWithDensity(seabloom$even, "even")
+par(mfrow = c(1, 1))
 ```
 
 <div class="alert alert-info">
@@ -346,12 +330,13 @@ seabloom$log.mass.above <- sqrt(seabloom$mass.above)
 seabloom$log.even <- sqrt(seabloom$even)
 seabloom$log.rich <- sqrt(seabloom$rich)
 
-mvn(data = seabloom[, c(17:19)], mvnTest = "hz", univariatePlot = "qqplot")
+mvn(data = seabloom[, c(13:15)], mvnTest = "hz", univariatePlot = "qqplot")
 
 par(mfrow = c(1, 3))
 histWithDensity(seabloom$log.mass.above, "log(mass.above)")
 histWithDensity(seabloom$log.rich, "log(rich)")
 histWithDensity(seabloom$log.even, "log(even)")
+par(mfrow = c(1, 1))
 ```
 
 
@@ -432,12 +417,10 @@ The boxplots show that the range of the variables is now more similar.
 
 ```{r}
 seabloom$mass.above <- seabloom$mass.above / 100
-seabloom$precip.mm <- seabloom$precip.mm / 100
-
-boxplot(seabloom[, c(7, 11, 13:16)], las = 2)
+boxplot(seabloom[, c("mass.above", "rich", "even", "nadd", "disk")], las = 2)
 ```
 
-Then, run `sem` again with the rescaled `biomass` and `precip.mm` variables:
+Then, run `sem` again with the rescaled `biomass` variable:
 
 ```{r}
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
@@ -483,7 +466,7 @@ summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE)
 
 Now, the model has a decent fit with a ratio of test statistic and degrees of freedom smaller than two (i.e. `r round(fitmeasures(fit.simple.up, "chisq") / fitmeasures(fit.simple.up, "df"), digits = 2)`) and a $p$-value of `r round(fitmeasures(fit.simple.up, "pvalue"), digits = 2)`. Further, also the robust CFI is now `r round(fitmeasures(fit.simple.up, "cfi.robust"), digits = 2)`.
 
-Another look at the modification indices shows that further modifications would yield only smallest improvements to the model fit, so that we can ignore them confidently:
+Another look at the modification indices shows that only one modification would yield an improvement, but based on the experimental design AGB cannot influence the disk treatment which was randomly assigned. All other modifications would yield only smallest improvements to the model fit, so that we can ignore them confidently:
 
 ```{r}
 modindices(fit.simple.up, minimum.value = 0.01)
@@ -530,7 +513,7 @@ To estimate derived quantities and their standard errors, we can use the `:=` op
 ```{r class.source = 'fold-hide'}
 derived <-
 "mass.above ~ b1 * nadd + b2 * rich + b3 * even + disk
-rich ~ b4 * nadd + disk
+rich ~ b4 * nadd 
 even ~ b5 * nadd
 
 dir.nut.effect   := b1
@@ -556,9 +539,9 @@ Adding each a path from `disk` to richness (`rich`) and evenness (`even`) turns 
 
 ```{r}
 satur <-
-"mass.above ~ nadd + rich + even + precip.mm + disk
-rich ~ nadd + precip.mm + disk
-even ~ nadd + precip.mm + disk
+"mass.above ~ nadd + rich + even +  disk
+rich ~ nadd + disk
+even ~ nadd + disk
 
 rich ~~ even"
 
@@ -593,13 +576,13 @@ summary(fit.satur, rsq = TRUE)
 
 
 # Model pruning
-Now, let's delete all statistically non-significant paths from the saturated model to obtain the most parsimonous model. There is only a single non-significant path, that is, the path between disturbance and evenness. 
+Now, let's delete all statistically non-significant paths from the saturated model to obtain the most parsimonous model. There are two non-significant paths, i.e. between disturbance and richness and disturbance and evenness. 
 
 ```{r}
 prune <-
-"mass.above ~ nadd + rich + even + precip.mm + disk
-rich ~ nadd + precip.mm + disk
-even ~ nadd + precip.mm 
+"mass.above ~ nadd + rich + even + disk
+rich ~ nadd 
+even ~ nadd
 
 rich ~~ even"
 
@@ -610,14 +593,14 @@ aictab(list(fit.satur, fit.prune),
        c("saturated", "pruned"))
 ```
 
-When comparing the CFI and AIC, we see that the pruned model is slightly superior to the saturated model. The AIC is the lowest (although dAIC < 2) and the number of model parameters is lower and hence this model is the most parsimonous.
+When comparing the CFI and AIC, we see that the pruned model is slightly superior to the saturated model. The AIC is the lowest (but with dAIC < 2), and the number of model parameters is lower and hence this model is the most parsimonous.
 
 
 ## Summary output
 Now that we have our final model, let's have a closer look on the model via `summary` requesting also the standardized estimates:
 
 ```{r}
-summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE, standardized = TRUE)
+summary(fit.prune, fit.measures = TRUE, rsq = TRUE, standardized = TRUE)
 ```
 
 <div class="alert alert-info">
@@ -644,7 +627,7 @@ the model, which provide a capacity to test the architecture of the model
 The `inspect` function retrieves information from a `lavaan` object (for more options see the help):
 
 ```{r}
-inspect(fit.simple.up, what = "r2")
+inspect(fit.prune, what = "r2")
 ```
 
 
@@ -655,19 +638,12 @@ The package [`lavaanPlot`](https://cran.r-project.org/web/packages/lavaanPlot) a
 
 Another library that handles `lavaan` objects would be [`semPlot`](https://cran.r-project.org/web/packages/semPlot/index.html). 
 
-
-
-```{r}
-suppressMessages(lavaanPlot_installed <- require(lavaanPlot))
-if (!lavaanPlot_installed) {install.packages("lavaanPlot")}
-```
-
 Then, we can plot the results with significance levels displayed as asterisks.
 
 ```{r}
 library("lavaanPlot")
 
-lavaanPlot(model = fit.simple.up,
+lavaanPlot(model = fit.prune,
            node_options = list(shape = "box", color = "gray",
                                fontname = "Helvetica"),
            edge_options = list(color = "black"),
@@ -678,12 +654,10 @@ For more customization, check out the [`lavaanPlot` documentation](https://lavaa
 
 
 ```{r}
-library("semPlot")
-
 # Add p-values and R^2: https://stackoverflow.com/questions/60706206/how-do-i-include-p-value-and-r-square-for-the-estimates-in-sempaths
 # thePlot <- semPlotModel(fit.simple.up)
 
-semPaths(fit.simple.up, what = "est", whatLabels = "est",
+semPaths(fit.prune, what = "est", whatLabels = "est",
          residuals = FALSE, intercepts = FALSE,
          sizeMan = 10, sizeMan2 = 7, edge.label.cex = 1,
          fade = FALSE, layout = "tree", style = "mx", nCharNodes = 0,
