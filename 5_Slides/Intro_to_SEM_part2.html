@@ -527,12 +527,7 @@ disturbance-&gt;biomass
 </ul>
 </div>
 </section>
-<section>
-<section id="latent-variables" class="title-slide slide level1 center">
-<h1>Latent variables</h1>
-
-</section>
-<section id="latent-variables-1" class="slide level2">
+<section id="latent-variables" class="slide level2">
 <h2>Latent variables</h2>
 <div class="cell" data-fig-width="6">
 <div class="cell-output-display">
@@ -584,7 +579,7 @@ Y-&gt;Z
 </ul>
 </div>
 </section>
-<section id="latent-variables-2" class="slide level2">
+<section id="latent-variables-1" class="slide level2">
 <h2>Latent variables</h2>
 <div class="cell" data-fig-width="6">
 <div class="cell-output-display">
@@ -644,7 +639,7 @@ Y-&gt;Z
 </ul>
 </div>
 </section>
-<section id="latent-variables-3" class="slide level2">
+<section id="latent-variables-2" class="slide level2">
 <h2>Latent variables</h2>
 <p>Latents fitted in two steps:</p>
 <div class="fragment">
@@ -810,60 +805,58 @@ Z-&gt;Y
 <li class="fragment">Estimating relationship between latent and response will lead to better slope estimate and higher R<sup>2</sup>.</li>
 </ul>
 </div>
-</section></section>
-<section>
-<section id="composite-variables" class="title-slide slide level1 center">
-<h1>Composite variables</h1>
-
 </section>
-<section id="composite-variables-1" class="slide level2 smaller">
+<section id="composite-variables" class="slide level2">
+<h2>Composite variables</h2>
+<div>
+<ul>
+<li class="fragment">Composites are very flexible constructs.</li>
+<li class="fragment">Allow to model interactions and nonlinear relationships.</li>
+<li class="fragment">Allow to summarize multiple drivers into a single cause.</li>
+<li class="fragment">Composites are shown as hexangular shapes in causal diagrams.</li>
+</ul>
+</div>
+</section>
+<section id="composite-variables-1" class="slide level2">
 <h2>Composite variables</h2>
 <div class="cell" data-fig-width="5">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="480" height="480" viewbox="0.00 0.00 346.32 132.40" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 128.4)">
+<svg width="480" height="480" viewbox="0.00 0.00 346.32 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
 <title>
 boxes_and_circles
 </title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-128.4 342.32,-128.4 342.32,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-94 342.32,-94 342.32,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
 <title>
 X1
 </title>
-<polygon fill="none" stroke="black" points="88.57,-124.4 -0.19,-124.4 -0.19,-88.4 88.57,-88.4 88.57,-124.4"></polygon> <text text-anchor="middle" x="44.19" y="-102.2" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- Y --> <g id="node4" class="node">
+<polygon fill="none" stroke="black" points="88.57,-90 -0.19,-90 -0.19,-54 88.57,-54 88.57,-90"></polygon> <text text-anchor="middle" x="44.19" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text> </g> <!-- Y --> <g id="node4" class="node">
 <title>
 Y
 </title>
-<polygon fill="none" stroke="black" points="234.09,-79.4 206.68,-97.4 151.88,-97.4 124.48,-79.4 151.88,-61.4 206.68,-61.4 234.09,-79.4"></polygon> <text text-anchor="middle" x="179.28" y="-75.2" font-family="Helvetica,sans-Serif" font-size="14.00">land use</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge2" class="edge">
+<polygon fill="none" stroke="black" points="234.09,-45 206.68,-63 151.88,-63 124.48,-45 151.88,-27 206.68,-27 234.09,-45"></polygon> <text text-anchor="middle" x="179.28" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">land use</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
 <title>
 X1-&gt;Y
 </title>
-<path fill="none" stroke="black" d="M88.4,-97.63C100.74,-95.13 114.3,-92.38 127.07,-89.79"></path> <polygon fill="black" stroke="black" points="127.99,-93.17 137.1,-87.75 126.6,-86.31 127.99,-93.17"></polygon> </g> <!-- X2 --> <g id="node2" class="node">
+<path fill="none" stroke="black" d="M88.4,-63.23C100.74,-60.73 114.3,-57.98 127.07,-55.39"></path> <polygon fill="black" stroke="black" points="127.99,-58.77 137.1,-53.35 126.6,-51.91 127.99,-58.77"></polygon> </g> <!-- X2 --> <g id="node2" class="node">
 <title>
 X2
 </title>
-<polygon fill="none" stroke="black" points="78.89,-70.4 9.49,-70.4 9.49,-34.4 78.89,-34.4 78.89,-70.4"></polygon> <text text-anchor="middle" x="44.19" y="-48.2" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge3" class="edge">
+<polygon fill="none" stroke="black" points="78.89,-36 9.49,-36 9.49,0 78.89,0 78.89,-36"></polygon> <text text-anchor="middle" x="44.19" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
 <title>
 X2-&gt;Y
 </title>
-<path fill="none" stroke="black" d="M79.12,-59.28C93.52,-62.21 110.64,-65.68 126.56,-68.91"></path> <polygon fill="black" stroke="black" points="126.31,-72.43 136.81,-70.99 127.7,-65.57 126.31,-72.43"></polygon> </g> <!-- Z --> <g id="node3" class="node">
+<path fill="none" stroke="black" d="M79.12,-24.88C93.52,-27.81 110.64,-31.28 126.56,-34.51"></path> <polygon fill="black" stroke="black" points="126.31,-38.03 136.81,-36.59 127.7,-31.17 126.31,-38.03"></polygon> </g> <!-- Z --> <g id="node3" class="node">
 <title>
 Z
 </title>
-<polygon fill="none" stroke="black" points="338.38,-97.4 270.12,-97.4 270.12,-61.4 338.38,-61.4 338.38,-97.4"></polygon> <text text-anchor="middle" x="304.25" y="-75.2" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- Y&#45;&gt;Z --> <g id="edge4" class="edge">
+<polygon fill="none" stroke="black" points="338.38,-63 270.12,-63 270.12,-27 338.38,-27 338.38,-63"></polygon> <text text-anchor="middle" x="304.25" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- Y&#45;&gt;Z --> <g id="edge3" class="edge">
 <title>
 Y-&gt;Z
 </title>
-<path fill="none" stroke="black" d="M234.22,-79.4C242.75,-79.4 251.47,-79.4 259.73,-79.4"></path> <polygon fill="black" stroke="black" points="259.88,-82.9 269.88,-79.4 259.88,-75.9 259.88,-82.9"></polygon> </g> <!-- E --> <g id="node5" class="node">
-<title>
-E
-</title>
-<text text-anchor="middle" x="44.19" y="-4.2" font-family="Helvetica,sans-Serif" font-size="14.00">0</text> </g> <!-- E&#45;&gt;Y --> <g id="edge1" class="edge">
-<title>
-E-&gt;Y
-</title>
-<path fill="none" stroke="black" d="M47.99,-9.32C54.96,-11.65 73.63,-18.13 88.38,-25.4 106.84,-34.5 126.53,-46.1 142.77,-56.21"></path> <polygon fill="black" stroke="black" points="141.07,-59.28 151.4,-61.65 144.8,-53.35 141.07,-59.28"></polygon> </g> </g>
+<path fill="none" stroke="black" d="M234.22,-45C242.75,-45 251.47,-45 259.73,-45"></path> <polygon fill="black" stroke="black" points="259.88,-48.5 269.88,-45 259.88,-41.5 259.88,-48.5"></polygon> </g> </g>
 </svg>
 </div>
 </div>
@@ -871,13 +864,8 @@ E-&gt;Y
 </div>
 <div>
 <ul>
-<li class="fragment">Composites to specify the collective influence of a set of variables (e.g., land use).</li>
-<li class="fragment">Composites arise from the indicators (in contrast to latents).<br>
-</li>
-<li class="fragment">Values are determined by causes (i.e., indicators), thus error variance is set to 0.<br>
-</li>
-<li class="fragment">Arrows point from the indicators to the composite (i.e., formative or causal indicators).</li>
-<li class="fragment">Composites are shown as hexangular shapes.</li>
+<li class="fragment">Composites specify the collective influence of a set of variables.</li>
+<li class="fragment">Here, land use is defined as the combination of disturbance and nutrients.</li>
 </ul>
 </div>
 </section>
@@ -936,11 +924,70 @@ E-&gt;Y
 </div>
 <div>
 <ul>
-<li class="fragment">Composites are very flexible constructs.</li>
-<li class="fragment">Allow to model interactions and nonlinear relationships.</li>
-<li class="fragment">Allow to summarize multiple drivers into a single cause.</li>
-<li class="fragment">Technically they are predictions.</li>
-<li class="fragment">Can cause convergence issues, may need to be handcoded.</li>
+<li class="fragment">Arrows point from the indicators to the composite (i.e., formative or causal indicators).</li>
+<li class="fragment">Values are determined by causes (i.e., indicators), thus error variance is set to 0.<br>
+</li>
+<li class="fragment">Technically, composites are the predictions from linear combinations of variables.</li>
+<li class="fragment">Estimation can cause convergence issues, may need to be fitted separately from full model.</li>
+</ul>
+</div>
+</section>
+<section id="using-composites-to-model-nonlinear-effects" class="slide level2 smaller">
+<h2>Using composites to model nonlinear effects</h2>
+<div class="cell" data-fig-width="5">
+<div class="cell-output-display">
+<div>
+<div>
+<svg width="480" height="480" viewbox="0.00 0.00 403.88 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
+<title>
+boxes_and_circles
+</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-94 399.88,-94 399.88,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
+<title>
+X1
+</title>
+<polygon fill="none" stroke="black" points="91.09,-90 21.7,-90 21.7,-54 91.09,-54 91.09,-90"></polygon> <text text-anchor="middle" x="56.39" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- X2 --> <g id="node2" class="node">
+<title>
+X2
+</title>
+<polygon fill="none" stroke="black" points="95.38,-36 17.41,-36 17.41,0 95.38,0 95.38,-36"></polygon> <text text-anchor="start" x="25.65" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> <text text-anchor="start" x="79.35" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="super" font-size="14.00">2</text> </g> <!-- X1&#45;&gt;X2 --> <g id="edge4" class="edge">
+<title>
+X1:w-&gt;X2:w
+</title>
+<path fill="none" stroke="black" d="M7.05,-21.63C-3.5,-31.49 -1.45,-58.7 10.61,-68.46"></path> <polygon fill="black" stroke="black" points="8.34,-24.88 16.39,-18 5.81,-18.35 8.34,-24.88"></polygon> <polygon fill="black" stroke="black" points="9.8,-71.88 20.39,-72 12.18,-65.3 9.8,-71.88"></polygon> </g> <!-- Y --> <g id="node4" class="node">
+<title>
+Y
+</title>
+<polygon fill="none" stroke="black" points="291.56,-45 251.5,-63 171.39,-63 131.33,-45 171.39,-27 251.5,-27 291.56,-45"></polygon> <text text-anchor="middle" x="211.44" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrient effect</text> </g> <!-- X1&#45;&gt;Y --> <g id="edge1" class="edge">
+<title>
+X1-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M91.36,-66.01C106.74,-63.29 125.49,-59.99 143.51,-56.81"></path> <polygon fill="black" stroke="black" points="144.18,-60.24 153.42,-55.06 142.97,-53.35 144.18,-60.24"></polygon> </g> <!-- X2&#45;&gt;Y --> <g id="edge2" class="edge">
+<title>
+X2-&gt;Y
+</title>
+<path fill="none" stroke="black" d="M95.23,-24.67C109.74,-27.23 126.78,-30.24 143.23,-33.14"></path> <polygon fill="black" stroke="black" points="142.91,-36.64 153.37,-34.93 144.13,-29.75 142.91,-36.64"></polygon> </g> <!-- Z --> <g id="node3" class="node">
+<title>
+Z
+</title>
+<polygon fill="none" stroke="black" points="395.95,-63 327.69,-63 327.69,-27 395.95,-27 395.95,-63"></polygon> <text text-anchor="middle" x="361.82" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- Y&#45;&gt;Z --> <g id="edge3" class="edge">
+<title>
+Y-&gt;Z
+</title>
+<path fill="none" stroke="black" d="M291.84,-45C300.56,-45 309.18,-45 317.23,-45"></path> <polygon fill="black" stroke="black" points="317.42,-48.5 327.42,-45 317.42,-41.5 317.42,-48.5"></polygon> </g> </g>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<div>
+<ul>
+<li class="fragment">Nutrient effects on biomass may be nonlinear (e.g.&nbsp;hump-shaped)</li>
+<li class="fragment">Can be modelled by adding a linear and a squared term of nutrients</li>
+<li class="fragment">Composite to capture this joint effect of nutrient addition</li>
+<li class="fragment">Check validity of nonlinear effect by only constructing composite first (linear model)</li>
+<li class="fragment">Use standardized coefficients for interpretation</li>
 </ul>
 </div>
 </section>
@@ -977,13 +1024,8 @@ E-&gt;Y
 <li class="fragment">Composite variable -&gt; the meaning of the construct changes after dropping one of the indicators</li>
 </ol>
 </div>
-</section></section>
-<section>
-<section id="exercise" class="title-slide slide level1 center">
-<h1>Exercise</h1>
-
 </section>
-<section id="exercise-1" class="slide level2">
+<section id="exercise" class="slide level2">
 <h2>Exercise:</h2>
 <ul>
 <li>Revisit the meta-model you have drawn yesterday:
@@ -996,13 +1038,8 @@ E-&gt;Y
 <li>Are there concepts that could be modelled with a latent or composite variable?</li>
 </ul></li>
 </ul>
-</section></section>
-<section>
-<section id="interactions" class="title-slide slide level1 center">
-<h1>Interactions</h1>
-
 </section>
-<section id="interactions-1" class="slide level2 smaller">
+<section id="interactions" class="slide level2 smaller">
 <h2>Interactions</h2>
 <div class="cell" data-fig-width="6">
 <div class="cell-output-display">
@@ -1056,7 +1093,7 @@ middleman-&gt;Y
 </ul>
 </div>
 </section>
-<section id="interactions-2" class="slide level2">
+<section id="interactions-1" class="slide level2">
 <h2>Interactions</h2>
 <p>Interactions can be modelled in different ways in lavaan:</p>
 <ol type="1">
@@ -1286,7 +1323,7 @@ survey.design = design)
 <!-- - Autocorrelation is a sign of non-independence, violating assumptions of linear models that data points are independent. -->
 <!-- - Does not influence estimates, but their standard errors and p values. -->
 <!-- - You think you have more information than you actually have. -->
-</section></section>
+</section>
 <section id="questions" class="title-slide slide level1 center">
 <h1>Questions?</h1>
 
@@ -1302,7 +1339,7 @@ survey.design = design)
 <h1>Your turn: working with the Seabloom dataset</h1>
 
 </section>
-<section id="exercise-1-1" class="slide level2">
+<section id="exercise-1" class="slide level2">
 <h2>Exercise 1</h2>
 <p>Start with the following model:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(<span class="st">"lavaan"</span>)</span>

@@ -113,8 +113,6 @@ digraph  {
     2) composite variables
 :::
 
-# Latent variables
-
 ## Latent variables
 
 ```{dot}
@@ -324,9 +322,17 @@ digraph  {
 -   Estimating relationship between latent and response will lead to better slope estimate and higher R^2^.
 :::
 
-# Composite variables
+## Composite variables
 
-## Composite variables {.smaller}
+::: incremental
+- Composites are very flexible constructs.
+- Allow to model interactions and nonlinear relationships.
+- Allow to summarize multiple drivers into a single cause.
+- Composites are shown as hexangular shapes in causal diagrams.
+:::
+
+
+## Composite variables
 
 ```{dot}
 //| fig-width: 5
@@ -344,10 +350,6 @@ digraph boxes_and_circles {
    node [shape=hexagon, fontname = Helvetica]
   Y [label="land use"]
 
-  node [shape=plain, fontname = Helvetica]
-  E [label="0"]
-  E -> Y [constraint=false];
-
   X1 -> Y;
   X2 -> Y;
   Y -> Z;
@@ -358,12 +360,11 @@ digraph boxes_and_circles {
 ```
 
 ::: incremental
--   Composites to specify the collective influence of a set of variables (e.g., land use).
--   Composites arise from the indicators (in contrast to latents).\
--   Values are determined by causes (i.e., indicators), thus error variance is set to 0.\
--   Arrows point from the indicators to the composite (i.e., formative or causal indicators).
--   Composites are shown as hexangular shapes.
+- Composites specify the collective influence of a set of variables.
+- Here, land use is defined as the combination of disturbance and nutrients.
 :::
+
+
 
 ## Composite variables
 
@@ -397,11 +398,49 @@ digraph boxes_and_circles {
 ```
 
 ::: incremental
-- Composites are very flexible constructs.
-- Allow to model interactions and nonlinear relationships.
-- Allow to summarize multiple drivers into a single cause.
-- Technically they are predictions.
-- Can cause convergence issues, may need to be handcoded.
+-  Arrows point from the indicators to the composite (i.e., formative or causal indicators).
+-  Values are determined by causes (i.e., indicators), thus error variance is set to 0.\
+- Technically, composites are the predictions from linear combinations of variables.
+- Estimation can cause convergence issues, may need to be fitted separately from full model.
+:::
+
+
+## Using composites to model nonlinear effects{.smaller}
+
+
+```{dot}
+//| fig-width: 5
+
+digraph boxes_and_circles {
+   
+   graph [overlap = false, fontsize = 10, rankdir = LR, fontname = Helvetica]
+   
+   node [shape=box, fontname = Helvetica]
+   X1 [label="nutrients"];
+   X2 [label=<nutrients<SUP>2</SUP>>];
+   Z [label="biomass"];
+
+   
+   node [shape=hexagon, fontname = Helvetica]
+  Y [label="nutrient effect"]
+
+  X1 -> Y;
+  X2 -> Y;
+  Y -> Z;
+
+  X1:w -> X2:w [dir="both"]
+
+  {rank = "max"; Z}
+  {rank = "same"; X1;X2;}
+}
+```
+
+::: incremental
+- Nutrient effects on biomass may be nonlinear (e.g. hump-shaped)
+- Can be modelled by adding a linear and a squared term of nutrients
+- Composite to capture this joint effect of nutrient addition
+- Check validity of nonlinear effect by only constructing composite first (linear model)
+- Use standardized coefficients for interpretation
 :::
 
 ## Distinguishing latent and composite variables 
@@ -430,7 +469,6 @@ Rules of thumb:
 2) Composite variable -> the meaning of the construct changes after dropping one of the indicators
 :::
 
-# Exercise
 
 ## Exercise:
 
@@ -440,8 +478,6 @@ Rules of thumb:
 - Revisit the meta-model of your dataset:
   - Are there concepts that could be modelled with a latent or composite variable?
 
-
-# Interactions
 
 ## Interactions {.smaller}
 
@@ -478,7 +514,7 @@ digraph boxes_and_circles {
 -   The coefficient of the interaction describes the deviation from additivity (can be positive or negative).
 :::
 
-## Interactions
+## Interactions 
 
 Interactions can be modelled in different ways in lavaan:
 
