@@ -293,7 +293,62 @@ Design the figure accordingly!
 
 ## Plotting tools
 
-- Dedicated packages available in R (e.g., semPlot, lavaanPlot)
+- Dedicated packages available in R 
+
+## Plotting tools I: lavaanPlot package
+
+```{r echo=F, results='hide'}
+library("lavaanPlot")
+library(semPlot)
+library(lavaan)
+library(tidyverse)
+library(here)
+
+
+seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
+                       sep = ",", header = TRUE)
+seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
+seabloom$mass.above <- seabloom$mass.above / 100
+
+
+prune <-
+"mass.above ~ nadd + rich + even + disk
+rich ~ nadd 
+even ~ nadd
+
+rich ~~ even"
+
+fit.prune <- sem(prune, data = seabloom, estimator = "MLM")
+summary(fit.prune)
+```
+
+
+```{r echo=F}
+
+lavaanPlot(model = fit.prune,
+           node_options = list(shape = "box", color = "gray",
+                               fontname = "Helvetica"),
+           edge_options = list(color = "black"),
+           coefs = TRUE, covs = FALSE, stars = "regress")
+```
+
+## Plotting tools II: semPlot package
+
+```{r echo=F}
+semPaths(fit.prune, what = "est", whatLabels = "est",
+         residuals = FALSE, intercepts = FALSE,
+         sizeMan = 10, sizeMan2 = 7, edge.label.cex = 1,
+         fade = FALSE, layout = "tree", style = "mx", nCharNodes = 0,
+         posCol = "#009e73ff", negCol = "#d55e00ff", edge.label.color = "black",
+         layoutSplit = TRUE, curve = 1, curvature = 1, #fixedStyle = 1,
+         exoCov = FALSE, rotation = 1)
+```
+
+## Plotting tools
+
+- Good for quick visualization but not ready for publication
 - Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.
+
+
 
 # Questions?  

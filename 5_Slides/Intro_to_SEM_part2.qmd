@@ -401,7 +401,9 @@ digraph boxes_and_circles {
 -  Arrows point from the indicators to the composite (i.e., formative or causal indicators).
 -  Values are determined by causes (i.e., indicators), thus error variance is set to 0.\
 - Technically, composites are the predictions from linear combinations of variables.
-- Estimation can cause convergence issues, may need to be fitted separately from full model.
+- Estimation can cause convergence issues, lavaan can only handle a single composite per model.
+- Solution: hand-code composites separately.
+- Only standardised coefficients of composites are interpretable.
 :::
 
 

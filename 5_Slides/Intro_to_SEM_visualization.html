@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Frank Pennekamp">
-  <meta name="dcterms.date" content="2022-09-11">
+  <meta name="dcterms.date" content="2024-01-17">
   <title>Introduction to structural equation modelling</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -320,6 +320,10 @@
       margin-right: 0; 
     }
   </style>
+  <script src="Intro_to_SEM_visualization_files/libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+  <script src="Intro_to_SEM_visualization_files/libs/viz-1.8.2/viz.js"></script>
+  <link href="Intro_to_SEM_visualization_files/libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+  <script src="Intro_to_SEM_visualization_files/libs/grViz-binding-1.0.10/grViz.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -343,7 +347,7 @@ Frank Pennekamp
     </div>
 </div>
 
-  <p class="date">2022-09-11</p>
+  <p class="date">January 17, 2024</p>
 </section>
 <section id="exercise-draw-your-idea" class="slide level2">
 <h2>Exercise: Draw your idea</h2>
@@ -733,14 +737,33 @@ Frank Pennekamp
 <section id="plotting-tools" class="slide level2">
 <h2>Plotting tools</h2>
 <ul>
-<li>Dedicated packages available in R (e.g., semPlot, lavaanPlot)</li>
+<li>Dedicated packages available in R</li>
+</ul>
+</section>
+<section id="plotting-tools-i-lavaanplot-package" class="slide level2">
+<h2>Plotting tools I: lavaanPlot package</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1cab8486cb2c5011302e" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1cab8486cb2c5011302e">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="plotting-tools-ii-semplot-package" class="slide level2">
+<h2>Plotting tools II: semPlot package</h2>
+
+<img data-src="Intro_to_SEM_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="plotting-tools-1" class="slide level2">
+<h2>Plotting tools</h2>
+<ul>
+<li>Good for quick visualization but not ready for publication</li>
 <li>Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.</li>
 </ul>
 </section></section>
 <section id="questions" class="title-slide slide level1 center">
 <h1>Questions?</h1>
 <div class="footer footer-default">
-<p>Introduction to SEM (2022)</p>
+<p>Introduction to SEM (2024)</p>
 </div>
 </section>
     </div>
@@ -922,7 +945,7 @@ Frank Pennekamp
         // specified using percentage units.
         width: 1200,
 
-        height: 800,
+        height: 900,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,

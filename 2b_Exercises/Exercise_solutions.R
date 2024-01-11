@@ -93,6 +93,8 @@ derived <-
 rich ~ b4 * nadd 
 even ~ b5 * nadd 
 
+rich ~~ even
+
 dir.nut.effect   := b1
 indir.nut.effect := b2 * b4 + b3 * b5
 tot.nut.effect :=  b1 + b2 * b4 + b3 * b5
@@ -115,7 +117,7 @@ summary(fit.satur, rsq = TRUE)
 
 # model pruning
 prune <-
-  "mass.above ~ nadd + rich + even +  disk
+"mass.above ~ nadd + rich + even +  disk
 rich ~ nadd
 even ~ nadd   
 
@@ -138,7 +140,7 @@ aictab(list(fit.satur, fit.prune),
 # What do you conclude?
 
 no.mediation <-
-  "mass.above ~ nadd + rich + even + disk
+"mass.above ~ nadd + rich + even + disk
 rich ~ nadd
 even ~ nadd
 rich ~~ even"
@@ -165,6 +167,9 @@ fit.full.mediation <- sem(full.mediation, data = seabloom, estimator = "MLM")
 summary(fit.full.mediation, rsq = TRUE)
 
 AIC(fit.no.mediation, fit.partial.mediation, fit.full.mediation)
+
+
+
 
 
 # Day 2:
