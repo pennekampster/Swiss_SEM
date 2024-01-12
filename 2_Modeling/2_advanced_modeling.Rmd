@@ -24,11 +24,11 @@ library("here")
 library(tidyverse)
 ```
 
-
+This document builds on the fitting process described in the following (`1_basic_modeling.Rmd`) file. 
 
 # Load data and re-run the model
-Here, we use the very same data set as in the introductory part to SEM (`1_basic_modeling.html`).
-Also, we rescale the biomass and precipitation so that they are in approximately the same range as the other variables.
+If you start from scratch, we first have to load the dataset again and refit the model.
+Also, let's rescale the biomass so that they are in approximately the same range as the other variables.
 
 
 ```{r}
@@ -43,7 +43,7 @@ seabloom$mass.above <- seabloom$mass.above / 100
 ```
 
 ## Rerun the model
-First, we run the model as before.
+First, let's fit the pruned model that fitted the observed data well. As before, we use the robust "MLM" estimator provided by lavaan.
 
 
 ![](Figures/SimpleSEM.svg){width=60%}
@@ -68,7 +68,7 @@ summary(fit.simple)
 **Latent variables** represent unmeasured variables that are represented by their  indicator variables^[Indicator variables are observed/manifest variables that are linked to either a latent or composite variable.] [@bollen89]. As a consequence, a latent variable is free of  random or systematic measurement errors in contrast to its indicators [@bollen89].
 They have a special role in SEM because they represent a kind of bridge between observed data and theoretical generalization [@grace08].
 
-Usually, they are visualized by arrows pointing from the latent variable to the indicators (so-called "reflective" [@grace21]).
+Usually, they are visualized by arrows pointing from the latent variable to the indicators (so-called "reflective" indicators [@grace21]).
 This symbolizes the underlying process that generated the indicators. In other words, latent variables give rise to their indicators.
 Often, ellipses are used to denote a latent variable.
 
@@ -90,7 +90,7 @@ Composites are often symbolized by hexangular shapes or--the same as for latent 
 <!-- * We should, therefore, recognize that a correlation among indicators does not inform us as to the direction of causal flow, though a lack of correlation among indicators would contraindicate the prospect that a block should be of the L → M form. -->
 
 Carried over to our example, we measured instances of the general process "diversity" (richness, evenness etc.).
-Further, we summarize the abiotic condition (nutrient addition, precipitation etc.) of a plot in a composite variable.
+Further, we summarize the abiotic condition (nutrient addition and disturbance) of a plot in a composite variable.
 
 
 ![](Figures/LatentCompositeSEM.svg){width=50%}
@@ -178,7 +178,7 @@ fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
 ```
 
-The model converged and the fit is good. The coefficients suggest effects of nutrient addition and precipitation on diversity. However, we would expect a negative effect of nutrient addition on diversity, while the effect is positive. The opposite expectation would hold for diversity on AGB, but here we see a negative effect. Can you explain why this is the case?
+The model converged and the fit is good. The coefficients suggest effects of nutrient addition on diversity. However, we would expect a negative effect of nutrient addition on diversity, while the effect is positive. The opposite expectation would hold for diversity on AGB, but here we see a negative effect. Can you explain why this is the case?
 
 Right, it has to do with reversing the direction of the evenness effect. As both richness and reversed evenness influence AGB, the meaning of the latent diversity effect is reversed. We can see this when we fit a model that just contains the ens.pie variable:
 

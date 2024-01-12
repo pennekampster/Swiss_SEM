@@ -223,6 +223,7 @@ summary(fit.lv)
 
 # issue with the direction of diversity on AGB. Can you explain?
 
+# compare to ens.pie
 
 lv <- '
 mass.above ~ nadd + disk + ens.pie
@@ -232,6 +233,10 @@ ens.pie ~ nadd
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
 
+
+
+
+
 # Exercise 4 (composite):
   
 comp <- "
@@ -239,14 +244,18 @@ comp.landuse <~ 1 * disk + nadd
 
 rich ~ comp.landuse
 even ~ comp.landuse
+
+
 mass.above ~ comp.landuse + rich + even
 
-rich ~~ even"
+rich ~~ even
+"
 
 fit.comp <- sem(comp, data = seabloom)
-summary(fit.comp, standardized=T)
+summary(fit.comp, standardized=T, rsq=T)
 
-# manual composite (if lavaan struggles)
+
+# manually construct composite (if lavaan struggles)
 comp.man <- 'mass.above ~ disk + nadd'
 fit.comp.man <- sem(comp.man, data = seabloom)
 summary(fit.comp.man)
@@ -254,28 +263,27 @@ summary(fit.comp.man)
 seabloom$landuse <- lavInspect(fit.comp.man, what = "est")$beta[1, 2] * seabloom$disk +
   lavInspect(fit.comp.man, what = "est")$beta[1, 3] * seabloom$nadd
 
-comp.man2 <- "mass.above ~ landuse"
-fit.comp.man2 <- sem(comp.man2, data = seabloom)
 
+# fit composite as part of SEM model
 comp <- "
 rich ~ landuse
 even ~ landuse
 
-mass.above ~ landuse + rich + even 
-
-rich ~~ even"
+mass.above ~ landuse + rich + even
+"
 
 fit.comp <- sem(comp, data = seabloom)
-summary(fit.comp, standardized=T)
+summary(fit.comp, standardized=T, rsq=T)
+
 
 # Exercise 5 (interactions):
 
-# manually
+# manual calculation of product of two predictors
 seabloom$diskxnadd <- seabloom$disk * seabloom$nadd
 
 int <- "mass.above ~ disk + nadd + diskxnadd"
 fit.int <- sem(int, data = seabloom)
-summary(fit.int)
+summary(fit.int, standardized=T)
 
 compint <-
   "comp.int <~ 1 * disk + nadd + diskxnadd
@@ -287,22 +295,27 @@ summary(fit.compint, standardized = TRUE)
 # Full model:
 
 int.full <-
-  "comp.int <~ 1 * disk + nadd + diskxnadd
+"comp.int <~ 1 * disk + nadd + diskxnadd
 
 mass.above ~ comp.int + rich + even 
 rich ~ nadd 
-even ~ nadd
+even ~ nadd +  disk + diskxnadd
 
 rich ~~ even"
 
 fit.int.full <- sem(int.full, data = seabloom)
-summary(fit.int.full, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
+summary(fit.int.full, standardized = TRUE, rsq = TRUE)
+
+
+# Does interaction term increase variance explained?
+lavInspect(fit.int.full, "R2")
+lavInspect(fit.simple, "R2")
 
 
 # Exercise 6:
 
 int.mg <-
-  "mass.above ~ rich + even 
+"mass.above ~ rich + even + nadd
 rich ~ nadd 
 even ~ nadd 
 
@@ -311,10 +324,11 @@ rich ~~ even"
 fit.int.mg <- sem(int.mg, group = "disk", data = seabloom)
 summary(fit.int.mg, standardized = TRUE, rsq = TRUE)
 
+# visualize how coefficients differ among groups
 fit_tab <- (summary(fit.int.mg, standardized = TRUE, rsq = TRUE))$pe
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
-fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
-                            ifelse(fit_tab$group == 2, "dist", NA))
+fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undisturbed", 
+                            ifelse(fit_tab$group == 2, "disturbed", NA))
 
 ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr)) + 
   geom_point(size=1) + geom_errorbar(aes(ymin = est-se*1.96, ymax = est+se*1.96)) + 
@@ -324,6 +338,7 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
   guides(colour="none") +
   theme_bw() 
 
+# constrain certain pathways to be the same
 int.mg.constrain <-
   "mass.above ~  c('b1', 'b1') * rich + c('b2', 'b2') * even 
 rich ~ c('b4a', 'b4b') * nadd 
@@ -336,8 +351,8 @@ summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
 
 fit_tab <- (summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE))$pe
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
-fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undist", 
-                            ifelse(fit_tab$group == 2, "dist", NA))
+fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undisturbed", 
+                            ifelse(fit_tab$group == 2, "disturbed", NA))
 
 ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr)) + 
   geom_point(size=1) + geom_errorbar(aes(ymin = est-se*1.96, ymax = est+se*1.96)) + 
