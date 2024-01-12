@@ -401,10 +401,45 @@ digraph boxes_and_circles {
 -  Arrows point from the indicators to the composite (i.e., formative or causal indicators).
 -  Values are determined by causes (i.e., indicators), thus error variance is set to 0.\
 - Technically, composites are the predictions from linear combinations of variables.
+:::
+
+## Composite variables
+
+```{dot}
+//| fig-width: 5
+
+digraph boxes_and_circles {
+   
+   graph [overlap = false, fontsize = 10, rankdir = LR, fontname = Helvetica]
+   
+   node [shape=box, fontname = Helvetica]
+   X1 [label="disturbance"];
+   X2 [label="nutrients"];
+   Z [label="biomass"];
+
+   
+   node [shape=hexagon, fontname = Helvetica]
+  Y [label="land use"]
+
+  node [shape=plain, fontname = Helvetica]
+  E [label="0"]
+  E -> Y [constraint=false];
+
+  X1 -> Y;
+  X2 -> Y;
+  Y -> Z;
+
+  {rank = "max"; Z}
+  {rank = "same"; X1;X2;}
+}
+```
+
+::: incremental
 - Estimation can cause convergence issues, lavaan can only handle a single composite per model.
 - Solution: hand-code composites separately.
 - Only standardised coefficients of composites are interpretable.
 :::
+
 
 
 ## Using composites to model nonlinear effects{.smaller}
@@ -475,7 +510,7 @@ Rules of thumb:
 ## Exercise:
 
 -   Revisit the meta-model you have drawn yesterday:
-    -   Which contructs could be modelled with a latent or composite variable?
+    -   Which constructs could be modelled with a latent or composite variable?
     -   Adapt your meta-model accordingly.
 - Revisit the meta-model of your dataset:
   - Are there concepts that could be modelled with a latent or composite variable?
