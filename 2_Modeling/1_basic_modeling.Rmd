@@ -133,7 +133,7 @@ str(seabloom$ntrt)
 To simplify the analysis, we will take the average across all the years in the dataset for our analysis.
 
 ```{r}
-seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
+seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, ~ mean(.x, na.rm = TRUE)))
 ```
 
 ### Overview
@@ -148,7 +148,7 @@ ggpairs(ungroup(seabloom[, c(7, 9:12)]), upper=NULL, lower = list(continuous = w
 # Metamodel
 A [metamodel](https://en.wikipedia.org/wiki/Metamodeling) summarizes the concept behind a model and links it to theory.
 Here, the metamodel is visualized as a [directed acyclic graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) which reads as:
-productivity (biomass) is directly influenced on the one hand by the environment (nutrients, disturbance and precipitation) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
+productivity (biomass) is directly influenced on the one hand by the environment (nutrients, disturbance) and on the other hand by biodiversity (richness and evenness). Also some elements of the environment influence biodiversity and thus, have an additional indirect effect on productivity via biodiversity.
 
 
 ![](Figures/Metamodel_simple.svg){width=70%}
@@ -163,7 +163,7 @@ For this, three models are necessary: one that accounts for the direct- and two 
 
 ## Direct effects
 If a linear model is visualized in a DAG, it becomes apparent that there is a set of permitted, but unanalyzed correlations among the predictors. 
-These correlations have a huge influence on the coefficients between the predictors $x_{1\ldots i}$ (here, nutrients, precipitation, richness and evenness) and the response $y$ (here, biomass).
+These correlations have a huge influence on the coefficients between the predictors $x_{1\ldots i}$ (here, nutrients, richness and evenness) and the response $y$ (here, biomass).
 Despite their importance, it is impossible to include any information about the reason of the correlations between the predictors.
 Further, they make it nearly impossible to create a proper causal model, since there are many possible causal relations that can create a set of "unanalyzed
 associations" which hinders interpretations [@grace21].
@@ -221,7 +221,7 @@ library("lavaan")
 
 ## Collinearity
 
-Inspecting our set of variables shows that correlations between all variables are rather weak except the precipitation throughout the year and those throughout the field season.
+Inspecting our set of variables shows that correlations between all variables are not too strong.
 
 ```{r}
 ggpairs(ungroup(seabloom[, c(7, 9:12)]), lower = list(continuous = wrap("points", alpha = 0.05)))  + theme_bw() + theme(panel.grid=element_blank())
@@ -411,7 +411,7 @@ This reveals an enormous difference in magnitude between the variance of biomass
 
 
 ## Rescale variables
-To remove this difference in magnitude between the variables, we divide `mass.above` and `precip.mm` by 100 what changes the unit from g/m^2^ to 10 mg/m^2^ and from mm to 0.1 m respectively.
+To remove this difference in magnitude between the variables, we divide `mass.above` by 100 what changes the unit from g/m^2^ to 10 mg/m^2^ and from mm to 0.1 m respectively.
 The boxplots show that the range of the variables is now more similar.
 
 
