@@ -24,11 +24,11 @@ library("here")
 library(tidyverse)
 ```
 
-
+This document builds on the fitting process described in the following (`1_basic_modeling.Rmd`) file. 
 
 # Load data and re-run the model
-Here, we use the very same data set as in the introductory part to SEM (`1_basic_modeling.html`).
-Also, we rescale the biomass so that they are in approximately the same range as the other variables.
+If you start from scratch, we first have to load the dataset again and refit the model.
+Also, let's rescale the biomass so that they are in approximately the same range as the other variables.
 
 
 ```{r}
@@ -43,7 +43,7 @@ seabloom$mass.above <- seabloom$mass.above / 100
 ```
 
 ## Rerun the model
-First, we run the model as before.
+First, let's fit the pruned model that fitted the observed data well. As before, we use the robust "MLM" estimator provided by lavaan.
 
 
 ![](Figures/SimpleSEM.svg){width=60%}
@@ -68,7 +68,7 @@ summary(fit.simple)
 **Latent variables** represent unmeasured variables that are represented by their  indicator variables^[Indicator variables are observed/manifest variables that are linked to either a latent or composite variable.] [@bollen89]. As a consequence, a latent variable is free of  random or systematic measurement errors in contrast to its indicators [@bollen89].
 They have a special role in SEM because they represent a kind of bridge between observed data and theoretical generalization [@grace08].
 
-Usually, they are visualized by arrows pointing from the latent variable to the indicators (so-called "reflective" [@grace21]).
+Usually, they are visualized by arrows pointing from the latent variable to the indicators (so-called "reflective" indicators [@grace21]).
 This symbolizes the underlying process that generated the indicators. In other words, latent variables give rise to their indicators.
 Often, ellipses are used to denote a latent variable.
 
