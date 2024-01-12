@@ -16,7 +16,7 @@ format:
     code-overflow: wrap
     footer: Introduction to SEM (2024)
     width: 1200
-    height: 900
+    height: 1000
 editor:
   render-on-save: true
 ---
