@@ -89,10 +89,10 @@ library(knitr)
 - Participants are able to fit SEMs to their datasets with the R package `lavaan` and present them graphically.
 :::
 
-## Course materials
+<!-- ## Course materials
 
 [Slide decks and R code available on github](https://github.com/pennekampster/Swiss_SEM/)
- 
+  -->
 
 # Getting started with Structural Equation Modeling
 
@@ -128,7 +128,7 @@ Ask students about their research questions
 :::
 
 
-## Understanding causes 
+## Understanding causes {.smaller}
 
 ::: {.incremental}
 ::: columns
