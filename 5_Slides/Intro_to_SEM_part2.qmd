@@ -49,9 +49,8 @@ library(ggplot2)
 
 ::: incremental
 - System thinking to understand the direct and indirect cause-effect pathways in a system
-- Consideration of relevant theory via the meta-model
+- Meta-model to connect data to general theory
 - Theory is often more general than particular proxies used (e.g. climate change $\neq$ temperature change)
-- How to connect particular proxies with general concepts?
 :::
 
 
@@ -181,14 +180,14 @@ digraph  {
 ::: incremental
 -   Indicator variables "emerge" from the latent variable.\
 -   Latent variables free of random or systematic measurement errors (unlike their indicators).
--   Identificability issues with two indicator variables require additional assumptions (e.g. similar effect of indicators on latent).
+-   Identifiability issues with two indicator variables require additional assumptions (e.g. similar effect of indicators on latent / same variance).
 :::
 
 ## Latent variables - a word of caution
 ::: incremental
 - The design of latent variables requires deep thinking and justification
-- Just because you name a particular latent in a certain way, does not mean you capture the underling process (a.k.a. "naming fallacy")
 - You have to justify the use of particular indicators to define a latent
+- Just because you name a particular latent in a certain way, does not mean you capture the underling process (a.k.a. "naming fallacy")
 :::
 
 ## Latent variables
@@ -198,9 +197,10 @@ Latents fitted in two steps:
 . . .
 
 1)  Confirmatory factor analysis
-    -   Precursor to evaluation of any structural models in which the latent variables appear.
-    -   All indicators need to be positively correlated to the latent variable (i.e., driver).
+    -   Precursor to any SEM in which the latent variables appear.
     -   For multi-indicator latent variables: check that the same process generated multiple indicators.
+    -   All indicators need to be positively correlated to the latent variable (i.e., driver).
+
 
 . . .
 
@@ -238,7 +238,7 @@ Example body size
 
 ::: incremental
   - multiple indicators of body size: mass, length, width
-  - check for positive correlation among indicators
+  - are indicators positively correlated?
   - With three indicator variable, coefficient of first indicator set to 1 by lavaan; use standardized effect for interpretation.
 :::
 
@@ -265,8 +265,8 @@ digraph  {
 
 ::: incremental
 -   Predictors are often measured with error.\
--   Regression assume that predictors are measured without error.\
--   What difference does it make?
+-   Regression assumption: no error in X.\
+-   What is the effect of error in X?
 :::
 
 ## Latents to adjust for measurement error in predictors
@@ -317,8 +317,7 @@ digraph  {
 
 
 ::: incremental
--   Possible to account for measurement error when multiple measurements were made.
--   Latent variable captures the underlying process giving rise to the indicator variables.
+-   With multiple measurements, latent variable can capture the underlying process giving rise to the indicator variables.
 -   Estimating relationship between latent and response will lead to better slope estimate and higher R^2^.
 :::
 
@@ -488,7 +487,7 @@ Pay attention to the flow of causation!
 
 1) Latents
   - From construct to indicators, i.e., indicators are driven by an underlying, unmeasured process.
-  - Indicators need to be correlated to each other, since a latent represents an underlying, data-generating process.\
+  - Indicators need to be positively correlated, since a latent represents an underlying, data-generating process.\
 
 . . .  
 
@@ -502,8 +501,8 @@ Pay attention to the flow of causation!
 Rules of thumb:
 
 ::: incremental
-1) Latent variable -> indicators are redundant (e.g. multiple measurements)
-2) Composite variable -> the meaning of the construct changes after dropping one of the indicators
+1) Latent variable -> if indicators are redundant (e.g. multiple measurements)
+2) Composite variable -> if the meaning of the construct changes after dropping one of the indicators
 :::
 
 
@@ -546,7 +545,6 @@ digraph boxes_and_circles {
 ::: incremental
 -   In nature, things often are contingent on each other.
 -   For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.\
--   Moderation: effects are different when combined.\
 -   In regression models, the coefficient for the interaction estimates the effect of the product of the two predictors.\
 -   The coefficient of the interaction describes the deviation from additivity (can be positive or negative).
 :::
@@ -588,7 +586,8 @@ disturbance->middleman [constraint=false, arrowhead=diamond];
 }
 ```
 
-- Interactions can also be modelled with composites.
+- Interactions can be modelled with composites.
+- Include interaction term in composite.
 - Preferable if only one or few interactions are considered.
 
 
@@ -656,13 +655,17 @@ digraph  {
 ::: incremental
 -   Multigroup fitting allows all coefficients to vary among groups.
 -   Groups have to be categorical (e.g., treatment, age class).
--   Test interaction of group factor with many or all paths in the causal diagram.
 - Statistical comparison of two causal diagrams $\neq$ fitting two separate SEMs and compare coefficients.
 :::
 
 ## Interactions (multiple groups)
 
-Lavaan allows to introduce equality constraints on various aspects via the `group.equal` argument:
+-   Test interaction of group factor with many or all paths in the causal diagram.
+
+. . .
+
+
+- Lavaan allows to introduce equality constraints on various aspects via the `group.equal` argument:
 
 ``` r
 sem(model, group = "age_class", group.equal = c("regressions"), data = dd)

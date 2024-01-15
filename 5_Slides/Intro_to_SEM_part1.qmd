@@ -134,7 +134,7 @@ Ask students about their research questions
 ::: columns
 ::: {.column width="50%"}
 - Why is understanding causes important?
-  + Be able to predic the behaviour of a system
+  + Be able to predict the behaviour of a system
   + Justify costly management interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
 - What is the problem?
   + Confounding of cause with non-cause (interventions with no or detrimental effects)
@@ -1265,6 +1265,8 @@ Correlation matrix:
   - r(X2, Y) = .4 + (.5 * .133) + (.2 * .167) = **.5** \   
   - r(X3, Y) = .167 + (.4 * .133) + (.2 * .4) = **.3**\
 
+All rules, except 6 apply.
+
 ## Unstandardized vs standardized coefficients
 
 ::: incremental
@@ -1308,7 +1310,7 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 
 ::: {.incremental}
 - Identifiability is a common issue in SEM
-- Some of the free parameters you are trying to estimate are interchangeable (e.g., and and b in `y = a*x + b*x + c`)
+- Some of the free parameters you are trying to estimate are interchangeable (e.g., a and b in `y = a*x + b*x + c`)
 - High correlation of parameters indicates identifiability issues.
 - Even an infinite amount of data does not allow to identify parameters precisely (e.g. one could be high the other low or vice-versa)
 - The more complex a SEM is, the more likely issues of identifiability will become

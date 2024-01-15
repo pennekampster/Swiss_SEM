@@ -8,7 +8,7 @@
 <link href="Intro_to_SEM_visualization_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="Intro_to_SEM_visualization_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="Intro_to_SEM_visualization_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.4.542">
 
   <meta name="author" content="Frank Pennekamp">
   <meta name="dcterms.date" content="2024-01-17">
@@ -32,7 +32,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -222,7 +222,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -472,7 +473,7 @@ Frank Pennekamp
 </section>
 <section id="what-can-you-expect-to-see-out-in-nature-2" class="slide level2">
 <h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Duffy_sem.png" class="absolute absolute" style="right: 200px; width: 600px; "></p>
+<p><img data-src="images/Duffy_sem.png" class="absolute" style="right: 200px; width: 600px; "></p>
 <aside class="notes">
 <p>Lots of exogenous variables. red = negative, black = positive. no non-significant paths?</p>
 <style type="text/css">
@@ -489,7 +490,7 @@ Frank Pennekamp
 </section>
 <section id="what-can-you-expect-to-see-out-in-nature-3" class="slide level2">
 <h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Domeignoz-Horta_sem.jpg" class="absolute absolute" style="right: 100px; width: 800px; "></p>
+<p><img data-src="images/Domeignoz-Horta_sem.jpg" class="absolute" style="right: 100px; width: 800px; "></p>
 <aside class="notes">
 <p>There is a lot of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are</p>
 <style type="text/css">
@@ -506,7 +507,7 @@ Frank Pennekamp
 </section>
 <section id="what-can-you-expect-to-see-out-in-nature-4" class="slide level2">
 <h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Lefcheck_sem.jpg" class="absolute absolute" style="right: 200px; width: 700px; "></p>
+<p><img data-src="images/Lefcheck_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
 <aside class="notes">
 <p>Use of color to highlight important paths.</p>
 <style type="text/css">
@@ -523,7 +524,7 @@ Frank Pennekamp
 </section>
 <section id="what-can-you-expect-to-see-out-in-nature-5" class="slide level2">
 <h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Jones_sem.jpg" class="absolute absolute" style="right: 200px; width: 700px; "></p>
+<p><img data-src="images/Jones_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
 <aside class="notes">
 <p>Lots of information. The gray, solid line is “marginally significant” (0.1 &gt; p &gt; 0.05)</p>
 <style type="text/css">
@@ -540,7 +541,7 @@ Frank Pennekamp
 </section>
 <section id="what-can-you-expect-to-see-out-in-nature-6" class="slide level2">
 <h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Poorter_sem.jpg" class="absolute absolute" style="right: 200px; width: 700px; "></p>
+<p><img data-src="images/Poorter_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
 <aside class="notes">
 <p>Use of color. Showing a conceptual model in the same figure as the data-model. Unusual way of showing a composite.</p>
 <style type="text/css">
@@ -557,7 +558,7 @@ Frank Pennekamp
 </section>
 <section id="what-can-you-expect-to-see-out-in-nature-7" class="slide level2">
 <h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Mazancourt_sem.jpg" class="absolute absolute" style="right: 200px; width: 700px; "></p>
+<p><img data-src="images/Mazancourt_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
 <aside class="notes">
 <p>Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it’s four separate models</p>
 <style type="text/css">
@@ -574,7 +575,7 @@ Frank Pennekamp
 </section>
 <section id="what-can-you-expect-to-see-out-in-nature-8" class="slide level2">
 <h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Mazziotta_sem.jpg" class="absolute absolute" style="right: 0px; width: 1000px; "></p>
+<p><img data-src="images/Mazziotta_sem.jpg" class="absolute" style="right: 0px; width: 1000px; "></p>
 <aside class="notes">
 <p>I like the use of color here, but why does it go from bottom to top?</p>
 <style type="text/css">
@@ -591,7 +592,7 @@ Frank Pennekamp
 </section>
 <section id="what-can-you-expect-to-see-out-in-nature-9" class="slide level2">
 <h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Tabi_SEM.png" class="absolute absolute" style="right: 100px; width: 900px; "></p>
+<p><img data-src="images/Tabi_SEM.png" class="absolute" style="right: 100px; width: 900px; "></p>
 <aside class="notes">
 <p>Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.</p>
 <style type="text/css">
@@ -748,10 +749,10 @@ Frank Pennekamp
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Table of path coefficients:</p>
-<p><img data-src="images/path_coeff_table.png" class="absolute absolute" style="width: 400px; "></p>
+<p><img data-src="images/path_coeff_table.png" class="absolute" style="width: 400px; "></p>
 </div><div class="column" style="width:50%;">
 <p>Direct, indirect and total effects:</p>
-<p><img data-src="images/Duffy_derived.jpg" class="absolute absolute" style="width: 400px; "></p>
+<p><img data-src="images/Duffy_derived.jpg" class="absolute" style="width: 400px; "></p>
 </div>
 </div>
 </div>
@@ -779,30 +780,30 @@ Frank Pennekamp
 <section id="plotting-tools-i-lavaanplot-package" class="slide level2">
 <h2>Plotting tools I: lavaanPlot package</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model =</span> fit.prune,</span>
-<span id="cb1-2"><a href="#cb1-2"></a>           <span class="at">node_options =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="st">"box"</span>, <span class="at">color =</span> <span class="st">"gray"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3"></a>                               <span class="at">fontname =</span> <span class="st">"Helvetica"</span>),</span>
-<span id="cb1-4"><a href="#cb1-4"></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
-<span id="cb1-5"><a href="#cb1-5"></a>           <span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">covs =</span> <span class="cn">FALSE</span>, <span class="at">stars =</span> <span class="st">"regress"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">lavaanPlot</span>(<span class="at">model =</span> fit.prune,</span>
+<span id="cb1-2"><a href=""></a>           <span class="at">node_options =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="st">"box"</span>, <span class="at">color =</span> <span class="st">"gray"</span>,</span>
+<span id="cb1-3"><a href=""></a>                               <span class="at">fontname =</span> <span class="st">"Helvetica"</span>),</span>
+<span id="cb1-4"><a href=""></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb1-5"><a href=""></a>           <span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">covs =</span> <span class="cn">FALSE</span>, <span class="at">stars =</span> <span class="st">"regress"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5da2af4b036f8937d1ff" style="width:960px;height:6in;"></div>
-<script type="application/json" data-for="htmlwidget-5da2af4b036f8937d1ff">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-eb7957f906e4a4941e44" style="width:960px;height:6in;"></div>
+<script type="application/json" data-for="htmlwidget-eb7957f906e4a4941e44">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
 <section id="plotting-tools-ii-semplot-package" class="slide level2">
 <h2>Plotting tools II: semPlot package</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">semPaths</span>(fit.prune, <span class="at">what =</span> <span class="st">"est"</span>, <span class="at">whatLabels =</span> <span class="st">"est"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2"></a>         <span class="at">residuals =</span> <span class="cn">FALSE</span>, <span class="at">intercepts =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="at">sizeMan2 =</span> <span class="dv">7</span>, <span class="at">edge.label.cex =</span> <span class="dv">1</span>,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">style =</span> <span class="st">"mx"</span>, <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb2-5"><a href="#cb2-5"></a>         <span class="at">posCol =</span> <span class="st">"#009e73ff"</span>, <span class="at">negCol =</span> <span class="st">"#d55e00ff"</span>, <span class="at">edge.label.color =</span> <span class="st">"black"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6"></a>         <span class="at">layoutSplit =</span> <span class="cn">TRUE</span>, <span class="at">curve =</span> <span class="dv">1</span>, <span class="at">curvature =</span> <span class="dv">1</span>, <span class="co">#fixedStyle = 1,</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>         <span class="at">exoCov =</span> <span class="cn">FALSE</span>, <span class="at">rotation =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">semPaths</span>(fit.prune, <span class="at">what =</span> <span class="st">"est"</span>, <span class="at">whatLabels =</span> <span class="st">"est"</span>,</span>
+<span id="cb2-2"><a href=""></a>         <span class="at">residuals =</span> <span class="cn">FALSE</span>, <span class="at">intercepts =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-3"><a href=""></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="at">sizeMan2 =</span> <span class="dv">7</span>, <span class="at">edge.label.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb2-4"><a href=""></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">style =</span> <span class="st">"mx"</span>, <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb2-5"><a href=""></a>         <span class="at">posCol =</span> <span class="st">"#009e73ff"</span>, <span class="at">negCol =</span> <span class="st">"#d55e00ff"</span>, <span class="at">edge.label.color =</span> <span class="st">"black"</span>,</span>
+<span id="cb2-6"><a href=""></a>         <span class="at">layoutSplit =</span> <span class="cn">TRUE</span>, <span class="at">curve =</span> <span class="dv">1</span>, <span class="at">curvature =</span> <span class="dv">1</span>, <span class="co">#fixedStyle = 1,</span></span>
+<span id="cb2-7"><a href=""></a>         <span class="at">exoCov =</span> <span class="cn">FALSE</span>, <span class="at">rotation =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="Intro_to_SEM_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="Intro_to_SEM_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="plotting-tools-1" class="slide level2">
 <h2>Plotting tools</h2>
 <ul>
@@ -839,8 +840,10 @@ Frank Pennekamp
 </section>
 <section id="questions" class="title-slide slide level1 center">
 <h1>Questions?</h1>
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 <p>Introduction to SEM (2024)</p>
+</div>
 </div>
 </section>
     </div>
@@ -869,7 +872,6 @@ Frank Pennekamp
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1168,10 +1170,9 @@ Frank Pennekamp
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1181,8 +1182,17 @@ Frank Pennekamp
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
