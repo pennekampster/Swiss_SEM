@@ -797,13 +797,13 @@ digraph  {
 :::
 
 
-## Explanatory modelling with SEM
+<!-- ## Explanatory modelling with SEM
 
 ![](images/Explanatory_modelling.png){width="60%"}
 
 ::: aside
 [Grace, James B., and Kathryn M. Irvine. 2020. “Scientist’s Guide to Developing Explanatory Statistical Models Using Causal Analysis Principles.” Ecology 101 (4): e02962.]{style="font-size: 5mm; text-align: center"}
-:::
+::: -->
 
 # Questions?
 
