@@ -6,7 +6,8 @@ library(here)
 
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
-seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
+seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% 
+  summarise(across(mass.above:ens.pie, mean))
 
 # seabloom$mass.above <- seabloom$mass.above / 100
 
@@ -31,10 +32,17 @@ par(mfrow=c(2,2))
 plot(lm.even)
 par(mfrow=c(1,1))
 
+library(broom)
 
-# Exercise 2:
+lm.dir.resid <- augment(lm.dir)$.resid
+lm.even.resid <- augment(lm.even)$.resid
+lm.rich.resid <- augment(lm.rich)$.resid
 
+resid.df <- data.frame(lm.dir.resid, lm.even.resid, lm.rich.resid)
 library("MVN")
+mvn(data = resid.df, mvnTest = "hz", univariatePlot = "qqplot")
+
+
 
 mvn(data = seabloom[, c("rich", "even", "mass.above")], mvnTest = "hz", univariatePlot = "qqplot")
 
@@ -55,6 +63,7 @@ log.rich <- sqrt(seabloom$rich)
 
 mvn(data = data.frame(log.mass.above, log.even, log.rich), mvnTest = "hz", univariatePlot = "qqplot")
 
+# Exercise 2:
 
 simple <-
 "mass.above ~ nadd + rich + even + disk
@@ -101,7 +110,7 @@ tot.nut.effect :=  b1 + b2 * b4 + b3 * b5
 "
 
 fit.derived <- sem(derived, data = seabloom, estimator = "MLM")
-summary(fit.derived, rsq = TRUE)
+summary(fit.derived, rsq = TRUE, standardized=T)
 
 # Exercise 4: Saturated model
 

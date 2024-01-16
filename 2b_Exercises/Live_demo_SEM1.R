@@ -58,7 +58,7 @@ x3 ~ x2
 
 dagify(y ~ x1 + x3,
        x2 ~ x1,
-       x3 ~ x1) %>% 
+       x3 ~ x2) %>% 
   ggdag() 
 
 fit2 <- sem(model2, data=dat)
@@ -88,7 +88,7 @@ summary(fit3)
 summary(fit3, fit.measures = T)
 
 # any more paths to include?
-subset(modindices(fit_true))
+subset(modindices(fit))
 
 
 
@@ -108,10 +108,11 @@ dagify(y ~ x2 + x3,
 fit_true <- sem(model_true, data=dat)
 summary(fit_true)
 
-
 # compare fits
 aictab(list(fit2, fit_true), c("fit 2", "fit true"))
 aictab(list(fit3, fit_true), c("fit 3", "fit true"))
+
+
 
 # look at the underlying representations
 lavInspect(fit2, what = "observed")
@@ -130,10 +131,10 @@ fit2_wrong <- sem(model2_wrong, data=dat)
 summary(fit2_wrong)
 
 # compare fits
-aictab(list(fit_true, fit2_wrong), c("fit true", "fit wrong"))
+aictab(list(fit_true, fit), c("fit true", "fit wrong"))
 
 
-
+anova(fit_true, model3)
 
 
 
@@ -184,11 +185,11 @@ resid(fit1b, type="cor")
 # interpretation
 
 # table of parameter estimates (confidence intervals)
-parameterEstimates(fit1b)
-subset(parameterEstimates(fit1b, standardized=T), op == "~")
+parameterEstimates(fit3)
+subset(parameterEstimates(fit3, standardized=T), op == "~")
 
 # get standardized estimates, SE and CIs
-standardizedSolution(fit1b, type = "std.all")
+standardizedSolution(fit3, type = "std.all")
 
 # standardized parameters and R square values (std.lv vs std.all)
 summary(fit1a, standardized=T, rsq=T)

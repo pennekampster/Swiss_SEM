@@ -1468,7 +1468,7 @@ digraph  {
 }
 ```
 
-1)  How has aboveground biomass changed as a function of soil disturbance, nutrient addition and precipitation?
+1)  How has aboveground biomass changed as a function of soil disturbance and nutrient addition?
 2)  How are these effects mediated by biodiversity?
 
 ::: notes
@@ -1623,7 +1623,7 @@ After finding a model with good fit:
 
 -   Model analysis:
     -   Calculate the standardized coefficients.
-    -   Add derived quantities (direct and indirect effects of nutrients and disturbance).
+    -   Add derived quantities (direct and indirect effects of nutrients on biomass).
 
 ## Exercise 4 {.smaller}
 
@@ -1647,6 +1647,7 @@ digraph  {
     disturbance->evenness;
     nutrients->richness;
     nutrients->evenness;
+    nutrients->biomass;
     disturbance -> biomass;
 
     evenness:e-> richness:e [dir=both; minlen=3, style="dashed"] ;
