@@ -829,6 +829,7 @@ digraph  {
     disturbance->diversity;
     nutrients->diversity;
     disturbance -> biomass;
+    nutrients->biomass;
     diversity->biomass ;
 
     diversity -> evenness;
