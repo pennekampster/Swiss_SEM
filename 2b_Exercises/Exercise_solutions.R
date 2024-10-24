@@ -209,10 +209,15 @@ diversity <- 'div =~ rich + even.rev + ens.pie'
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 
 
+scale(seabloom$rich, center=T)
+
 seabloom$rich_std <- (mean(seabloom$rich)-seabloom$rich) / sd(seabloom$rich)
 seabloom$even.rev_std <- (mean(seabloom$even.rev)-seabloom$even.rev) / sd(seabloom$even.rev)
 
-diversity <- 'div =~ lambda*rich_std + lambda*even.rev_std'
+diversity <- 'div =~ lambda*rich + lambda*even.rev
+rich ~~ 1*rich
+even.rev ~~ 1*even.rev
+'
 
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 summary(fit.diversity, standardized=T)
@@ -224,7 +229,7 @@ lv <- '
 diversity =~ lambda*even.rev_std + lambda*rich_std
 
 mass.above ~ nadd + disk + diversity
-diversity ~ nadd
+diversity ~ nadd + disk
 '
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
@@ -236,7 +241,7 @@ summary(fit.lv)
 
 lv <- '
 mass.above ~ nadd + disk + ens.pie
-ens.pie ~ nadd
+ens.pie ~ nadd + disk
 '
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
@@ -253,7 +258,6 @@ comp.landuse <~ 1 * disk + nadd
 
 rich ~ comp.landuse
 even ~ comp.landuse
-
 
 mass.above ~ comp.landuse + rich + even
 
@@ -295,7 +299,7 @@ fit.int <- sem(int, data = seabloom)
 summary(fit.int, standardized=T)
 
 compint <-
-  "comp.int <~ 1 * disk + nadd + diskxnadd
+"comp.int <~ 1 * disk + nadd + diskxnadd
 mass.above ~ comp.int"
 
 fit.compint <- sem(compint, data = seabloom)
@@ -306,9 +310,9 @@ summary(fit.compint, standardized = TRUE)
 int.full <-
 "comp.int <~ 1 * disk + nadd + diskxnadd
 
-mass.above ~ comp.int + rich + even 
-rich ~ nadd 
-even ~ nadd +  disk + diskxnadd
+mass.above ~ rich + even 
+rich ~ comp.int 
+even ~ comp.int
 
 rich ~~ even"
 
