@@ -4,7 +4,7 @@ subtitle: "Day 1: Basic modelling"
 author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
-date: "1/16/2024"
+date: "11/6/2024"
 date-format: long
 format:
   revealjs: 
@@ -53,15 +53,16 @@ library(knitr)
     -  General introduction to SEM to model ecological systems (lecture)
     -  Fitting SEMs to data (live demo)
     -  Model evaluation and reporting (exercises)
-    -  Work on your research question /  SEM model (self-study)
+    -  Work on your research question /  meta-model (self-study)
 -   *Day 2*: 
     -  Constructs: latent and composite variables (lecture)
     -  Fitting SEMs to data (live demo & exercises)
-    -  Model visualization (lecture)
     -  Work on your research question /  SEM model (self-study)
 -   *Day 3*:
+    -  Progress update
+    -  Model visualization (lecture)
     -  Work on your research question /  SEM model (self-study)
-    -  Discussion with instructor and peers
+    -  Presentation of your SEM model and discussion with instructor and peers
 
 ## Overview {.smaller}
 
@@ -69,7 +70,7 @@ library(knitr)
     -   Global estimation of SEMs with R package lavaan (including latents and composites)
     -   Hands-on exercises and live coding
     -   All exercises about one ecological dataset (Seabloom et al. 2020)
-    -   Work on your own dataset
+    -   Develop SEM model for your own data
 
 .  .  .  
 
@@ -96,7 +97,7 @@ library(knitr)
 
 # Getting started with Structural Equation Modeling
 
-## Research question _first_ {.smaller}
+## Understanding (ecological) systems {.smaller}
 
 <!-- Comments: -->
 
@@ -111,10 +112,10 @@ library(knitr)
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
--   Ecological system = complex network of interactions between organisms and their environment.
--   As ecologists, we hypothesize how things could be connected in ecological systems (e.g., species interactions, drivers).
--   Research questions are often about particular cause-effect relationships in ecological systems.   
--   Testing hypotheses requires us to dissect when they occur for a reason vs. randomness.
+-   Ecological systems characterized by complex network of interactions between organisms and the environment.
+-   Research questions are often about cause-effect relationships.
+-   Hypotheses about how things could be connected in ecological systems (e.g., species interactions, drivers). 
+-   Data and statistics allow us to test these hypotheses.
 :::
 
 ::: {.column width="50%"}
@@ -124,7 +125,7 @@ library(knitr)
 :::
 
 ::: notes
-Ask students about their research questions
+
 :::
 
 
@@ -134,10 +135,11 @@ Ask students about their research questions
 ::: columns
 ::: {.column width="50%"}
 - Why is understanding causes important?
-  + Be able to predict the behaviour of a system
-  + Justify costly management interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
+  + Causes = mechanisms
+  + Allows us to predict the behaviour of a system
+  + Justify interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
 - What is the problem?
-  + Confounding of cause with non-cause (interventions with no or detrimental effects)
+  + Confounding of cause with non-cause (e.g., avoid interventions with no or detrimental effects)
 :::
 
 ::: {.column width="40%"}
@@ -157,7 +159,7 @@ Ask students about their research questions
 - Causation: everything else being equal, causing variation in X leading to variation in Y (=X causes Y).
 - Experiments required to isolate effect of X on Y.
 - Randomized controlled trials as gold standard to infer causes
-- Experiments sometimes unethical or unfeasible.
+- Problem: conducting experiments can be unethical or unfeasible.
 :::
 
 ::: {.column width="40%"}
@@ -333,7 +335,7 @@ digraph G {
 ::: {.column width="50%"}
 -   Only observed variables.
 -   Correlations between predictors usually ignored (up to threshold).
--   Only direct effects. 
+-   Only direct effects on Y. 
 :::
 
 ::: {.column width="50%"}
@@ -856,7 +858,7 @@ kable(V)
 
 . . .
 
--   Variance: $VAR_{x}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})}{N-1}$
+-   Variance: $VAR_{x}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})^2}{N-1}$
     -   Variance is the degree of spread in a set of data.
 
 . . .
