@@ -4,7 +4,7 @@ title: "Introduction to structural equation modelling"
 subtitle: "Day 2: Advanced modelling"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
-date: "1/17/2024"
+date: "11/7/2024"
 date-format: long
 format:
   revealjs: 
@@ -33,17 +33,17 @@ library(ggplot2)
 -   *Day 1*:
     -  General introduction to SEM to model ecological systems (lecture)
     -  Fitting SEMs to data (live demo)
-    -  Model evaluation and reporting (exercises)
-    -  Work on your research question /  SEM model (self-study)
+    -  Case study: fitting SEMs to data (exercises)
+    -  Work on your research question /  meta-model (self-study)
 -   *Day 2*: 
     -  Constructs: latent and composite variables (lecture)
-    -  Fitting SEMs to data (live demo & exercises)
-    -  Model visualization (lecture)
+    -  Fitting SEMs to data (live demo & case study exercises)
     -  Work on your research question /  SEM model (self-study)
 -   *Day 3*:
+    -  Progress update
+    -  Model visualization (lecture)
     -  Work on your research question /  SEM model (self-study)
-    -  Discussion with instructor and peers
-
+    -  Presentation of your SEM model and discussion with instructor and peers
 
 ## Motivation for SEM modelling
 

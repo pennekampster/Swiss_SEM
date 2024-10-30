@@ -52,11 +52,11 @@ library(knitr)
 -   *Day 1*:
     -  General introduction to SEM to model ecological systems (lecture)
     -  Fitting SEMs to data (live demo)
-    -  Model evaluation and reporting (exercises)
+    -  Case study: fitting SEMs to data (exercises)
     -  Work on your research question /  meta-model (self-study)
 -   *Day 2*: 
     -  Constructs: latent and composite variables (lecture)
-    -  Fitting SEMs to data (live demo & exercises)
+    -  Fitting SEMs to data (live demo & case study exercises)
     -  Work on your research question /  SEM model (self-study)
 -   *Day 3*:
     -  Progress update
@@ -69,25 +69,28 @@ library(knitr)
 -   What the course is about:
     -   Global estimation of SEMs with R package lavaan (including latents and composites)
     -   Hands-on exercises and live coding
-    -   All exercises about one ecological dataset (Seabloom et al. 2020)
-    -   Develop SEM model for your own data
+    -   A single ecological dataset for demonstration (Seabloom et al. 2020)
+    -   Develop your own SEM model
 
 .  .  .  
 
 -   What will *not* be covered
     - Local estimation of SEMs (with R package piecewiseSEM)
     - Advanced topics:
-      + random effects
-      + feedback loops
+      + integrate random effects
+      + disentangle feedback loops
       + dealing with spatial and temporal autocorrelation
 
 ## Learning objectives
 
+You can:
+
 ::: incremental
-- Participants understand the pros and cons of SEMs for drawing inferences from data.
-- Participants understand path models, as well as latent and composites variables.
-- Participants can assess and interpret SEMs reported in the literature.
-- Participants are able to fit SEMs to their datasets with the R package `lavaan` and present them graphically.
+  - translate your research question into a meta-model.
+  - fit a SEMs with the R package `lavaan`.
+  - assess the quality of a fitted SEM  
+  - interpret your SEM model and those reported by others.
+   - present SEMs graphically.
 :::
 
 <!-- ## Course materials
@@ -114,8 +117,8 @@ library(knitr)
 ::: {.column width="50%"}
 -   Ecological systems characterized by complex network of interactions between organisms and the environment.
 -   Research questions are often about cause-effect relationships.
--   Hypotheses about how things could be connected in ecological systems (e.g., species interactions, drivers). 
--   Data and statistics allow us to test these hypotheses.
+-   Create hypotheses about how things could be connected in ecological systems (e.g., species interactions, drivers). 
+-   Test these hypotheses using data and statistics.
 :::
 
 ::: {.column width="50%"}
@@ -129,13 +132,12 @@ library(knitr)
 :::
 
 
-## Understanding causes {.smaller}
+## Why is understanding causes important? {.smaller}
 
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
-- Why is understanding causes important?
-  + Causes = mechanisms
+- Causes = mechanisms
   + Allows us to predict the behaviour of a system
   + Justify interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
 - What is the problem?
@@ -156,7 +158,7 @@ library(knitr)
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
-- Causation: everything else being equal, causing variation in X leading to variation in Y (=X causes Y).
+- Causation: causing variation in X leading to variation in Y (=X causes Y), everything else being equal.
 - Experiments required to isolate effect of X on Y.
 - Randomized controlled trials as gold standard to infer causes
 - Problem: conducting experiments can be unethical or unfeasible.
@@ -247,7 +249,7 @@ https://www.nature.com/articles/ncomms10541
 
 ::: {.incremental}
 -   Graph specifying putative cause-effect relationships.
--   Data-generating mechanisms leading to a set of observational expectations.
+-   Data-generating mechanisms lead to a set of observational expectations.
 -   Causal diagrams are based on directed acyclic graphs (DAGs).
 :::
 
@@ -256,11 +258,11 @@ https://www.nature.com/articles/ncomms10541
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
+- Directed = unidirectional. 
+- Acyclic = no cylces (=causal loops) permitted.
 - Variables are nodes (boxes). 
 - Edges (one-headed arrows) are causal relationships such as X affects Y.  
-- Directed = unidirectional.  
 - Edges can have any functional shape. 
-- Acyclic = no causal loops permitted.  
 - Omitted links and nodes have empirical implications (= assumptions about the causal diagram)
 - U variables represent unmeasured causes.
 :::
@@ -333,15 +335,16 @@ digraph G {
 ::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
--   Only observed variables.
--   Correlations between predictors usually ignored (up to threshold).
--   Only direct effects on Y. 
+-   Relates observed variables to each other.
+-   Only direct effects on Y considered.
+-   Correlations between predictors ignored, unless very high (r >0.9). 
 :::
 
 ::: {.column width="50%"}
 
 ```{dot}
 //| fig-width: 4
+
 digraph {
 
   # a 'graph' statement
@@ -389,8 +392,12 @@ digraph {
 
 ## A simple linear regression
 
+`lm(biomass ~ precipitation)`
+
 ```{dot}
-//| fig-width: 4
+//| fig-width: 5
+//| fig-height: 2
+
 digraph  {
 
   # a 'graph' statement
@@ -413,16 +420,21 @@ digraph  {
 }
 ```
 
+
+
 ::: {.incremental}
--    `lm(biomass ~ precipitation)`
 -   Regression coefficient quantifies the direction and strength of relationship.\
 -   How much change in Y for one unit change in X.
 ::: 
 
 ## Multiple regression {.smaller}
 
+ `lm(biomass ~  nutrients + precipitation + richness + evenness)`
+
 ```{dot}
 //| fig-width: 4
+//| fig-height: 4
+
 digraph  {
 
   # a 'graph' statement
@@ -455,8 +467,9 @@ digraph  {
 
 ```
 
+
+
 ::: {.incremental}
--   `lm(biomass ~ precipitation + nutrients + ...)`
 -   More than one independent variable\
 -   Estimates partial effects (i.e. effect of precipitation on biomass when nutrient addition is fixed)\
 :::
@@ -521,10 +534,11 @@ digraph G {
 ## Structural equation model {.smaller}
 
 ::: {.incremental}
--   A series of equations united in a single causal network.
--   System thinking = causal relationships between multiple variables.
+-   Multiple (regression) equations in a single framework.
+- Embraces the correlations between variables.
+-  Allow understanding of potentially causal relationships between variables (= system thinking).
 -   Allow testing both direct and indirect effects.
--   Incorporate observed and unobserved variables (i.e., 'latent / composite').
+-   Can incorporate observed and unobserved variables.
 
 ::: {layout-ncol="3"}
 ```{dot}
@@ -618,8 +632,14 @@ digraph {
 
 ## Structural equation model {.smaller}
 
+`lm(richness ~ nutrients)`\
+`lm(evenness ~ nutrients)`\
+`lm(biomass ~ richness + evenness + nutrients)`\
+
 ```{dot}
-//| fig-width: 6
+//| fig-width: 5
+//| fig-height: 2
+
 digraph  {
 
   # a 'graph' statement
@@ -645,56 +665,18 @@ digraph  {
 }
 ```
 
-`lm(richness ~ nutrients)`\
-`lm(evenness ~ nutrients)`\
-`lm(biomass ~ richness + evenness + nutrients)`\
 
 ::: {.incremental}
-- Multiple independent and dependent variables
-- Exogenous variables: only have paths emanating from them, not going into them.   
+- Exogenous variables: 
+  - only have out-going paths.   
+- Endogenous variables:
+  - have in-going paths
+  - can have out-going paths.  
+  - must be predicted. 
 :::
 
 
-## Structural equation model {.smaller}
 
-
-```{dot}
-//| fig-width: 6
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, splines = curved,
-       rankdir = LR]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-        
-  nutrients; evenness, richness; biomass;
-
-  # several 'edge' statements
-    nutrients->richness [style=dashed];
-    nutrients->evenness [style=dashed];
-    evenness->biomass [style=dashed];
-    richness->biomass [style=dashed];
-    nutrients->biomass [color=red, minlen=3];
-    
-    {rank=min; nutrients;}
-    {rank=max; biomass;}
-    {rank=same; richness evenness;}
-}
-```
-
-`lm(richness ~ nutrients)`\
-`lm(evenness ~ nutrients)`\
-`lm(biomass ~ richness + evenness + nutrients)`\
-
-::: {.incremental}
-- Endogenous variables have paths directed into them.  
-  + An endogenous variable can also have arrows directing out of it.  
-  + Endogenous variables must be predicted.  
--   Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.\
-:::
 
 
 ## Mediation {.smaller}
@@ -712,6 +694,8 @@ digraph  {
 ::: {.column width="50%"}
 ```{dot}
 //| fig-width: 5
+//| fig-height: 2
+
 digraph  {
 
    label     = "Full mediation"
@@ -742,6 +726,8 @@ digraph  {
 ::: {.column width="50%"}
 ```{dot}
 //| fig-width: 5
+//| fig-height: 2
+
 digraph  {
 
    label     = "Partial mediation"
@@ -830,7 +816,7 @@ digraph  {
 
 # Global estimation in a nutshell
 
-## Scatterplot matrix of observed variables
+## Observed variables
 
 ```{r, out.width="90%", fig.align='center'}
 set.seed(5)
@@ -838,8 +824,19 @@ x <- rnorm(500, sd=runif(500, 2, 50))
 x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
 d <- matrix(c(x,x2), 250)
 colnames(d) <-   c("X1","X2", "X3", "Y")
-pairs(d, pch = 19)
+
+panel_regression_line = function(x,y, ...){
+  points(x,y,...)
+  linear_regression = lm(y~x)
+  linear_regression_line = abline(linear_regression)
+}
+
+
+pairs(d, pch = 19, lower.panel=panel_regression_line, upper.panel = panel_regression_line)
 ```
+
+Scatter plots of observed variables and fitted lines.   
+
 
 ## Variance-covariance matrix estimated from data {.smaller}
 
@@ -921,43 +918,15 @@ pairs(d, pch = 19)
 :::
 :::
 
-
-# Model evaluation
-
-## Model fit measures {.smaller}
-
-+ *$\chi^2$ statistic*
-  - compare the model-implied to the observed variance-covariance
-  - good fit when $\chi^2$ statistic is small (P > 0.05)   
-  - sample-size dependent
-
-. . .
-
-+ *Comparative fit index (CFI)*: 
-  - deviation from a 'null' model (variances estimated but covariances set to 0).
-  - higher is better, \> 0.95 is considered good.
-
-. . .
-
-+ *Root-mean squared error of approximation (RMSEA)*
-  - statistic penalizes models based on sample size
-  - \< 0.10 is acceptable, and anything \< 0.06 is good
-
-. . .
-
-+ *Standardized root-mean squared residual (SRMR)*
-  - standardized difference between the observed and predicted correlations
-  - \< 0.08 is considered good
-
-
-
-
-## Grace's 8 rules of path coefficients
+## Interpreting path coefficients (8 rules)
 
 <!-- https://jslefche.github.io/sem_book/global-estimation.html -->
 
-- The inferential heart of structural equation modeling are the model coefficients.
-- Understanding the meaning of the model coefficients needed to interpret SEM.
+:::{.incremental}
+- Path coefficients inferential heart of structural equation modeling.
+- Understanding how to interpret path coefficients necessary for robust SEM inference.
+- Important to be aware of the defaults of SEM software, such as `lavaan`.
+:::
 
 ## Rule 1 {.smaller}
 
@@ -1032,12 +1001,10 @@ digraph  {
   Y2
 
   # 'edge' statements
-  
-  X -> Y2 [style = dashed label = <&gamma;<SUB>X,Y1</SUB> * &beta;<SUB>Y1,Y2</SUB>> ]
-  X -> Y1
-  Y1 -> Y2 
-  
-   
+  X -> Y2 [style = dashed label = <&gamma;<SUB>X,Y1</SUB> * &beta;<SUB>Y1,Y2</SUB>>, color=white]
+  X  -> Y1
+  Y1 -> Y2
+
   
 
 {rank=same X; Y1, Y2}
@@ -1294,6 +1261,33 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 -   Linear relationships
 ::: 
 
+# Model evaluation
+
+## Model fit measures {.smaller}
+
++ *$\chi^2$ statistic*
+  - compare the model-implied to the observed variance-covariance
+  - good fit when $\chi^2$ statistic is small (P > 0.05)   
+  - sample-size dependent
+
+. . .
+
++ *Comparative fit index (CFI)*: 
+  - deviation from a 'null' model (variances estimated but covariances set to 0).
+  - higher is better, \> 0.95 is considered good.
+
+. . .
+
++ *Root-mean squared error of approximation (RMSEA)*
+  - statistic penalizes models based on sample size
+  - \< 0.10 is acceptable, and anything \< 0.06 is good
+
+. . .
+
++ *Standardized root-mean squared residual (SRMR)*
+  - standardized difference between the observed and predicted correlations
+  - \< 0.08 is considered good
+
 ## Troubleshooting pathological models (a.k.a. Heywood cases)
 
 -   Improper solutions:
@@ -1340,6 +1334,37 @@ $$ t \leq \frac{n (n + 1 )}{2} $$
 The LHS is how many pieces of information we want to know.\
 RHS: information we have (number of unique cells in the observed variance-covariance matrix).
 
+## Variable types: continuous
+
+::: {.incremental}
+  - Exogenous variables:
+    - No limitations, can be used as endo- and exogenous variables
+  - Endogenous variables:
+    - lavaan can only handle Gaussian error distribution; for other error distributions consider piecewiseSEM package.
+:::
+
+## Variable types: categorical
+::: {.incremental}
+
+<!-- https://personality-project.org/r/tutorials/summerschool.14/rosseel_sem_cat.pdf 
+
+https://www.aggieerin.com/post/quick-and-dirty-categorical-lavaan/
+
+-->
+
+- Includes binary (yes/no, failure/success, etc.), nominal (site 1, site 2), or ordinal levels (small < medium < large) variables.
+  - nominal variables currently not covered by lavaan
+- Exogenous variables:
+  - code binary variables as dummy variable (0/1)
+  - if more than 2 levels, create multiple dummy variables
+- Endogenous variables:
+  - for binary and ordinal variables, use R's `ordered()` function to specify the order, or use `ordered=` argument.
+  - when `ordered=` argument is used, WLSMV estimator is used by lavaan.
+- Bootstrapping approach to get robust standard error estimates due to non-normal errors when dealing with categorical variables.
+:::
+
+
+
 ## Data requirements
 
 ::: {.incremental}
@@ -1363,7 +1388,7 @@ RHS: information we have (number of unique cells in the observed variance-covari
 10) Interpret model coefficients
 11) Present results visually
 
-## Basic lavaan syntax
+<!-- ## Basic lavaan syntax
 
 Define model:
 
@@ -1390,6 +1415,7 @@ mod.fit <- sem(mod.form , data = dat1)
 | defining     | `:=`  | define quantity           | `Total := b1*b3 + b2`     |
 | latent       | `=~`  | set reflective indicators | `LV =~ x1 + x2 + x3`      |
 | composite    | `<~`  | set formative indicators  | `Comp <~ 1*x1 + x2 + x3`  |
+-->
 
 # Questions?
 
@@ -1477,11 +1503,11 @@ digraph  {
 Ask students about how they would address this question.
 :::
 
-## The meta-model {.smaller}
+## The meta-model
 
 ```{dot}
-//| fig-width: 6
-//| fig-height: 6
+//| fig-width: 12
+//| fig-height: 5
 
 digraph  {
 
@@ -1550,10 +1576,12 @@ digraph  {
     -   (in)direct effects of environmental predictors on richness and evenness
 - What do you conclude?
 
-## Exercise 2 {.smaller}
+## Exercise 2
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 10
+//| fig-height: 4
+
 digraph  {
 
    # a 'graph' statement
@@ -1588,10 +1616,11 @@ digraph  {
     -   Check model summary.
 - What do you conclude?
 
-## Exercise 3 {.smaller}
+## Exercise 3 
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 10
+//| fig-height: 4
 digraph  {
 
    # a 'graph' statement
@@ -1627,11 +1656,13 @@ After finding a model with good fit:
     -   Calculate the standardized coefficients.
     -   Add derived quantities (direct and indirect effects of nutrients on biomass).
 
-## Exercise 4 {.smaller}
+## Exercise 4 
 
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 10
+//| fig-height: 4
+
 digraph  {
 
    # a 'graph' statement
@@ -1668,10 +1699,12 @@ digraph  {
     -   Decide on most parsimonious model and summarize model.
 - What do you conclude?
 
-## Exercise 5 {.smaller}
+## Exercise 5 
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 10
+//| fig-height: 4
+
 digraph  {
 
    # a 'graph' statement
