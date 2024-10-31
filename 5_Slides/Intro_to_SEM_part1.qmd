@@ -1569,8 +1569,11 @@ digraph  {
 
 ## Exercise 1 
 
-- Exploration of dataset (variables and treatments)
-- Check collinearity and normality
+- Load and aggregate the Seabloom dataset (data and code provided)
+- Check collinearity of the following variables:
+  - nadd, disk, nadd, rich, even, ens.pie, mass.above
+- Check multivariate normality of the following variables: 
+ - rich, even, mass.above
 - Fit multiple linear regression models to estimate coefficients
     -   direct effects of environmental predictors on above ground biomass (AGB)
     -   (in)direct effects of environmental predictors on richness and evenness
@@ -1612,7 +1615,7 @@ digraph  {
 
 -   Fit the above DAG to the Seabloom data:
     -   Assess model goodness of fit.
-    -   Investigate the modification indices. Are there paths to add that are reasonable?
+    -   Investigate the modification indices. Any paths that need adding?
     -   Check model summary.
 - What do you conclude?
 

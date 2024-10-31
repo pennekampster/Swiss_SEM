@@ -442,11 +442,11 @@ Pay attention to the flow of causation!
 Rules of thumb:
 
 ::: incremental
-1) Latent: 
+- Latent: 
   - indicators are redundant, e.g. 
     - multiple measurements of the same process
     - multiple proxies of the same process
-2) Composite:
+- Composite:
   - the meaning of the construct changes after dropping one of the indicators
 :::
 
@@ -704,7 +704,7 @@ survey.design = design)
 
 # Your turn: working with the Seabloom dataset
 
-## Exercise 1
+## Set up
 
 Start with the following model:
 
@@ -722,7 +722,7 @@ fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
 ```
 
-## Exercise 2
+## Exercise 1
 
 ```{dot}
 //| fig-width: 4
@@ -753,7 +753,7 @@ digraph  {
     -   Run confirmatory factor analysis
     -   What do you conclude?
 
-## Exercise 3
+## Exercise 2
 
 ```{dot}
 //| fig-width: 6
@@ -793,7 +793,7 @@ digraph  {
     -   Include latent variable into full model
     -   What do you conclude?
 
-## Exercise 4
+## Exercise 3
 
 ```{dot}
 //| fig-width: 5
@@ -832,7 +832,7 @@ digraph  {
     -   What do you conclude?
     -   Build composite manually.
 
-## Exercise 5
+## Exercise 4
 
 ```{dot}
 //| fig-width: 5
@@ -873,7 +873,7 @@ disturbance->middleman [constraint=false, arrowhead=diamond];
 - What do you conclude?
 
 
-## Exercise 6
+## Exercise 5
 
 
 
