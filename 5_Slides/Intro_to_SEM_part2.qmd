@@ -45,12 +45,17 @@ library(ggplot2)
     -  Work on your research question /  SEM model (self-study)
     -  Presentation of your SEM model and discussion with instructor and peers
 
-## Motivation for SEM modelling
+## SEM modelling for causal understanding of systems
 
 ::: incremental
-- System thinking to understand the direct and indirect cause-effect pathways in a system
-- Meta-model to connect data to general theory
+- Meta-model to connect general theory with data
+- Understand the direct and indirect cause-effect pathways in a system 
 - Theory is often more general than particular proxies used (e.g. climate change $\neq$ temperature change)
+- Constructs to model:
+  - Unobserved variables
+  - Composites of multiple causes
+  - Interactions between variables
+  - Nonlinear relationships
 :::
 
 
@@ -103,13 +108,10 @@ digraph  {
 ```
 
 ::: incremental
--   So far, only measured variables were considered (i.e. path modelling).
-- However:
-  -   Some components of a meta-model may be abstract and difficult to quantify and measure directly.
-  -   Some components may be convenient to summarize as a single cause.
--   SEM provides constructs to address these situations: 
-    1) latent variables 
-    2) composite variables
+- So far, only measured variables were considered (i.e. path model).
+- Some variables may be:
+  -   abstract and difficult to quantify and measure directly, i.e. latent.
+  -   represent joint causes, i.e. composite.
 :::
 
 ## Latent variables
@@ -142,45 +144,10 @@ digraph  {
 ```
 
 ::: incremental
--   Latent variables are unobserved.
 -   In diagrams, latent variables are represented by oval node shape.\
--   Their influence is captured by one or more indicator variable(s).\
+-   Latent variables are unobserved, but influence is captured by indicator variable(s).\
 -   Direction of causality flows from latent variable to the observed variable(s) (reflective indicators).
-:::
-
-## Latent variables
-
-```{dot}
-//| fig-width: 6
-
-digraph  {
-
-    graph [rankdir = LR, fontname = Helvetica]
-   
-   node [shape=box, fontname = Helvetica]
-   X1 [label="evenness"];
-   X2 [label="richness"];
-   Z [label="biomass"];
-
-   
-   node [shape=oval]
-    Y [label="diversity"]
-    
-    Y -> X1;
-    Y -> X2;
-    Y -> Z;
-    Z;
-    
-  {rank = max; Z}
-  {rank = min; X1}
-  {rank = same; X1;X2}
-}
-```
-
-::: incremental
--   Indicator variables "emerge" from the latent variable.\
 -   Latent variables free of random or systematic measurement errors (unlike their indicators).
--   Identifiability issues with two indicator variables require additional assumptions (e.g. similar effect of indicators on latent / same variance).
 :::
 
 ## Latent variables - a word of caution
@@ -190,28 +157,28 @@ digraph  {
 - Just because you name a particular latent in a certain way, does not mean you capture the underling process (a.k.a. "naming fallacy")
 :::
 
-## Latent variables
+## Fitting latent variables
 
 Latents fitted in two steps:
 
 . . .
 
-1)  Confirmatory factor analysis
+1)  Confirmatory factor analysis (measurement model)
     -   Precursor to any SEM in which the latent variables appear.
     -   For multi-indicator latent variables: check that the same process generated multiple indicators.
-    -   All indicators need to be positively correlated to the latent variable (i.e., driver).
+    -   All indicators need to be positively correlated to the latent variable (i.e., cause).
 
 
 . . .
 
-2)  Full model including latent variable
-    -   To estimate effect of latent variable on other variables.
+2)  Structural model
+    -   estimates relationships between multiple latent variables and latents on other variables.
 
-## Latent variables to model abstract concept
+## Latent example: body size {.smaller}
 
 ```{dot}
 //| fig-width: 4
-
+//| fig-height=: 3
 digraph  {
 
     graph [rankdir = LR, fontname = Helvetica]
@@ -234,19 +201,23 @@ digraph  {
 }
 ```
 
-Example body size
-
 ::: incremental
+- body size is a multidimensional concept
   - multiple indicators of body size: mass, length, width
-  - are indicators positively correlated?
-  - With three indicator variable, coefficient of first indicator set to 1 by lavaan; use standardized effect for interpretation.
+  - a single cause requires indicators are positively correlated (needs checking)
+  - identifiability: 
+    - loading of first indicator set to 1 by lavaan
+    - latents with two indicators require assumption (e.g. similar effect of indicators on latent).
+    - use standardized effect for interpretation.
 :::
 
 
-## Latents to adjust for measurement error in predictors
+## Latent example: measurement error in predictor
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 8
+//| fig-height: 5
+
 
 digraph  {
 
@@ -265,11 +236,11 @@ digraph  {
 
 ::: incremental
 -   Predictors are often measured with error.\
--   Regression assumption: no error in X.\
--   What is the effect of error in X?
+-   Regression assumes no error in X.\
+-   What if this assumption is violated?
 :::
 
-## Latents to adjust for measurement error in predictors
+## Latent example: measurement error in predictor
 
 ```{r}
 #| echo: false
@@ -287,23 +258,22 @@ Red = true slope, blue = OLS slope.
 -   How to account for regression dilution?
 :::
 
-## Latents to adjust for measurement error in predictors
-
- 
+## Latent example: measurement error in predictor
 
 ```{dot}
-//| fig-width: 6
+//| fig-width: 8
+//| fig-height: 5
 
 digraph  {
 
     graph [rankdir = LR, fontname = Helvetica]
    
    node [shape=box, fontname = Helvetica]
-   X1 [label="measurements 1"];
-   X2 [label="measurement 2"];
+   X1 [label="1st noisy measurement"];
+   X2 [label="2nd noisy measurement"];
     
    node [shape=oval]
-   Z [label="latent"]
+   Z [label="underlying process"]
     
    Z -> X1;
    Z -> X2;
@@ -317,58 +287,27 @@ digraph  {
 
 
 ::: incremental
--   With multiple measurements, latent variable can capture the underlying process giving rise to the indicator variables.
--   Estimating relationship between latent and response will lead to better slope estimate and higher R^2^.
+-   Latent to capture the underlying process giving rise to the measurements (indicator variables).
+-   Better slope estimate and higher R^2^ when regressing Y on latent.
 :::
 
 ## Composite variables
 
 ::: incremental
-- Composites are very flexible constructs.
-- Allow to model interactions and nonlinear relationships.
-- Allow to summarize multiple drivers into a single cause.
+- Composites can be used flexibly and require less assumptions than latents:
+  - Allow to summarize multiple drivers into a single cause.
+  - Positive and negative relationship can be considered.
+  - Allow to model interactions and nonlinear relationships.
 - Composites are shown as hexangular shapes in causal diagrams.
 :::
 
 
-## Composite variables
+## Example composite: joint cause landuse
 
 ```{dot}
-//| fig-width: 5
+//| fig-width: 8
+//| fig-height: 5
 
-digraph boxes_and_circles {
-   
-   graph [overlap = false, fontsize = 10, rankdir = LR, fontname = Helvetica]
-   
-   node [shape=box, fontname = Helvetica]
-   X1 [label="disturbance"];
-   X2 [label="nutrients"];
-   Z [label="biomass"];
-
-   
-   node [shape=hexagon, fontname = Helvetica]
-  Y [label="land use"]
-
-  X1 -> Y;
-  X2 -> Y;
-  Y -> Z;
-
-  {rank = "max"; Z}
-  {rank = "same"; X1;X2;}
-}
-```
-
-::: incremental
-- Composites specify the collective influence of a set of variables.
-- Here, land use is defined as the combination of disturbance and nutrients.
-:::
-
-
-
-## Composite variables
-
-```{dot}
-//| fig-width: 5
 
 digraph boxes_and_circles {
    
@@ -397,15 +336,17 @@ digraph boxes_and_circles {
 ```
 
 ::: incremental
--  Arrows point from the indicators to the composite (i.e., formative or causal indicators).
--  Values are determined by causes (i.e., indicators), thus error variance is set to 0.\
-- Technically, composites are the predictions from linear combinations of variables.
+- Composites specify the collective influence of a set of variables.
+- Arrows point from the indicators to the composite (i.e., formative or causal indicators).
+- The values of the composite determined by causes (i.e., indicators), thus error variance is set to 0.\
+  - Technically, predictions from linear combinations of variables.
 :::
 
-## Composite variables
+## Example composite: joint cause landuse
 
 ```{dot}
-//| fig-width: 5
+//| fig-width: 8
+//| fig-height: 5
 
 digraph boxes_and_circles {
    
@@ -435,17 +376,16 @@ digraph boxes_and_circles {
 
 ::: incremental
 - Estimation can cause convergence issues, lavaan can only handle a single composite per model.
-- Solution: hand-code composites separately.
-- Only standardised coefficients of composites are interpretable.
+- Solution: hand-code composites.
+- Only standardised coefficients interpretable.
 :::
 
-
-
-## Using composites to model nonlinear effects{.smaller}
+## Example composite: model nonlinear effects{.smaller}
 
 
 ```{dot}
-//| fig-width: 5
+//| fig-width: 8
+//| fig-height: 5
 
 digraph boxes_and_circles {
    
@@ -476,10 +416,9 @@ digraph boxes_and_circles {
 - Can be modelled by adding a linear and a squared term of nutrients
 - Composite to capture this joint effect of nutrient addition
 - Check validity of nonlinear effect by only constructing composite first (linear model)
-- Use standardized coefficients for interpretation
 :::
 
-## Distinguishing latent and composite variables 
+<!--- ## Distinguishing latent and composite variables 
 
 Pay attention to the flow of causation!
 
@@ -495,24 +434,28 @@ Pay attention to the flow of causation!
   - flow of causation is reversed and the indicators are independent entities.\
   - There is no assumption about the relation between the indicators (can be positive/negative).
 
+-->
+
 
 ## Distinguishing latent and composite variables 
 
 Rules of thumb:
 
 ::: incremental
-1) Latent variable -> if indicators are redundant (e.g. multiple measurements)
-2) Composite variable -> if the meaning of the construct changes after dropping one of the indicators
+1) Latent: 
+  - indicators are redundant, e.g. 
+    - multiple measurements of the same process
+    - multiple proxies of the same process
+2) Composite:
+  - the meaning of the construct changes after dropping one of the indicators
 :::
 
 
 ## Exercise:
 
--   Revisit the meta-model you have drawn yesterday:
-    -   Which constructs could be modelled with a latent or composite variable?
-    -   Adapt your meta-model accordingly.
-- Revisit the meta-model of your dataset:
+- Revisit your meta-model:
   - Are there concepts that could be modelled with a latent or composite variable?
+  - Adapt your meta-model accordingly.
 
 
 ## Interactions {.smaller}
@@ -545,18 +488,18 @@ digraph boxes_and_circles {
 ::: incremental
 -   In nature, things often are contingent on each other.
 -   For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.\
--   In regression models, the coefficient for the interaction estimates the effect of the product of the two predictors.\
--   The coefficient of the interaction describes the deviation from additivity (can be positive or negative).
+-   In regression models, an interaction coefficient estimates the effect of the product of the two predictors.\
+-   The interaction coefficient describes the deviation from additivity (can be positive or negative).
 :::
 
 ## Interactions 
 
-Interactions can be modelled in different ways in lavaan:
+Two ways to model interactions in lavaan:
 
-1)  Composites
-2)  Multiple groups
+1)  Interactions between continous variables: composite variable
+2)  Interactions with categorical variables: multi-group SEM
 
-## Interactions (composite)
+## Interactions between continuous variables (composite example)
 ```{dot}
 //| fig-width: 5
 digraph  {
@@ -586,12 +529,12 @@ disturbance->middleman [constraint=false, arrowhead=diamond];
 }
 ```
 
-- Interactions can be modelled with composites.
+::: incremental
 - Include interaction term in composite.
-- Preferable if only one or few interactions are considered.
+- Preferable when only a few interactions are considered.
+:::
 
-
-## Interactions (multiple groups)
+## Interactions with categorical variable (multi-group SEM)
 
 ::: {.column width="40%"}
 Group = Disturbed
@@ -609,11 +552,11 @@ digraph  {
         evenness, richness;
         nutrients;
 
-    nutrients->richness [style="dashed"];
+    nutrients->richness;
     nutrients -> evenness;
 
-    evenness-> biomass;
-    richness->biomass [style="dashed"];
+    evenness-> biomass [penwidth=3, color="red"];
+    richness->biomass;
 
   
  #{ rank="same"; precipitation, nutrients, disturbance}
@@ -638,10 +581,10 @@ digraph  {
         nutrients;
 
     nutrients->richness;
-    nutrients -> evenness [style="dashed"];
-    nutrients -> biomass [color="red"];
+    nutrients -> evenness [penwidth=3, color="red"];
+   # nutrients -> biomass [color="red"];
 
-    evenness-> biomass [style="dashed"];
+    evenness-> biomass
     richness->biomass;
 
   
@@ -653,21 +596,25 @@ digraph  {
 
 
 ::: incremental
--   Multigroup fitting allows all coefficients to vary among groups.
--   Groups have to be categorical (e.g., treatment, age class).
-- Statistical comparison of two causal diagrams $\neq$ fitting two separate SEMs and compare coefficients.
+- Multi-group SEM allows all coefficients to vary among groups.
+- Groups have to be categorical (e.g., treatment, age class).
+- Allows formal tests of equality among causal diagrams
 :::
 
-## Interactions (multiple groups)
+## Interactions with categorical variable (multi-group SEM)
 
--   Test interaction of group factor with many or all paths in the causal diagram.
+::: incremental
+-   Test interaction of a categorical factor with many or all paths in the causal diagram.
+- Lavaan allows to test various equality constraints:
+   - Equal path coefficients, intercepts, residuals among groups
+- Even more control by naming and fixing parameters
+  - Coefficients with same name are estimated to be the same
+  - Fixing coefficients to 0 allows graph to vary among groups.
+::: 
 
-. . .
 
 
-- Lavaan allows to introduce equality constraints on various aspects via the `group.equal` argument:
-
-``` r
+<!-- ``` r
 sem(model, group = "age_class", group.equal = c("regressions"), data = dd)
 ```
 
