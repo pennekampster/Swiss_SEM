@@ -166,7 +166,7 @@ Latents fitted in two steps:
 1)  Confirmatory factor analysis (measurement model)
     -   Precursor to any SEM in which the latent variables appear.
     -   For multi-indicator latent variables: check that the same process generated multiple indicators.
-    -   All indicators need to be positively correlated to the latent variable (i.e., cause).
+    -   All indicators need to be strongly correlated to the latent variable (i.e., the cause).
 
 
 . . .
@@ -204,7 +204,6 @@ digraph  {
 ::: incremental
 - body size is a multidimensional concept
   - multiple indicators of body size: mass, length, width
-  - a single cause requires indicators are positively correlated (needs checking)
   - identifiability: 
     - loading of first indicator set to 1 by lavaan
     - latents with two indicators require assumption (e.g. similar effect of indicators on latent).
@@ -296,7 +295,6 @@ digraph  {
 ::: incremental
 - Composites can be used flexibly and require less assumptions than latents:
   - Allow to summarize multiple drivers into a single cause.
-  - Positive and negative relationship can be considered.
   - Allow to model interactions and nonlinear relationships.
 - Composites are shown as hexangular shapes in causal diagrams.
 :::
@@ -376,7 +374,7 @@ digraph boxes_and_circles {
 
 ::: incremental
 - Estimation can cause convergence issues, lavaan can only handle a single composite per model.
-- Solution: hand-code composites.
+  - Solution: hand-code composites.
 - Only standardised coefficients interpretable.
 :::
 
@@ -749,9 +747,9 @@ digraph  {
 ```
 
 
--   Construct latent variable diversity based on richness, evenness and ens.pie:
-    -   Run confirmatory factor analysis
-    -   What do you conclude?
+-   Construct a latent variable called diversity using richness and evenness as indicators and ens.pie:
+    - Run confirmatory factor analysis
+    - Troubleshoot potential issues
 
 ## Exercise 2
 
@@ -782,16 +780,18 @@ digraph  {
     diversity -> evenness;
     diversity -> richness;
 
- { rank="max"; nutrients; disturbance}
+ { rank="min"; nutrients; disturbance}
 
  { rank="min"; evenness; richness}
+
+ 
 }
 ```
 
--   Construct latent variable diversity only based on richness and evenness:
-    -   Run confirmatory factor analysis
+-   Construct a latent variable called diversity using richness and evenness as indicators:
+    -   Run confirmatory factor analysis to confirm validity of latent
     -   Include latent variable into full model
-    -   What do you conclude?
+-   What do you conclude?
 
 ## Exercise 3
 
@@ -813,24 +813,28 @@ digraph  {
         nutrients;
         disturbance;
 
-    landuse->richness;
-    landuse -> evenness;
-    landuse -> biomass;
+    nutrients->richness;
+    nutrients -> evenness;
+
+  landuse -> biomass;
 
     evenness-> biomass;
     richness->biomass;
 
     nutrients -> landuse;
     disturbance -> landuse;
+
+     evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+
   
- #{ rank="same"; precipitation, nutrients, disturbance}
+ { rank="same"; evenness, richness}
 }
 ```
 
 
--   Construct composite variable landuse based on nutrients and disturbance (disk):
-    -   What do you conclude?
-    -   Build composite manually.
+-   Construct composite variable landuse based on nutrients and disturbance in lavaan.
+-   Construct composite manually.
+- Compare original model with this one. Which one is better supported?
 
 ## Exercise 4
 
@@ -853,29 +857,27 @@ digraph  {
   middleman[shape=none width=0 height=0 label="" style=invis]
 disturbance->middleman [constraint=false, arrowhead=diamond];
 
-    middleman->richness;
-    middleman -> evenness;
-
+    middleman->biomass;
+  
     evenness-> biomass;
     richness->biomass;
 
     nutrients -> middleman[arrowhead=none];
-     
- #{ rank="same"; precipitation, nutrients, disturbance}
+    nutrients -> evenness;
+   nutrients -> richness;
+
+ evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+
+ { rank="same"; evenness, richness}
 }
 ```
 
-
-
--   Investigate possible interaction between disturbance and nutrient addition on AGB
-    -   Construct composite to model an interaction
-    -   Incorporate composite into full model
-- What do you conclude?
-
+-   Investigate possible interaction between disturbance and nutrient addition on above ground biomass.
+-   Use composite to model an interaction between nutrients and disturbance on biomass. 
+-   Incorporate composite into full model
+- How does the interaction term influence the R$^2$ of biomass?
 
 ## Exercise 5
-
-
 
 ::: {.column width="40%"}
 Group = Disturbed
@@ -899,6 +901,10 @@ digraph  {
 
     evenness-> biomass;
     richness->biomass;
+
+ evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+
+ { rank="same"; evenness, richness}
 
   
  #{ rank="same"; precipitation, nutrients, disturbance}
@@ -929,6 +935,9 @@ digraph  {
     evenness-> biomass;
     richness->biomass;
 
+ evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+
+ { rank="same"; evenness, richness}
   
  #{ rank="same"; precipitation, nutrients, disturbance}
 }
@@ -937,9 +946,9 @@ digraph  {
 :::
 
 
--   Investigate possible interaction between disturbance and nutrient addition on AGB:
-    -   Use multi-group fitting to explore interaction.
--   What do you conclude?
+- Investigate possible interaction between disturbance and nutrient addition on biomass with a multi-group SEM.
+- Test the hypothesis that all paths are the same for disturbend and undisturbed plots.
+
 
 <!-- ## Exercise 7
 

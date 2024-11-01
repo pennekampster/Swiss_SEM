@@ -43,9 +43,9 @@ library(knitr)
 
 ![](images/Swiss_SEM_team.png){width="100%"}
 
--   Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course design)
--  Dr. Rachel Korn (course development: exercises)
--  Dr. Frank Pennekamp (course development: exercises and slides, instructor)
+-  Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course design)
+-  Dr. Rachel Korn (course development: exercises and solutions)
+-  Dr. Frank Pennekamp (course development: exercises, solutions and slides, instructor)
 
 ## Schedule & content {.smaller}
 
@@ -1298,7 +1298,6 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 
 -   Reasons for the warnings can be:
     1)  Slightly negative error estimates (not really a problem)\
-    2)  Indicators for latent variables need to be positively correlated\
     3)  Local non-identification of parameters\
     4)  Model misspecification
 
@@ -1573,7 +1572,7 @@ digraph  {
 - Check collinearity of the following variables:
   - nadd, disk, nadd, rich, even, ens.pie, mass.above
 - Check multivariate normality of the following variables: 
- - rich, even, mass.above
+  - rich, even, mass.above
 - Fit multiple linear regression models to estimate coefficients
     -   direct effects of environmental predictors on above ground biomass (AGB)
     -   (in)direct effects of environmental predictors on richness and evenness
