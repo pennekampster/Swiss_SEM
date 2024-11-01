@@ -5,7 +5,7 @@ subtitle: "How to effectively communicate your SEM analysis"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences
 - University of Zurich
-date: "11/8/2024"
+date: "11/7/2024"
 date-format: long
 format:
   revealjs: 
@@ -66,8 +66,6 @@ Alternative wording could be "How would you draw the model output for a manuscri
 <!-- - Use colours that work for colour-blind people -->
 
 ##  What is a good SEM drawing? 
-
-Suggestions to draw an informative, interpretable and reproducible SEM diagram.
 
 ::: {.incremental}
 1) Show all relevant variables  
@@ -167,7 +165,7 @@ Report residual error or $R^2$ for endogenous variables
 - Report standardized and unstandardized effects
 - Consider naming parameters for easier interpretation
 
-![](images/path_coeff_table.png){.absolute .absolute width="600"}
+![](images/path_coeff_table.png){.absolute .absolute width="400"}
 
 ## Raw data (appendix)
 
@@ -264,9 +262,7 @@ Design the figure accordingly!
 
 ## Room for creativity {.smaller}
 
-- Meta models:
-  - Shows the core concepts and their relationships.
-  - The most conceptual version of the causal network you try to capture.
+- Combine meta-model with fitted SEM
 
 ![](images/Mazziotta_sem.jpg){height=60%}
 

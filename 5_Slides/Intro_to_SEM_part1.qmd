@@ -4,7 +4,7 @@ subtitle: "Day 1: Basic modelling"
 author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
-date: "11/6/2024"
+date: "11/5/2024"
 date-format: long
 format:
   revealjs: 
