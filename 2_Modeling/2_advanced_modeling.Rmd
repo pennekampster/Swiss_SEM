@@ -53,11 +53,11 @@ First, let's fit the pruned model that fitted the observed data well. As before,
 library("lavaan")
 
 simple <-
-"mass.above ~ nadd + rich + even + disk
+'mass.above ~ nadd + rich + even + disk
 rich ~ nadd 
 even ~ nadd
 
-rich ~~ even"
+rich ~~ even'
 
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
@@ -103,7 +103,7 @@ Latent variable models are usually evaluated in two stages:
 first the fit between the latent variables and their indicators ([confirmatory factor analysis (CFA)](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis)), second the full model [@grace21a].
 
 ## Correlations between indicators
-Indicators for a LV should be positively correlated with each other. If we fail to find significant correlations based on standard tests and null hypothesis testing, we reject the hypothesis that the indicators are varying in concert and the data contradicts the claim of a latent cause [@grace21a].
+Indicators for a LV should be strongly correlated with each other. If we fail to find significant correlations based on standard tests and null hypothesis testing, we reject the hypothesis that the indicators are varying in concert and the data contradicts the claim of a latent cause [@grace21a].
 
 
 ```{r}
@@ -140,9 +140,8 @@ Parameter estimates taking improper solution, i.e. impossible values, are a sign
 The occurrence of negative variances, as we see here, is known as "Heywood case". Another improper solution would be correlations larger than one [@bollen89].
 Reasons for the current warning could be
 (i) slightly negative error estimates (what would not really be a problem),
-(ii) the need to code indicators for the latent variable to be positively related,
-(iii) local non-identification or
-(iv) general misspecification [@grace21].
+(ii) local non-identification or
+(iii) general misspecification [@grace21].
 
 Here we clearly have a problem with model mis-specification. According to (@seabloom20), the variable ens.pie is the product of evenness and species richness. This causes the model to fail. Therefore let's abandon the ens.pie variable for a moment and focus on a two indicator latent variable.
 
@@ -204,14 +203,14 @@ To model the collective effect of the treatment, let's create a "landuse" compos
 To save one parameter, we fix the `disk` at one--now the model is just identified.
 
 ```{r}
-comp <- "
+comp <- '
 comp.landuse <~ 1 * disk + nadd
 
 rich ~  comp.landuse
 even ~  comp.landuse
 mass.above ~ comp.landuse + rich + even
 
-rich ~~ even"
+rich ~~ even'
 
 fit.comp <- sem(comp, data = seabloom)
 summary(fit.comp, standardized=T)
@@ -239,7 +238,7 @@ seabloom$landuse <- lavInspect(fit.comp.man, what = "est")$beta[1, 2] * seabloom
 Fitting this newly calculated variable `landuse` to the response `mass.above`...
 
 ```{r}
-comp.man2 <- "mass.above ~ landuse"
+comp.man2 <- 'mass.above ~ landuse'
 fit.comp.man2 <- sem(comp.man2, data = seabloom)
 ```
 
@@ -256,13 +255,13 @@ lavInspect(fit.comp.man2, "rsquare")
 Finally, we can integrate the composite `landuse` into the `simple` model from before.
 
 ```{r}
-comp <- "
+comp <- '
 rich ~  landuse
 even ~ landuse
 
 mass.above ~ landuse + rich + even
 
-rich ~~ even"
+rich ~~ even'
 
 fit.comp <- sem(comp, data = seabloom)
 summary(fit.comp, standardized=T)
@@ -301,7 +300,7 @@ In regression, the interaction is represented by a coefficient that estimates th
 ```{r}
 seabloom$diskxnadd <- seabloom$disk * seabloom$nadd
 
-int <- "mass.above ~ disk + nadd + diskxnadd"
+int <- 'mass.above ~ disk + nadd + diskxnadd'
 fit.int <- sem(int, data = seabloom)
 summary(fit.int)
 ```
@@ -312,8 +311,8 @@ Next, we model them as a composite:
 
 ```{r}
 compint <-
-"comp.int <~ 1 * disk + nadd + diskxnadd
-mass.above ~ comp.int"
+'comp.int <~ 1 * disk + nadd + diskxnadd
+mass.above ~ comp.int'
 
 fit.compint <- sem(compint, data = seabloom)
 summary(fit.compint, standardized = TRUE)
@@ -324,13 +323,13 @@ The combined effect of the predictors is the `std.all` value for the regression 
 ### Full model
 ```{r}
 int.full <-
-"comp.int <~ 1 * disk + nadd + diskxnadd
+'comp.int <~ 1 * disk + nadd + diskxnadd
 
 mass.above ~ comp.int + rich + even
 rich ~ nadd
 even ~ nadd 
 
-rich ~~ even"
+rich ~~ even'
 
 fit.int.full <- sem(int.full, data = seabloom)
 summary(fit.int.full, fit.measures = TRUE, standardized = TRUE, rsq = TRUE)
@@ -344,11 +343,11 @@ Another way to incorporate interactions is to fit SEMs where coefficients can va
 
 ```{r}
 int.mg <-
-"mass.above ~ rich + even 
+'mass.above ~ rich + even 
 rich ~ nadd 
 even ~ nadd
 
-rich ~~ even"
+rich ~~ even'
 
 fit.int.mg <- sem(int.mg, group = "disk", data = seabloom)
 summary(fit.int.mg, standardized = TRUE, rsq = TRUE)
@@ -390,11 +389,11 @@ Furthermore, we can test equality constraints by labeling parameters. To do so, 
 
 ```{r}
 int.mg.constrain <-
-"mass.above ~  c('b1', 'b1') * rich + c('b2', 'b2') * even
-rich ~ c('b4a', 'b4b') * nadd 
-even ~ c('b6a', 'b6b') *  nadd 
+'mass.above ~  c("b1", "b1") * rich + c("b2", "b2") * even
+rich ~ c("b4a", "b4b") * nadd 
+even ~ c("b6a", "b6b") *  nadd 
 
-rich ~~ even"
+rich ~~ even'
 
 fit.int.mg.constrain <- sem(int.mg.constrain, group = "disk", data = seabloom)
 summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
