@@ -8,10 +8,10 @@
 <link href="Intro_to_SEM_visualization_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="Intro_to_SEM_visualization_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="Intro_to_SEM_visualization_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.542">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Frank Pennekamp">
-  <meta name="dcterms.date" content="2024-01-17">
+  <meta name="dcterms.date" content="2024-11-08">
   <title>Introduction to structural equation modelling</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,7 +32,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -222,8 +222,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -386,10 +385,11 @@
       margin-right: 0; 
     }
   </style>
-  <script src="Intro_to_SEM_visualization_files/libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+  <link href="Intro_to_SEM_visualization_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+  <script src="Intro_to_SEM_visualization_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
   <script src="Intro_to_SEM_visualization_files/libs/viz-1.8.2/viz.js"></script>
   <link href="Intro_to_SEM_visualization_files/libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-  <script src="Intro_to_SEM_visualization_files/libs/grViz-binding-1.0.10/grViz.js"></script>
+  <script src="Intro_to_SEM_visualization_files/libs/grViz-binding-1.0.11/grViz.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -413,13 +413,38 @@ Frank Pennekamp
     </div>
 </div>
 
-  <p class="date">January 17, 2024</p>
+  <p class="date">November 8, 2024</p>
+</section>
+<section id="schedule-content" class="slide level2 smaller">
+<h2>Schedule &amp; content</h2>
+<ul>
+<li><em>Day 1</em>:
+<ul>
+<li>General introduction to SEM to model ecological systems (lecture)</li>
+<li>Fitting SEMs to data (live demo)</li>
+<li>Case study: fitting SEMs to data (exercises)</li>
+<li>Work on your research question / meta-model (self-study)</li>
+</ul></li>
+<li><em>Day 2</em>:
+<ul>
+<li>Constructs: latent and composite variables (lecture)</li>
+<li>Fitting SEMs to data (live demo &amp; case study exercises)</li>
+<li>Work on your research question / SEM model (self-study)</li>
+</ul></li>
+<li><em>Day 3</em>:
+<ul>
+<li>Progress update</li>
+<li>Model visualization (lecture)</li>
+<li>Work on your research question / SEM model (self-study)</li>
+<li>Presentation of your SEM model and discussion with instructor and peers</li>
+</ul></li>
+</ul>
 </section>
 <section id="exercise-draw-your-idea" class="slide level2">
 <h2>Exercise: Draw your idea</h2>
 <p>How would you draw your model for a manuscript?</p>
 <aside class="notes">
-<p>Alternative wording could be “How would you draw the model output for a manuscript”? That might create more variation which would be kind of fun</p>
+<p>Alternative wording could be “How would you draw the model output for a manuscript”?</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -431,184 +456,6 @@ Frank Pennekamp
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p>Four SEMs across treatments.</p>
-<div class="column-page">
-<p><img data-src="images/Hodapp_sem.jpg"></p>
-</div>
-<aside class="notes">
-<p>This figure does not show a multi-group model. Each treatment was modeled independently. Question: Is it appropriate to compare standardized coefficients between models with different datasets? In other words is the .53 in panel A the same as .53 in panel B?</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-1" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<div class="column-page">
-<p><img data-src="images/Allen_sem.jpg"></p>
-</div>
-<aside class="notes">
-<p>This is one of the most well cited empirical papers using SEM in ecology. It’s interesting how little they show on the actual diagram, but rather show the coefficients for a huge number of responses. Question, which paths do these coefficients map onto?</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-2" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Duffy_sem.png" class="absolute" style="right: 200px; width: 600px; "></p>
-<aside class="notes">
-<p>Lots of exogenous variables. red = negative, black = positive. no non-significant paths?</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-3" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Domeignoz-Horta_sem.jpg" class="absolute" style="right: 100px; width: 800px; "></p>
-<aside class="notes">
-<p>There is a lot of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-4" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Lefcheck_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
-<aside class="notes">
-<p>Use of color to highlight important paths.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-5" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Jones_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
-<aside class="notes">
-<p>Lots of information. The gray, solid line is “marginally significant” (0.1 &gt; p &gt; 0.05)</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-6" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Poorter_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
-<aside class="notes">
-<p>Use of color. Showing a conceptual model in the same figure as the data-model. Unusual way of showing a composite.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-7" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Mazancourt_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
-<aside class="notes">
-<p>Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it’s four separate models</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-8" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Mazziotta_sem.jpg" class="absolute" style="right: 0px; width: 1000px; "></p>
-<aside class="notes">
-<p>I like the use of color here, but why does it go from bottom to top?</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-can-you-expect-to-see-out-in-nature-9" class="slide level2">
-<h2>What can you expect to see out in nature?</h2>
-<p><img data-src="images/Tabi_SEM.png" class="absolute" style="right: 100px; width: 900px; "></p>
-<aside class="notes">
-<p>Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-makes-a-good-data-visualization" class="slide level2">
-<h2>What makes a good data visualization?</h2>
 <!-- ## Theory -->
 <!-- *Maybe one slide drawing on theory from people like Edward Tufte* -->
 <!-- *Information/ink ratio* -->
@@ -622,35 +469,22 @@ Frank Pennekamp
 </section>
 <section id="what-is-a-good-sem-drawing" class="slide level2">
 <h2>What is a good SEM drawing?</h2>
-<div>
-<ul>
-<li class="fragment">Starting from your drawing and what you just saw, what is missing in your drawing?</li>
-<li class="fragment">What is the minimum necessary information to include in an SEM?<br>
-</li>
-</ul>
-</div>
-</section>
-<section id="what-is-a-good-sem-drawing-1" class="slide level2 smaller">
-<h2>What is a good SEM drawing?</h2>
-<p>Guidelines to help drawing an informative, interpretable and reproducible SEM diagrams.</p>
+<p>Suggestions to draw an informative, interpretable and reproducible SEM diagram.</p>
 <div>
 <ol type="1">
-<li class="fragment">Show the relevant variables<br>
+<li class="fragment">Show all relevant variables<br>
 </li>
-<li class="fragment">Represent causal relationships by the path coefficients<br>
-</li>
-<li class="fragment">Represent all relevant paths (regardless of significance)<br>
-</li>
+<li class="fragment">Show all relevant paths</li>
 <li class="fragment">Report goodness of fit of the model</li>
 <li class="fragment">Report explanatory power for endogenous variables<br>
 </li>
-<li class="fragment">Include tables with additional coefficients and derived quantities<br>
+<li class="fragment">Include figure or tables with additional quantities (e.g, indirect and total effects)<br>
 </li>
 </ol>
 </div>
 </section>
-<section id="variable-types" class="slide level2">
-<h2>Variable types</h2>
+<section id="revelant-variables-and-their-types" class="slide level2">
+<h2>Revelant variables and their types</h2>
 <div>
 <div class="columns">
 <div class="column">
@@ -673,10 +507,9 @@ Frank Pennekamp
 <div class="columns">
 <div class="column">
 <ul>
-<li class="fragment">Represent all causal paths included in your model regardless of significance.</li>
-<li class="fragment">Not necessarily in the same figure.</li>
-<li class="fragment">Represent important correlations (with double-headed arrows).</li>
-<li class="fragment">Good practice to include correlations among the errors of endogenous variables.</li>
+<li class="fragment">Represent all causal paths regardless of significance.</li>
+<li class="fragment">Represent important covariance/correlation among variables (with double-headed arrows).</li>
+<li class="fragment">Include correlations among the errors of endogenous variables.</li>
 </ul>
 </div><div class="column">
 <p><img data-src="images/Poorter_sem.jpg" style="height:80.0%"></p>
@@ -690,38 +523,37 @@ Frank Pennekamp
 <div class="columns">
 <div class="column">
 <ul>
-<li class="fragment">Indicate the magnitude, direction, and significance by:
+<li class="fragment">Indicate the direction, and significance by:
 <ul>
+<li class="fragment">Arrow width for magnitude</li>
+<li class="fragment">Add coefficients when possible<br>
+</li>
 <li class="fragment">Linetype or color for direction<br>
 </li>
 <li class="fragment">Dashed vs solid for significance<br>
 </li>
-<li class="fragment">Arrow width for magnitude<br>
-</li>
-<li class="fragment">Labelling with coefficient (in simple diagrams)</li>
 </ul></li>
 </ul>
 </div><div class="column">
-<p><img data-src="images/Hodapp_sem.jpg" style="height:80.0%"></p>
+<p><img data-src="images/Duffy_sem.png" style="height:80.0%"></p>
 </div>
 </div>
 </div>
 </section>
 <section id="model-goodness-of-fit" class="slide level2">
 <h2>Model goodness-of-fit</h2>
-<div>
 <div class="columns">
 <div class="column">
 <ul>
-<li class="fragment">Covariance-based approaches:
+<li>Covariance-based approaches:
 <ul>
-<li class="fragment"><span class="math inline">\(\chi^2\)</span><br>
+<li><span class="math inline">\(\chi^2\)</span><br>
 </li>
-<li class="fragment">CFI<br>
+<li>CFI<br>
 </li>
-<li class="fragment">SRMR<br>
+<li>SRMR<br>
 </li>
-<li class="fragment">RMSEA<br>
+<li>RMSEA<br>
 </li>
 </ul></li>
 </ul>
@@ -729,47 +561,44 @@ Frank Pennekamp
 <p><img data-src="images/Jones_sem.jpg" style="height:80.0%"></p>
 </div>
 </div>
-</div>
 </section>
 <section id="explanatory-power" class="slide level2">
 <h2>Explanatory power</h2>
 <div class="columns">
 <div class="column">
-<ul>
-<li>Residual error or <span class="math inline">\(R^2\)</span> for endogenous variables</li>
-</ul>
-</div><div class="column">
 <p><img data-src="images/R2_endogenous.png" style="height:50.0%"></p>
+</div><div class="column">
+<p><img data-src="images/Domeignoz-Horta_sem.jpg" style="height:50.0%"></p>
 </div>
 </div>
+<p>Report residual error or <span class="math inline">\(R^2\)</span> for endogenous variables</p>
 </section>
-<section id="tablesfigures-with-coefficients-and-derived-quantities-appendix" class="slide level2">
-<h2>Tables/figures with coefficients and derived quantities (appendix)</h2>
-<div>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Table of path coefficients:</p>
-<p><img data-src="images/path_coeff_table.png" class="absolute" style="width: 400px; "></p>
-</div><div class="column" style="width:50%;">
-<p>Direct, indirect and total effects:</p>
-<p><img data-src="images/Duffy_derived.jpg" class="absolute" style="width: 400px; "></p>
-</div>
-</div>
-</div>
+<section id="figures-with-additional-quantities" class="slide level2">
+<h2>Figures with additional quantities</h2>
+<ul>
+<li>Plots to show derived quantities such as direct, indirect and total effects</li>
+</ul>
+<p><img data-src="images/Duffy_derived.jpg" class="absolute absolute" style="width: 800px; "></p>
+</section>
+<section id="tables-with-coefficients-appendix" class="slide level2">
+<h2>Tables with coefficients (appendix)</h2>
+<ul>
+<li>Report standardized and unstandardized effects</li>
+<li>Consider naming parameters for easier interpretation</li>
+</ul>
+<p><img data-src="images/path_coeff_table.png" class="absolute absolute" style="width: 600px; "></p>
 </section>
 <section id="raw-data-appendix" class="slide level2">
 <h2>Raw data (appendix)</h2>
-<div>
 <ul>
-<li class="fragment">Show the underlying data:
+<li>Show the underlying data:
 <ul>
-<li class="fragment">Plots of raw correlations</li>
-<li class="fragment">Correlation tables</li>
-<li class="fragment">Distributions of raw data</li>
-<li class="fragment">Partial plots</li>
+<li>Plots of raw correlations</li>
+<li>Correlation tables</li>
+<li>Distributions of raw data</li>
+<li>Partial plots</li>
 </ul></li>
 </ul>
-</div>
 </section>
 <section id="plotting-tools" class="slide level2">
 <h2>Plotting tools</h2>
@@ -780,70 +609,213 @@ Frank Pennekamp
 <section id="plotting-tools-i-lavaanplot-package" class="slide level2">
 <h2>Plotting tools I: lavaanPlot package</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">lavaanPlot</span>(<span class="at">model =</span> fit.prune,</span>
-<span id="cb1-2"><a href=""></a>           <span class="at">node_options =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="st">"box"</span>, <span class="at">color =</span> <span class="st">"gray"</span>,</span>
-<span id="cb1-3"><a href=""></a>                               <span class="at">fontname =</span> <span class="st">"Helvetica"</span>),</span>
-<span id="cb1-4"><a href=""></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
-<span id="cb1-5"><a href=""></a>           <span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">covs =</span> <span class="cn">FALSE</span>, <span class="at">stars =</span> <span class="st">"regress"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model =</span> fit.prune,</span>
+<span id="cb1-2"><a href="#cb1-2"></a>           <span class="at">node_options =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="st">"box"</span>, <span class="at">color =</span> <span class="st">"gray"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3"></a>                               <span class="at">fontname =</span> <span class="st">"Helvetica"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4"></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb1-5"><a href="#cb1-5"></a>           <span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">covs =</span> <span class="cn">FALSE</span>, <span class="at">stars =</span> <span class="st">"regress"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-eb7957f906e4a4941e44" style="width:960px;height:6in;"></div>
-<script type="application/json" data-for="htmlwidget-eb7957f906e4a4941e44">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-353e6db1a3c230640528" style="width:960px;height:6in;"></div>
+<script type="application/json" data-for="htmlwidget-353e6db1a3c230640528">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
+</div>
+<div>
+<ul>
+<li class="fragment">Allow for customization but may not provide full freedom</li>
+<li class="fragment">Allow to export to png or pdf</li>
+<li class="fragment">Caveat: interactions or multi-group models not supported yet</li>
+</ul>
 </div>
 </section>
 <section id="plotting-tools-ii-semplot-package" class="slide level2">
 <h2>Plotting tools II: semPlot package</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">semPaths</span>(fit.prune, <span class="at">what =</span> <span class="st">"est"</span>, <span class="at">whatLabels =</span> <span class="st">"est"</span>,</span>
-<span id="cb2-2"><a href=""></a>         <span class="at">residuals =</span> <span class="cn">FALSE</span>, <span class="at">intercepts =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb2-3"><a href=""></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="at">sizeMan2 =</span> <span class="dv">7</span>, <span class="at">edge.label.cex =</span> <span class="dv">1</span>,</span>
-<span id="cb2-4"><a href=""></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">style =</span> <span class="st">"mx"</span>, <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
-<span id="cb2-5"><a href=""></a>         <span class="at">posCol =</span> <span class="st">"#009e73ff"</span>, <span class="at">negCol =</span> <span class="st">"#d55e00ff"</span>, <span class="at">edge.label.color =</span> <span class="st">"black"</span>,</span>
-<span id="cb2-6"><a href=""></a>         <span class="at">layoutSplit =</span> <span class="cn">TRUE</span>, <span class="at">curve =</span> <span class="dv">1</span>, <span class="at">curvature =</span> <span class="dv">1</span>, <span class="co">#fixedStyle = 1,</span></span>
-<span id="cb2-7"><a href=""></a>         <span class="at">exoCov =</span> <span class="cn">FALSE</span>, <span class="at">rotation =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">semPaths</span>(fit.prune, <span class="at">what =</span> <span class="st">"est"</span>, <span class="at">whatLabels =</span> <span class="st">"est"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2"></a>         <span class="at">residuals =</span> <span class="cn">FALSE</span>, <span class="at">intercepts =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>         <span class="at">sizeMan =</span> <span class="dv">10</span>, <span class="at">sizeMan2 =</span> <span class="dv">7</span>, <span class="at">edge.label.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb2-4"><a href="#cb2-4"></a>         <span class="at">fade =</span> <span class="cn">FALSE</span>, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">style =</span> <span class="st">"mx"</span>, <span class="at">nCharNodes =</span> <span class="dv">0</span>,</span>
+<span id="cb2-5"><a href="#cb2-5"></a>         <span class="at">posCol =</span> <span class="st">"#009e73ff"</span>, <span class="at">negCol =</span> <span class="st">"#d55e00ff"</span>, <span class="at">edge.label.color =</span> <span class="st">"black"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>         <span class="at">layoutSplit =</span> <span class="cn">TRUE</span>, <span class="at">curve =</span> <span class="dv">1</span>, <span class="at">curvature =</span> <span class="dv">1</span>, <span class="co">#fixedStyle = 1,</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>         <span class="at">exoCov =</span> <span class="cn">FALSE</span>, <span class="at">rotation =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="Intro_to_SEM_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<img data-src="Intro_to_SEM_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch quarto-figure-center"><div>
+<ul>
+<li class="fragment">Allow for customization but may not provide full freedom</li>
+<li class="fragment">Rather rigid layout of plots (required in some fields)</li>
+</ul>
+</div>
+</section>
 <section id="plotting-tools-1" class="slide level2">
 <h2>Plotting tools</h2>
 <ul>
-<li>Good for quick visualization but not ready for publication</li>
+<li>Good for quick visualization but not ready for publication.</li>
 <li>Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.</li>
 </ul>
 </section>
-<section id="room-for-artistry" class="slide level2 smaller">
-<h2>Room for artistry</h2>
+<section id="room-for-creativity" class="slide level2">
+<h2>Room for creativity</h2>
+<p>Will depend on the audience and the purpose</p>
+<div class="fragment">
 <ul>
-<li>Meta models:
-<ul>
-<li>Shows the core concepts and their relationships, ignoring the data.</li>
-<li>The most conceptual version of the causal network you try to capture.</li>
-</ul></li>
-</ul>
-<p><img data-src="images/Mazziotta_sem.jpg" style="height:60.0%"></p>
-</section>
-<section id="room-for-artistry-1" class="slide level2">
-<h2>Room for artistry</h2>
-<div>
-<ul>
-<li class="fragment">This will depend on the audience and the purpose:
-<ul>
-<li class="fragment">Is this a paper?</li>
-<li class="fragment">Is this a presentation?</li>
-<li class="fragment">What is the narrative structure?</li>
-</ul></li>
+<li>Is this a paper?</li>
+<li>Is this a presentation?</li>
+<li>What is the narrative structure?</li>
 </ul>
 </div>
 <div class="fragment">
 <p>Design the figure accordingly!</p>
 </div>
 </section>
+<section id="room-for-creativity-1" class="slide level2 smaller">
+<h2>Room for creativity</h2>
+<ul>
+<li>Meta models:
+<ul>
+<li>Shows the core concepts and their relationships.</li>
+<li>The most conceptual version of the causal network you try to capture.</li>
+</ul></li>
+</ul>
+<p><img data-src="images/Mazziotta_sem.jpg" style="height:60.0%"></p>
+<!--
+## A quick tour of SEM visualizations
+
+Four SEMs across treatments.
+
+::: {.column-page}
+![](images/Hodapp_sem.jpg)
+:::
+
+::: notes
+This figure does not show a multi-group model. Each treatment was modeled independently. Question: Is it appropriate to compare standardized coefficients between models with different datasets? In other words is the .53 in panel A the same as .53 in panel B?
+:::
+--->
+</section>
+<section id="a-quick-tour-of-sem-visualizations" class="slide level2">
+<h2>A quick tour of SEM visualizations</h2>
+<div class="column-page">
+<p><img data-src="images/Allen_sem.jpg"></p>
+</div>
+<aside class="notes">
+<p>This is one of the most well cited empirical papers using SEM in ecology. It’s interesting how little they show on the actual diagram, but rather show the coefficients for a huge number of responses. Question, which paths do these coefficients map onto?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<aside class="notes">
+<p>Lots of exogenous variables. red = negative, black = positive. no non-significant paths?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-quick-tour-of-sem-visualizations-1" class="slide level2">
+<h2>A quick tour of SEM visualizations</h2>
+<p><img data-src="images/Lefcheck_sem.jpg" class="absolute absolute" style="right: 200px; width: 700px; "></p>
+<aside class="notes">
+<p>Use of color to highlight important paths.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<!--
+## A quick tour of SEM visualizations
+
+![](images/Domeignoz-Horta_sem.jpg){.absolute .absolute width="800" right=100}
+
+::: notes
+There is a lot of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are
+:::
+
+
+
+
+## A quick tour of SEM visualizations
+
+![](images/Jones_sem.jpg){.absolute .absolute width="700" right=200}
+
+::: notes
+Lots of information. The gray, solid line is "marginally significant" (0.1 > p > 0.05)
+:::
+
+## A quick tour of SEM visualizations
+
+![](images/Poorter_sem.jpg){.absolute .absolute width="700" right=200}
+
+::: notes
+Use of color. Showing a conceptual model in the same figure as the data-model. Unusual way of showing a composite.
+::: 
+--->
+</section>
+<section id="a-quick-tour-of-sem-visualizations-2" class="slide level2">
+<h2>A quick tour of SEM visualizations</h2>
+<p><img data-src="images/Mazancourt_sem.jpg" class="absolute absolute" style="right: 200px; width: 700px; "></p>
+<aside class="notes">
+<p>Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it’s four separate models</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<!--
+## A quick tour of SEM visualizations
+
+![](images/Mazziotta_sem.jpg){.absolute .absolute width="1000" right=0}
+
+::: notes
+I like the use of color here, but why does it go from bottom to top?
+:::
+
+--->
+</section>
+<section id="a-quick-tour-of-sem-visualizations-3" class="slide level2">
+<h2>A quick tour of SEM visualizations</h2>
+<p><img data-src="images/Tabi_SEM.png" class="absolute absolute" style="right: 100px; width: 900px; "></p>
+<aside class="notes">
+<p>Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="questions" class="title-slide slide level1 center">
 <h1>Questions?</h1>
-<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 <p>Introduction to SEM (2024)</p>
-</div>
 </div>
 </section>
     </div>
@@ -872,6 +844,7 @@ Frank Pennekamp
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1170,9 +1143,10 @@ Frank Pennekamp
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1182,17 +1156,8 @@ Frank Pennekamp
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

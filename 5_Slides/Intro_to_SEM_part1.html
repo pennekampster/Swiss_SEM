@@ -30,71 +30,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="Intro_to_SEM_part1_files/libs/revealjs/dist/theme/quarto.css">
   <link href="Intro_to_SEM_part1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -425,8 +360,8 @@ Frank Pennekamp
 
 <img data-src="images/Swiss_SEM_team.png" style="width:100.0%" class="r-stretch"><ul>
 <li>Dr.&nbsp;Noémie Pichon, Dr.&nbsp;Fletcher Halliday, Dr.&nbsp;Eliane Meier, Dr.&nbsp;Hugo Saiz, Dr.&nbsp;Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course design)</li>
-<li>Dr.&nbsp;Rachel Korn (course development: exercises)</li>
-<li>Dr.&nbsp;Frank Pennekamp (course development: exercises and slides, instructor)</li>
+<li>Dr.&nbsp;Rachel Korn (course development: exercises and solutions)</li>
+<li>Dr.&nbsp;Frank Pennekamp (course development: exercises, solutions and slides, instructor)</li>
 </ul>
 </section>
 <section id="schedule-content" class="slide level2 smaller">
@@ -436,13 +371,13 @@ Frank Pennekamp
 <ul>
 <li>General introduction to SEM to model ecological systems (lecture)</li>
 <li>Fitting SEMs to data (live demo)</li>
-<li>Model evaluation and reporting (exercises)</li>
+<li>Case study: fitting SEMs to data (exercises)</li>
 <li>Work on your research question / meta-model (self-study)</li>
 </ul></li>
 <li><em>Day 2</em>:
 <ul>
 <li>Constructs: latent and composite variables (lecture)</li>
-<li>Fitting SEMs to data (live demo &amp; exercises)</li>
+<li>Fitting SEMs to data (live demo &amp; case study exercises)</li>
 <li>Work on your research question / SEM model (self-study)</li>
 </ul></li>
 <li><em>Day 3</em>:
@@ -461,8 +396,8 @@ Frank Pennekamp
 <ul>
 <li>Global estimation of SEMs with R package lavaan (including latents and composites)</li>
 <li>Hands-on exercises and live coding</li>
-<li>All exercises about one ecological dataset (Seabloom et al.&nbsp;2020)</li>
-<li>Develop SEM model for your own data</li>
+<li>A single ecological dataset for demonstration (Seabloom et al.&nbsp;2020)</li>
+<li>Develop your own SEM model</li>
 </ul></li>
 </ul>
 <div class="fragment">
@@ -472,8 +407,8 @@ Frank Pennekamp
 <li>Local estimation of SEMs (with R package piecewiseSEM)</li>
 <li>Advanced topics:
 <ul>
-<li>random effects</li>
-<li>feedback loops</li>
+<li>integrate random effects</li>
+<li>disentangle feedback loops</li>
 <li>dealing with spatial and temporal autocorrelation</li>
 </ul></li>
 </ul></li>
@@ -482,12 +417,15 @@ Frank Pennekamp
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning objectives</h2>
+<p>You can:</p>
 <div>
 <ul>
-<li class="fragment">Participants understand the pros and cons of SEMs for drawing inferences from data.</li>
-<li class="fragment">Participants understand path models, as well as latent and composites variables.</li>
-<li class="fragment">Participants can assess and interpret SEMs reported in the literature.</li>
-<li class="fragment">Participants are able to fit SEMs to their datasets with the R package <code>lavaan</code> and present them graphically.</li>
+<li class="fragment">translate your research question into a meta-model.</li>
+<li class="fragment">fit a SEMs with the R package <code>lavaan</code>.</li>
+<li class="fragment">assess the quality of a fitted SEM<br>
+</li>
+<li class="fragment">interpret your SEM model and those reported by others.</li>
+<li class="fragment">present SEMs graphically.</li>
 </ul>
 </div>
 <!-- ## Course materials
@@ -513,8 +451,8 @@ Frank Pennekamp
 <ul>
 <li class="fragment">Ecological systems characterized by complex network of interactions between organisms and the environment.</li>
 <li class="fragment">Research questions are often about cause-effect relationships.</li>
-<li class="fragment">Hypotheses about how things could be connected in ecological systems (e.g., species interactions, drivers).</li>
-<li class="fragment">Data and statistics allow us to test these hypotheses.</li>
+<li class="fragment">Create hypotheses about how things could be connected in ecological systems (e.g., species interactions, drivers).</li>
+<li class="fragment">Test these hypotheses using data and statistics.</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="images/ecosystem.jpg"></p>
@@ -535,15 +473,14 @@ Frank Pennekamp
           display:block!important;
       }</style></aside>
 </section>
-<section id="understanding-causes" class="slide level2 smaller">
-<h2>Understanding causes</h2>
+<section id="why-is-understanding-causes-important" class="slide level2 smaller">
+<h2>Why is understanding causes important?</h2>
 <div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Why is understanding causes important?
+<li class="fragment">Causes = mechanisms
 <ul>
-<li class="fragment">Causes = mechanisms</li>
 <li class="fragment">Allows us to predict the behaviour of a system</li>
 <li class="fragment">Justify interventions (e.g., eradication of invasive species, habitat restoration for threatened species)</li>
 </ul></li>
@@ -567,7 +504,7 @@ Frank Pennekamp
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Causation: everything else being equal, causing variation in X leading to variation in Y (=X causes Y).</li>
+<li class="fragment">Causation: causing variation in X leading to variation in Y (=X causes Y), everything else being equal.</li>
 <li class="fragment">Experiments required to isolate effect of X on Y.</li>
 <li class="fragment">Randomized controlled trials as gold standard to infer causes</li>
 <li class="fragment">Problem: conducting experiments can be unethical or unfeasible.</li>
@@ -681,7 +618,7 @@ Sewell Wright, 1923</p>
 <div>
 <ul>
 <li class="fragment">Graph specifying putative cause-effect relationships.</li>
-<li class="fragment">Data-generating mechanisms leading to a set of observational expectations.</li>
+<li class="fragment">Data-generating mechanisms lead to a set of observational expectations.</li>
 <li class="fragment">Causal diagrams are based on directed acyclic graphs (DAGs).</li>
 </ul>
 </div>
@@ -692,14 +629,12 @@ Sewell Wright, 1923</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
+<li class="fragment">Directed = unidirectional.</li>
+<li class="fragment">Acyclic = no cylces (=causal loops) permitted.</li>
 <li class="fragment">Variables are nodes (boxes).</li>
 <li class="fragment">Edges (one-headed arrows) are causal relationships such as X affects Y.<br>
 </li>
-<li class="fragment">Directed = unidirectional.<br>
-</li>
 <li class="fragment">Edges can have any functional shape.</li>
-<li class="fragment">Acyclic = no causal loops permitted.<br>
-</li>
 <li class="fragment">Omitted links and nodes have empirical implications (= assumptions about the causal diagram)</li>
 <li class="fragment">U variables represent unmeasured causes.</li>
 </ul>
@@ -836,9 +771,9 @@ environment-&gt;function
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Only observed variables.</li>
-<li class="fragment">Correlations between predictors usually ignored (up to threshold).</li>
-<li class="fragment">Only direct effects on Y.</li>
+<li class="fragment">Relates observed variables to each other.</li>
+<li class="fragment">Only direct effects on Y considered.</li>
+<li class="fragment">Correlations between predictors ignored, unless very high (r &gt;0.9).</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-fig-width="4">
@@ -922,11 +857,12 @@ E-&gt;Y
 </section>
 <section id="a-simple-linear-regression" class="slide level2">
 <h2>A simple linear regression</h2>
-<div class="cell" data-fig-width="4">
+<p><code>lm(biomass ~ precipitation)</code></p>
+<div class="cell" data-fig-width="5" data-fig-height="2">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="384" height="480" viewbox="0.00 0.00 185.81 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="480" height="192" viewbox="0.00 0.00 185.81 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-40 181.81,-40 181.81,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
 <title>
 X1
@@ -947,7 +883,6 @@ X1-&gt;X2
 </div>
 <div>
 <ul>
-<li class="fragment"><code>lm(biomass ~ precipitation)</code></li>
 <li class="fragment">Regression coefficient quantifies the direction and strength of relationship.<br>
 </li>
 <li class="fragment">How much change in Y for one unit change in X.</li>
@@ -956,11 +891,12 @@ X1-&gt;X2
 </section>
 <section id="multiple-regression" class="slide level2 smaller">
 <h2>Multiple regression</h2>
-<div class="cell" data-fig-width="4">
+<p><code>lm(biomass ~  nutrients + precipitation + richness + evenness)</code></p>
+<div class="cell" data-fig-width="4" data-fig-height="4">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="384" height="480" viewbox="0.00 0.00 264.54 260.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="384" height="384" viewbox="0.00 0.00 264.54 260.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-256 260.54,-256 260.54,4 -4,4"></polygon> <!-- X1 --> <g id="node1" class="node">
 <title>
 X1
@@ -1029,7 +965,6 @@ X4-&gt;Y:w
 </div>
 <div>
 <ul>
-<li class="fragment"><code>lm(biomass ~ precipitation + nutrients + ...)</code></li>
 <li class="fragment">More than one independent variable<br>
 </li>
 <li class="fragment">Estimates partial effects (i.e.&nbsp;effect of precipitation on biomass when nutrient addition is fixed)<br>
@@ -1153,10 +1088,11 @@ environment-&gt;diversity
 <h2>Structural equation model</h2>
 <div>
 <ul>
-<li class="fragment">A series of equations united in a single causal network.</li>
-<li class="fragment">System thinking = causal relationships between multiple variables.</li>
+<li class="fragment">Multiple (regression) equations in a single framework.</li>
+<li class="fragment">Embraces the correlations between variables.</li>
+<li class="fragment">Allow understanding of potentially causal relationships between variables (= system thinking).</li>
 <li class="fragment">Allow testing both direct and indirect effects.</li>
-<li class="fragment">Incorporate observed and unobserved variables (i.e., ‘latent / composite’).</li>
+<li class="fragment">Can incorporate observed and unobserved variables.</li>
 </ul>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1283,11 +1219,15 @@ U1-&gt;X3
 </section>
 <section id="structural-equation-model-1" class="slide level2 smaller">
 <h2>Structural equation model</h2>
-<div class="cell" data-fig-width="6">
+<p><code>lm(richness ~ nutrients)</code><br>
+<code>lm(evenness ~ nutrients)</code><br>
+<code>lm(biomass ~ richness + evenness + nutrients)</code><br>
+</p>
+<div class="cell" data-fig-width="5" data-fig-height="2">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="576" height="480" viewbox="0.00 0.00 330.76 118.33" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="480" height="192" viewbox="0.00 0.00 330.76 118.33" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 114.33)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-114.33 326.76,-114.33 326.76,4 -4,4"></polygon> <!-- nutrients --> <g id="node1" class="node">
 <title>
 nutrients
@@ -1330,82 +1270,20 @@ richness-&gt;biomass
 </div>
 </div>
 </div>
-<p><code>lm(richness ~ nutrients)</code><br>
-<code>lm(evenness ~ nutrients)</code><br>
-<code>lm(biomass ~ richness + evenness + nutrients)</code><br>
-</p>
 <div>
 <ul>
-<li class="fragment">Multiple independent and dependent variables</li>
-<li class="fragment">Exogenous variables: only have paths emanating from them, not going into them.<br>
-</li>
-</ul>
-</div>
-</section>
-<section id="structural-equation-model-2" class="slide level2 smaller">
-<h2>Structural equation model</h2>
-<div class="cell" data-fig-width="6">
-<div class="cell-output-display">
-<div>
-<div>
-<svg width="576" height="480" viewbox="0.00 0.00 330.76 118.33" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 114.33)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-114.33 326.76,-114.33 326.76,4 -4,4"></polygon> <!-- nutrients --> <g id="node1" class="node">
-<title>
-nutrients
-</title>
-<polygon fill="none" stroke="black" points="69.55,-56.33 0.15,-56.33 0.15,-20.33 69.55,-20.33 69.55,-56.33"></polygon> <text text-anchor="middle" x="34.85" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text> </g> <!-- evenness --> <g id="node2" class="node">
-<title>
-evenness
-</title>
-<polygon fill="none" stroke="black" points="218.59,-110.33 142.73,-110.33 142.73,-74.33 218.59,-74.33 218.59,-110.33"></polygon> <text text-anchor="middle" x="180.66" y="-88.13" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text> </g> <!-- nutrients&#45;&gt;evenness --> <g id="edge2" class="edge">
-<title>
-nutrients-&gt;evenness
-</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M64.5,-56.47C80.06,-64.72 95.88,-69.93 132.68,-79.77"></path> <polygon fill="black" stroke="black" points="131.93,-83.19 142.5,-82.38 133.73,-76.43 131.93,-83.19"></polygon> </g> <!-- richness --> <g id="node3" class="node">
-<title>
-richness
-</title>
-<polygon fill="none" stroke="black" points="214.79,-56.33 146.53,-56.33 146.53,-20.33 214.79,-20.33 214.79,-56.33"></polygon> <text text-anchor="middle" x="180.66" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text> </g> <!-- nutrients&#45;&gt;richness --> <g id="edge1" class="edge">
-<title>
-nutrients-&gt;richness
-</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M69.87,-29.82C85.94,-27.39 101.83,-28.3 136.33,-32.56"></path> <polygon fill="black" stroke="black" points="136.22,-36.08 146.57,-33.86 137.09,-29.13 136.22,-36.08"></polygon> </g> <!-- biomass --> <g id="node4" class="node">
-<title>
-biomass
-</title>
-<polygon fill="none" stroke="black" points="322.82,-56.33 254.56,-56.33 254.56,-20.33 322.82,-20.33 322.82,-56.33"></polygon> <text text-anchor="middle" x="288.69" y="-34.13" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text> </g> <!-- nutrients&#45;&gt;biomass --> <g id="edge5" class="edge">
-<title>
-nutrients-&gt;biomass
-</title>
-<path fill="none" stroke="red" d="M69.75,-24.55C150.14,6.63 170.15,7.8 245.17,-21.05"></path> <polygon fill="red" stroke="red" points="244.01,-24.35 254.6,-24.72 246.55,-17.83 244.01,-24.35"></polygon> </g> <!-- evenness&#45;&gt;biomass --> <g id="edge3" class="edge">
-<title>
-evenness-&gt;biomass
-</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M218.63,-79.09C238.26,-72.06 249.64,-67.4 258.74,-62.14"></path> <polygon fill="black" stroke="black" points="260.84,-64.95 267.3,-56.55 257.02,-59.08 260.84,-64.95"></polygon> </g> <!-- richness&#45;&gt;biomass --> <g id="edge4" class="edge">
-<title>
-richness-&gt;biomass
-</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M214.74,-34.97C227.54,-33.78 236.87,-33.06 244.46,-32.82"></path> <polygon fill="black" stroke="black" points="244.55,-36.32 254.54,-32.81 244.54,-29.32 244.55,-36.32"></polygon> </g> </g>
-</svg>
-</div>
-</div>
-</div>
-</div>
-<p><code>lm(richness ~ nutrients)</code><br>
-<code>lm(evenness ~ nutrients)</code><br>
-<code>lm(biomass ~ richness + evenness + nutrients)</code><br>
-</p>
-<div>
+<li class="fragment">Exogenous variables:
 <ul>
-<li class="fragment">Endogenous variables have paths directed into them.
-<ul>
-<li class="fragment">An endogenous variable can also have arrows directing out of it.<br>
-</li>
-<li class="fragment">Endogenous variables must be predicted.<br>
+<li class="fragment">only have out-going paths.<br>
 </li>
 </ul></li>
-<li class="fragment">Indirect effect is the effect of an independent variable on a dependent variable through one or more intervening or mediating variables.<br>
+<li class="fragment">Endogenous variables:
+<ul>
+<li class="fragment">have in-going paths</li>
+<li class="fragment">can have out-going paths.<br>
 </li>
+<li class="fragment">must be predicted.</li>
+</ul></li>
 </ul>
 </div>
 </section>
@@ -1423,11 +1301,11 @@ richness-&gt;biomass
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell" data-fig-width="5">
+<div class="cell" data-fig-width="5" data-fig-height="2">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="480" height="480" viewbox="0.00 0.00 285.96 76.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="480" height="192" viewbox="0.00 0.00 285.96 76.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 72)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-72 281.96,-72 281.96,4 -4,4"></polygon> <text text-anchor="middle" x="138.98" y="-46" font-family="Times,serif" font-size="20.00">Full mediation</text> <!-- nutrients --> <g id="node1" class="node">
 <title>
 nutrients
@@ -1455,11 +1333,11 @@ richness-&gt;biomass
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="cell" data-fig-width="5">
+<div class="cell" data-fig-width="5" data-fig-height="2">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="480" height="480" viewbox="0.00 0.00 285.96 112.59" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="480" height="192" viewbox="0.00 0.00 285.96 112.59" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108.59)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-108.59 281.96,-108.59 281.96,4 -4,4"></polygon> <text text-anchor="middle" x="138.98" y="-82.59" font-family="Times,serif" font-size="20.00">Partial mediation</text> <!-- nutrients --> <g id="node1" class="node">
 <title>
 nutrients
@@ -1566,10 +1444,11 @@ richness-&gt;biomass
 <h1>Global estimation in a nutshell</h1>
 
 </section>
-<section id="scatterplot-matrix-of-observed-variables" class="slide level2">
-<h2>Scatterplot matrix of observed variables</h2>
+<section id="observed-variables" class="slide level2">
+<h2>Observed variables</h2>
 
-<img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:90.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-14-1.png" style="width:90.0%" class="r-stretch quarto-figure-center"><p>Scatter plots of observed variables and fitted lines.</p>
+</section>
 <section id="variance-covariance-matrix-estimated-from-data" class="slide level2 smaller">
 <h2>Variance-covariance matrix estimated from data</h2>
 <div class="cell" data-layout-align="center">
@@ -1743,65 +1622,24 @@ Var3-&gt;Var4
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-19-1.png" style="width:90.0%"></p>
+<p><img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-18-1.png" style="width:90.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="model-evaluation" class="title-slide slide level1 center">
-<h1>Model evaluation</h1>
-
 </section>
-<section id="model-fit-measures" class="slide level2 smaller">
-<h2>Model fit measures</h2>
-<ul>
-<li><em><span class="math inline">\(\chi^2\)</span> statistic</em>
-<ul>
-<li>compare the model-implied to the observed variance-covariance</li>
-<li>good fit when <span class="math inline">\(\chi^2\)</span> statistic is small (P &gt; 0.05)<br>
-</li>
-<li>sample-size dependent</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li><em>Comparative fit index (CFI)</em>:
-<ul>
-<li>deviation from a ‘null’ model (variances estimated but covariances set to 0).</li>
-<li>higher is better, &gt; 0.95 is considered good.</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li><em>Root-mean squared error of approximation (RMSEA)</em>
-<ul>
-<li>statistic penalizes models based on sample size</li>
-<li>&lt; 0.10 is acceptable, and anything &lt; 0.06 is good</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li><em>Standardized root-mean squared residual (SRMR)</em>
-<ul>
-<li>standardized difference between the observed and predicted correlations</li>
-<li>&lt; 0.08 is considered good</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="graces-8-rules-of-path-coefficients" class="slide level2">
-<h2>Grace’s 8 rules of path coefficients</h2>
+<section id="interpreting-path-coefficients-8-rules" class="slide level2">
+<h2>Interpreting path coefficients (8 rules)</h2>
 <!-- https://jslefche.github.io/sem_book/global-estimation.html -->
+<div>
 <ul>
-<li>The inferential heart of structural equation modeling are the model coefficients.</li>
-<li>Understanding the meaning of the model coefficients needed to interpret SEM.</li>
+<li class="fragment">Path coefficients inferential heart of structural equation modeling.</li>
+<li class="fragment">Understanding how to interpret path coefficients necessary for robust SEM inference.</li>
+<li class="fragment">Important to be aware of the defaults of SEM software, such as <code>lavaan</code>.</li>
 </ul>
+</div>
 </section>
 <section id="rule-1" class="slide level2 smaller">
 <h2>Rule 1</h2>
@@ -1911,7 +1749,7 @@ Y2
 <title>
 X-&gt;Y2
 </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M27,-36.42C27,-45.28 27,-54 27,-54 27,-54 213,-54 213,-54 213,-54 213,-46.42 213,-46.42"></path> <polygon fill="black" stroke="black" points="216.5,-46.42 213,-36.42 209.5,-46.42 216.5,-46.42"></polygon> <text text-anchor="start" x="71.78" y="-59.2" font-family="Times,serif" font-size="14.00">γ</text> <text text-anchor="start" x="78.78" y="-59.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y1</text> <text text-anchor="start" x="109.5" y="-59.2" font-family="Times,serif" font-size="14.00"> * β</text> <text text-anchor="start" x="130.5" y="-59.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">Y1,Y2</text> </g> <!-- Y1&#45;&gt;Y2 --> <g id="edge3" class="edge">
+<path fill="none" stroke="white" stroke-dasharray="5,2" d="M27,-36.42C27,-45.28 27,-54 27,-54 27,-54 213,-54 213,-54 213,-54 213,-46.42 213,-46.42"></path> <polygon fill="white" stroke="white" points="216.5,-46.42 213,-36.42 209.5,-46.42 216.5,-46.42"></polygon> <text text-anchor="start" x="71.78" y="-59.2" font-family="Times,serif" font-size="14.00">γ</text> <text text-anchor="start" x="78.78" y="-59.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">X,Y1</text> <text text-anchor="start" x="109.5" y="-59.2" font-family="Times,serif" font-size="14.00"> * β</text> <text text-anchor="start" x="130.5" y="-59.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">Y1,Y2</text> </g> <!-- Y1&#45;&gt;Y2 --> <g id="edge3" class="edge">
 <title>
 Y1-&gt;Y2
 </title>
@@ -2287,6 +2125,50 @@ X3-&gt;Y
 <li class="fragment">Linear relationships</li>
 </ul>
 </div>
+</section></section>
+<section>
+<section id="model-evaluation" class="title-slide slide level1 center">
+<h1>Model evaluation</h1>
+
+</section>
+<section id="model-fit-measures" class="slide level2 smaller">
+<h2>Model fit measures</h2>
+<ul>
+<li><em><span class="math inline">\(\chi^2\)</span> statistic</em>
+<ul>
+<li>compare the model-implied to the observed variance-covariance</li>
+<li>good fit when <span class="math inline">\(\chi^2\)</span> statistic is small (P &gt; 0.05)<br>
+</li>
+<li>sample-size dependent</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><em>Comparative fit index (CFI)</em>:
+<ul>
+<li>deviation from a ‘null’ model (variances estimated but covariances set to 0).</li>
+<li>higher is better, &gt; 0.95 is considered good.</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Root-mean squared error of approximation (RMSEA)</em>
+<ul>
+<li>statistic penalizes models based on sample size</li>
+<li>&lt; 0.10 is acceptable, and anything &lt; 0.06 is good</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Standardized root-mean squared residual (SRMR)</em>
+<ul>
+<li>standardized difference between the observed and predicted correlations</li>
+<li>&lt; 0.08 is considered good</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section id="troubleshooting-pathological-models-a.k.a.-heywood-cases" class="slide level2">
 <h2>Troubleshooting pathological models (a.k.a. Heywood cases)</h2>
@@ -2302,8 +2184,6 @@ X3-&gt;Y
 <li>Reasons for the warnings can be:
 <ol type="1">
 <li>Slightly negative error estimates (not really a problem)<br>
-</li>
-<li>Indicators for latent variables need to be positively correlated<br>
 </li>
 <li>Local non-identification of parameters<br>
 </li>
@@ -2346,6 +2226,48 @@ X3-&gt;Y
 <p>The LHS is how many pieces of information we want to know.<br>
 RHS: information we have (number of unique cells in the observed variance-covariance matrix).</p>
 </section>
+<section id="variable-types-continuous" class="slide level2">
+<h2>Variable types: continuous</h2>
+<div>
+<ul>
+<li class="fragment">Exogenous variables:
+<ul>
+<li class="fragment">No limitations, can be used as endo- and exogenous variables</li>
+</ul></li>
+<li class="fragment">Endogenous variables:
+<ul>
+<li class="fragment">lavaan can only handle Gaussian error distribution; for other error distributions consider piecewiseSEM package.</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="variable-types-categorical" class="slide level2">
+<h2>Variable types: categorical</h2>
+<div>
+<!-- https://personality-project.org/r/tutorials/summerschool.14/rosseel_sem_cat.pdf 
+
+https://www.aggieerin.com/post/quick-and-dirty-categorical-lavaan/
+
+-->
+<ul>
+<li class="fragment">Includes binary (yes/no, failure/success, etc.), nominal (site 1, site 2), or ordinal levels (small &lt; medium &lt; large) variables.
+<ul>
+<li class="fragment">nominal variables currently not covered by lavaan</li>
+</ul></li>
+<li class="fragment">Exogenous variables:
+<ul>
+<li class="fragment">code binary variables as dummy variable (0/1)</li>
+<li class="fragment">if more than 2 levels, create multiple dummy variables</li>
+</ul></li>
+<li class="fragment">Endogenous variables:
+<ul>
+<li class="fragment">for binary and ordinal variables, use R’s <code>ordered()</code> function to specify the order, or use <code>ordered=</code> argument.</li>
+<li class="fragment">when <code>ordered=</code> argument is used, WLSMV estimator is used by lavaan.</li>
+</ul></li>
+<li class="fragment">Bootstrapping approach to get robust standard error estimates due to non-normal errors when dealing with categorical variables.</li>
+</ul>
+</div>
+</section>
 <section id="data-requirements" class="slide level2">
 <h2>Data requirements</h2>
 <div>
@@ -2372,78 +2294,34 @@ RHS: information we have (number of unique cells in the observed variance-covari
 <li>Interpret model coefficients</li>
 <li>Present results visually</li>
 </ol>
-</section>
-<section id="basic-lavaan-syntax" class="slide level2">
-<h2>Basic lavaan syntax</h2>
-<p>Define model:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>mod.form  <span class="ot">&lt;-</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="st">"Y ~ X1 + X2 + x3</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="st">X3 ~ X1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Fit model:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>mod.fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(mod.form , <span class="at">data =</span> dat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="lavaan-syntax" class="slide level2 smaller">
-<h2>Lavaan syntax</h2>
-<table>
-<colgroup>
-<col style="width: 18%">
-<col style="width: 9%">
-<col style="width: 36%">
-<col style="width: 36%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Formula type</th>
-<th style="text-align: left;">R</th>
-<th style="text-align: left;">Meaning</th>
-<th style="text-align: left;">Example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">regression</td>
-<td style="text-align: left;"><code>~</code></td>
-<td style="text-align: left;">is regressed on</td>
-<td style="text-align: left;"><code>y ~ x</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">correlation</td>
-<td style="text-align: left;"><code>~~</code></td>
-<td style="text-align: left;">correlate errors for</td>
-<td style="text-align: left;"><code>x1 ~~ x2</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">intercept</td>
-<td style="text-align: left;"><code>~ 1</code></td>
-<td style="text-align: left;">estimate mean for <code>y</code></td>
-<td style="text-align: left;"><code>y ~ 1</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">labelling</td>
-<td style="text-align: left;"><code>*</code></td>
-<td style="text-align: left;">name coefficients</td>
-<td style="text-align: left;"><code>y ~ b1*x1 + b2*x2</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">defining</td>
-<td style="text-align: left;"><code>:=</code></td>
-<td style="text-align: left;">define quantity</td>
-<td style="text-align: left;"><code>Total := b1*b3 + b2</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">latent</td>
-<td style="text-align: left;"><code>=~</code></td>
-<td style="text-align: left;">set reflective indicators</td>
-<td style="text-align: left;"><code>LV =~ x1 + x2 + x3</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">composite</td>
-<td style="text-align: left;"><code>&lt;~</code></td>
-<td style="text-align: left;">set formative indicators</td>
-<td style="text-align: left;"><code>Comp &lt;~ 1*x1 + x2 + x3</code></td>
-</tr>
-</tbody>
-</table>
+<!-- ## Basic lavaan syntax
+
+Define model:
+
+```r
+mod.form  <-
+"Y ~ X1 + X2 + x3
+X3 ~ X1
+````
+
+Fit model:
+
+```r
+mod.fit <- sem(mod.form , data = dat1)
+```
+
+## Lavaan syntax {.smaller}
+
+| Formula type | R     | Meaning                   | Example                   |
+|:-------------|:------|:--------------------------|:--------------------------|
+| regression   | `~`   | is regressed on           | `y ~ x`                   |
+| correlation  | `~~`  | correlate errors for      | `x1 ~~ x2`                |
+| intercept    | `~ 1` | estimate mean for `y`     | `y ~ 1`                   |
+| labelling    | `*`   | name coefficients         | `y ~ b1*x1 + b2*x2`       |
+| defining     | `:=`  | define quantity           | `Total := b1*b3 + b2`     |
+| latent       | `=~`  | set reflective indicators | `LV =~ x1 + x2 + x3`      |
+| composite    | `<~`  | set formative indicators  | `Comp <~ 1*x1 + x2 + x3`  |
+-->
 </section></section>
 <section id="questions-1" class="title-slide slide level1 center">
 <h1>Questions?</h1>
@@ -2575,14 +2453,18 @@ biodiversity-&gt;biomass
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-meta-model" class="slide level2 smaller">
+<section id="the-meta-model" class="slide level2">
 <h2>The meta-model</h2>
-<div class="cell" data-fig-width="6" data-fig-height="6">
+<div class="cell" data-fig-width="12" data-fig-height="5">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="576" height="576" viewbox="0.00 0.00 388.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 384.44,-215 384.44,4 -4,4"></polygon> <g id="clust1" class="cluster">
+<svg width="1152" height="480" viewbox="0.00 0.00 388.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 384.44,-215 384.44,4 -4,4"></polygon> <g id="clust3" class="cluster">
+<title>
+cluster_prod
+</title>
+<polygon fill="none" stroke="lightgrey" points="288.31,-54 288.31,-126 372.44,-126 372.44,-54 288.31,-54"></polygon> <text text-anchor="middle" x="330.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text> </g> <g id="clust1" class="cluster">
 <title>
 cluster_bio
 </title>
@@ -2590,11 +2472,7 @@ cluster_bio
 <title>
 cluster_env
 </title>
-<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <g id="clust3" class="cluster">
-<title>
-cluster_prod
-</title>
-<polygon fill="none" stroke="lightgrey" points="288.31,-54 288.31,-126 372.44,-126 372.44,-54 288.31,-54"></polygon> <text text-anchor="middle" x="330.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text> </g> <!-- evenness --> <g id="node1" class="node">
+<polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon> <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text> </g> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
 </title>
@@ -2673,8 +2551,15 @@ disturbance-&gt;biomass
 <section id="exercise-1" class="slide level2">
 <h2>Exercise 1</h2>
 <ul>
-<li>Exploration of dataset (variables and treatments)</li>
-<li>Check collinearity and normality</li>
+<li>Load and aggregate the Seabloom dataset (data and code provided)</li>
+<li>Check collinearity of the following variables:
+<ul>
+<li>nadd, disk, nadd, rich, even, ens.pie, mass.above</li>
+</ul></li>
+<li>Check multivariate normality of the following variables:
+<ul>
+<li>rich, even, mass.above</li>
+</ul></li>
 <li>Fit multiple linear regression models to estimate coefficients
 <ul>
 <li>direct effects of environmental predictors on above ground biomass (AGB)</li>
@@ -2683,13 +2568,13 @@ disturbance-&gt;biomass
 <li>What do you conclude?</li>
 </ul>
 </section>
-<section id="exercise-2" class="slide level2 smaller">
+<section id="exercise-2" class="slide level2">
 <h2>Exercise 2</h2>
-<div class="cell" data-fig-width="6">
+<div class="cell" data-fig-width="10" data-fig-height="4">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="576" height="480" viewbox="0.00 0.00 384.44 182.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="960" height="384" viewbox="0.00 0.00 384.44 182.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 178)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-178 380.44,-178 380.44,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
@@ -2744,19 +2629,19 @@ disturbance-&gt;biomass
 <li>Fit the above DAG to the Seabloom data:
 <ul>
 <li>Assess model goodness of fit.</li>
-<li>Investigate the modification indices. Are there paths to add that are reasonable?</li>
+<li>Investigate the modification indices. Any paths that need adding?</li>
 <li>Check model summary.</li>
 </ul></li>
 <li>What do you conclude?</li>
 </ul>
 </section>
-<section id="exercise-3" class="slide level2 smaller">
+<section id="exercise-3" class="slide level2">
 <h2>Exercise 3</h2>
-<div class="cell" data-fig-width="6">
+<div class="cell" data-fig-width="10" data-fig-height="4">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="576" height="480" viewbox="0.00 0.00 384.44 218.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="960" height="384" viewbox="0.00 0.00 384.44 218.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 214)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-214 380.44,-214 380.44,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
@@ -2820,13 +2705,13 @@ disturbance-&gt;biomass
 </ul></li>
 </ul>
 </section>
-<section id="exercise-4" class="slide level2 smaller">
+<section id="exercise-4" class="slide level2">
 <h2>Exercise 4</h2>
-<div class="cell" data-fig-width="6">
+<div class="cell" data-fig-width="10" data-fig-height="4">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="576" height="480" viewbox="0.00 0.00 384.44 166.71" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="960" height="384" viewbox="0.00 0.00 384.44 166.71" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 162.71)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-162.71 380.44,-162.71 380.44,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
@@ -2899,13 +2784,13 @@ disturbance-&gt;biomass
 <li>What do you conclude?</li>
 </ul>
 </section>
-<section id="exercise-5" class="slide level2 smaller">
+<section id="exercise-5" class="slide level2">
 <h2>Exercise 5</h2>
-<div class="cell" data-fig-width="6">
+<div class="cell" data-fig-width="10" data-fig-height="4">
 <div class="cell-output-display">
 <div>
 <div>
-<svg width="576" height="480" viewbox="0.00 0.00 384.44 146.09" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="960" height="384" viewbox="0.00 0.00 384.44 146.09" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 142.09)"> <polygon fill="white" stroke="transparent" points="-4,4 -4,-142.09 380.44,-142.09 380.44,4 -4,4"></polygon> <!-- evenness --> <g id="node1" class="node">
 <title>
 evenness
