@@ -142,6 +142,8 @@ Alternative wording could be "How would you draw the model output for a manuscri
 
 ##  Explanatory power 
 
+- Report residual error or $R^2$ for endogenous variables
+
 :::::::::::::: {.columns}
 ::: {.column}
 ![](images/R2_endogenous.png){height=50%}
@@ -152,7 +154,6 @@ Alternative wording could be "How would you draw the model output for a manuscri
 :::
 ::::::::::::::
 
-Report residual error or $R^2$ for endogenous variables
 
 ## Figures with additional quantities 
 
@@ -179,7 +180,7 @@ Report residual error or $R^2$ for endogenous variables
 
 - Dedicated packages available in R 
 
-## Plotting tools I: lavaanPlot package
+## Plotting tools I: lavaanPlot package 
 
 ```{r echo=F, results='hide'}
 library("lavaanPlot")
@@ -196,18 +197,18 @@ seabloom$mass.above <- seabloom$mass.above / 100
 
 
 prune <-
-"mass.above ~ nadd + rich + even + disk
+'mass.above ~ nadd + rich + even + disk
 rich ~ nadd 
 even ~ nadd
 
-rich ~~ even"
+rich ~~ even'
 
 fit.prune <- sem(prune, data = seabloom, estimator = "MLM")
 summary(fit.prune)
 ```
 
 
-```{r echo=T, out.height = '6in'}
+```{r echo=T, out.height = '5in'}
 
 lavaanPlot(model = fit.prune,
            node_options = list(shape = "box", color = "gray",

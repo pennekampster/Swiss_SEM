@@ -49,10 +49,9 @@ library(ggplot2)
 
 ::: incremental
 - Meta-model to connect general theory with data
-- Understand the direct and indirect cause-effect pathways in a system 
 - Theory is often more general than particular proxies used (e.g. climate change $\neq$ temperature change)
 - Constructs to model:
-  - Unobserved variables
+  - Unobserved latent variables
   - Composites of multiple causes
   - Interactions between variables
   - Nonlinear relationships
@@ -114,11 +113,11 @@ digraph  {
   -   represent joint causes, i.e. composite.
 :::
 
-## Latent variables
+## Latent variables {.smaller}
 
 ```{dot}
 //| fig-width: 6
-
+//| fig-height=: 1
 digraph  {
 
   graph [rankdir = LR]
@@ -144,17 +143,18 @@ digraph  {
 ```
 
 ::: incremental
--   In diagrams, latent variables are represented by oval node shape.\
--   Latent variables are unobserved, but influence is captured by indicator variable(s).\
--   Direction of causality flows from latent variable to the observed variable(s) (reflective indicators).
+-   Latent variables represented by oval node shape.\
+-   Latent variables are unobserved.
+-   Influence is captured by indicator variable(s).\
+-   Direction of causality flows from latent variable to the observed variable(s).
 -   Latent variables free of random or systematic measurement errors (unlike their indicators).
 :::
 
 ## Latent variables - a word of caution
 ::: incremental
 - The design of latent variables requires deep thinking and justification
-- You have to justify the use of particular indicators to define a latent
-- Just because you name a particular latent in a certain way, does not mean you capture the underling process (a.k.a. "naming fallacy")
+- The choice of particular indicators to define a latent variable needs justification.
+- The naming fallacy: naming a latent variable in a certain way does not guarantee you capture the underling process.
 :::
 
 ## Fitting latent variables
@@ -166,19 +166,19 @@ Latents fitted in two steps:
 1)  Confirmatory factor analysis (measurement model)
     -   Precursor to any SEM in which the latent variables appear.
     -   For multi-indicator latent variables: check that the same process generated multiple indicators.
-    -   All indicators need to be strongly correlated to the latent variable (i.e., the cause).
+    -   All indicators need to be strongly correlated to justify an underlying latent variable (i.e., the cause).
 
 
 . . .
 
 2)  Structural model
-    -   estimates relationships between multiple latent variables and latents on other variables.
+    -   Estimates relationships between multiple latent variables and between latent and other variables.
 
 ## Latent example: body size {.smaller}
 
 ```{dot}
 //| fig-width: 4
-//| fig-height=: 3
+//| fig-height=: 2
 digraph  {
 
     graph [rankdir = LR, fontname = Helvetica]
@@ -202,12 +202,12 @@ digraph  {
 ```
 
 ::: incremental
-- body size is a multidimensional concept
-  - multiple indicators of body size: mass, length, width
-  - identifiability: 
-    - loading of first indicator set to 1 by lavaan
-    - latents with two indicators require assumption (e.g. similar effect of indicators on latent).
-    - use standardized effect for interpretation.
+- Body size is a multidimensional concept
+  - Multiple indicators of body size: mass, length, width
+  - Identifiability: 
+    - Loading of first indicator set to 1 by lavaan
+    - Use standardized effect for interpretation.
+    - Latents with two indicators require assumption (e.g. similar effect of indicators on latent).
 :::
 
 
@@ -378,12 +378,12 @@ digraph boxes_and_circles {
 - Only standardised coefficients interpretable.
 :::
 
-## Example composite: model nonlinear effects{.smaller}
+## Example composite: model nonlinear effects
 
 
 ```{dot}
 //| fig-width: 8
-//| fig-height: 5
+//| fig-height: 2
 
 digraph boxes_and_circles {
    
@@ -456,10 +456,11 @@ Rules of thumb:
   - Adapt your meta-model accordingly.
 
 
-## Interactions {.smaller}
+## Interactions
 
 ```{dot}
 //| fig-width: 6
+//| fig-height: 3
 digraph boxes_and_circles {
 
   # a 'graph' statement
@@ -484,10 +485,10 @@ digraph boxes_and_circles {
 ```
 
 ::: incremental
--   In nature, things often are contingent on each other.
--   For instance, the effect of nutrients on plant growth, may depend on how disturbed the environment is.\
--   In regression models, an interaction coefficient estimates the effect of the product of the two predictors.\
--   The interaction coefficient describes the deviation from additivity (can be positive or negative).
+-   Effect of one variable may depend on another variable.
+-   E.g., nutrient effect on plant growth, may depend on whether the environment was disturbed in the past.\
+-   In a regression model, interaction coefficient estimates the effect of the product of the two predictors.\
+-   The interaction coefficient captures possible positive or negative deviation from additivity (e.g., the sum of the two effects in isolation).
 :::
 
 ## Interactions 

@@ -31,8 +31,8 @@ library(knitr)
 ## Quick introduction of participants
 
 -   Who are you?
--   Why do you want to learn about SEM?
 -   What is your research question?
+-   What do you know about SEM already?
 
 # General information
 
@@ -506,30 +506,6 @@ digraph G {
   
 }
 ```
-
-## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
-
-```{dot}
-//| fig-width: 10
-digraph G {
-
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .9,
-       rankdir = TB nodesep=1]
-
-
-  bgcolor="transparent"
-  resources -> function;
-  diversity -> function;
-  diversity:e -> resources:w [dir=both style="dashed"]
-  environment -> diversity;
-  environment -> resources;
-
-  
-   {rank=same; resources; diversity;}
-  
-}
-```
-
 
 ## Structural equation model {.smaller}
 
@@ -1234,7 +1210,7 @@ Correlation matrix:
   - r(X2, Y) = .4 + (.5 * .133) + (.2 * .167) = **.5** \   
   - r(X3, Y) = .167 + (.4 * .133) + (.2 * .4) = **.3**\
 
-All rules, except 6 apply.
+All rules, except rule 2, 5 and 6 apply.
 
 ## Unstandardized vs standardized coefficients
 
@@ -1246,18 +1222,17 @@ All rules, except 6 apply.
 - Only allow for comparisons within the same dataset.
 :::
 
-::: aside
+<!-- ::: aside
 $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
 where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)
-:::
+:::-->
 
 
 ## Assumptions of SEM with lavaan
 
 ::: {.incremental}
 -   (Multivariate) normality of endogenous (but not exogenous!) variables required
--   Global estimation based on variance-covariance matrix
--   Directed (acyclic) relationships
+-   Only acyclic relationships (no loops)
 -   Linear relationships
 ::: 
 
@@ -1306,7 +1281,6 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 ::: {.incremental}
 - Identifiability is a common issue in SEM
 - Some of the free parameters you are trying to estimate are interchangeable (e.g., a and b in `y = a*x + b*x + c`)
-- High correlation of parameters indicates identifiability issues.
 - Even an infinite amount of data does not allow to identify parameters precisely (e.g. one could be high the other low or vice-versa)
 - The more complex a SEM is, the more likely issues of identifiability will become
 - Fixing parameters or their variance may be needed to achieve model convergence (especially when latents or composites are involved).
@@ -1315,11 +1289,19 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 
 ## Model identification
 
-::: {.incremental}
--   Underidentified: not enough pieces of information to identify parameters uniquely (df \< 0).\
--   Saturated: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
--   Over-identified: parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
-:::
+- Underidentified: 
+  - Not enough pieces of information to identify parameters uniquely (df \< 0).\
+
+. . . 
+
+- Just identidied: 
+  - Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
+
+.  .  .
+
+- Over-identified: 
+  - Parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
+
 
 ## Model identification
 
@@ -1332,6 +1314,65 @@ $$ t \leq \frac{n (n + 1 )}{2} $$
 
 The LHS is how many pieces of information we want to know.\
 RHS: information we have (number of unique cells in the observed variance-covariance matrix).
+
+
+## Model identification example
+
+$$ t \leq \frac{n (n + 1 )}{2} $$
+
+*Unidentified:*
+
+- a + b = 8 
+- multiple possible solutions (e.g., a=7, b=1, a=6, b=2 ...)
+
+. . .
+
+*Just identified:*
+
+- add equation a = 3b allows to solve the system
+- Single solution a = 6 and b = 2 
+
+. . . 
+
+*Over-identified:*
+
+- add equation 2a - 4 = 4b gives us more information than we need 
+
+## Model identification example
+
+```{dot}
+//| fig-width: 6
+//| fig-height: 2
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR]
+
+  # 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  X 
+  Y1 
+  Y2
+  
+  # 'edge' statements
+  X -> Y1 [label = <&gamma;<SUB>X,Y1</SUB>> ]
+  Y1 -> Y2 [label = <&beta;<SUB>Y1,Y2</SUB>> ]
+
+
+}
+```
+
+Can we identify this simple mediation model?
+
+- How many many pieces of information do we have (n) and how many do we need to estimate (t)?
+
+
+. . . 
+
+$$ 5 \leq \frac{3 (3 + 1 )}{2} $$
+$$ 5 \leq 6 $$
+
 
 ## Variable types: continuous
 
@@ -1571,7 +1612,7 @@ digraph  {
 - Load and aggregate the Seabloom dataset (data and code provided)
 - Check collinearity of the following variables:
   - nadd, disk, nadd, rich, even, ens.pie, mass.above
-- Check multivariate normality of the following variables: 
+- Check multivariate normality of the following variables using the `mvn()` function in `library(MVN)`: 
   - rich, even, mass.above
 - Fit multiple linear regression models to estimate coefficients
     -   direct effects of environmental predictors on above ground biomass (AGB)
@@ -1616,7 +1657,7 @@ digraph  {
     -   Assess model goodness of fit.
     -   Investigate the modification indices. Any paths that need adding?
     -   Check model summary.
-- What do you conclude?
+- Do you have a valid model?
 
 ## Exercise 3 
 
@@ -1699,7 +1740,8 @@ digraph  {
     -   Model comparison with simpler model used in exercise 3.
     -   Perform model pruning.
     -   Decide on most parsimonious model and summarize model.
-- What do you conclude?
+- Which model best represents your system?
+- What inferences do you draw from your SEM?
 
 ## Exercise 5 
 
@@ -1720,11 +1762,12 @@ digraph  {
         nutrients;
         disturbance;
 
-    disturbance->richness [color="red"];
-    disturbance->evenness [color="red"];
+    disturbance->richness;
+    disturbance->evenness;
     nutrients->richness;
     nutrients->evenness;
     disturbance -> biomass [color="red"];
+    nutrients -> biomass [color="red"];
 
     evenness:e-> richness:e [dir=both; minlen=3; style="dashed"];
 
@@ -1740,5 +1783,5 @@ digraph  {
     -   Is there no, partial, or full mediation of disturbance on biomass via richness and eveness?
     -   Add paths from disturbance to richness and evenness, remove the direct paths to AGB (both nutrients and disturbance).
     -   Compare model fit to simple model. 
-- What do you conclude?
+- Which model better represents your data?
  
