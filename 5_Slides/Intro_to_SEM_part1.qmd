@@ -4,7 +4,7 @@ subtitle: "Day 1: Basic modelling"
 author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
-date: "11/5/2024"
+date: "11/5/2025"
 date-format: long
 format:
   revealjs: 
@@ -13,7 +13,7 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
-    footer: Introduction to SEM (2024)
+    footer: Introduction to SEM (2025)
     width: 1200
     height: 1000
 editor:
@@ -185,8 +185,11 @@ Bill Shipley (Cause and correlation in biology, 2004)
 ::: {.incremental}
 ::: columns
 ::: {.column width="100%"}
-- Inferring causes from observations is possible, but requires well justified assumptions.
-- Necessary to rule out confounding (i.e., backdoor paths).
+- Inferring causes from observations is possible, but requires to rule out confounding.
+- What is confounding?
+
+
+
 :::
 
 ::: {.column width="0%"}
@@ -194,54 +197,111 @@ Bill Shipley (Cause and correlation in biology, 2004)
 :::
 :::
 
+## Confounding
+
+> Confounding occurs when an outside variable influences both the independent variable (X) and the dependent variable (Y), creating a false impression of a causal relationship between them. This can lead to incorrect conclusions about the nature of the relationship.
 
 
-## How can we determine causality? 
-> The combination of knowledge of correlations with knowledge of causal relations, to obtain certain results, is a different thing from the deduction of causal relations from correlations.”    
-Sewell Wright, 1923
+```{dot}
+digraph confounding_classic {
+  rankdir = LR;
+  
+  node [shape = box, fontname = Helvetica, color = "gray"];
+  U [label = "U\n(Unobserved\nConfounder)", color = "red"];
+  X [label = "X\n(Predictor)"];
+  Y [label = "Y\n(Outcome)"];
+  
+  U -> X [color = "red", penwidth = 2];
+  U -> Y [color = "red", penwidth = 2];
+  X -> Y [style = "dashed"];
+  
+  label = "Example 1: Classic Confounding\nU affects both X and Y";
+  labelloc = "b";
+}
 
-::: {.incremental}
-::: columns
-::: {.column width="100%"}
-- Build knowledge from past observation
-- Design and conduct experiments
-- Test hypotheses
-- Develop theory 
-:::
-
-::: {.column width="0%"}
-:::
-:::
-:::
-
-
-
-
-## How can we evaluate causality? 
-- Build a hypothesized causal diagram
-![](images/A_priori_SEM.jpg){width="50%"}
-
-## How can we evaluate causality? 
-- Build a hypothesized causal diagram
-- Collect data
-
-## How can we evaluate causality? 
-- Build a hypothesized causal diagram
-- Collect data
-- Test data against diagram, extract inferences
-![](images/Final_SEM.jpg){width="50%"}
-
-## How can we evaluate causality? 
-- Build a hypothesized causal diagram
-- Collect data
-- Test data against diagram, extract inferences
-![](images/Final_SEM.jpg){width="50%"}
-- Repeat!
+```
 
 
-:::notes
-https://www.nature.com/articles/ncomms10541
-:::
+
+## Confounding example
+
+Correlation between ice cream sales and cases of drowning are both influenced by temperature (confounder).
+
+```{r, out.width="200%", fig.align='center'}
+
+
+# Demonstrating Confounding: Ice Cream Sales vs Drowning Deaths
+# A classic example showing how correlation does not imply causation
+
+# Load required libraries
+library(tidyverse)
+library(ggplot2)
+library(corrplot)
+
+# Create synthetic data based on realistic patterns
+set.seed(42)
+
+# Temperature is the confounder (in Celsius)
+temperature <- seq(5, 35, length.out = 12)  # Monthly temperatures
+
+# Ice cream sales increase with temperature
+ice_cream_sales <- 100 + 50 * temperature + rnorm(12, 0, 30)
+ice_cream_sales <- pmax(ice_cream_sales, 0)  # Ensure non-negative
+
+# Drowning deaths increase with temperature (people swim more)
+drowning_deaths <- 10 + 2 * temperature + rnorm(12, 0, 3)
+
+# Create a data frame
+data <- tibble(
+  month = month.abb,
+  temperature = temperature,
+  ice_cream_sales = ice_cream_sales,
+  drowning_deaths = drowning_deaths
+)
+
+# Create scatter plot showing the correlation
+scatter_plot <- data %>%
+  ggplot(aes(x = ice_cream_sales, y = drowning_deaths)) +
+  geom_point(size = 4, color = "steelblue", alpha = 0.7) +
+  geom_smooth(method = "lm", se = TRUE, color = "red", fill = "red", alpha = 0.2) +
+  labs(
+    title = "Ice Cream Sales vs Drowning Deaths",
+    subtitle = "Is this causal",
+    x = "Ice Cream Sales (arbitrary units)",
+    y = "Drowning Deaths (count)",
+    caption = paste("Correlation:", round(cor(data$ice_cream_sales, data$drowning_deaths), 3))
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(size = 12, color = "darkred"),
+    panel.grid = element_line(color = "lightgray")
+  )
+
+print(scatter_plot)
+
+```
+
+.  .  .
+
+```{dot}
+// Example 2: Ice cream sales and drowning
+// Temperature is the confounder
+digraph confounding_icecream {
+  rankdir = LR;
+  
+  node [shape = box, fontname = Helvetica, color = "gray"];
+  Temperature [label = "Temperature"];
+  IceCreamSales [label = "Ice Cream\nSales"];
+  Drowning [label = "Drowning\nDeaths"];
+  
+  Temperature -> IceCreamSales;
+  Temperature -> Drowning;
+  IceCreamSales -> Drowning [style = "dashed", label = "Spurious correlation"];
+  
+  labelloc = "b";
+}
+```
 
 
 
@@ -250,7 +310,7 @@ https://www.nature.com/articles/ncomms10541
 ::: {.incremental}
 -   Graph specifying putative cause-effect relationships.
 -   Data-generating mechanisms lead to a set of observational expectations.
--   Causal diagrams are based on directed acyclic graphs (DAGs).
+-   Formalized as Directed Acyclic Graphs (DAGs).
 :::
 
 ## Directed acyclic graphs {.smaller}
@@ -259,7 +319,7 @@ https://www.nature.com/articles/ncomms10541
 ::: columns
 ::: {.column width="50%"}
 - Directed = unidirectional. 
-- Acyclic = no cylces (=causal loops) permitted.
+- Acyclic = no cyclces (=causal loops) permitted.
 - Variables are nodes (boxes). 
 - Edges (one-headed arrows) are causal relationships such as X affects Y.  
 - Edges can have any functional shape. 
@@ -310,6 +370,56 @@ digraph {
 :::
 :::
 :::
+
+## How can we determine causality? 
+> The combination of knowledge of correlations with knowledge of causal relations, to obtain certain results, is a different thing from the deduction of causal relations from correlations.”    
+Sewell Wright, 1923
+
+::: {.incremental}
+::: columns
+::: {.column width="100%"}
+- Build knowledge from past observation
+- Design and conduct experiments
+- Test hypotheses
+- Develop theory 
+:::
+
+::: {.column width="0%"}
+:::
+:::
+:::
+
+
+
+
+## How can we evaluate causality? 
+- Build a hypothesized causal diagram
+![](images/A_priori_SEM.jpg){width="50%"}
+
+## How can we evaluate causality? 
+- Build a hypothesized causal diagram
+- Collect data
+
+## How can we evaluate causality? 
+- Build a hypothesized causal diagram
+- Collect data
+- Test data against diagram, extract inferences
+![](images/Final_SEM.jpg){width="50%"}
+
+## How can we evaluate causality? 
+- Build a hypothesized causal diagram
+- Collect data
+- Test data against diagram, extract inferences
+![](images/Final_SEM.jpg){width="50%"}
+- Repeat!
+
+
+:::notes
+https://www.nature.com/articles/ncomms10541
+:::
+
+
+
 
 
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
@@ -894,19 +1004,18 @@ pairs(d, pch = 19)
 :::
 :::
 
-## Interpreting path coefficients (8 rules)
+# Interpreting path coefficients
 
 <!-- https://jslefche.github.io/sem_book/global-estimation.html -->
 
-:::{.incremental}
+::: notes
 - Path coefficients inferential heart of structural equation modeling.
 - Understanding how to interpret path coefficients necessary for robust SEM inference.
 - Important to be aware of the defaults of SEM software, such as `lavaan`.
 :::
 
-## Rule 1 {.smaller}
+## Unspecified relationships among exogenous variables are their bivariate correlations. {.smaller}
 
-> Unspecified relationships among exogenous variables are their bivariate correlations.
 
 ```{dot}
 //| fig-width: 6
@@ -932,9 +1041,7 @@ digraph  {
 }
 ```
 
-## Rule 2 {.smaller}
-
-> When two variables are connected by a single path, the coefficient of that path is the regression coefficient.
+## When two variables are connected by a single path, the coefficient of that path is the regression coefficient. {.smaller}
 
 ```{dot}
 //| fig-width: 6
@@ -951,16 +1058,14 @@ digraph  {
   Y2
   
   # 'edge' statements
-  X -> Y1 [label = <&gamma;<SUB>X,Y1</SUB>> ]
-  Y1 -> Y2 [label = <&beta;<SUB>Y1,Y2</SUB>> ]
-
-
+  X -> Y1 [label = <&gamma;<SUB>X,Y1</SUB>>]
+  Y1 -> Y2 [label = <&beta;<SUB>Y1,Y2</SUB>>]
 }
 ```
 
-## Rule 3 {.smaller}
 
-> The strength of a compound path (one that includes multiple links) is the product of the individual coefficients.
+
+## The strength of a compound path is the product of the individual coefficients {.smaller} 
 
 ```{dot}
 //| fig-width: 6
@@ -990,9 +1095,7 @@ digraph  {
 
 ```
 
-## Rule 4 {.smaller}
-
-> When variables are connected by more than one pathway, each pathway is the 'partial' regression coefficient.
+## When variables are connected by more than one pathway, each pathway is the 'partial' regression coefficient {.smaller}
 
 ::: {.incremental}
 -   The partial regression coefficient accounts for influence of more than one variable on the response\
@@ -1022,9 +1125,7 @@ digraph {
 ```
 
 
-## Rule 5 {.smaller}
-
-> Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables.
+## Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables {.smaller}
 
 ::: {.incremental}
 -   $R^{2}$: ratio of explained to total variation in response (here Y1)\
@@ -1065,12 +1166,10 @@ E1 [label = <&zeta;<SUB>Y1</SUB>>];
 }
 ```
 
-## Rule 6 {.smaller}
-
-> Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.
+## Unanalyzed (residual) correlations among two endogenous variables are their partial correlations. {.smaller}
 
 ::: {.incremental}
--   If they were exogenous variables, the relationship would be their bivariate correlation (Rule #1).
+-   If they were exogenous variables, the relationship would be their bivariate correlation.
 -   Here we have we have to remove the effects of X on both variables.
 -   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.
 :::
@@ -1108,9 +1207,7 @@ digraph {
 }
 ```
 
-## Rule 7 {.smaller}
-
-> The total effect one variable has on another is the sum of its direct and indirect effects.
+## The total effect one variable has on another is the sum of its direct and indirect effects {.smaller}
 
 $$ total = \gamma_{X, Y1} * \beta_{Y1, Y2} + \gamma_{X, Y2}$$
 
@@ -1142,9 +1239,8 @@ digraph {
 
 ```
 
-## Rule 8
+## The total effect (including undirected paths) is equivalent to the total correlation {.smaller}
 
-> The total effect (including undirected paths) is equivalent to the total correlation.
 
 ## Example: applying Grace's rules to simple SEM model {.smaller}
 
@@ -1210,7 +1306,6 @@ Correlation matrix:
   - r(X2, Y) = .4 + (.5 * .133) + (.2 * .167) = **.5** \   
   - r(X3, Y) = .167 + (.4 * .133) + (.2 * .4) = **.3**\
 
-All rules, except rule 2, 5 and 6 apply.
 
 ## Unstandardized vs standardized coefficients
 

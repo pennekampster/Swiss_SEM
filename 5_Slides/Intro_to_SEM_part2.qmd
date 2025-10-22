@@ -4,7 +4,7 @@ title: "Introduction to structural equation modelling"
 subtitle: "Day 2: Advanced modelling"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
-date: "11/6/2024"
+date: "11/6/2025"
 date-format: long
 format:
   revealjs: 
@@ -14,7 +14,7 @@ format:
     slide-number: true
     show-slide-number: all
     code-overflow: wrap
-    footer: Introduction to SEM (2024)
+    footer: Introduction to SEM (2025)
     width: 1200
     height: 1000
 editor:
