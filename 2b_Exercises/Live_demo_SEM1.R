@@ -7,12 +7,15 @@ library(patchwork)
 library(ggdag)
 
 # simulate a dataset with known causal structure (make drawing)
+
+# More realistic simulation with varying error structures
 set.seed(2397348)
-N <- 100
-dat <- data.frame(x1 = rnorm(N))
-dat$x2 = 0.2 * dat$x1 + rnorm(N)
-dat$x3 = 0.3 * dat$x2 + rnorm(N)
-dat$y = .7 * dat$x2 + 0.8 * dat$x3 + rnorm(N) 
+N <- 200  # Slightly larger sample
+
+dat <- data.frame(x1 = rnorm(N, mean = 0, sd = 1))
+dat$x2 = 0.2 * dat$x1 + rnorm(N, mean = 0, sd = 0.8)
+dat$x3 = 0.3 * dat$x2 + rnorm(N, mean = 0, sd = 1.2)
+dat$y = 0.5 * dat$x2 + 0.6 * dat$x3 + rnorm(N, mean = 0, sd = 2)
 
 dagify(y ~ x2 + x3,
        x2 ~ x1,
@@ -45,7 +48,7 @@ summary(fit)
 
 
 # Summarize the results
-# no direct effect of X1, but we know there is an effect mediated by X2 and X3 on Y
+# we know there is an effect mediated by X2 and X3 on Y, however, X2 not significant, while X1 is.
 # Let's fit a SEM instead
 
 
@@ -131,10 +134,7 @@ fit2_wrong <- sem(model2_wrong, data=dat)
 summary(fit2_wrong)
 
 # compare fits
-aictab(list(fit_true, fit), c("fit true", "fit wrong"))
-
-
-anova(fit_true, model3)
+aictab(list(fit_true, fit2_wrong), c("fit true", "fit wrong"))
 
 
 
