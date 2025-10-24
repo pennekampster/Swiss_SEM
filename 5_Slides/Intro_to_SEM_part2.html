@@ -238,11 +238,11 @@ Frank Pennekamp
 <section id="sem-modelling-for-causal-understanding-of-systems" class="slide level2">
 <h2>SEM modelling for causal understanding of systems</h2>
 <ul>
-<li class="fragment">Meta-model to connect general theory with data</li>
+<li class="fragment">Meta-model aims to connect general theory with study specific model and data</li>
 <li class="fragment">Theory is often more general than particular proxies used (e.g.&nbsp;climate change <span class="math inline">\(\neq\)</span> temperature change)</li>
-<li class="fragment">Constructs to model:
+<li class="fragment">Constructs can bridge between general theory and the complexity of case studies:
 <ul>
-<li class="fragment">Unobserved latent variables</li>
+<li class="fragment">Latent variables that capture underlying processes</li>
 <li class="fragment">Composites of multiple causes</li>
 <li class="fragment">Interactions between variables</li>
 <li class="fragment">Nonlinear relationships</li>
@@ -259,6 +259,11 @@ Frank Pennekamp
 <svg width="864" height="480" viewbox="0.00 0.00 488.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 484.44,-215 484.44,4 -4,4"></polygon>
+<g id="clust3" class="cluster">
+<title>cluster_prod</title>
+<polygon fill="none" stroke="lightgrey" points="388.31,-54 388.31,-126 472.44,-126 472.44,-54 388.31,-54"></polygon>
+<text text-anchor="middle" x="430.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
+</g>
 <g id="clust1" class="cluster">
 <title>cluster_bio</title>
 <polygon fill="none" stroke="lightgrey" points="204.38,-77 204.38,-203 296.31,-203 296.31,-77 204.38,-77"></polygon>
@@ -268,11 +273,6 @@ Frank Pennekamp
 <title>cluster_env</title>
 <polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon>
 <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text>
-</g>
-<g id="clust3" class="cluster">
-<title>cluster_prod</title>
-<polygon fill="none" stroke="lightgrey" points="388.31,-54 388.31,-126 472.44,-126 472.44,-54 388.31,-54"></polygon>
-<text text-anchor="middle" x="430.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
 </g>
 <!-- evenness -->
 <g id="node1" class="node">
@@ -348,13 +348,27 @@ Frank Pennekamp
 </div>
 </div>
 <ul>
-<li class="fragment">So far, only measured variables were considered (i.e.&nbsp;path model).</li>
+<li class="fragment">So far, only observed variables were considered (i.e.&nbsp;path model).</li>
 <li class="fragment">Some variables may be:
 <ul>
 <li class="fragment">abstract and difficult to quantify and measure directly, i.e.&nbsp;latent.</li>
 <li class="fragment">represent joint causes, i.e.&nbsp;composite.</li>
 </ul></li>
 </ul>
+</section>
+<section id="latent-variables-in-the-social-sciences-and-psychology" class="slide level2">
+<h2>Latent variables in the social sciences and psychology</h2>
+<ul>
+<li class="fragment">In the social sciences, latent variables are widely used to capture abstract concepts.</li>
+<li class="fragment">Human attitudes and motivations are assumed to be “deeply latent” and only discernible indirectly.</li>
+<li class="fragment">Moreover, the properties often of primary interest itself and used as instruments.</li>
+<li class="fragment">Powerful but currently underused tool in ecology.</li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p>Instrument development: The process of creating a new instrument [a set of specific measurements] for measuring an unobserved or latent construct, such as depression, sociability, or fourth-grade mathematics ability.</p>
+</blockquote>
+</div>
 </section>
 <section id="latent-variables" class="slide level2 smaller">
 <h2>Latent variables</h2>
@@ -393,13 +407,13 @@ Frank Pennekamp
 <!-- Y&#45;&gt;X1 -->
 <g id="edge1" class="edge">
 <title>Y-&gt;X1</title>
-<path fill="none" stroke="black" d="M117.91,-54C107.7,-56.33 96.59,-58.86 86.03,-61.27"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M117.91,-54C107.7,-56.33 96.59,-58.86 86.03,-61.27"></path>
 <polygon fill="black" stroke="black" points="85.08,-57.9 76.11,-63.53 86.64,-64.72 85.08,-57.9"></polygon>
 </g>
 <!-- Y&#45;&gt;X2 -->
 <g id="edge2" class="edge">
 <title>Y-&gt;X2</title>
-<path fill="none" stroke="black" d="M118.04,-36.03C106.57,-33.41 93.97,-30.54 82.27,-27.87"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M118.04,-36.03C106.57,-33.41 93.97,-30.54 82.27,-27.87"></path>
 <polygon fill="black" stroke="black" points="82.79,-24.4 72.27,-25.59 81.24,-31.23 82.79,-24.4"></polygon>
 </g>
 <!-- Y&#45;&gt;Z -->
@@ -418,11 +432,11 @@ Frank Pennekamp
 <ul>
 <li class="fragment">Latent variables represented by oval node shape.<br>
 </li>
-<li class="fragment">Latent variables are unobserved.</li>
-<li class="fragment">Influence is captured by indicator variable(s).<br>
+<li class="fragment">The latent variable itself is unobserved.</li>
+<li class="fragment">Instead, its influence is captured by indicator variable(s).<br>
 </li>
 <li class="fragment">Direction of causality flows from latent variable to the observed variable(s).</li>
-<li class="fragment">Latent variables free of random or systematic measurement errors (unlike their indicators).</li>
+<li class="fragment">Latent variables are free of random or systematic measurement errors (unlike their indicators).</li>
 </ul>
 </section>
 <section id="latent-variables---a-word-of-caution" class="slide level2">
@@ -435,14 +449,36 @@ Frank Pennekamp
 </section>
 <section id="fitting-latent-variables" class="slide level2">
 <h2>Fitting latent variables</h2>
+<ul>
+<li class="fragment">Latent variable can have 1 to many indicators:
+<ul>
+<li class="fragment">1 indicator:
+<ul>
+<li class="fragment">assumes measured variable is perfect representation of the latent.</li>
+<li class="fragment">Makes a conceptual distinction between the concept of interest and the observed measure.</li>
+</ul></li>
+<li class="fragment">2 indicators:
+<ul>
+<li class="fragment">need to make additional assumptions to identify the model.</li>
+<li class="fragment">Possible to remove measurement error.</li>
+</ul></li>
+<li class="fragment">3 or more indicators:
+<ul>
+<li class="fragment">allows to test whether or not the same process generated the indicators.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="fitting-latent-variables-1" class="slide level2">
+<h2>Fitting latent variables</h2>
 <p>Latents fitted in two steps:</p>
 <div class="fragment">
 <ol type="1">
-<li>Confirmatory factor analysis (measurement model)
+<li>Measurement model (Confirmatory Factor Analysis)
 <ul>
 <li>Precursor to any SEM in which the latent variables appear.</li>
 <li>For multi-indicator latent variables: check that the same process generated multiple indicators.</li>
-<li>All indicators need to be strongly correlated to justify an underlying latent variable (i.e., the cause).</li>
+<li>All indicators need to be correlated with similar loadings to justify an underlying latent variable (i.e., the cause).</li>
 </ul></li>
 </ol>
 </div>
@@ -462,50 +498,62 @@ Frank Pennekamp
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="384" height="480" viewbox="0.00 0.00 201.81 152.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 148)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-148 197.81,-148 197.81,4 -4,4"></polygon>
+<svg width="384" height="480" viewbox="0.00 0.00 201.81 206.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 202)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-202 197.81,-202 197.81,4 -4,4"></polygon>
 <!-- X1 -->
 <g id="node1" class="node">
 <title>X1</title>
-<polygon fill="none" stroke="black" points="54.07,-144 0.07,-144 0.07,-108 54.07,-108 54.07,-144"></polygon>
-<text text-anchor="middle" x="27.07" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">mass</text>
+<polygon fill="none" stroke="black" points="54.07,-198 0.07,-198 0.07,-162 54.07,-162 54.07,-198"></polygon>
+<text text-anchor="middle" x="27.07" y="-175.8" font-family="Helvetica,sans-Serif" font-size="14.00">mass</text>
 </g>
 <!-- X2 -->
 <g id="node2" class="node">
 <title>X2</title>
-<polygon fill="none" stroke="black" points="54.22,-90 -0.07,-90 -0.07,-54 54.22,-54 54.22,-90"></polygon>
-<text text-anchor="middle" x="27.07" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">length</text>
+<polygon fill="none" stroke="black" points="54.22,-144 -0.07,-144 -0.07,-108 54.22,-108 54.22,-144"></polygon>
+<text text-anchor="middle" x="27.07" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">length</text>
 </g>
 <!-- X3 -->
 <g id="node3" class="node">
 <title>X3</title>
-<polygon fill="none" stroke="black" points="54.07,-36 0.07,-36 0.07,0 54.07,0 54.07,-36"></polygon>
-<text text-anchor="middle" x="27.07" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">width</text>
+<polygon fill="none" stroke="black" points="54.07,-90 0.07,-90 0.07,-54 54.07,-54 54.07,-90"></polygon>
+<text text-anchor="middle" x="27.07" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">width</text>
+</g>
+<!-- X4 -->
+<g id="node4" class="node">
+<title>X4</title>
+<polygon fill="none" stroke="black" points="54.22,-36 -0.07,-36 -0.07,0 54.22,0 54.22,-36"></polygon>
+<text text-anchor="middle" x="27.07" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">height</text>
 </g>
 <!-- Y -->
-<g id="node4" class="node">
+<g id="node5" class="node">
 <title>Y</title>
-<ellipse fill="none" stroke="black" cx="141.98" cy="-72" rx="51.67" ry="18"></ellipse>
-<text text-anchor="middle" x="141.98" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">body size</text>
+<ellipse fill="none" stroke="black" cx="141.98" cy="-99" rx="51.67" ry="18"></ellipse>
+<text text-anchor="middle" x="141.98" y="-94.8" font-family="Helvetica,sans-Serif" font-size="14.00">body size</text>
 </g>
 <!-- Y&#45;&gt;X1 -->
 <g id="edge1" class="edge">
 <title>Y-&gt;X1</title>
-<path fill="none" stroke="black" d="M110.54,-86.56C95.98,-93.52 78.46,-101.9 63.33,-109.14"></path>
-<polygon fill="black" stroke="black" points="61.77,-106 54.26,-113.48 64.79,-112.32 61.77,-106"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M118.4,-115.2C102.27,-126.77 80.27,-142.55 62.02,-155.64"></path>
+<polygon fill="black" stroke="black" points="59.5,-153.15 53.41,-161.82 63.58,-158.84 59.5,-153.15"></polygon>
 </g>
 <!-- Y&#45;&gt;X2 -->
 <g id="edge2" class="edge">
 <title>Y-&gt;X2</title>
-<path fill="none" stroke="black" d="M90.06,-72C81.45,-72 72.67,-72 64.53,-72"></path>
-<polygon fill="black" stroke="black" points="64.26,-68.5 54.26,-72 64.26,-75.5 64.26,-68.5"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M98.57,-109.14C87.3,-111.84 75.22,-114.73 64.3,-117.34"></path>
+<polygon fill="black" stroke="black" points="63.17,-114.01 54.26,-119.74 64.8,-120.82 63.17,-114.01"></polygon>
 </g>
 <!-- Y&#45;&gt;X3 -->
 <g id="edge3" class="edge">
 <title>Y-&gt;X3</title>
-<path fill="none" stroke="black" d="M110.54,-57.44C95.98,-50.48 78.46,-42.1 63.33,-34.86"></path>
-<polygon fill="black" stroke="black" points="64.79,-31.68 54.26,-30.52 61.77,-38 64.79,-31.68"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M98.57,-88.86C87.3,-86.16 75.22,-83.27 64.3,-80.66"></path>
+<polygon fill="black" stroke="black" points="64.8,-77.18 54.26,-78.26 63.17,-83.99 64.8,-77.18"></polygon>
+</g>
+<!-- Y&#45;&gt;X4 -->
+<g id="edge4" class="edge">
+<title>Y-&gt;X4</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M118.4,-82.8C102.27,-71.23 80.27,-55.45 62.02,-42.36"></path>
+<polygon fill="black" stroke="black" points="63.58,-39.16 53.41,-36.18 59.5,-44.85 63.58,-39.16"></polygon>
 </g>
 </g>
 </svg>
@@ -520,9 +568,9 @@ Frank Pennekamp
 <li class="fragment">Multiple indicators of body size: mass, length, width</li>
 <li class="fragment">Identifiability:
 <ul>
-<li class="fragment">Loading of first indicator set to 1 by lavaan</li>
-<li class="fragment">Use standardized effect for interpretation.</li>
-<li class="fragment">Latents with two indicators require assumption (e.g.&nbsp;similar effect of indicators on latent).</li>
+<li class="fragment">Loading of first indicator set to 1 by lavaan (sets scale of latent).</li>
+<li class="fragment">Because of this, use standardized effect for interpretation.</li>
+<li class="fragment">Latents with two indicators require additional assumptions (e.g.&nbsp;similar loadings of latent on indicators).</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -610,13 +658,13 @@ Frank Pennekamp
 <!-- Z&#45;&gt;X1 -->
 <g id="edge1" class="edge">
 <title>Z-&gt;X1</title>
-<path fill="none" stroke="black" d="M216.08,-54.88C202.16,-56.68 187.51,-58.58 173.25,-60.42"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M216.08,-54.88C202.16,-56.68 187.51,-58.58 173.25,-60.42"></path>
 <polygon fill="black" stroke="black" points="172.41,-57 162.94,-61.75 173.31,-63.94 172.41,-57"></polygon>
 </g>
 <!-- Z&#45;&gt;X2 -->
 <g id="edge2" class="edge">
 <title>Z-&gt;X2</title>
-<path fill="none" stroke="black" d="M216.27,-35.14C203.14,-33.44 189.37,-31.66 175.88,-29.92"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M216.27,-35.14C203.14,-33.44 189.37,-31.66 175.88,-29.92"></path>
 <polygon fill="black" stroke="black" points="176,-26.41 165.63,-28.59 175.1,-33.35 176,-26.41"></polygon>
 </g>
 <!-- Y -->
@@ -680,7 +728,7 @@ Frank Pennekamp
 <!-- X1&#45;&gt;Y -->
 <g id="edge2" class="edge">
 <title>X1-&gt;Y</title>
-<path fill="none" stroke="black" d="M88.4,-97.63C100.74,-95.13 114.3,-92.38 127.07,-89.79"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M88.4,-97.63C100.74,-95.13 114.3,-92.38 127.07,-89.79"></path>
 <polygon fill="black" stroke="black" points="127.99,-93.17 137.1,-87.75 126.6,-86.31 127.99,-93.17"></polygon>
 </g>
 <!-- X2 -->
@@ -692,7 +740,7 @@ Frank Pennekamp
 <!-- X2&#45;&gt;Y -->
 <g id="edge3" class="edge">
 <title>X2-&gt;Y</title>
-<path fill="none" stroke="black" d="M79.12,-59.28C93.52,-62.21 110.64,-65.68 126.56,-68.91"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M79.12,-59.28C93.52,-62.21 110.64,-65.68 126.56,-68.91"></path>
 <polygon fill="black" stroke="black" points="126.31,-72.43 136.81,-70.99 127.7,-65.57 126.31,-72.43"></polygon>
 </g>
 <!-- Z -->
@@ -761,7 +809,7 @@ Frank Pennekamp
 <!-- X1&#45;&gt;Y -->
 <g id="edge2" class="edge">
 <title>X1-&gt;Y</title>
-<path fill="none" stroke="black" d="M88.4,-97.63C100.74,-95.13 114.3,-92.38 127.07,-89.79"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M88.4,-97.63C100.74,-95.13 114.3,-92.38 127.07,-89.79"></path>
 <polygon fill="black" stroke="black" points="127.99,-93.17 137.1,-87.75 126.6,-86.31 127.99,-93.17"></polygon>
 </g>
 <!-- X2 -->
@@ -773,7 +821,7 @@ Frank Pennekamp
 <!-- X2&#45;&gt;Y -->
 <g id="edge3" class="edge">
 <title>X2-&gt;Y</title>
-<path fill="none" stroke="black" d="M79.12,-59.28C93.52,-62.21 110.64,-65.68 126.56,-68.91"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M79.12,-59.28C93.52,-62.21 110.64,-65.68 126.56,-68.91"></path>
 <polygon fill="black" stroke="black" points="126.31,-72.43 136.81,-70.99 127.7,-65.57 126.31,-72.43"></polygon>
 </g>
 <!-- Z -->
@@ -821,59 +869,58 @@ Frank Pennekamp
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="768" height="192" viewbox="0.00 0.00 403.88 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="768" height="192" viewbox="0.00 0.00 404.00 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
 <title>boxes_and_circles</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-94 399.88,-94 399.88,4 -4,4"></polygon>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-94 400,-94 400,4 -4,4"></polygon>
 <!-- X1 -->
 <g id="node1" class="node">
 <title>X1</title>
-<polygon fill="none" stroke="black" points="91.09,-90 21.7,-90 21.7,-54 91.09,-54 91.09,-90"></polygon>
-<text text-anchor="middle" x="56.39" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
+<polygon fill="none" stroke="black" points="91.21,-90 21.82,-90 21.82,-54 91.21,-54 91.21,-90"></polygon>
+<text text-anchor="middle" x="56.52" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
 </g>
 <!-- X2 -->
 <g id="node2" class="node">
 <title>X2</title>
-<polygon fill="none" stroke="black" points="95.38,-36 17.41,-36 17.41,0 95.38,0 95.38,-36"></polygon>
-<text text-anchor="start" x="25.65" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
-<text text-anchor="start" x="79.35" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="super" font-size="14.00">2</text>
+<polygon fill="none" stroke="black" points="95.5,-36 17.53,-36 17.53,0 95.5,0 95.5,-36"></polygon>
+<text text-anchor="start" x="25.78" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
+<text text-anchor="start" x="79.47" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="super" font-size="14.00">2</text>
 </g>
 <!-- X1&#45;&gt;X2 -->
 <g id="edge4" class="edge">
 <title>X1:w-&gt;X2:w</title>
-<path fill="none" stroke="black" d="M7.05,-21.63C-3.5,-31.49 -1.45,-58.7 10.61,-68.46"></path>
-<polygon fill="black" stroke="black" points="8.34,-24.88 16.39,-18 5.81,-18.35 8.34,-24.88"></polygon>
-<polygon fill="black" stroke="black" points="9.8,-71.88 20.39,-72 12.18,-65.3 9.8,-71.88"></polygon>
+<path fill="none" stroke="black" d="M6.9,-21.88C-5.7,-34.27 0.4,-72 20.52,-72"></path>
+<polygon fill="black" stroke="black" points="8.56,-24.99 16.52,-18 5.93,-18.5 8.56,-24.99"></polygon>
 </g>
 <!-- Y -->
 <g id="node4" class="node">
 <title>Y</title>
-<polygon fill="none" stroke="black" points="291.56,-45 251.5,-63 171.39,-63 131.33,-45 171.39,-27 251.5,-27 291.56,-45"></polygon>
-<text text-anchor="middle" x="211.44" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrient effect</text>
+<polygon fill="none" stroke="black" points="291.68,-45 251.62,-63 171.51,-63 131.45,-45 171.51,-27 251.62,-27 291.68,-45"></polygon>
+<text text-anchor="middle" x="211.57" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrient effect</text>
 </g>
 <!-- X1&#45;&gt;Y -->
 <g id="edge1" class="edge">
 <title>X1-&gt;Y</title>
-<path fill="none" stroke="black" d="M91.36,-66.01C106.74,-63.29 125.49,-59.99 143.51,-56.81"></path>
-<polygon fill="black" stroke="black" points="144.18,-60.24 153.42,-55.06 142.97,-53.35 144.18,-60.24"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M91.48,-66.01C106.86,-63.29 125.61,-59.99 143.63,-56.81"></path>
+<polygon fill="black" stroke="black" points="144.31,-60.24 153.55,-55.06 143.09,-53.35 144.31,-60.24"></polygon>
 </g>
 <!-- X2&#45;&gt;Y -->
 <g id="edge2" class="edge">
 <title>X2-&gt;Y</title>
-<path fill="none" stroke="black" d="M95.23,-24.67C109.74,-27.23 126.78,-30.24 143.23,-33.14"></path>
-<polygon fill="black" stroke="black" points="142.91,-36.64 153.37,-34.93 144.13,-29.75 142.91,-36.64"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M95.35,-24.67C109.86,-27.23 126.9,-30.24 143.35,-33.14"></path>
+<polygon fill="black" stroke="black" points="143.04,-36.64 153.49,-34.93 144.25,-29.75 143.04,-36.64"></polygon>
 </g>
 <!-- Z -->
 <g id="node3" class="node">
 <title>Z</title>
-<polygon fill="none" stroke="black" points="395.95,-63 327.69,-63 327.69,-27 395.95,-27 395.95,-63"></polygon>
-<text text-anchor="middle" x="361.82" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text>
+<polygon fill="none" stroke="black" points="396.07,-63 327.81,-63 327.81,-27 396.07,-27 396.07,-63"></polygon>
+<text text-anchor="middle" x="361.94" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text>
 </g>
 <!-- Y&#45;&gt;Z -->
 <g id="edge3" class="edge">
 <title>Y-&gt;Z</title>
-<path fill="none" stroke="black" d="M291.84,-45C300.56,-45 309.18,-45 317.23,-45"></path>
-<polygon fill="black" stroke="black" points="317.42,-48.5 327.42,-45 317.42,-41.5 317.42,-48.5"></polygon>
+<path fill="none" stroke="black" d="M291.97,-45C300.68,-45 309.31,-45 317.35,-45"></path>
+<polygon fill="black" stroke="black" points="317.54,-48.5 327.54,-45 317.54,-41.5 317.54,-48.5"></polygon>
 </g>
 </g>
 </svg>
@@ -1371,19 +1418,19 @@ survey.design = design)
 <!-- Y&#45;&gt;X1 -->
 <g id="edge1" class="edge">
 <title>Y-&gt;X1</title>
-<path fill="none" stroke="black" d="M108.12,-34.44C96.39,-43.56 81.3,-55.3 68.12,-65.54"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M108.12,-34.44C96.39,-43.56 81.3,-55.3 68.12,-65.54"></path>
 <polygon fill="black" stroke="black" points="65.96,-62.79 60.21,-71.7 70.25,-68.32 65.96,-62.79"></polygon>
 </g>
 <!-- Y&#45;&gt;X2 -->
 <g id="edge2" class="edge">
 <title>Y-&gt;X2</title>
-<path fill="none" stroke="black" d="M127.97,-36.1C127.97,-43.79 127.97,-53.05 127.97,-61.67"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M127.97,-36.1C127.97,-43.79 127.97,-53.05 127.97,-61.67"></path>
 <polygon fill="black" stroke="black" points="124.47,-61.7 127.97,-71.7 131.47,-61.7 124.47,-61.7"></polygon>
 </g>
 <!-- Y&#45;&gt;X3 -->
 <g id="edge3" class="edge">
 <title>Y-&gt;X3</title>
-<path fill="none" stroke="black" d="M146.55,-34.67C157.14,-43.6 170.63,-54.98 182.52,-65.01"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M146.55,-34.67C157.14,-43.6 170.63,-54.98 182.52,-65.01"></path>
 <polygon fill="black" stroke="black" points="180.55,-67.93 190.45,-71.7 185.06,-62.57 180.55,-67.93"></polygon>
 </g>
 </g>
@@ -1408,86 +1455,88 @@ survey.design = design)
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="576" height="480" viewbox="0.00 0.00 364.04 188.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-184 360.04,-184 360.04,4 -4,4"></polygon>
+<svg width="576" height="480" viewbox="0.00 0.00 295.04 260.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-256 291.04,-256 291.04,4 -4,4"></polygon>
 <!-- diversity -->
 <g id="node1" class="node">
 <title>diversity</title>
-<ellipse fill="none" stroke="black" cx="153.85" cy="-90" rx="46.41" ry="18"></ellipse>
-<text text-anchor="middle" x="153.85" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">diversity</text>
+<ellipse fill="none" stroke="black" cx="133.85" cy="-126" rx="46.41" ry="18"></ellipse>
+<text text-anchor="middle" x="133.85" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">diversity</text>
 </g>
 <!-- evenness -->
 <g id="node2" class="node">
 <title>evenness</title>
-<polygon fill="none" stroke="gray" points="163.78,-180 87.92,-180 87.92,-144 163.78,-144 163.78,-180"></polygon>
-<text text-anchor="middle" x="125.85" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text>
+<polygon fill="none" stroke="gray" points="126.78,-252 50.92,-252 50.92,-216 126.78,-216 126.78,-252"></polygon>
+<text text-anchor="middle" x="88.85" y="-229.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text>
 </g>
 <!-- diversity&#45;&gt;evenness -->
 <g id="edge6" class="edge">
 <title>diversity-&gt;evenness</title>
-<path fill="none" stroke="black" d="M147.01,-108.1C143.86,-115.96 140.06,-125.46 136.56,-134.23"></path>
-<polygon fill="black" stroke="black" points="133.23,-133.11 132.77,-143.7 139.73,-135.71 133.23,-133.11"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M126.64,-143.99C119.46,-160.89 108.34,-187.08 100.02,-206.68"></path>
+<polygon fill="black" stroke="black" points="96.76,-205.4 96.08,-215.97 103.21,-208.13 96.76,-205.4"></polygon>
 </g>
 <!-- richness -->
 <g id="node3" class="node">
 <title>richness</title>
-<polygon fill="none" stroke="gray" points="249.98,-180 181.72,-180 181.72,-144 249.98,-144 249.98,-180"></polygon>
-<text text-anchor="middle" x="215.85" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text>
+<polygon fill="none" stroke="gray" points="212.98,-252 144.72,-252 144.72,-216 212.98,-216 212.98,-252"></polygon>
+<text text-anchor="middle" x="178.85" y="-229.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text>
 </g>
 <!-- diversity&#45;&gt;richness -->
 <g id="edge7" class="edge">
 <title>diversity-&gt;richness</title>
-<path fill="none" stroke="black" d="M168.15,-107.14C175.72,-115.69 185.18,-126.37 193.67,-135.97"></path>
-<polygon fill="black" stroke="black" points="191.27,-138.53 200.52,-143.7 196.51,-133.89 191.27,-138.53"></polygon>
-</g>
-<!-- biomass -->
-<g id="node6" class="node">
-<title>biomass</title>
-<polygon fill="none" stroke="gray" points="187.98,-36 119.72,-36 119.72,0 187.98,0 187.98,-36"></polygon>
-<text text-anchor="middle" x="153.85" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text>
-</g>
-<!-- diversity&#45;&gt;biomass -->
-<g id="edge5" class="edge">
-<title>diversity-&gt;biomass</title>
-<path fill="none" stroke="black" d="M153.85,-71.7C153.85,-63.98 153.85,-54.71 153.85,-46.11"></path>
-<polygon fill="black" stroke="black" points="157.35,-46.1 153.85,-36.1 150.35,-46.1 157.35,-46.1"></polygon>
-</g>
-<!-- nutrients -->
-<g id="node4" class="node">
-<title>nutrients</title>
-<polygon fill="none" stroke="gray" points="69.55,-180 0.15,-180 0.15,-144 69.55,-144 69.55,-180"></polygon>
-<text text-anchor="middle" x="34.85" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
-</g>
-<!-- nutrients&#45;&gt;diversity -->
-<g id="edge2" class="edge">
-<title>nutrients-&gt;diversity</title>
-<path fill="none" stroke="black" d="M63.96,-143.88C81.07,-133.81 102.76,-121.05 120.55,-110.59"></path>
-<polygon fill="black" stroke="black" points="122.61,-113.44 129.45,-105.35 119.06,-107.41 122.61,-113.44"></polygon>
-</g>
-<!-- nutrients&#45;&gt;biomass -->
-<g id="edge4" class="edge">
-<title>nutrients-&gt;biomass</title>
-<path fill="none" stroke="black" d="M45.79,-143.92C57.9,-125.48 78.42,-95.59 98.85,-72 107.46,-62.05 117.66,-51.86 126.92,-43.1"></path>
-<polygon fill="black" stroke="black" points="129.49,-45.49 134.42,-36.11 124.72,-40.36 129.49,-45.49"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M141.06,-143.99C148.24,-160.89 159.35,-187.08 167.67,-206.68"></path>
+<polygon fill="black" stroke="black" points="164.49,-208.13 171.62,-215.97 170.93,-205.4 164.49,-208.13"></polygon>
 </g>
 <!-- disturbance -->
 <g id="node5" class="node">
 <title>disturbance</title>
-<polygon fill="none" stroke="gray" points="356.23,-180 267.47,-180 267.47,-144 356.23,-144 356.23,-180"></polygon>
-<text text-anchor="middle" x="311.85" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text>
+<polygon fill="none" stroke="gray" points="287.23,-144 198.47,-144 198.47,-108 287.23,-108 287.23,-144"></polygon>
+<text text-anchor="middle" x="242.85" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text>
+</g>
+<!-- diversity&#45;&gt;disturbance -->
+<!-- biomass -->
+<g id="node6" class="node">
+<title>biomass</title>
+<polygon fill="none" stroke="gray" points="167.98,-36 99.72,-36 99.72,0 167.98,0 167.98,-36"></polygon>
+<text text-anchor="middle" x="133.85" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text>
+</g>
+<!-- diversity&#45;&gt;biomass -->
+<g id="edge5" class="edge">
+<title>diversity-&gt;biomass</title>
+<path fill="none" stroke="black" d="M133.85,-107.97C133.85,-91.38 133.85,-65.88 133.85,-46.43"></path>
+<polygon fill="black" stroke="black" points="137.35,-46.34 133.85,-36.34 130.35,-46.34 137.35,-46.34"></polygon>
+</g>
+<!-- nutrients -->
+<g id="node4" class="node">
+<title>nutrients</title>
+<polygon fill="none" stroke="gray" points="69.55,-144 0.15,-144 0.15,-108 69.55,-108 69.55,-144"></polygon>
+<text text-anchor="middle" x="34.85" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
+</g>
+<!-- nutrients&#45;&gt;diversity -->
+<g id="edge2" class="edge">
+<title>nutrients-&gt;diversity</title>
+<path fill="none" stroke="black" d="M69.65,-113.69C76.18,-112.63 82.71,-112.28 89.24,-112.63"></path>
+<polygon fill="black" stroke="black" points="89.17,-116.15 99.49,-113.76 89.94,-109.19 89.17,-116.15"></polygon>
+</g>
+<!-- nutrients&#45;&gt;diversity -->
+<!-- nutrients&#45;&gt;biomass -->
+<g id="edge4" class="edge">
+<title>nutrients-&gt;biomass</title>
+<path fill="none" stroke="black" d="M50.75,-107.97C66.97,-90.61 92.28,-63.5 110.71,-43.77"></path>
+<polygon fill="black" stroke="black" points="113.38,-46.04 117.65,-36.34 108.27,-41.26 113.38,-46.04"></polygon>
 </g>
 <!-- disturbance&#45;&gt;diversity -->
 <g id="edge1" class="edge">
 <title>disturbance-&gt;diversity</title>
-<path fill="none" stroke="black" d="M273.2,-143.88C248.68,-133.01 217.07,-119.01 192.55,-108.14"></path>
-<polygon fill="black" stroke="black" points="193.75,-104.85 183.18,-104 190.91,-111.25 193.75,-104.85"></polygon>
+<path fill="none" stroke="black" d="M198.54,-112.97C192.12,-112.38 185.7,-112.34 179.28,-112.87"></path>
+<polygon fill="black" stroke="black" points="178.66,-109.42 169.19,-114.17 179.55,-116.37 178.66,-109.42"></polygon>
 </g>
 <!-- disturbance&#45;&gt;biomass -->
 <g id="edge3" class="edge">
 <title>disturbance-&gt;biomass</title>
-<path fill="none" stroke="black" d="M292.79,-143.87C264.79,-118.71 212.43,-71.65 180.6,-43.04"></path>
-<polygon fill="black" stroke="black" points="182.75,-40.27 172.97,-36.19 178.07,-45.48 182.75,-40.27"></polygon>
+<path fill="none" stroke="black" d="M225.34,-107.97C207.41,-90.53 179.36,-63.26 159.05,-43.51"></path>
+<polygon fill="black" stroke="black" points="161.29,-40.8 151.68,-36.34 156.41,-45.82 161.29,-40.8"></polygon>
 </g>
 </g>
 </svg>
@@ -1548,7 +1597,7 @@ survey.design = design)
 <!-- evenness&#45;&gt;richness -->
 <g id="edge8" class="edge">
 <title>evenness-&gt;richness</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M208.21,-90C219.28,-90 230.35,-90 241.42,-90"></path>
+<path fill="none" stroke="black" d="M208.21,-90C219.28,-90 230.35,-90 241.42,-90"></path>
 <polygon fill="black" stroke="black" points="208.2,-86.5 198.2,-90 208.2,-93.5 208.2,-86.5"></polygon>
 <polygon fill="black" stroke="black" points="241.58,-93.5 251.58,-90 241.58,-86.5 241.58,-93.5"></polygon>
 </g>
@@ -1573,7 +1622,7 @@ survey.design = design)
 <!-- nutrients&#45;&gt;landuse -->
 <g id="edge6" class="edge">
 <title>nutrients-&gt;landuse</title>
-<path fill="none" stroke="black" d="M133.38,-143.88C119.29,-134.74 101.77,-123.38 86.58,-113.54"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M133.38,-143.88C119.29,-134.74 101.77,-123.38 86.58,-113.54"></path>
 <polygon fill="black" stroke="black" points="88.25,-110.45 77.95,-107.95 84.44,-116.32 88.25,-110.45"></polygon>
 </g>
 <!-- nutrients&#45;&gt;evenness -->
@@ -1597,7 +1646,7 @@ survey.design = design)
 <!-- disturbance&#45;&gt;landuse -->
 <g id="edge7" class="edge">
 <title>disturbance-&gt;landuse</title>
-<path fill="none" stroke="black" d="M51.8,-143.7C51.8,-135.98 51.8,-126.71 51.8,-118.11"></path>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M51.8,-143.7C51.8,-135.98 51.8,-126.71 51.8,-118.11"></path>
 <polygon fill="black" stroke="black" points="55.3,-118.1 51.8,-108.1 48.3,-118.1 55.3,-118.1"></polygon>
 </g>
 </g>
@@ -1638,7 +1687,7 @@ survey.design = design)
 <!-- evenness&#45;&gt;richness -->
 <g id="edge8" class="edge">
 <title>evenness-&gt;richness</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M86.37,-90C97.44,-90 108.51,-90 119.58,-90"></path>
+<path fill="none" stroke="black" d="M86.37,-90C97.44,-90 108.51,-90 119.58,-90"></path>
 <polygon fill="black" stroke="black" points="86.36,-86.5 76.36,-90 86.36,-93.5 86.36,-86.5"></polygon>
 <polygon fill="black" stroke="black" points="119.74,-93.5 129.74,-90 119.74,-86.5 119.74,-93.5"></polygon>
 </g>
@@ -1743,7 +1792,7 @@ survey.design = design)
 <!-- evenness&#45;&gt;richness -->
 <g id="edge6" class="edge">
 <title>evenness-&gt;richness</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M86.37,-90C97.44,-90 108.51,-90 119.58,-90"></path>
+<path fill="none" stroke="black" d="M86.37,-90C97.44,-90 108.51,-90 119.58,-90"></path>
 <polygon fill="black" stroke="black" points="86.36,-86.5 76.36,-90 86.36,-93.5 86.36,-86.5"></polygon>
 <polygon fill="black" stroke="black" points="119.74,-93.5 129.74,-90 119.74,-86.5 119.74,-93.5"></polygon>
 </g>
@@ -1821,7 +1870,7 @@ survey.design = design)
 <!-- evenness&#45;&gt;richness -->
 <g id="edge6" class="edge">
 <title>evenness-&gt;richness</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M86.37,-90C97.44,-90 108.51,-90 119.58,-90"></path>
+<path fill="none" stroke="black" d="M86.37,-90C97.44,-90 108.51,-90 119.58,-90"></path>
 <polygon fill="black" stroke="black" points="86.36,-86.5 76.36,-90 86.36,-93.5 86.36,-86.5"></polygon>
 <polygon fill="black" stroke="black" points="119.74,-93.5 129.74,-90 119.74,-86.5 119.74,-93.5"></polygon>
 </g>

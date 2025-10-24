@@ -227,8 +227,10 @@ digraph confounding_classic {
 
 Correlation between ice cream sales and cases of drowning are both influenced by temperature (confounder).
 
-```{r, out.width="200%", fig.align='center'}
+```{r, dev = "png", fig.align='center', .nostretch}
 
+#| out-width: 12in
+#| out-height: 3.5in
 
 # Demonstrating Confounding: Ice Cream Sales vs Drowning Deaths
 # A classic example showing how correlation does not imply causation
@@ -1242,7 +1244,7 @@ digraph {
 ## The total effect (including undirected paths) is equivalent to the total correlation {.smaller}
 
 
-## Example: applying Grace's rules to simple SEM model {.smaller}
+## Example: Interpreting coeffients in a simple model {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
@@ -1309,13 +1311,14 @@ Correlation matrix:
 
 ## Unstandardized vs standardized coefficients
 
-::: incremental
-- Global estimation based on covariance / correlation matrices.
-- Results in unstandardized / standardized coefficients.
-- Significance tests on unstandardized (raw) coefficients.
-- Standardized coefficients for interpretation only (relative strength of paths).
-- Only allow for comparisons within the same dataset.
-:::
+| Unstandardized  | Standardized  |
+|:----------------------------|:--------------------------|
+| Reported in raw units | Expressed in units of standard deviations (Z transformed) |
+| Essential for prediction | Used for interpretation of relative strength |
+| Useful for comparing across models with same variables but different datasets | Only comparable within the same dataset/model |
+| Contain information about variance and mean | Facilitate comparison of paths within a model |
+
+> Z transformation results in mean of 0 and SD of 1: $Z = \frac{x - \mu(x)}{\sigma(x)}$
 
 <!-- ::: aside
 $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$

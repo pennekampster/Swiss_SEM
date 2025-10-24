@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content="Frank Pennekamp">
-  <meta name="dcterms.date" content="2024-11-05">
+  <meta name="dcterms.date" content="2025-11-05">
   <title>Introduction to structural equation modelling</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -142,7 +142,7 @@ Frank Pennekamp
     </div>
 </div>
 
-  <p class="date">November 5, 2024</p>
+  <p class="date">November 5, 2025</p>
 </section>
 <section id="quick-introduction-of-participants" class="slide level2">
 <h2>Quick introduction of participants</h2>
@@ -405,7 +405,7 @@ Bill Shipley (Cause and correlation in biology, 2004)</p>
 <h2>Confounding example</h2>
 <p>Correlation between ice cream sales and cases of drowning are both influenced by temperature (confounder).</p>
 
-<img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:200.0%"><div class="fragment">
+<img data-src="Intro_to_SEM_part1_files/figure-revealjs/.nostretch-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><div class="fragment">
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1537,7 +1537,7 @@ Sewell Wright, 1923</p>
 <section id="observed-variables" class="slide level2">
 <h2>Observed variables</h2>
 
-<img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:90.0%"><p>Scatter plots of observed variables and fitted lines.</p>
+<img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:90.0%"><p>Scatter plots of observed variables and fitted lines.</p>
 </section>
 <section id="variance-covariance-matrix-estimated-from-data" class="slide level2 smaller">
 <h2>Variance-covariance matrix estimated from data</h2>
@@ -1732,7 +1732,7 @@ Sewell Wright, 1923</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+<p><img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
 </figure>
 </div>
 </div>
@@ -2209,8 +2209,8 @@ Sewell Wright, 1923</p>
 <section id="the-total-effect-including-undirected-paths-is-equivalent-to-the-total-correlation" class="slide level2 smaller">
 <h2>The total effect (including undirected paths) is equivalent to the total correlation</h2>
 </section>
-<section id="example-applying-graces-rules-to-simple-sem-model" class="slide level2 smaller">
-<h2>Example: applying Grace’s rules to simple SEM model</h2>
+<section id="example-interpreting-coeffients-in-a-simple-model" class="slide level2 smaller">
+<h2>Example: Interpreting coeffients in a simple model</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-fig-width="4" data-fig-height="4" data-layout-align="default">
@@ -2367,13 +2367,39 @@ Sewell Wright, 1923</p>
 </section>
 <section id="unstandardized-vs-standardized-coefficients" class="slide level2">
 <h2>Unstandardized vs standardized coefficients</h2>
-<ul>
-<li class="fragment">Global estimation based on covariance / correlation matrices.</li>
-<li class="fragment">Results in unstandardized / standardized coefficients.</li>
-<li class="fragment">Significance tests on unstandardized (raw) coefficients.</li>
-<li class="fragment">Standardized coefficients for interpretation only (relative strength of paths).</li>
-<li class="fragment">Only allow for comparisons within the same dataset.</li>
-</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 51%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Unstandardized</th>
+<th style="text-align: left;">Standardized</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Reported in raw units</td>
+<td style="text-align: left;">Expressed in units of standard deviations (Z transformed)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Essential for prediction</td>
+<td style="text-align: left;">Used for interpretation of relative strength</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Useful for comparing across models with same variables but different datasets</td>
+<td style="text-align: left;">Only comparable within the same dataset/model</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Contain information about variance and mean</td>
+<td style="text-align: left;">Facilitate comparison of paths within a model</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Z transformation results in mean of 0 and SD of 1: <span class="math inline">\(Z = \frac{x - \mu(x)}{\sigma(x)}\)</span></p>
+</blockquote>
 <!-- ::: aside
 $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
 where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)
@@ -3379,7 +3405,7 @@ mod.fit <- sem(mod.form , data = dat1)
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>Introduction to SEM (2024)</p>
+<p>Introduction to SEM (2025)</p>
 </div>
 </div></div>
 

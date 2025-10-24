@@ -48,10 +48,10 @@ library(ggplot2)
 ## SEM modelling for causal understanding of systems
 
 ::: incremental
-- Meta-model to connect general theory with data
+- Meta-model aims to connect general theory with study specific model and data
 - Theory is often more general than particular proxies used (e.g. climate change $\neq$ temperature change)
-- Constructs to model:
-  - Unobserved latent variables
+- Constructs can bridge between general theory and the complexity of case studies:
+  - Latent variables that capture underlying processes
   - Composites of multiple causes
   - Interactions between variables
   - Nonlinear relationships
@@ -107,11 +107,25 @@ digraph  {
 ```
 
 ::: incremental
-- So far, only measured variables were considered (i.e. path model).
+- So far, only observed variables were considered (i.e. path model).
 - Some variables may be:
   -   abstract and difficult to quantify and measure directly, i.e. latent.
   -   represent joint causes, i.e. composite.
 :::
+
+## Latent variables in the social sciences and psychology
+
+::: incremental
+- In the social sciences, latent variables are widely used to capture abstract concepts.
+- Human attitudes and motivations are assumed to be “deeply latent” and only discernible indirectly.
+- Moreover, the properties often of primary interest itself and used as instruments.
+- Powerful but currently underused tool in ecology.
+:::
+
+. . .
+
+> Instrument development: The process of creating a new instrument [a set of specific measurements] for measuring an unobserved or latent construct, such as depression, sociability, or fourth-grade mathematics ability.
+
 
 ## Latent variables {.smaller}
 
@@ -131,11 +145,12 @@ digraph  {
    node [shape=oval]
     Y [label="diversity"]
     
-    Y -> X1;
-    Y -> X2;
+    Y -> X1 [style="dashed"];
+    Y -> X2 [style="dashed"];
     Y -> Z;
     Z;
-    
+
+  
   {rank = max; Z}
   {rank = min; X1}
   {rank = same; X1;X2}
@@ -144,10 +159,10 @@ digraph  {
 
 ::: incremental
 -   Latent variables represented by oval node shape.\
--   Latent variables are unobserved.
--   Influence is captured by indicator variable(s).\
+-   The latent variable itself is unobserved.
+-   Instead, its influence is captured by indicator variable(s).\
 -   Direction of causality flows from latent variable to the observed variable(s).
--   Latent variables free of random or systematic measurement errors (unlike their indicators).
+-   Latent variables are free of random or systematic measurement errors (unlike their indicators).
 :::
 
 ## Latent variables - a word of caution
@@ -159,15 +174,28 @@ digraph  {
 
 ## Fitting latent variables
 
+::: incremental
+- Latent variable can have 1 to many indicators:
+  - 1 indicator: 
+    - assumes measured variable is perfect representation of the latent. 
+    - Makes a conceptual distinction between the concept of interest and the observed measure.
+  - 2 indicators:
+    - need to make additional assumptions to identify the model. 
+    - Possible to remove measurement error.
+  - 3 or more indicators: 
+    - allows to test whether or not the same process generated the indicators.
+:::
+
+## Fitting latent variables
+
 Latents fitted in two steps:
 
 . . .
 
-1)  Confirmatory factor analysis (measurement model)
+1)  Measurement model (Confirmatory Factor Analysis)
     -   Precursor to any SEM in which the latent variables appear.
     -   For multi-indicator latent variables: check that the same process generated multiple indicators.
-    -   All indicators need to be strongly correlated to justify an underlying latent variable (i.e., the cause).
-
+    -   All indicators need to be correlated with similar loadings to justify an underlying latent variable (i.e., the cause).
 
 . . .
 
@@ -181,23 +209,26 @@ Latents fitted in two steps:
 //| fig-height=: 2
 digraph  {
 
-    graph [rankdir = LR, fontname = Helvetica]
+  graph [rankdir = LR, fontname = Helvetica]
    
    node [shape=box, fontname = Helvetica]
    X1 [label="mass"];
    X2 [label="length"];
    X3 [label="width"];
+   X4 [label="height"];
 
    
    node [shape=oval]
-    Y [label="body size"]
-    
-    Y -> X1;
-    Y -> X2;
-    Y -> X3;
-    
+  Y [label="body size"]
+  
+  Y -> X1 [style="dashed"];
+  Y -> X2[style="dashed"];
+  Y -> X3[style="dashed"];
+  Y -> X4[style="dashed"];
+   
+  {rank = max; Y}
   {rank = min; X1}
-  {rank = same; X1;X2; X3}
+  {rank = same; X1;X2; X3;X4}
 }
 ```
 
@@ -205,11 +236,10 @@ digraph  {
 - Body size is a multidimensional concept
   - Multiple indicators of body size: mass, length, width
   - Identifiability: 
-    - Loading of first indicator set to 1 by lavaan
-    - Use standardized effect for interpretation.
-    - Latents with two indicators require assumption (e.g. similar effect of indicators on latent).
+    - Loading of first indicator set to 1 by lavaan (sets scale of latent).
+    - Because of this, use standardized effect for interpretation.
+    - Latents with two indicators require additional assumptions (e.g. similar loadings of latent on indicators).
 :::
-
 
 ## Latent example: measurement error in predictor
 
@@ -274,8 +304,8 @@ digraph  {
    node [shape=oval]
    Z [label="underlying process"]
     
-   Z -> X1;
-   Z -> X2;
+   Z -> X1 [style="dashed"];
+   Z -> X2 [style="dashed"];
    Z -> Y;
        
   {rank = max; Y}
@@ -324,8 +354,8 @@ digraph boxes_and_circles {
   E [label="0"]
   E -> Y [constraint=false];
 
-  X1 -> Y;
-  X2 -> Y;
+  X1 -> Y [style="dashed"];
+  X2 -> Y [style="dashed"];
   Y -> Z;
 
   {rank = "max"; Z}
@@ -363,8 +393,8 @@ digraph boxes_and_circles {
   E [label="0"]
   E -> Y [constraint=false];
 
-  X1 -> Y;
-  X2 -> Y;
+  X1 -> Y [style="dashed"];
+  X2 -> Y [style="dashed"];
   Y -> Z;
 
   {rank = "max"; Z}
@@ -398,8 +428,8 @@ digraph boxes_and_circles {
    node [shape=hexagon, fontname = Helvetica]
   Y [label="nutrient effect"]
 
-  X1 -> Y;
-  X2 -> Y;
+  X1 -> Y [style="dashed"];
+  X2 -> Y [style="dashed"];
   Y -> Z;
 
   X1:w -> X2:w [dir="both"]
@@ -739,9 +769,9 @@ digraph  {
    node [shape=oval]
     Y [label="diversity"]
     
-    Y -> X1;
-    Y -> X2;
-    Y -> X3;
+    Y -> X1 [style="dashed"];
+    Y -> X2 [style="dashed"];
+    Y -> X3 [style="dashed"];
     
   {rank = min; X1;X2; X3}
 }
@@ -759,7 +789,7 @@ digraph  {
 digraph  {
 
    # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5]
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=1]
 
     node [shape=oval, fontname = Helvetica]
     diversity
@@ -771,6 +801,7 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
+        biomass;
 
     disturbance->diversity;
     nutrients->diversity;
@@ -778,14 +809,19 @@ digraph  {
     nutrients->biomass;
     diversity->biomass ;
 
-    diversity -> evenness;
-    diversity -> richness;
-
- { rank="min"; nutrients; disturbance}
+    diversity -> evenness [style="dashed"];
+    diversity -> richness [style="dashed"];
 
  { rank="min"; evenness; richness}
 
+ { rank="same"; nutrients; diversity; disturbance}
+
+ { rank="max"; biomass}
  
+ # Add invisible edges to force left-to-right ordering
+ nutrients -> diversity [style=invis];
+ diversity -> disturbance [style=invis];
+
 }
 ```
 
@@ -813,19 +849,20 @@ digraph  {
         evenness, richness;
         nutrients;
         disturbance;
+        biomass;
 
     nutrients->richness;
     nutrients -> evenness;
 
-  landuse -> biomass;
+    landuse -> biomass;
 
     evenness-> biomass;
     richness->biomass;
 
-    nutrients -> landuse;
-    disturbance -> landuse;
+    nutrients -> landuse [style="dashed"];
+    disturbance -> landuse [style="dashed"];
 
-     evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+    evenness-> richness [dir=both, minlen=3] ;
 
   
  { rank="same"; evenness, richness}
@@ -867,7 +904,7 @@ disturbance->middleman [constraint=false, arrowhead=diamond];
     nutrients -> evenness;
    nutrients -> richness;
 
- evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+ evenness-> richness [dir=both; minlen=3] ;
 
  { rank="same"; evenness, richness}
 }
@@ -903,7 +940,7 @@ digraph  {
     evenness-> biomass;
     richness->biomass;
 
- evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+ evenness-> richness [dir=both; minlen=3] ;
 
  { rank="same"; evenness, richness}
 
@@ -936,7 +973,7 @@ digraph  {
     evenness-> biomass;
     richness->biomass;
 
- evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+ evenness-> richness [dir=both; minlen=3] ;
 
  { rank="same"; evenness, richness}
   
