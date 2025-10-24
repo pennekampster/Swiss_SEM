@@ -5,64 +5,85 @@ library(faux)
 
 ## Latent variables
 
-# CFA with more than three indicator variables
+# Generate 2 correlated indicators of "body size"
 set.seed(72643276)
-dat <- rnorm_multi(n = 100, 
-                   mu = c(4, 20, 1),
-                   sd = c(5, 5, 5),
-                   r = c(0.4, 0.5, 0.7), 
-                   varnames = c("length", "width", "mass"),
-                   empirical = F)
+dat <- rnorm_multi(
+  n = 100, 
+  mu = c(40, 80),              # length, mass
+  sd = c(4, 5),              # CV = 0.25 for both
+  r = 0.5,                     # correlation between them
+  varnames = c("length", "mass"),
+  empirical = FALSE
+)
 
+# Are indicators correlated?
 pairs(dat)
 
-cfa <- "body_size =~ mass + width + length"
+# CFA with 2 indicators
+cfa_model <- "body_size =~ length + mass"
+
+fit <- cfa(cfa_model, data=dat)
+summary(fit, standardized=T, rsq=T)
+
+# Note: Model has -1 degrees of freedom (under-identified)
+# This means we can't test model fit
+
+# Force equal loadings (adds 1 df) to estimate parameters
+# Assumption: The latent body size variable has an equal effect on both measurements. 
+# Requires that both are equally reliable, i.e., are measured with the same precision."
+
+cfa_equal <- "body_size =~ a*length + a*mass"
+
+fit_equal <- cfa(cfa_equal, data=dat)
+summary(fit_equal, standardized=T, rsq=T, fit.measures=T)
+
+# CFA with more than two indicator variables
+set.seed(72643276)
+dat <- rnorm_multi(
+  n = 100, 
+  mu = c(40, 15, 80, 200),           # Similar scales
+  sd = c(10, 3.75, 20, 50),          # CV = 0.25 for all
+  r = c(0.5, 0.6, 0.5, 0.6, 0.5, 0.5),  # 6 correlations for 4 vars
+  varnames = c("length", "width", "mass", "height"),
+  empirical = TRUE
+)
+
+# Are indicators correlated?
+pairs(dat)
+
+cfa <- "body_size =~ mass + width + length + height"
 fit <- cfa(cfa, data=dat)
+
+# check that standardised lambdas are of similar magnitude (similar loadings) 
+# suggesting common cause
 summary(fit, standardized=T, rsq=T)
 
 
-# Accounting for measurement error with 2 indicator variables
+
+
+# Accounting for measurement error using latent variables
 set.seed(1)
-n = 100
-x = rnorm(n)
+n <- 100
 
-eta1 = rnorm(n) # measurement error1
-noisy1 = x + eta1
+# True relationship: y = 0.9*x + error
+x_true <- rnorm(n)
+y <- 0.9 * x_true + rnorm(n)
 
-eta2 = rnorm(n) # measurement error2
-noisy2 = x + eta2
+# But we measure x with error
+measure1 <- x_true + rnorm(n)
+measure2 <- x_true + rnorm(n)
 
-u = rnorm(n)
-# intercept
-beta0=0; 
-# true effect of x on y
-beta1 = .25
-y = beta0+beta1*x + u
+dat <- data.frame(y, measure1, measure2)
 
-dat <- data.frame(y, eta1, eta2, noisy1, noisy2)
+# WRONG: Direct regression (biased toward 0)
+summary(lm(y ~ measure1, data = dat))
 
-# regression dilution 7 attenuation bias
-lm <- '
-y ~ noisy1 # exogenous latent
-'
-fit <- sem(lm, data=dat)
-summary(fit, standardized=T, rsq=T)
-
-
-# use latent variable to model underlying cause
+# CORRECT: Latent variable (recovers true effect)
 latent <- '
-xi =~ lambda*noisy1 + lambda*noisy2 # exogenous latent
-y ~ xi # path model
+  x_true =~ a*measure1 + a*measure2
+  y ~ x_true
 '
-fit <- sem(latent, data=dat)
-summary(fit, standardized=T, rsq=T)
-
-
-
-
-
-
-
+summary(sem(latent, data = dat), standardized = T, rsq = T)
 
 # Interactions
 
