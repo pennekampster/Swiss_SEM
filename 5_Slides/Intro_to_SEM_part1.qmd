@@ -1,6 +1,6 @@
 ---
-title: "Introduction to structural equation modelling"
-subtitle: "Day 1: Basic modelling"
+title: "Introduction to path and structural equation modelling"
+subtitle: "Day 1: Path modelling"
 author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
@@ -32,7 +32,7 @@ library(knitr)
 
 -   Who are you?
 -   What is your research question?
--   What do you know about SEM already?
+-   What do you know about path and structural equation modelling already?
 
 # General information
 
@@ -51,18 +51,18 @@ library(knitr)
 
 -   *Day 1*:
     -  General introduction to SEM to model ecological systems (lecture)
-    -  Fitting SEMs to data (live demo)
-    -  Case study: fitting SEMs to data (exercises)
+    -  Fitting path models to data (live demo)
+    -  Case study: fitting path models to data (exercises)
     -  Work on your research question /  meta-model (self-study)
 -   *Day 2*: 
     -  Constructs: latent and composite variables (lecture)
-    -  Fitting SEMs to data (live demo & case study exercises)
-    -  Work on your research question /  SEM model (self-study)
+    -  Fitting SE models to data (live demo & case study exercises)
+    -  Work on your research question /  SE model (self-study)
 -   *Day 3*:
     -  Progress update
     -  Model visualization (lecture)
-    -  Work on your research question /  SEM model (self-study)
-    -  Presentation of your SEM model and discussion with instructor and peers
+    -  Work on your research question /  SE model (self-study)
+    -  Presentation of your SE model and discussion with instructor and peers
 
 ## Overview {.smaller}
 
@@ -70,12 +70,12 @@ library(knitr)
     -   Global estimation of SEMs with R package lavaan (including latents and composites)
     -   Hands-on exercises and live coding
     -   A single ecological dataset for demonstration (Seabloom et al. 2020)
-    -   Develop your own SEM model
+    -   Develop your own SE model
 
 .  .  .  
 
 -   What will *not* be covered
-    - Local estimation of SEMs (with R package piecewiseSEM)
+    - Local estimation of SE models (with R package piecewiseSEM)
     - Advanced topics:
       + integrate random effects
       + disentangle feedback loops
@@ -87,10 +87,10 @@ You can:
 
 ::: incremental
   - translate your research question into a meta-model.
-  - fit a SEMs with the R package `lavaan`.
-  - assess the quality of a fitted SEM  
-  - interpret your SEM model and those reported by others.
-   - present SEMs graphically.
+  - fit a SE model with the R package `lavaan`.
+  - assess the quality of a fitted SE model
+  - interpret your SE model and those reported by others.
+   - present SE models graphically.
 :::
 
 <!-- ## Course materials
@@ -863,10 +863,10 @@ digraph  {
 4) Theory-focused: compare observations of a system to available theory 
 ::: 
 
-## SEM modelling philosophy
+## SE modelling philosophy
 
 ::: {.incremental}
-- A SEM should be specified based on prior evidence / theory (i.e., a meta-model).
+- A SE model should be specified based on prior evidence / theory (i.e., a meta-model).
 - Each path requires justification.
 - Continuum between theory (hypothesis-driven) to exploratory (data-driven) modelling.
 - Causal diagram to specify relationships of actual variables (using meta-model).
@@ -892,14 +892,14 @@ digraph  {
 
 
 
-# SEM model fitting
+# SE model fitting
 
-## How to estimate SEMs? 
+## How to estimate SE models? 
 
 ::: {.incremental}
 - Structural equation modelling is a framework rather than a statistical technique.   
 - Lavaan uses Maximum likelihood estimation (ML).   
-- Important: only variance-covariance matrix used for global estimation of SEM.    
+- Important: only variance-covariance matrix used for global estimation of SE models.    
 :::
 
 # Global estimation in a nutshell

@@ -1,6 +1,6 @@
 ---
 author: "Frank Pennekamp"
-title: "Introduction to structural equation modelling"
+title: "Introduction to path and structural equation modelling"
 subtitle: "How to effectively communicate your SEM analysis"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences
