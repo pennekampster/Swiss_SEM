@@ -1709,7 +1709,7 @@ digraph  {
 
 - Load and aggregate the Seabloom dataset (data and code provided)
 - Check collinearity of the following variables:
-  - nadd, disk, nadd, rich, even, ens.pie, mass.above
+  - nadd, disk, rich, even, ens.pie, mass.above
 - Check multivariate normality of the following variables using the `mvn()` function in `library(MVN)`: 
   - rich, even, mass.above
 - Fit multiple linear regression models to estimate coefficients
@@ -1759,6 +1759,8 @@ digraph  {
 
 ## Exercise 3 
 
+
+
 ```{dot}
 //| fig-width: 10
 //| fig-height: 4
@@ -1780,7 +1782,7 @@ digraph  {
     nutrients -> biomass;
     disturbance -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3, style="dashed"] ;
+    evenness:e-> richness:e [dir=both; minlen=3] ;
 
     evenness->biomass ;
     richness->biomass ;
@@ -1795,7 +1797,7 @@ After finding a model with good fit:
 
 -   Model analysis:
     -   Calculate the standardized coefficients.
-    -   Add derived quantities (direct and indirect effects of nutrients on biomass).
+    -   Calculate derived quantities (direct, indirect and total effects of nutrient addition on biomass).
 
 ## Exercise 4 
 
@@ -1834,17 +1836,19 @@ digraph  {
 }
 ```
 
--   Saturated model:
-    -   Model comparison with simpler model used in exercise 3.
-    -   Perform model pruning.
-    -   Decide on most parsimonious model and summarize model.
-- Which model best represents your system?
-- What inferences do you draw from your SEM?
+-  Build the saturated model, then:
+    -   AIC comparison with simpler model used in exercise 3. Which one is more parsimonious?
+    -   Perform model pruning on saturated model.
 
 ## Exercise 5 
 
+
+::: columns
+
+::: {.column width="33%"}
+Full mediation
 ```{dot}
-//| fig-width: 10
+//| fig-width: 3
 //| fig-height: 4
 
 digraph  {
@@ -1862,12 +1866,12 @@ digraph  {
 
     disturbance->richness;
     disturbance->evenness;
+
     nutrients->richness;
     nutrients->evenness;
-    disturbance -> biomass [color="red"];
-    nutrients -> biomass [color="red"];
+    nutrients -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3; style="dashed"];
+    evenness:e-> richness:e [dir=both; minlen=3];
 
     evenness->biomass ;
     richness->biomass ;
@@ -1876,10 +1880,88 @@ digraph  {
  { rank="same"; evenness; richness}
 }
 ```
+:::
+
+
+
+
+::: {.column width="33%"}
+Partial mediation
+```{dot}
+//| fig-width: 3
+//| fig-height: 4
+
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+    disturbance;
+
+    disturbance->richness;
+    disturbance->evenness;
+    nutrients->richness;
+    nutrients->evenness;
+    disturbance -> biomass;
+    nutrients -> biomass;
+
+    evenness:e-> richness:e [dir=both; minlen=3];
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+ { rank="same"; nutrients; disturbance}
+ { rank="same"; evenness; richness}
+}
+```
+:::
+
+::: {.column width="33%"}
+No mediation
+```{dot}
+//| fig-width: 3
+//| fig-height: 4
+
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = LR, ranksep=1]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+        disturbance;
+
+    nutrients->richness;
+    nutrients->evenness;
+    disturbance -> biomass;
+    nutrients -> biomass;
+
+    evenness:e-> richness:e [dir=both; minlen=3];
+
+    evenness->biomass ;
+    richness->biomass ;
+  
+ { rank="same"; nutrients; disturbance}
+ { rank="same"; evenness; richness}
+}
+```
+:::
+:::
 
 -   Perform mediation analysis:
-    -   Is there no, partial, or full mediation of disturbance on biomass via richness and eveness?
-    -   Add paths from disturbance to richness and evenness, remove the direct paths to AGB (both nutrients and disturbance).
-    -   Compare model fit to simple model. 
-- Which model better represents your data?
- 
+    - Is there no, partial, or full mediation of disturbance on biomass via richness and eveness?
+    - Compare model fits.
+    - Which model better represents your data?
+
+
+  

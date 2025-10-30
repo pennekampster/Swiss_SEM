@@ -780,7 +780,7 @@ digraph  {
 
 
 -   Construct a latent variable called diversity using richness and evenness as indicators and ens.pie:
-    - Run confirmatory factor analysis
+    - Use confirmatory factor analysis
     - Troubleshoot potential issues
 
 ## Exercise 2
@@ -827,8 +827,8 @@ digraph  {
 ```
 
 -   Construct a latent variable called diversity using richness and evenness as indicators:
-    -   Run confirmatory factor analysis to confirm validity of latent
-    -   Include latent variable into full model
+    -   Use confirmatory factor analysis to confirm validity of latent
+    -   Include latent variable into structural equation model
 -   What do you conclude?
 
 ## Exercise 3
@@ -986,6 +986,7 @@ digraph  {
 
 
 - Investigate possible interaction between disturbance and nutrient addition on biomass with a multi-group SEM.
+- Test the hypothesis that all paths are the same for disturbend and undisturbed plots.
 - Test the hypothesis that all paths are the same for disturbend and undisturbed plots.
 
 

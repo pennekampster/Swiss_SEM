@@ -11,7 +11,7 @@
 
   <meta name="author" content="Frank Pennekamp">
   <meta name="dcterms.date" content="2025-11-05">
-  <title>Introduction to structural equation modelling</title>
+  <title>Introduction to path and structural equation modelling</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -128,8 +128,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Introduction to structural equation modelling</h1>
-  <p class="subtitle">Day 1: Basic modelling</p>
+  <h1 class="title">Introduction to path and structural equation modelling</h1>
+  <p class="subtitle">Day 1: Path modelling</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -149,7 +149,7 @@ Frank Pennekamp
 <ul>
 <li>Who are you?</li>
 <li>What is your research question?</li>
-<li>What do you know about SEM already?</li>
+<li>What do you know about path and structural equation modelling already?</li>
 </ul>
 </section>
 <section>
@@ -172,22 +172,22 @@ Frank Pennekamp
 <li><em>Day 1</em>:
 <ul>
 <li>General introduction to SEM to model ecological systems (lecture)</li>
-<li>Fitting SEMs to data (live demo)</li>
-<li>Case study: fitting SEMs to data (exercises)</li>
+<li>Fitting path models to data (live demo)</li>
+<li>Case study: fitting path models to data (exercises)</li>
 <li>Work on your research question / meta-model (self-study)</li>
 </ul></li>
 <li><em>Day 2</em>:
 <ul>
 <li>Constructs: latent and composite variables (lecture)</li>
-<li>Fitting SEMs to data (live demo &amp; case study exercises)</li>
-<li>Work on your research question / SEM model (self-study)</li>
+<li>Fitting SE models to data (live demo &amp; case study exercises)</li>
+<li>Work on your research question / SE model (self-study)</li>
 </ul></li>
 <li><em>Day 3</em>:
 <ul>
 <li>Progress update</li>
 <li>Model visualization (lecture)</li>
-<li>Work on your research question / SEM model (self-study)</li>
-<li>Presentation of your SEM model and discussion with instructor and peers</li>
+<li>Work on your research question / SE model (self-study)</li>
+<li>Presentation of your SE model and discussion with instructor and peers</li>
 </ul></li>
 </ul>
 </section>
@@ -199,14 +199,14 @@ Frank Pennekamp
 <li>Global estimation of SEMs with R package lavaan (including latents and composites)</li>
 <li>Hands-on exercises and live coding</li>
 <li>A single ecological dataset for demonstration (Seabloom et al.&nbsp;2020)</li>
-<li>Develop your own SEM model</li>
+<li>Develop your own SE model</li>
 </ul></li>
 </ul>
 <div class="fragment">
 <ul>
 <li>What will <em>not</em> be covered
 <ul>
-<li>Local estimation of SEMs (with R package piecewiseSEM)</li>
+<li>Local estimation of SE models (with R package piecewiseSEM)</li>
 <li>Advanced topics:
 <ul>
 <li>integrate random effects</li>
@@ -222,11 +222,10 @@ Frank Pennekamp
 <p>You can:</p>
 <ul>
 <li class="fragment">translate your research question into a meta-model.</li>
-<li class="fragment">fit a SEMs with the R package <code>lavaan</code>.</li>
-<li class="fragment">assess the quality of a fitted SEM<br>
-</li>
-<li class="fragment">interpret your SEM model and those reported by others.</li>
-<li class="fragment">present SEMs graphically.</li>
+<li class="fragment">fit a SE model with the R package <code>lavaan</code>.</li>
+<li class="fragment">assess the quality of a fitted SE model</li>
+<li class="fragment">interpret your SE model and those reported by others.</li>
+<li class="fragment">present SE models graphically.</li>
 </ul>
 <!-- ## Course materials
 
@@ -1483,10 +1482,10 @@ Sewell Wright, 1923</p>
 <li class="fragment">Theory-focused: compare observations of a system to available theory</li>
 </ol>
 </section>
-<section id="sem-modelling-philosophy" class="slide level2">
-<h2>SEM modelling philosophy</h2>
+<section id="se-modelling-philosophy" class="slide level2">
+<h2>SE modelling philosophy</h2>
 <ul>
-<li class="fragment">A SEM should be specified based on prior evidence / theory (i.e., a meta-model).</li>
+<li class="fragment">A SE model should be specified based on prior evidence / theory (i.e., a meta-model).</li>
 <li class="fragment">Each path requires justification.</li>
 <li class="fragment">Continuum between theory (hypothesis-driven) to exploratory (data-driven) modelling.</li>
 <li class="fragment">Causal diagram to specify relationships of actual variables (using meta-model).</li>
@@ -1514,18 +1513,18 @@ Sewell Wright, 1923</p>
 </ul>
 </section></section>
 <section>
-<section id="sem-model-fitting" class="title-slide slide level1 center">
-<h1>SEM model fitting</h1>
+<section id="se-model-fitting" class="title-slide slide level1 center">
+<h1>SE model fitting</h1>
 
 </section>
-<section id="how-to-estimate-sems" class="slide level2">
-<h2>How to estimate SEMs?</h2>
+<section id="how-to-estimate-se-models" class="slide level2">
+<h2>How to estimate SE models?</h2>
 <ul>
 <li class="fragment">Structural equation modelling is a framework rather than a statistical technique.<br>
 </li>
 <li class="fragment">Lavaan uses Maximum likelihood estimation (ML).<br>
 </li>
-<li class="fragment">Important: only variance-covariance matrix used for global estimation of SEM.<br>
+<li class="fragment">Important: only variance-covariance matrix used for global estimation of SE models.<br>
 </li>
 </ul>
 </section></section>
@@ -2852,11 +2851,6 @@ mod.fit <- sem(mod.form , data = dat1)
 <svg width="1152" height="480" viewbox="0.00 0.00 388.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 384.44,-215 384.44,4 -4,4"></polygon>
-<g id="clust3" class="cluster">
-<title>cluster_prod</title>
-<polygon fill="none" stroke="lightgrey" points="288.31,-54 288.31,-126 372.44,-126 372.44,-54 288.31,-54"></polygon>
-<text text-anchor="middle" x="330.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
-</g>
 <g id="clust1" class="cluster">
 <title>cluster_bio</title>
 <polygon fill="none" stroke="lightgrey" points="154.38,-77 154.38,-203 246.31,-203 246.31,-77 154.38,-77"></polygon>
@@ -2866,6 +2860,11 @@ mod.fit <- sem(mod.form , data = dat1)
 <title>cluster_env</title>
 <polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon>
 <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_prod</title>
+<polygon fill="none" stroke="lightgrey" points="288.31,-54 288.31,-126 372.44,-126 372.44,-54 288.31,-54"></polygon>
+<text text-anchor="middle" x="330.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
 </g>
 <!-- evenness -->
 <g id="node1" class="node">
@@ -2970,7 +2969,7 @@ mod.fit <- sem(mod.form , data = dat1)
 <li>Load and aggregate the Seabloom dataset (data and code provided)</li>
 <li>Check collinearity of the following variables:
 <ul>
-<li>nadd, disk, nadd, rich, even, ens.pie, mass.above</li>
+<li>nadd, disk, rich, even, ens.pie, mass.above</li>
 </ul></li>
 <li>Check multivariate normality of the following variables using the <code>mvn()</code> function in <code>library(MVN)</code>:
 <ul>
@@ -3102,7 +3101,7 @@ mod.fit <- sem(mod.form , data = dat1)
 <!-- evenness&#45;&gt;richness -->
 <g id="edge5" class="edge">
 <title>evenness:e-&gt;richness:e</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M243.48,-104.15C270.62,-116.39 273.39,-177.32 247.45,-189.78"></path>
+<path fill="none" stroke="black" d="M243.48,-104.15C270.62,-116.39 273.39,-177.32 247.45,-189.78"></path>
 <polygon fill="black" stroke="black" points="243.85,-100.65 233.34,-102 242.4,-107.5 243.85,-100.65"></polygon>
 <polygon fill="black" stroke="black" points="246.36,-186.43 237.34,-192 247.86,-193.27 246.36,-186.43"></polygon>
 </g>
@@ -3172,7 +3171,7 @@ mod.fit <- sem(mod.form , data = dat1)
 <li>Model analysis:
 <ul>
 <li>Calculate the standardized coefficients.</li>
-<li>Add derived quantities (direct and indirect effects of nutrients on biomass).</li>
+<li>Calculate derived quantities (direct, indirect and total effects of nutrient addition on biomass).</li>
 </ul></li>
 </ul>
 </section>
@@ -3279,24 +3278,120 @@ mod.fit <- sem(mod.form , data = dat1)
 </div>
 </div>
 <ul>
-<li>Saturated model:
+<li>Build the saturated model, then:
 <ul>
-<li>Model comparison with simpler model used in exercise 3.</li>
-<li>Perform model pruning.</li>
-<li>Decide on most parsimonious model and summarize model.</li>
+<li>AIC comparison with simpler model used in exercise 3. Which one is more parsimonious?</li>
+<li>Perform model pruning on saturated model.</li>
 </ul></li>
-<li>Which model best represents your system?</li>
-<li>What inferences do you draw from your SEM?</li>
 </ul>
 </section>
 <section id="exercise-5" class="slide level2">
 <h2>Exercise 5</h2>
-<div class="cell" data-fig-width="10" data-fig-height="4" data-layout-align="default">
+<div class="columns">
+<div class="column" style="width:33%;">
+<p>Full mediation</p>
+<div class="cell" data-fig-width="3" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="960" height="384" viewbox="0.00 0.00 384.44 166.71" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="288" height="384" viewbox="0.00 0.00 384.44 146.09" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 142.09)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-142.09 380.44,-142.09 380.44,4 -4,4"></polygon>
+<!-- evenness -->
+<g id="node1" class="node">
+<title>evenness</title>
+<polygon fill="none" stroke="gray" points="236.27,-138.09 160.41,-138.09 160.41,-102.09 236.27,-102.09 236.27,-138.09"></polygon>
+<text text-anchor="middle" x="198.34" y="-115.89" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text>
+</g>
+<!-- richness -->
+<g id="node2" class="node">
+<title>richness</title>
+<polygon fill="none" stroke="gray" points="232.48,-48.09 164.21,-48.09 164.21,-12.09 232.48,-12.09 232.48,-48.09"></polygon>
+<text text-anchor="middle" x="198.34" y="-25.89" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text>
+</g>
+<!-- evenness&#45;&gt;richness -->
+<g id="edge6" class="edge">
+<title>evenness:e-&gt;richness:e</title>
+<path fill="none" stroke="black" d="M243.48,-32.23C270.62,-44.48 273.39,-105.41 247.45,-117.86"></path>
+<polygon fill="black" stroke="black" points="243.85,-28.73 233.34,-30.09 242.4,-35.58 243.85,-28.73"></polygon>
+<polygon fill="black" stroke="black" points="246.36,-114.52 237.34,-120.09 247.86,-121.35 246.36,-114.52"></polygon>
+</g>
+<!-- biomass -->
+<g id="node5" class="node">
+<title>biomass</title>
+<polygon fill="none" stroke="gray" points="376.51,-48.09 308.24,-48.09 308.24,-12.09 376.51,-12.09 376.51,-48.09"></polygon>
+<text text-anchor="middle" x="342.38" y="-25.89" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text>
+</g>
+<!-- evenness&#45;&gt;biomass -->
+<g id="edge7" class="edge">
+<title>evenness-&gt;biomass</title>
+<path fill="none" stroke="black" d="M228.09,-101.87C249.94,-88.03 280.18,-68.86 303.93,-53.82"></path>
+<polygon fill="black" stroke="black" points="306.1,-56.58 312.68,-48.27 302.36,-50.67 306.1,-56.58"></polygon>
+</g>
+<!-- richness&#45;&gt;biomass -->
+<g id="edge8" class="edge">
+<title>richness-&gt;biomass</title>
+<path fill="none" stroke="black" d="M232.64,-30.09C252.14,-30.09 276.99,-30.09 298,-30.09"></path>
+<polygon fill="black" stroke="black" points="298.28,-33.59 308.28,-30.09 298.28,-26.59 298.28,-33.59"></polygon>
+</g>
+<!-- nutrients -->
+<g id="node3" class="node">
+<title>nutrients</title>
+<polygon fill="none" stroke="gray" points="78.89,-48.09 9.49,-48.09 9.49,-12.09 78.89,-12.09 78.89,-48.09"></polygon>
+<text text-anchor="middle" x="44.19" y="-25.89" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
+</g>
+<!-- nutrients&#45;&gt;evenness -->
+<g id="edge4" class="edge">
+<title>nutrients-&gt;evenness</title>
+<path fill="none" stroke="black" d="M75.98,-48.3C99.67,-62.31 132.58,-81.78 158.15,-96.9"></path>
+<polygon fill="black" stroke="black" points="156.47,-99.98 166.86,-102.05 160.03,-93.95 156.47,-99.98"></polygon>
+</g>
+<!-- nutrients&#45;&gt;richness -->
+<g id="edge3" class="edge">
+<title>nutrients-&gt;richness</title>
+<path fill="none" stroke="black" d="M78.96,-30.09C101.07,-30.09 130.19,-30.09 154.01,-30.09"></path>
+<polygon fill="black" stroke="black" points="154.19,-33.59 164.19,-30.09 154.19,-26.59 154.19,-33.59"></polygon>
+</g>
+<!-- nutrients&#45;&gt;biomass -->
+<g id="edge5" class="edge">
+<title>nutrients-&gt;biomass</title>
+<path fill="none" stroke="black" d="M79.1,-19.96C101.85,-13.71 132.63,-6.29 160.38,-3.09 193.9,0.79 202.83,1.15 236.31,-3.09 257.06,-5.71 279.57,-11.14 298.42,-16.44"></path>
+<polygon fill="black" stroke="black" points="297.62,-19.85 308.2,-19.27 299.56,-13.13 297.62,-19.85"></polygon>
+</g>
+<!-- disturbance -->
+<g id="node4" class="node">
+<title>disturbance</title>
+<polygon fill="none" stroke="gray" points="88.57,-120.09 -0.19,-120.09 -0.19,-84.09 88.57,-84.09 88.57,-120.09"></polygon>
+<text text-anchor="middle" x="44.19" y="-97.89" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text>
+</g>
+<!-- disturbance&#45;&gt;evenness -->
+<g id="edge2" class="edge">
+<title>disturbance-&gt;evenness</title>
+<path fill="none" stroke="black" d="M88.38,-107.2C107.69,-109.48 130.49,-112.18 150.23,-114.51"></path>
+<polygon fill="black" stroke="black" points="149.9,-118 160.24,-115.7 150.72,-111.05 149.9,-118"></polygon>
+</g>
+<!-- disturbance&#45;&gt;richness -->
+<g id="edge1" class="edge">
+<title>disturbance-&gt;richness</title>
+<path fill="none" stroke="black" d="M83.58,-83.92C105.31,-73.64 132.51,-60.76 154.87,-50.18"></path>
+<polygon fill="black" stroke="black" points="156.59,-53.24 164.13,-45.8 153.59,-46.92 156.59,-53.24"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:33%;">
+<p>Partial mediation</p>
+<div class="cell" data-fig-width="3" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="288" height="384" viewbox="0.00 0.00 384.44 166.71" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 162.71)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-162.71 380.44,-162.71 380.44,4 -4,4"></polygon>
 <!-- evenness -->
@@ -3314,7 +3409,7 @@ mod.fit <- sem(mod.form , data = dat1)
 <!-- evenness&#45;&gt;richness -->
 <g id="edge7" class="edge">
 <title>evenness:e-&gt;richness:e</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M243.48,-36.51C270.62,-48.76 273.39,-109.68 247.45,-122.14"></path>
+<path fill="none" stroke="black" d="M243.48,-36.51C270.62,-48.76 273.39,-109.68 247.45,-122.14"></path>
 <polygon fill="black" stroke="black" points="243.85,-33.01 233.34,-34.36 242.4,-39.86 243.85,-33.01"></polygon>
 <polygon fill="black" stroke="black" points="246.36,-118.79 237.34,-124.36 247.86,-125.63 246.36,-118.79"></polygon>
 </g>
@@ -3357,8 +3452,8 @@ mod.fit <- sem(mod.form , data = dat1)
 <!-- nutrients&#45;&gt;biomass -->
 <g id="edge6" class="edge">
 <title>nutrients-&gt;biomass</title>
-<path fill="none" stroke="red" d="M79.04,-137.89C117.81,-151.38 182.85,-167.92 236.31,-151.36 266.2,-142.1 295.15,-121.08 315.06,-104.13"></path>
-<polygon fill="red" stroke="red" points="317.54,-106.61 322.76,-97.4 312.93,-101.35 317.54,-106.61"></polygon>
+<path fill="none" stroke="black" d="M79.04,-137.89C117.81,-151.38 182.85,-167.92 236.31,-151.36 266.2,-142.1 295.15,-121.08 315.06,-104.13"></path>
+<polygon fill="black" stroke="black" points="317.54,-106.61 322.76,-97.4 312.93,-101.35 317.54,-106.61"></polygon>
 </g>
 <!-- disturbance -->
 <g id="node4" class="node">
@@ -3381,8 +3476,8 @@ mod.fit <- sem(mod.form , data = dat1)
 <!-- disturbance&#45;&gt;biomass -->
 <g id="edge5" class="edge">
 <title>disturbance-&gt;biomass</title>
-<path fill="none" stroke="red" d="M88.56,-17.65C127.87,-4.96 187.01,7.91 236.31,-7.36 266.2,-16.62 295.15,-37.64 315.06,-54.59"></path>
-<polygon fill="red" stroke="red" points="312.93,-57.38 322.76,-61.33 317.54,-52.11 312.93,-57.38"></polygon>
+<path fill="none" stroke="black" d="M88.56,-17.65C127.87,-4.96 187.01,7.91 236.31,-7.36 266.2,-16.62 295.15,-37.64 315.06,-54.59"></path>
+<polygon fill="black" stroke="black" points="312.93,-57.38 322.76,-61.33 317.54,-52.11 312.93,-57.38"></polygon>
 </g>
 </g>
 </svg>
@@ -3391,14 +3486,104 @@ mod.fit <- sem(mod.form , data = dat1)
 </div>
 </div>
 </div>
+</div><div class="column" style="width:33%;">
+<p>No mediation</p>
+<div class="cell" data-fig-width="3" data-fig-height="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="288" height="384" viewbox="0.00 0.00 384.44 218.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 214)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-214 380.44,-214 380.44,4 -4,4"></polygon>
+<!-- evenness -->
+<g id="node1" class="node">
+<title>evenness</title>
+<polygon fill="none" stroke="gray" points="236.27,-210 160.41,-210 160.41,-174 236.27,-174 236.27,-210"></polygon>
+<text text-anchor="middle" x="198.34" y="-187.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text>
+</g>
+<!-- richness -->
+<g id="node2" class="node">
+<title>richness</title>
+<polygon fill="none" stroke="gray" points="232.48,-120 164.21,-120 164.21,-84 232.48,-84 232.48,-120"></polygon>
+<text text-anchor="middle" x="198.34" y="-97.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text>
+</g>
+<!-- evenness&#45;&gt;richness -->
+<g id="edge5" class="edge">
+<title>evenness:e-&gt;richness:e</title>
+<path fill="none" stroke="black" d="M243.48,-104.15C270.62,-116.39 273.39,-177.32 247.45,-189.78"></path>
+<polygon fill="black" stroke="black" points="243.85,-100.65 233.34,-102 242.4,-107.5 243.85,-100.65"></polygon>
+<polygon fill="black" stroke="black" points="246.36,-186.43 237.34,-192 247.86,-193.27 246.36,-186.43"></polygon>
+</g>
+<!-- biomass -->
+<g id="node5" class="node">
+<title>biomass</title>
+<polygon fill="none" stroke="gray" points="376.51,-97 308.24,-97 308.24,-61 376.51,-61 376.51,-97"></polygon>
+<text text-anchor="middle" x="342.38" y="-74.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text>
+</g>
+<!-- evenness&#45;&gt;biomass -->
+<g id="edge6" class="edge">
+<title>evenness-&gt;biomass</title>
+<path fill="none" stroke="black" d="M222.16,-173.84C246.18,-154.73 284.13,-124.54 310.74,-103.37"></path>
+<polygon fill="black" stroke="black" points="312.97,-106.08 318.61,-97.11 308.61,-100.6 312.97,-106.08"></polygon>
+</g>
+<!-- richness&#45;&gt;biomass -->
+<g id="edge7" class="edge">
+<title>richness-&gt;biomass</title>
+<path fill="none" stroke="black" d="M232.64,-96.61C252.23,-93.44 277.21,-89.39 298.29,-85.98"></path>
+<polygon fill="black" stroke="black" points="298.97,-89.41 308.28,-84.36 297.85,-82.5 298.97,-89.41"></polygon>
+</g>
+<!-- nutrients -->
+<g id="node3" class="node">
+<title>nutrients</title>
+<polygon fill="none" stroke="gray" points="78.89,-120 9.49,-120 9.49,-84 78.89,-84 78.89,-120"></polygon>
+<text text-anchor="middle" x="44.19" y="-97.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
+</g>
+<!-- nutrients&#45;&gt;evenness -->
+<g id="edge2" class="edge">
+<title>nutrients-&gt;evenness</title>
+<path fill="none" stroke="black" d="M75.98,-120.21C99.67,-134.23 132.58,-153.69 158.15,-168.81"></path>
+<polygon fill="black" stroke="black" points="156.47,-171.89 166.86,-173.97 160.03,-165.86 156.47,-171.89"></polygon>
+</g>
+<!-- nutrients&#45;&gt;richness -->
+<g id="edge1" class="edge">
+<title>nutrients-&gt;richness</title>
+<path fill="none" stroke="black" d="M78.96,-102C101.07,-102 130.19,-102 154.01,-102"></path>
+<polygon fill="black" stroke="black" points="154.19,-105.5 164.19,-102 154.19,-98.5 154.19,-105.5"></polygon>
+</g>
+<!-- nutrients&#45;&gt;biomass -->
+<g id="edge4" class="edge">
+<title>nutrients-&gt;biomass</title>
+<path fill="none" stroke="black" d="M79.1,-91.88C101.85,-85.63 132.63,-78.21 160.38,-75 193.9,-71.12 202.57,-74.36 236.31,-75 256.64,-75.39 279.16,-76.19 298.13,-76.98"></path>
+<polygon fill="black" stroke="black" points="298.12,-80.49 308.26,-77.42 298.42,-73.49 298.12,-80.49"></polygon>
+</g>
+<!-- disturbance -->
+<g id="node4" class="node">
+<title>disturbance</title>
+<polygon fill="none" stroke="gray" points="88.57,-36 -0.19,-36 -0.19,0 88.57,0 88.57,-36"></polygon>
+<text text-anchor="middle" x="44.19" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text>
+</g>
+<!-- disturbance&#45;&gt;biomass -->
+<g id="edge3" class="edge">
+<title>disturbance-&gt;biomass</title>
+<path fill="none" stroke="black" d="M88.57,-26.94C144.69,-38.49 241.89,-58.51 298,-70.07"></path>
+<polygon fill="black" stroke="black" points="297.48,-73.53 307.98,-72.12 298.89,-66.68 297.48,-73.53"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
 <ul>
 <li>Perform mediation analysis:
 <ul>
 <li>Is there no, partial, or full mediation of disturbance on biomass via richness and eveness?</li>
-<li>Add paths from disturbance to richness and evenness, remove the direct paths to AGB (both nutrients and disturbance).</li>
-<li>Compare model fit to simple model.</li>
-</ul></li>
+<li>Compare model fits.</li>
 <li>Which model better represents your data?</li>
+</ul></li>
 </ul>
 
 </section></section>

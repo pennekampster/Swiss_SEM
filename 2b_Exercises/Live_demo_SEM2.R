@@ -47,7 +47,7 @@ pairs(dat)
 cfa_model <- "body_size =~ length + mass"
 fit <- cfa(cfa_model, data=dat)
 
-# Note: Model has -1 degrees of freedom (under-identified)
+# Note: Model has 0 degrees of freedom (just identified)
 # This means we can't test model fit
 
 # Force equal loadings (adds 1 df) to estimate parameters
@@ -69,7 +69,7 @@ dat <- rnorm_multi(
   sd = c(10, 3.75, 20, 50),          # CV = 0.25 for all
   r = c(0.5, 0.6, 0.5, 0.6, 0.5, 0.5),  # 6 correlations for 4 vars
   varnames = c("length", "width", "mass", "height"),
-  empirical = TRUE
+  empirical = FALSE
 )
 
 # Are indicators correlated?
