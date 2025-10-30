@@ -3,16 +3,38 @@ library(visreg)
 library(tidyverse)
 library(AICcmodavg)
 library(here)
+library(corrplot)      # For correlation plots
+library(MVN)
 
+# load the dataset
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
-seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% 
-  summarise(across(mass.above:ens.pie, mean))
 
+# average across years
+seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
+
+# run this for exercises of Day 2
 # seabloom$mass.above <- seabloom$mass.above / 100
 
 # Day 1:
 # Exercise 1:
+
+# 1. COLLINEARITY TESTS
+vars_to_check <- c("nadd", "disk", "rich", "even", "ens.pie", "mass.above")
+cor_matrix <- cor(seabloom[, vars_to_check], use = "complete.obs")
+# --- Method 2: Correlation Plot (Visual) ---
+corrplot(cor_matrix, 
+         method = "number",
+         type = "upper",
+         tl.col = "black",
+         tl.srt = 45,
+         title = "Correlation Matrix",
+         mar = c(0,0,1,0))
+
+# Rule of thumb: correlations > 0.9 indicate potential collinearity issues, correlations between 0.7-0.9 warrant attention
+
+
+# 2. MULTIVARIATE NORMALITY TESTS
 
 lm.dir <- lm(mass.above ~ nadd  + rich + even, data = seabloom)
 summary(lm.dir)
@@ -32,36 +54,21 @@ par(mfrow=c(2,2))
 plot(lm.even)
 par(mfrow=c(1,1))
 
-library(broom)
-
+# extract residuals from regressions
 lm.dir.resid <- augment(lm.dir)$.resid
 lm.even.resid <- augment(lm.even)$.resid
 lm.rich.resid <- augment(lm.rich)$.resid
-
 resid.df <- data.frame(lm.dir.resid, lm.even.resid, lm.rich.resid)
-library("MVN")
-mvn(data = resid.df, mvnTest = "hz", univariatePlot = "qqplot")
+
+# test multivariate normality
+mvn_result <- mvn(data = resid.df)
+summary(mvn_result, select = "mvn")
+plot(mvn_result, diagnostic = "multivariate", type = "qq")
+
+# What to do when multivariate normality assumption is violated?
+# Do estimation with a Satorra-Bentler correction, to be included in the sem() or cfa() function: estimator="MLM"
 
 
-
-mvn(data = seabloom[, c("rich", "even", "mass.above")], mvnTest = "hz", univariatePlot = "qqplot")
-
-histWithDensity <- function(variable, name){
-  hist(variable, prob = TRUE, main = "", xlab = name)
-  x <- seq(min(variable), max(variable), length = 400)
-  y <- dnorm(x, mean = mean(variable), sd = sd(variable))
-  lines(x, y, col = "red", lwd = 2)
-}
-par(mfrow = c(1, 3))
-histWithDensity(seabloom$mass.above, "mass.above")
-histWithDensity(seabloom$rich, "rich")
-histWithDensity(seabloom$even, "even")
-
-log.mass.above <- sqrt(seabloom$mass.above)
-log.even <- sqrt(seabloom$even)
-log.rich <- sqrt(seabloom$rich)
-
-mvn(data = data.frame(log.mass.above, log.even, log.rich), mvnTest = "hz", univariatePlot = "qqplot")
 
 # Exercise 2:
 
@@ -70,32 +77,33 @@ simple <-
 rich ~ nadd
 even ~ nadd"
 
+# use robust estimator due to non-normality
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 
 #Rescale variables
 seabloom$mass.above <- seabloom$mass.above / 100
 
+# estimate again
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple, fit.measures = TRUE)
 
 # modification indices
 modindices(fit.simple, minimum.value = 3.84)
 
+# add error correlation between evenness and richness
 fit.simple.up <- update(fit.simple, add = "rich ~~ even")
-summary(fit.simple.up, fit.measures = TRUE, rsq = TRUE)
+summary(fit.simple.up, fit.measures = TRUE)
 
 # modification indices
 modindices(fit.simple.up, minimum.value = 0.01)
 
 
-# Exercise 3: derived quantities
-#
+# Exercise 3: standardized coefficients and derived quantities
 
-# standardized coefficients
-
+# get standardized coefficients
 standardizedsolution(fit.simple.up, type = "std.all")
 
-# Add variables that calculate the total, direct and indirect effect of each variable
+# Calculate the total, direct and indirect effect of each variable
 
 derived <-
 "mass.above ~ b1 * nadd + b2 * rich + b3 * even + disk
@@ -110,7 +118,7 @@ tot.nut.effect :=  b1 + b2 * b4 + b3 * b5
 "
 
 fit.derived <- sem(derived, data = seabloom, estimator = "MLM")
-summary(fit.derived, rsq = TRUE, standardized=T)
+summary(fit.derived, standardized = TRUE)
 
 # Exercise 4: Saturated model
 
@@ -122,9 +130,12 @@ even ~ nadd + disk
 rich ~~ even"
 
 fit.satur <- sem(satur, data = seabloom, estimator = "MLM")
-summary(fit.satur, rsq = TRUE)
+summary(fit.satur)
 
-# model pruning
+aictab(list(fit.simple.up, fit.satur),
+       c("simple", "saturated"))
+
+# model pruning (remove non-significant paths)
 prune <-
 "mass.above ~ nadd + rich + even +  disk
 rich ~ nadd
@@ -135,17 +146,17 @@ rich ~~ even"
 fit.prune <- sem(prune, data = seabloom, estimator = "MLM")
 summary(fit.prune, rsq = TRUE, fit.measures = TRUE)
 
-
 aictab(list(fit.satur, fit.prune),
        c("saturated", "pruned"))
+
+# Take away: a saturated model is not always useless, since one can use model comparisons to assess whether all paths are necessary
+# Generally, one should assess model fit first, then prune non-significant paths to arrive at a more parsimonious model, rather than fitting a saturated model and then simplifying it.
 
 
 # Exercise 5: Mediation 
 
 # Let's test whether the effect of disturbance is mediated via its
 # effect on richness and evenness, rather than directly on biomass
-# Add paths from disk to rich and even, remove the path to mass.above
-# Compare model fit to simple model
 # What do you conclude?
 
 no.mediation <-
@@ -175,10 +186,8 @@ rich ~~ even"
 fit.full.mediation <- sem(full.mediation, data = seabloom, estimator = "MLM")
 summary(fit.full.mediation, rsq = TRUE)
 
-AIC(fit.no.mediation, fit.partial.mediation, fit.full.mediation)
-
-
-
+aictab(list(fit.no.mediation, fit.partial.mediation, fit.full.mediation),
+       c("no mediation", "partial mediation", "full mediation"))
 
 
 # Day 2:
@@ -196,34 +205,32 @@ fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
 
 
-# exercise 2:
+# Exercise 2:
 
+# investigate correlations among diversity metrics
 cor.test(seabloom$even, seabloom$rich)
 cor.test(seabloom$ens.pie, seabloom$rich)
 cor.test(seabloom$even, seabloom$ens.pie)
 
-plot(seabloom$ens.pie, seabloom$even)
-
-seabloom$even.rev <- 1 - seabloom$even
-diversity <- 'div =~ rich + even.rev + ens.pie'
+diversity <- 'div =~ rich + even + ens.pie'
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
+# CFA model fails with Heywood case (negative variance estimate)
 
+# construct simpler 2 indicator latent variable
+seabloom$rich_std <- (seabloom$rich-mean(seabloom$rich)) / sd(seabloom$rich)
+seabloom$even_std <- (seabloom$even-mean(seabloom$even)) / sd(seabloom$even)
+# reverse evenness so that higher values = lower evenness
+seabloom$even.rev_std <- seabloom$even_std * -1  
 
-scale(seabloom$rich, center=T)
-
-seabloom$rich_std <- (mean(seabloom$rich)-seabloom$rich) / sd(seabloom$rich)
-seabloom$even.rev_std <- (mean(seabloom$even.rev)-seabloom$even.rev) / sd(seabloom$even.rev)
-
-diversity <- 'div =~ lambda*rich + lambda*even.rev
-rich ~~ 1*rich
-even.rev ~~ 1*even.rev
-'
-
+# test measurement model
+diversity <- 'div =~ lambda*even.rev_std + lambda*rich_std'  
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 summary(fit.diversity, standardized=T)
 
+
 # Exercise 3:
 
+# fit full SEM with latent diversity variable 
 lv <- '
 # Latent variable definition
 diversity =~ lambda*even.rev_std + lambda*rich_std
@@ -235,25 +242,11 @@ diversity ~ nadd + disk
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
 
-# issue with the direction of diversity on AGB. Can you explain?
 
-# compare to ens.pie
-
-lv <- '
-mass.above ~ nadd + disk + ens.pie
-ens.pie ~ nadd + disk
-'
-
-fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
-summary(fit.lv)
-
-
-
-
-
-# Exercise 4 (composite):
+# Exercise 3:
+# construct and estimate composite variable in SEM
   
-comp <- "
+comp.auto <- '
 comp.landuse <~ 1 * disk + nadd
 
 rich ~ comp.landuse
@@ -262,34 +255,61 @@ even ~ comp.landuse
 mass.above ~ comp.landuse + rich + even
 
 rich ~~ even
-"
+'
 
-fit.comp <- sem(comp, data = seabloom)
-summary(fit.comp, standardized=T, rsq=T)
+fit.comp.auto <- sem(comp.auto, data = seabloom)
+summary(fit.comp.auto, standardized=T, rsq=T)
 
+# what is a composite variable?
+# A composite variable is a weighted sum of its indicators,
+# where weights are estimated from the data to maximize explained variance in the response variable.
+# calculate composite variable manually
+lm(mass.above ~ disk + nadd, data = seabloom)
+lm(rich ~ disk + nadd, data = seabloom)
+lm(even ~ disk + nadd, data = seabloom)
 
-# manually construct composite (if lavaan struggles)
-comp.man <- 'mass.above ~ disk + nadd'
-fit.comp.man <- sem(comp.man, data = seabloom)
-summary(fit.comp.man)
-
-seabloom$landuse <- lavInspect(fit.comp.man, what = "est")$beta[1, 2] * seabloom$disk +
-  lavInspect(fit.comp.man, what = "est")$beta[1, 3] * seabloom$nadd
-
-
-# fit composite as part of SEM model
+# fit more than 1 composite as part of SEM model
 comp <- "
-rich ~ landuse
-even ~ landuse
+comp.biomass <~ 0.4928826 * disk + 0.06799544 * nadd
+comp.rich <~ 0.4123 * disk + -0.1902 * nadd
 
-mass.above ~ landuse + rich + even
+rich ~ comp.rich
+even ~ nadd
+
+mass.above ~ comp.biomass + rich + even
+
+rich ~~ even
 "
 
 fit.comp <- sem(comp, data = seabloom)
 summary(fit.comp, standardized=T, rsq=T)
 
+# calculate composite variable manually
+seabloom2 <- seabloom
+seabloom2$even_rev <- 1-seabloom$even # reverse evenness so that higher values = lower evenness
+coef(lm(mass.above ~ disk + nadd, data = seabloom2))
+seabloom2$comp.biomass <- 0.49288262 * seabloom2$disk + 0.06799544 * seabloom2$nadd
 
-# Exercise 5 (interactions):
+coef(lm(rich ~ disk + nadd, data = seabloom2))
+seabloom2$comp.rich <- 0.4122807 * seabloom2$disk + -0.1902469 * seabloom2$nadd
+
+coef(lm(even_rev ~ disk + nadd, data = seabloom2))
+seabloom2$comp.even <- 0.002715821 * seabloom2$disk + -0.005796789 * seabloom2$nadd
+
+# fit more than 1 composite as part of SEM model
+comp <- '
+mass.above ~ comp.biomass + rich + even
+even ~ comp.even
+
+rich ~~ even
+'
+
+fit.comp <- sem(comp, data = seabloom2)
+summary(fit.comp, standardized=T, rsq=T)
+
+
+
+# Exercise 4 (interactions):
 
 # manual calculation of product of two predictors
 seabloom$diskxnadd <- seabloom$disk * seabloom$nadd
@@ -310,9 +330,9 @@ summary(fit.compint, standardized = TRUE)
 int.full <-
 "comp.int <~ 1 * disk + nadd + diskxnadd
 
-mass.above ~ rich + even 
-rich ~ comp.int 
-even ~ comp.int
+mass.above ~ rich + even + comp.int 
+rich ~ nadd 
+even ~ nadd 
 
 rich ~~ even"
 
@@ -323,9 +343,12 @@ summary(fit.int.full, standardized = TRUE, rsq = TRUE)
 # Does interaction term increase variance explained?
 lavInspect(fit.int.full, "R2")
 lavInspect(fit.simple, "R2")
+# Yes, inclusion of interaction term increases R2 for mass.above from 0.57 to 0.60
+# what about goodness-of-fit?
+fitmeasures(fit.int.full, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+fitmeasures(fit.simple, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
 
-
-# Exercise 6:
+# Exercise 5:
 
 int.mg <-
 "mass.above ~ rich + even + nadd
@@ -352,12 +375,12 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
   theme_bw() 
 
 # constrain certain pathways to be the same
-int.mg.constrain <-
-  "mass.above ~  c('b1', 'b1') * rich + c('b2', 'b2') * even 
-rich ~ c('b4a', 'b4b') * nadd 
-even ~ c('b6a', 'b6b') *  nadd
+int.mg.constrain <- ' 
+mass.above ~ c("b1", "b1") * rich + c("b2", "b2") * even
+rich ~ c("b4a", "b4b") * nadd 
+even ~ c("b6a", "b6b") *  nadd
 
-rich ~~ even"
+rich ~~ even'
 
 fit.int.mg.constrain <- sem(int.mg.constrain, group = "disk", data = seabloom)
 summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
@@ -378,7 +401,7 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
 
 library(AICcmodavg)
 aictab(list(fit.int.mg, fit.int.mg.constrain))
-
+# The constrained model is less parsimonious and has a higher AICc value, indicating that not all pathways have the same strength between disturbed and undisturbed plots.
 
 
 
