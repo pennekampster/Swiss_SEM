@@ -58,8 +58,8 @@ library(knitr)
     -  Constructs: latent and composite variables (lecture)
     -  Fitting SE models to data (live demo & case study exercises)
     -  Work on your research question /  SE model (self-study)
--   *Day 3*:
     -  Progress update
+-   *Day 3*:
     -  Model visualization (lecture)
     -  Work on your research question /  SE model (self-study)
     -  Presentation of your SE model and discussion with instructor and peers
@@ -1619,8 +1619,10 @@ digraph  {
   node [shape = box,
         fontname = Helvetica]
   
-   environment -> biodiversity -> biomass;
-   environment -> biomass;
+  impact [ label = "human impact" ]
+
+   impact -> biodiversity -> biomass;
+   impact -> biomass;
   
 }
 ```
@@ -1656,7 +1658,7 @@ digraph  {
 
 
    subgraph cluster_env {
-        label="Environment"
+        label="Human impact"
         fontname = Helvetica
      		color=lightgrey;
         nutrients;
@@ -1682,26 +1684,23 @@ digraph  {
 ```
 
 ::: {.incremental}
-1)  Function (biomass) is directly influenced by the environment (nutrients, disturbance)
+1)  Function (biomass) is directly influenced by human impact (nutrients, disturbance)
 2)  Function (biomass) is directly influenced by biodiversity (richness and evenness).
-3)  The environment also influences biodiversity and thus, have an indirect effect on function via biodiversity.
+3)  Human impact also influences biodiversity and thus, have an indirect effect on function via biodiversity.
 :::
 
 
 ::: notes
--   Ask students about how they would address this question.
--   Thinking about what is missing in the model, measurement errors etc.
--   Present the concept of meta-model and impications for research.
--   Include a graphical representation of the meta-model as what is missing in the model.
+
 :::
 
 
 ## Exercise 1 
 
 - Load and aggregate the Seabloom dataset (data and code provided)
-- Check collinearity of the following variables:
+- Inspect raw correlations between the following variables:
   - nadd, disk, rich, even, ens.pie, mass.above
-- Check multivariate normality of the following variables using the `mvn()` function in `library(MVN)`: 
+- Inspect multivariate normality of the following variables using the `mvn()` function in `library(MVN)`: 
   - rich, even, mass.above
 - Fit multiple linear regression models to estimate coefficients
     -   direct effects of environmental predictors on above ground biomass (AGB)

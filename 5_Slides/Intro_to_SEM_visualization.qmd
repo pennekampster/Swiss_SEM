@@ -36,8 +36,8 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
     -  Constructs: latent and composite variables (lecture)
     -  Fitting SE models to data (live demo & case study exercises)
     -  Work on your research question /  SE model (self-study)
--   *Day 3*:
     -  Progress update
+-   *Day 3*:
     -  Model visualization (lecture)
     -  Work on your research question /  SE model (self-study)
     -  Presentation of your SE model and discussion with instructor and peers

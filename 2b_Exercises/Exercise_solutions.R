@@ -11,6 +11,9 @@ library(broom)
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
                        sep = ",", header = TRUE)
 
+#turn nutrient treatments into factor
+seabloom$ntrt <- as.factor(seabloom$ntrt)
+
 # average across years
 seabloom <- seabloom %>% group_by(exp, field, plot, disk, yr.plowed, ntrt, nadd, other.add) %>% summarise(across(mass.above:ens.pie, mean))
 

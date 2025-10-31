@@ -39,8 +39,8 @@ library(ggplot2)
     -  Constructs: latent and composite variables (lecture)
     -  Fitting SE models to data (live demo & case study exercises)
     -  Work on your research question /  SE model (self-study)
--   *Day 3*:
     -  Progress update
+-   *Day 3*:
     -  Model visualization (lecture)
     -  Work on your research question /  SE model (self-study)
     -  Presentation of your SE model and discussion with instructor and peers
@@ -49,7 +49,7 @@ library(ggplot2)
 
 ::: incremental
 - Meta-model aims to connect general theory with study specific model and data
-- Theory is often more general than particular proxies used (e.g. climate change $\neq$ temperature change)
+- Theory is often more general than particular proxies used (e.g. climate change includes temperature mean, extremes, precipitation changes etc.)
 - Constructs can bridge between general theory and the complexity of case studies:
   - Capture underlying processes and multiple causes
   - Interactions between variables
@@ -79,7 +79,7 @@ digraph  {
 
 
    subgraph cluster_env {
-        label="Environment"
+        label="Human impact"
         fontname = Helvetica
      		color=lightgrey;
         nutrients;
@@ -108,9 +108,11 @@ digraph  {
 - So far, only observed variables were considered (i.e. path model).
 - However, many ecological concepts are:
   -  abstract and difficult to quantify and measure directly
-  -  multifaceted and dimensional
--  Latent and composite variables help to capture such concepts.
+  -  multifaceted and multidimensional
+-  Latent and composite variables help to capture such concepts
 :::
+
+# Latent variables
 
 ## Latent variables in the social sciences and psychology
 
@@ -156,18 +158,10 @@ digraph  {
 
 ::: incremental
 -   Latent variables represented by oval node shape.\
--   The latent variable itself is unobserved.
--   Instead, its influence is captured by indicator variable(s).\
+-   The latent variable itself is unobserved, its influence is captured by indicator variable(s).\
 -   Latents capture the common variance or overlapping information for a set of measures. 
--   Direction of causality flows from latent variable to the observed variable(s).
+-   Direction of causality flows from latent variable to the (reflective) indicator(s).
 -   Latent variables are free of random or systematic measurement errors (unlike their indicators).
-:::
-
-## Latent variables - a word of caution
-::: incremental
-- The design of latent variables requires deep thinking and justification
-- The choice of particular indicators to define a latent variable needs justification.
-- The naming fallacy: naming a latent variable in a certain way does not guarantee you capture the underling process.
 :::
 
 ## Fitting latent variables
@@ -178,7 +172,7 @@ digraph  {
     - assumes measured variable is perfect representation of the latent. 
     - makes a conceptual distinction between the concept of interest and the observed measure.
   - 2 indicators:
-    - need to make additional assumptions to identify the model. 
+    - requires assumptions to identify the model. 
     - possible to remove measurement error.
   - 3 or more indicators: 
     - allows to test whether or not the same process generated the indicators.
@@ -198,7 +192,7 @@ Latents fitted in two steps:
 . . .
 
 2)  Structural model
-    -   Estimates relationships between multiple latent variables and between latent and other variables.
+    -   Estimates relationships betweenmultiple latent variables and between latent and other variables.
 
 ## Latent example: measurement error in predictor
 
@@ -246,7 +240,7 @@ Red = true slope, blue = OLS slope.
 -   How to account for regression dilution?
 :::
 
-## Latent example: measurement error in predictor
+## Latent example 1: measurement error in predictor
 
 ```{dot}
 //| fig-width: 8
@@ -276,10 +270,10 @@ digraph  {
 
 ::: incremental
 -   Latent captures the overlapping information in the repeated measures.
--   This results in better slope estimate and higher R^2^ when regressing Y on latent rather than indicators.
+-   Better slope estimate and higher R^2^ when regressing Y on latent.
 :::
 
-## Latent example: body size {.smaller}
+## Latent example 2: body size {.smaller}
 
 ```{dot}
 //| fig-width: 4
@@ -313,18 +307,25 @@ digraph  {
 - Body size is multidimensional.
   - Multiple indicators of body size: mass, length, width
   - Identifiability: 
-    - Loading of first indicator set to 1 by lavaan (sets scale of latent).
+    - Loading of first indicator set to 1 by lavaan (sets scale of latent to 1st indicator).
     - Because of this, use standardized effect for interpretation.
     - Latents with two indicators require additional assumptions (e.g. similar loadings of latent on indicators).
 :::
 
+## Latent variables - a word of caution
+::: incremental
+- The design of latent variables requires deep thinking and justification
+- The choice of particular indicators to define a latent variable needs justification.
+- The naming fallacy: naming a latent variable in a certain way does not guarantee you capture the underling process.
+:::
 
+# Composite variables
 
 ## Composite variables
 
 ::: incremental
 - Composites can be used flexibly and require less assumptions than latents:
-  - Allow to summarize multiple drivers into a single cause.
+  - Summarize multiple causes under a single composite (dimension reduction).
   - Allow to model interactions and nonlinear relationships.
 - Composites are shown as hexangular shapes in causal diagrams.
 :::
@@ -442,7 +443,6 @@ digraph boxes_and_circles {
 ::: incremental
 - Nutrient effects on biomass may be nonlinear (e.g. hump-shaped)
 - Can be modelled by adding a linear and a squared term of nutrients
-- Composite to capture this joint effect of nutrient addition
 - Check validity of nonlinear effect by only constructing composite first (linear model)
 :::
 
@@ -485,6 +485,7 @@ Rules of thumb:
   - Are there concepts that could be modelled with a latent or composite variable?
   - Adapt your meta-model accordingly.
 
+# Interactions
 
 ## Interactions
 
@@ -517,18 +518,20 @@ digraph boxes_and_circles {
 ::: incremental
 -   Effect of one variable may depend on another variable.
 -   E.g., nutrient effect on plant growth, may depend on whether the environment was disturbed in the past.\
--   In a regression model, interaction coefficient estimates the effect of the product of the two predictors.\
 -   The interaction coefficient captures possible positive or negative deviation from additivity (e.g., the sum of the two effects in isolation).
+-   In a regression model, interaction coefficient estimates the effect of the product of the two predictors.\
 :::
+
+
 
 ## Interactions 
 
 Two ways to model interactions in lavaan:
 
-1)  Interactions between continous variables: composite variable
-2)  Interactions with categorical variables: multi-group SEM
+1)  Interactions between **continous** variables: composite variable
+2)  Interactions with **categorical** variables: multi-group SEM
 
-## Interactions between continuous variables (composite example)
+## Interactions between continuous variables (composite)
 ```{dot}
 //| fig-width: 5
 digraph  {
@@ -563,7 +566,7 @@ disturbance->middleman [constraint=false, arrowhead=diamond];
 - Preferable when only a few interactions are considered.
 :::
 
-## Interactions with categorical variable (multi-group SEM)
+## Interactions with categorical variable (multi-group)
 
 ::: {.column width="40%"}
 Group = Disturbed
@@ -630,7 +633,7 @@ digraph  {
 - Allows formal tests of equality among causal diagrams
 :::
 
-## Interactions with categorical variable (multi-group SEM)
+## Interactions with categorical variable (multi-group)
 
 ::: incremental
 -   Test interaction of a categorical factor with many or all paths in the causal diagram.
@@ -985,8 +988,8 @@ digraph  {
 
 
 - Investigate possible interaction between disturbance and nutrient addition on biomass with a multi-group SEM.
-- Test the hypothesis that all paths are the same for disturbend and undisturbed plots.
-- Test the hypothesis that all paths are the same for disturbend and undisturbed plots.
+- Test the hypothesis that all paths are the same for disturbed and undisturbed plots.
+- Test the hypothesis that all paths are the same for disturbed and undisturbed plots.
 
 
 <!-- ## Exercise 7
