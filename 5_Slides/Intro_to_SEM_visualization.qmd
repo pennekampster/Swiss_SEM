@@ -28,28 +28,19 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ## Schedule & content {.smaller}
 
 -   *Day 1*:
-    -  General introduction to SEM to model ecological systems (lecture)
-    -  Fitting SEMs to data (live demo)
-    -  Case study: fitting SEMs to data (exercises)
+    -  General introduction to path modelling for ecological systems (lecture)
+    -  Fitting path models to data (live demo)
+    -  Case study: fitting path models to data (exercises)
     -  Work on your research question /  meta-model (self-study)
 -   *Day 2*: 
     -  Constructs: latent and composite variables (lecture)
-    -  Fitting SEMs to data (live demo & case study exercises)
-    -  Work on your research question /  SEM model (self-study)
+    -  Fitting SE models to data (live demo & case study exercises)
+    -  Work on your research question /  SE model (self-study)
 -   *Day 3*:
     -  Progress update
     -  Model visualization (lecture)
-    -  Work on your research question /  SEM model (self-study)
-    -  Presentation of your SEM model and discussion with instructor and peers
-
-
-## Exercise: Draw your idea
-
-How would you draw your model for a manuscript?
-
-::: notes
-Alternative wording could be "How would you draw the model output for a manuscript"? 
-:::
+    -  Work on your research question /  SE model (self-study)
+    -  Presentation of your SE model and discussion with instructor and peers
 
 
 <!-- ## Theory -->
@@ -65,17 +56,110 @@ Alternative wording could be "How would you draw the model output for a manuscri
 <!-- - Moving information to a supplement -->
 <!-- - Use colours that work for colour-blind people -->
 
+## A quick tour of SEM visualizations
+
+::: {.column-page}
+![](images/Allen_sem.jpg)
+:::
+
+::: notes
+This is one of the most well cited empirical papers using SEM in ecology. It's interesting how little they show on the actual diagram, but rather show the coefficients for a huge number of responses. Question, which paths do these coefficients map onto?
+Lots of exogenous variables. red = negative, black = positive. no non-significant paths?
+:::
+
+## A quick tour of SEM visualizations
+
+![](images/Lefcheck_sem.jpg){.absolute .absolute width="700" right=200}
+
+::: notes
+Use of color to highlight important paths.
+::: 
+
+
+
+<!--
+## A quick tour of SEM visualizations
+
+Four SEMs across treatments.
+
+::: {.column-page}
+![](images/Hodapp_sem.jpg)
+:::
+
+::: notes
+This figure does not show a multi-group model. Each treatment was modeled independently. Question: Is it appropriate to compare standardized coefficients between models with different datasets? In other words is the .53 in panel A the same as .53 in panel B?
+:::
+--->
+
+<!--
+## A quick tour of SEM visualizations
+
+![](images/Domeignoz-Horta_sem.jpg){.absolute .absolute width="800" right=100}
+
+::: notes
+There is a lot of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are
+:::
+
+
+
+
+## A quick tour of SEM visualizations
+
+![](images/Jones_sem.jpg){.absolute .absolute width="700" right=200}
+
+::: notes
+Lots of information. The gray, solid line is "marginally significant" (0.1 > p > 0.05)
+:::
+
+## A quick tour of SEM visualizations
+
+![](images/Poorter_sem.jpg){.absolute .absolute width="700" right=200}
+
+::: notes
+Use of color. Showing a conceptual model in the same figure as the data-model. Unusual way of showing a composite.
+::: 
+--->
+
+## A quick tour of SEM visualizations
+
+![](images/Mazancourt_sem.jpg){.absolute .absolute width="700" right=200}
+
+::: notes
+Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it's four separate models
+:::
+
+<!--
+## A quick tour of SEM visualizations
+
+![](images/Mazziotta_sem.jpg){.absolute .absolute width="1000" right=0}
+
+::: notes
+I like the use of color here, but why does it go from bottom to top?
+:::
+
+--->
+
+## A quick tour of SEM visualizations
+
+![](images/Tabi_SEM.png){.absolute .absolute width="900" right=100}
+
+::: notes
+Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.
+:::
+
+
 ##  What is a good SEM drawing? 
 
 ::: {.incremental}
-1) Show all relevant variables  
-1) Show all relevant paths 
-1) Report goodness of fit of the model 
+1) Show relevant variables and paths
+1) Indicate path coefficients (direction, magnitude, significance)
+1) Show constructs with appropriate complexity (e.g. without indicators) 
+1) Include goodness of fit of the model 
 1) Report explanatory power for endogenous variables  
-1) Include figure or tables with additional quantities (e.g, indirect and total effects)  
+1) Add graphs or tables with additional quantities (e.g, indirect and total effects) when relevant  
 :::
 
-## Revelant variables and their types
+## Relevant variables and their types
 
 ::: {.incremental}
 :::::::::::::: {.columns}
@@ -238,7 +322,11 @@ semPaths(fit.prune, what = "est", whatLabels = "est",
 ::: incremental
 - Allow for customization but may not provide full freedom
 - Rather rigid layout of plots (required in some fields)
+- semptools package offers additional customization
 :::
+
+
+
 
 
 ## Plotting tools
@@ -268,101 +356,12 @@ Design the figure accordingly!
 ![](images/Mazziotta_sem.jpg){height=60%}
 
 
-<!--
-## A quick tour of SEM visualizations
-
-Four SEMs across treatments.
-
-::: {.column-page}
-![](images/Hodapp_sem.jpg)
-:::
-
-::: notes
-This figure does not show a multi-group model. Each treatment was modeled independently. Question: Is it appropriate to compare standardized coefficients between models with different datasets? In other words is the .53 in panel A the same as .53 in panel B?
-:::
---->
-
-## A quick tour of SEM visualizations
-
-
-::: {.column-page}
-![](images/Allen_sem.jpg)
-:::
-
-::: notes
-This is one of the most well cited empirical papers using SEM in ecology. It's interesting how little they show on the actual diagram, but rather show the coefficients for a huge number of responses. Question, which paths do these coefficients map onto?
-:::
-
-::: notes
-Lots of exogenous variables. red = negative, black = positive. no non-significant paths?
-:::
-
-## A quick tour of SEM visualizations
-
-![](images/Lefcheck_sem.jpg){.absolute .absolute width="700" right=200}
-
-::: notes
-Use of color to highlight important paths.
-::: 
-
-
-<!--
-## A quick tour of SEM visualizations
-
-![](images/Domeignoz-Horta_sem.jpg){.absolute .absolute width="800" right=100}
-
-::: notes
-There is a lot of information, including path coefficients, r2, goodness of fit. path width represents p-value, which is unusual. Where are the non-significant paths? Also, notice how low some of the R2 values are
-:::
-
-
-
-
-## A quick tour of SEM visualizations
-
-![](images/Jones_sem.jpg){.absolute .absolute width="700" right=200}
-
-::: notes
-Lots of information. The gray, solid line is "marginally significant" (0.1 > p > 0.05)
-:::
-
-## A quick tour of SEM visualizations
-
-![](images/Poorter_sem.jpg){.absolute .absolute width="700" right=200}
-
-::: notes
-Use of color. Showing a conceptual model in the same figure as the data-model. Unusual way of showing a composite.
-::: 
---->
-
-## A quick tour of SEM visualizations
-
-![](images/Mazancourt_sem.jpg){.absolute .absolute width="700" right=200}
-
-::: notes
-Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it's four separate models
-:::
-
-<!--
-## A quick tour of SEM visualizations
-
-![](images/Mazziotta_sem.jpg){.absolute .absolute width="1000" right=0}
-
-::: notes
-I like the use of color here, but why does it go from bottom to top?
-:::
-
---->
-
-## A quick tour of SEM visualizations
-
-![](images/Tabi_SEM.png){.absolute .absolute width="900" right=100}
-
-::: notes
-Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.
-:::
-
-
-
-
 # Questions?  
+
+## Exercise: 
+
+Draw your SE model for a manuscript
+
+::: notes
+Alternative wording could be "How would you draw the model output for a manuscript"? 
+:::

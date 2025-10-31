@@ -50,7 +50,7 @@ library(knitr)
 ## Schedule & content {.smaller}
 
 -   *Day 1*:
-    -  General introduction to SEM to model ecological systems (lecture)
+    -  General introduction to path modelling for ecological systems (lecture)
     -  Fitting path models to data (live demo)
     -  Case study: fitting path models to data (exercises)
     -  Work on your research question /  meta-model (self-study)
@@ -284,8 +284,6 @@ print(scatter_plot)
 
 ```
 
-.  .  .
-
 ```{dot}
 // Example 2: Ice cream sales and drowning
 // Temperature is the confounder
@@ -311,7 +309,7 @@ digraph confounding_icecream {
 
 ::: {.incremental}
 -   Graph specifying putative cause-effect relationships.
--   Data-generating mechanisms lead to a set of observational expectations.
+-   Which data-generating mechanisms lead to a set of observational expectations.
 -   Formalized as Directed Acyclic Graphs (DAGs).
 :::
 
@@ -374,14 +372,12 @@ digraph {
 :::
 
 ## How can we determine causality? 
-> The combination of knowledge of correlations with knowledge of causal relations, to obtain certain results, is a different thing from the deduction of causal relations from correlations.”    
-Sewell Wright, 1923
 
 ::: {.incremental}
 ::: columns
 ::: {.column width="100%"}
 - Build knowledge from past observation
-- Design and conduct experiments
+- Design and conduct experiment or observational study
 - Test hypotheses
 - Develop theory 
 :::
@@ -391,6 +387,11 @@ Sewell Wright, 1923
 :::
 :::
 
+.  .  . 
+
+
+> The combination of knowledge of correlations with knowledge of causal relations, to obtain certain results, is a different thing from the deduction of causal relations from correlations.”    
+Sewell Wright, 1923
 
 
 
@@ -405,13 +406,13 @@ Sewell Wright, 1923
 ## How can we evaluate causality? 
 - Build a hypothesized causal diagram
 - Collect data
-- Test data against diagram, extract inferences
+- Build SEM and test against causal diagram
 ![](images/Final_SEM.jpg){width="50%"}
 
 ## How can we evaluate causality? 
 - Build a hypothesized causal diagram
 - Collect data
-- Test data against diagram, extract inferences
+- Build SEM and test against causal diagram
 ![](images/Final_SEM.jpg){width="50%"}
 - Repeat!
 
@@ -433,115 +434,19 @@ digraph G {
   graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
        rankdir = TB]
 
+ impact[label="human impact"]
 
   bgcolor="transparent"
-  resources -> function;
+  impact -> function;
   diversity -> function;
   environment -> function;
   
 }
 ```
 
-## Regressions
-
-::: {.incremental}
-::: columns
-::: {.column width="50%"}
--   Relates observed variables to each other.
--   Only direct effects on Y considered.
--   Correlations between predictors ignored, unless very high (r >0.9). 
-:::
-
-::: {.column width="50%"}
-
-```{dot}
-//| fig-width: 4
-
-digraph {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
-       rankdir = TB]
-
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X1 [label = <X<SUB>1</SUB>>]
-  X2 [label = <X<SUB>2</SUB>>]
-  X3 [label = <X<SUB>3</SUB>>]
-  Y
-  E [label = <&epsilon;>, shape = plaintext]
-  
-  # 'edge' statements
-  X1 -> Y
-  X2 -> Y
-  X3 -> Y
-  E -> Y  [minlen = .1]
-  
-  X1:n -> X2:n [dir=both, minlen = 5 style="dashed"]
-  X2:n -> X3:n [dir=both, minlen = 5 style="dashed"]
-  X1:n -> X3:n [dir=both, minlen = 10 style="dashed"]
-  
- # control the placement of elements on the graph 
-{rank = same; X1 ; X2; X3}
-{rank = max; E}
-
-  
-}
-```
-
-
-:::
-:::
-:::
-
-
-::: notes
--   Explain the concept and discuss with students the topic.
--   Show the difference between direct effects and correlation together with the graphical representation.
-:::
-
-
-## A simple linear regression
-
-`lm(biomass ~ precipitation)`
-
-```{dot}
-//| fig-width: 5
-//| fig-height: 2
-
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
-       rankdir = TB]
-
-   # 'node' statements
-  node [shape = box,
-        fontname = Helvetica];
-        
-  X1 [label = precipitation]
-  X2 [label = biomass]
-
-  # 'edge' statements
-  X1 -> X2
- # control the placement of elements on the graph 
-{rank = same; X1 ; X2}
-}
-
-}
-```
-
-
-
-::: {.incremental}
--   Regression coefficient quantifies the direction and strength of relationship.\
--   How much change in Y for one unit change in X.
-::: 
-
 ## Multiple regression {.smaller}
 
- `lm(biomass ~  nutrients + precipitation + richness + evenness)`
+ `lm(biomass ~  nutrients + precipitation + richness)`
 
 ```{dot}
 //| fig-width: 4
@@ -582,8 +487,12 @@ digraph  {
 
 
 ::: {.incremental}
--   More than one independent variable\
--   Estimates partial effects (i.e. effect of precipitation on biomass when nutrient addition is fixed)\
+-   Effect of one or more independent variables (X) on a dependent variable (Y).
+-   Only direct effects on Y considered.
+-   Regression coefficient quantifies the direction and strength of relationship.\
+-   How much change in Y for one unit change in X.
+-   Partial effects (i.e. effect of precipitation on biomass when nutrient addition is fixed) when > 1 independent variables.
+-   Strong correlations between predictors may become problematic. 
 :::
 
 <!-- - Discuss with students other variables that may affect B.   -->
@@ -607,26 +516,25 @@ digraph G {
 
   graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
        rankdir = TB]
-
+  impact [label="human impact"]
 
   bgcolor="transparent"
-  resources -> function;
-  diversity -> function;
   environment -> diversity;
-  environment -> resources;
+  impact -> diversity;
+  diversity -> function;
+  impact -> function;
+  
   
   
 }
 ```
 
-## Structural equation model {.smaller}
+## Path model {.smaller}
 
 ::: {.incremental}
--   Multiple (regression) equations in a single framework.
-- Embraces the correlations between variables.
--  Allow understanding of potentially causal relationships between variables (= system thinking).
--   Allow testing both direct and indirect effects.
--   Can incorporate observed and unobserved variables.
+- Estimates multiple (regression) equations at once.
+- Allow understanding of potentially causal relationships between variables in a system.
+- Allows testing both direct and indirect effects.
 
 ::: {layout-ncol="3"}
 ```{dot}
@@ -718,11 +626,14 @@ digraph {
 :::
 
 
-## Structural equation model {.smaller}
+## Path model {.smaller}
 
-`lm(richness ~ nutrients)`\
-`lm(evenness ~ nutrients)`\
-`lm(biomass ~ richness + evenness + nutrients)`\
+```r
+model <- '
+richness ~ nutrients + precipitation
+biomass ~ richness + nutrients + precipitation'
+sem(model, data = data)
+```
 
 ```{dot}
 //| fig-width: 5
@@ -755,12 +666,11 @@ digraph  {
 
 
 ::: {.incremental}
-- Exogenous variables: 
+- Exogenous variables (independent variables): 
   - only have out-going paths.   
-- Endogenous variables:
+- Endogenous variables (response variables):
   - have in-going paths
   - can have out-going paths.  
-  - must be predicted. 
 :::
 
 
@@ -854,7 +764,7 @@ digraph  {
 ![](Anatomy_linear_model.jpeg){.absolute width="800"}
 -->
 
-## Motivations to use SEM:
+## Motivations to use path models:
 
 ::: {.incremental}
 1) Driver-focused: Understand how drivers influence a system 
@@ -910,7 +820,7 @@ digraph  {
 set.seed(5)
 x <- rnorm(500, sd=runif(500, 2, 50))
 x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
-d <- matrix(c(x,x2), 250)
+d <- matrix(c(round(x, 2),round(x2, 2)), 250)
 colnames(d) <-   c("X1","X2", "X3", "Y")
 
 panel_regression_line = function(x,y, ...){
@@ -932,11 +842,11 @@ Scatter plots of observed variables and fitted lines.
 set.seed(5)
 x <- rnorm(500, sd=runif(500, 2, 50))
 x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
-d <- matrix(c(x,x2), 250)
+d <- matrix(c(round(x, 2),round(x2, 2)), 250)
 V <- cov(d)
 colnames(V)  <- c("X1","X2", "X3", "Y")
 rownames(V)  <- c("X","X2", "X3", "Y")
-kable(V)
+kable(V, digits = 2)
 ```
 
 -   Variances on the diagonal, covariances on the off-diagonal elements
@@ -961,14 +871,14 @@ d <- matrix(c(x,x2), 250)
 V <- cov(d)
 colnames(V)  <- c("X1","X2", "X3", "Y")
 rownames(V)  <- c("X","X2", "X3", "Y")
-kable(cov2cor(V))
+kable(cov2cor(V),  digits = 2)
 ```
 
 - Correlation: $COR_{x,y}=\frac{COV_{x,y}}{\sigma_x*\sigma_y}$
   + Correlation matrix is standardized variance-covariance matrix
 
 
-## SEM: compare model-implied to observed covariance 
+## Compare model-implied to observed covariance 
 
 
 ::: columns
@@ -1006,14 +916,44 @@ pairs(d, pch = 19)
 :::
 :::
 
+Assess goodness of fit by comparing model-implied to observed covariance matrix.
+
+## Model fit measures {.smaller}
+
++ *$\chi^2$ statistic*
+  - compare the model-implied to the observed variance-covariance
+  - good fit when $\chi^2$ statistic is small (P > 0.05)   
+  - sample-size dependent
+
+. . .
+
++ *Comparative fit index (CFI)*: 
+  - deviation from a 'null' model (variances estimated but covariances set to 0).
+  - higher is better, \> 0.95 is considered good.
+
+. . .
+
++ *Root-mean squared error of approximation (RMSEA)*
+  - statistic penalizes models based on sample size
+  - \< 0.10 is acceptable, and anything \< 0.06 is good
+
+. . .
+
++ *Standardized root-mean squared residual (SRMR)*
+  - standardized difference between the observed and predicted correlations
+  - \< 0.08 is considered good
+
+
 # Interpreting path coefficients
 
 <!-- https://jslefche.github.io/sem_book/global-estimation.html -->
 
 ::: notes
 - Path coefficients inferential heart of structural equation modeling.
-- Understanding how to interpret path coefficients necessary for robust SEM inference.
+- Wright's rules for tracing paths can be used to calculate total correlations
+- Modern SEM software calculates these automatically
 - Important to be aware of the defaults of SEM software, such as `lavaan`.
+
 :::
 
 ## Unspecified relationships among exogenous variables are their bivariate correlations. {.smaller}
@@ -1043,6 +983,14 @@ digraph  {
 }
 ```
 
+:::notes
+- Define exogenous variables as variables that are not caused by other variables in the model
+- Explain that bivariate correlation is simply the Pearson correlation coefficient between the two variables
+- Emphasize that this correlation is assumed to exist but not explained by the model
+:::
+
+
+
 ## When two variables are connected by a single path, the coefficient of that path is the regression coefficient. {.smaller}
 
 ```{dot}
@@ -1065,7 +1013,12 @@ digraph  {
 }
 ```
 
-
+:::notes
+- A single directional path represents a simple regression relationship
+- γ (gamma) typically denotes coefficients for paths from exogenous to endogenous variables
+- β (beta) typically denotes coefficients for paths between endogenous variables
+- These coefficients are interpreted as standardized or unstandardized regression coefficients
+:::
 
 ## The strength of a compound path is the product of the individual coefficients {.smaller} 
 
@@ -1097,12 +1050,18 @@ digraph  {
 
 ```
 
+:::notes
+- Use an example: if γ = 0.5 and β = 0.4, then indirect effect = 0.5 × 0.4 = 0.20
+- Explain that this represents how much of X's effect on Y2 is transmitted through Y1
+- This is fundamental to mediation analysis
+- The dashed line is conceptual - it's not estimated separately but calculated from the product
+:::
+
+
 ## When variables are connected by more than one pathway, each pathway is the 'partial' regression coefficient {.smaller}
 
 ::: {.incremental}
--   The partial regression coefficient accounts for influence of more than one variable on the response\
--   In other words, the coefficient for one predictor controls for the influence of other predictors in the model\
--   The coefficients of multiple regression are partial coefficients
+-   The partial regression coefficient estimates the effect of a pathway holding other pathways constant.\
 ::: 
 
 ```{dot}
@@ -1125,6 +1084,12 @@ digraph {
 
 }
 ```
+
+:::notes
+- Each β is a partial coefficient - it shows the effect of one predictor while holding the other constant
+- This is different from bivariate regression where other variables are not controlled
+- This is why partial coefficients are often smaller than bivariate correlations
+:::
 
 
 ## Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables {.smaller}
@@ -1168,6 +1133,16 @@ E1 [label = <&zeta;<SUB>Y1</SUB>>];
 }
 ```
 
+:::notes
+- Every endogenous variable has an error term
+- The error represents all unmeasured causes of that variable
+- If R² = 0.60, then ζ = 1 - 0.60 = 0.40
+- This means 60% of variance is explained, 40% is unexplained
+- Error terms are crucial for model identification and estimation
+- In lavaan and other SEM software, these are typically estimated automatically
+:::
+
+
 ## Unanalyzed (residual) correlations among two endogenous variables are their partial correlations. {.smaller}
 
 ::: {.incremental}
@@ -1209,6 +1184,15 @@ digraph {
 }
 ```
 
+:::notes
+- Correlated errors represent shared unmeasured causes of Y1 and Y2
+- The correlation is "partial" because it's after accounting for X
+- This is conceptually similar to partial correlation in statistics
+- Should only be included when theoretically justified
+- Overuse of correlated errors can indicate model misspecification
+:::
+
+
 ## The total effect one variable has on another is the sum of its direct and indirect effects {.smaller}
 
 $$ total = \gamma_{X, Y1} * \beta_{Y1, Y2} + \gamma_{X, Y2}$$
@@ -1241,10 +1225,34 @@ digraph {
 
 ```
 
+:::notes
+- Example calculation: 
+  - Direct effect = 0.30
+  - Indirect effect = 0.50 × 0.40 = 0.20
+  - Total effect = 0.30 + 0.20 = 0.50
+- This decomposition is useful for understanding mediation
+- In complete mediation, direct effect = 0
+- In partial mediation, both direct and indirect effects are significant
+:::
+
+
 ## The total effect (including undirected paths) is equivalent to the total correlation {.smaller}
 
+Observed correlation matrix:
 
-## Example: Interpreting coeffients in a simple model {.smaller}
+|  | X1 | X2 | X3 | Y |
+|:---|:---|:---|:---|:---|
+| X1  | 1  | .5   |  .4  | .4  |
+| X2  | .5  |  1  | .2   | .5  |
+| X3  | .4  |  .2  | 1   | .3  |
+| Y   | .4  |  .5  | .3   | 1  |
+
+:::notes
+
+:::
+
+
+## Example: path tracing in a simple model {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
@@ -1297,7 +1305,7 @@ Correlation matrix:
 
 .  .  .  
 
-- Path tracing for all X-Y correlations:
+- Path tracing for X1-Y correlation:
   - r(X1, Y) = X1->Y + X1->X2->Y + X1->X3->Y \   
   - r(X1, Y) = .133 + (.5 * .4) + (.4 * .167) = **.4**\
 
@@ -1309,14 +1317,23 @@ Correlation matrix:
   - r(X3, Y) = .167 + (.4 * .133) + (.2 * .4) = **.3**\
 
 
+:::notes
+
+:::
+
+
+
 ## Unstandardized vs standardized coefficients
 
-| Unstandardized  | Standardized  |
-|:----------------------------|:--------------------------|
-| Reported in raw units | Expressed in units of standard deviations (Z transformed) |
-| Essential for prediction | Used for interpretation of relative strength |
-| Useful for comparing across models with same variables but different datasets | Only comparable within the same dataset/model |
-| Contain information about variance and mean | Facilitate comparison of paths within a model |
+
+| Unstandardized   | Standardized  |
+|:-----------------------------------|--------------------------------------------|
+| Reported in raw units  | Expressed in units of standard deviations (z transformation) |
+| Depend on the scale of the variables | Used for interpretation of relative strength |
+| Contain information about variance and mean  | Facilitate comparison of paths within a model |
+| For predictions in original units | To calculate indirect and total effects within your model|
+
+Best practice: report both types of coefficients!
 
 > Z transformation results in mean of 0 and SD of 1: $Z = \frac{x - \mu(x)}{\sigma(x)}$
 
@@ -1333,33 +1350,6 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 -   Only acyclic relationships (no loops)
 -   Linear relationships
 ::: 
-
-# Model evaluation
-
-## Model fit measures {.smaller}
-
-+ *$\chi^2$ statistic*
-  - compare the model-implied to the observed variance-covariance
-  - good fit when $\chi^2$ statistic is small (P > 0.05)   
-  - sample-size dependent
-
-. . .
-
-+ *Comparative fit index (CFI)*: 
-  - deviation from a 'null' model (variances estimated but covariances set to 0).
-  - higher is better, \> 0.95 is considered good.
-
-. . .
-
-+ *Root-mean squared error of approximation (RMSEA)*
-  - statistic penalizes models based on sample size
-  - \< 0.10 is acceptable, and anything \< 0.06 is good
-
-. . .
-
-+ *Standardized root-mean squared residual (SRMR)*
-  - standardized difference between the observed and predicted correlations
-  - \< 0.08 is considered good
 
 ## Troubleshooting pathological models (a.k.a. Heywood cases)
 
@@ -1392,7 +1382,7 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 
 . . . 
 
-- Just identidied: 
+- Just identified: 
   - Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
 
 .  .  .
@@ -1478,7 +1468,8 @@ $$ 5 \leq 6 $$
   - Exogenous variables:
     - No limitations, can be used as endo- and exogenous variables
   - Endogenous variables:
-    - lavaan can only handle Gaussian error distribution; for other error distributions consider piecewiseSEM package.
+    - lavaan handles Gaussian error distributions 
+    - For other error distributions consider the piecewiseSEM package.
 :::
 
 ## Variable types: categorical
@@ -1509,7 +1500,7 @@ https://www.aggieerin.com/post/quick-and-dirty-categorical-lavaan/
 -   Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).
 -   To estimate two relationships, at least n = 10 required to fit model.
 -   Ideally, replication is 5-20x the number of estimated parameters.
--   The larger the sample size, the more precise (unbiased) are the estimates.
+-   The larger the sample size, the more precise your estimates will be.
 :::
 
 ## SEM check list {.smaller}

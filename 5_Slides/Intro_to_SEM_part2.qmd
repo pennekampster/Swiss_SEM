@@ -31,9 +31,9 @@ library(ggplot2)
 ## Schedule & content {.smaller}
 
 -   *Day 1*:
-    -  General introduction to SEM to model ecological systems (lecture)
-    -  Fitting SEMs to data (live demo)
-    -  Case study: fitting SEMs to data (exercises)
+    -  General introduction to path modelling for ecological systems (lecture)
+    -  Fitting path models to data (live demo)
+    -  Case study: fitting path models to data (exercises)
     -  Work on your research question /  meta-model (self-study)
 -   *Day 2*: 
     -  Constructs: latent and composite variables (lecture)
@@ -106,13 +106,15 @@ digraph  {
 
 ::: incremental
 - So far, only observed variables were considered (i.e. path model).
-- Some variables may be:
-  -  abstract and difficult to quantify and measure directly, i.e. latent.
-  -  latents capture the common variance or overlapping information for a set of measures.
-  -  represent joint i.e. composite causes.
+- However, many ecological concepts are:
+  -  abstract and difficult to quantify and measure directly
+  -  multifaceted and dimensional
+-  Latent and composite variables help to capture such concepts.
 :::
 
 ## Latent variables in the social sciences and psychology
+
+> Instrument development: The process of creating a new instrument [a set of specific measurements] for measuring an unobserved or latent construct, such as depression, sociability, or fourth-grade mathematics ability.
 
 ::: incremental
 - In the social sciences, latent variables are widely used to capture abstract concepts.
@@ -120,10 +122,6 @@ digraph  {
 - Moreover, the properties often of primary interest itself and used as instruments.
 - Powerful but currently underused tool in ecology.
 :::
-
-. . .
-
-> Instrument development: The process of creating a new instrument [a set of specific measurements] for measuring an unobserved or latent construct, such as depression, sociability, or fourth-grade mathematics ability.
 
 
 ## Latent variables {.smaller}
@@ -160,6 +158,7 @@ digraph  {
 -   Latent variables represented by oval node shape.\
 -   The latent variable itself is unobserved.
 -   Instead, its influence is captured by indicator variable(s).\
+-   Latents capture the common variance or overlapping information for a set of measures. 
 -   Direction of causality flows from latent variable to the observed variable(s).
 -   Latent variables are free of random or systematic measurement errors (unlike their indicators).
 :::

@@ -198,8 +198,3 @@ aictab(list(fit3a, fit3b, fit3c), modnames=c("no groups", "free params", "spec. 
 
 
 
-
-
-
-
-
