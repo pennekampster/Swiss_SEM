@@ -215,9 +215,9 @@ Frank Pennekamp
 <ul>
 <li><em>Day 1</em>:
 <ul>
-<li>General introduction to SEM to model ecological systems (lecture)</li>
-<li>Fitting SEMs to data (live demo)</li>
-<li>Case study: fitting SEMs to data (exercises)</li>
+<li>General introduction to path modelling for ecological systems (lecture)</li>
+<li>Fitting path models to data (live demo)</li>
+<li>Case study: fitting path models to data (exercises)</li>
 <li>Work on your research question / meta-model (self-study)</li>
 </ul></li>
 <li><em>Day 2</em>:
@@ -225,10 +225,10 @@ Frank Pennekamp
 <li>Constructs: latent and composite variables (lecture)</li>
 <li>Fitting SE models to data (live demo &amp; case study exercises)</li>
 <li>Work on your research question / SE model (self-study)</li>
+<li>Progress update</li>
 </ul></li>
 <li><em>Day 3</em>:
 <ul>
-<li>Progress update</li>
 <li>Model visualization (lecture)</li>
 <li>Work on your research question / SE model (self-study)</li>
 <li>Presentation of your SE model and discussion with instructor and peers</li>
@@ -239,7 +239,7 @@ Frank Pennekamp
 <h2>SE modelling for causal understanding of systems</h2>
 <ul>
 <li class="fragment">Meta-model aims to connect general theory with study specific model and data</li>
-<li class="fragment">Theory is often more general than particular proxies used (e.g.&nbsp;climate change <span class="math inline">\(\neq\)</span> temperature change)</li>
+<li class="fragment">Theory is often more general than particular proxies used (e.g.&nbsp;climate change includes temperature mean, extremes, precipitation changes etc.)</li>
 <li class="fragment">Constructs can bridge between general theory and the complexity of case studies:
 <ul>
 <li class="fragment">Capture underlying processes and multiple causes</li>
@@ -266,7 +266,7 @@ Frank Pennekamp
 <g id="clust2" class="cluster">
 <title>cluster_env</title>
 <polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon>
-<text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Environment</text>
+<text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Human impact</text>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_prod</title>
@@ -351,10 +351,15 @@ Frank Pennekamp
 <li class="fragment">However, many ecological concepts are:
 <ul>
 <li class="fragment">abstract and difficult to quantify and measure directly</li>
-<li class="fragment">multifaceted and dimensional</li>
+<li class="fragment">multifaceted and multidimensional</li>
 </ul></li>
-<li class="fragment">Latent and composite variables help to capture such concepts.</li>
+<li class="fragment">Latent and composite variables help to capture such concepts</li>
 </ul>
+</section>
+<section>
+<section id="latent-variables" class="title-slide slide level1 center">
+<h1>Latent variables</h1>
+
 </section>
 <section id="latent-variables-in-the-social-sciences-and-psychology" class="slide level2">
 <h2>Latent variables in the social sciences and psychology</h2>
@@ -368,7 +373,7 @@ Frank Pennekamp
 <li class="fragment">Powerful but currently underused tool in ecology.</li>
 </ul>
 </section>
-<section id="latent-variables" class="slide level2 smaller">
+<section id="latent-variables-1" class="slide level2 smaller">
 <h2>Latent variables</h2>
 <div class="cell" data-fig-width="6" data-fig-height="=&quot;1&quot;" data-layout-align="default">
 <div class="cell-output-display">
@@ -430,20 +435,11 @@ Frank Pennekamp
 <ul>
 <li class="fragment">Latent variables represented by oval node shape.<br>
 </li>
-<li class="fragment">The latent variable itself is unobserved.</li>
-<li class="fragment">Instead, its influence is captured by indicator variable(s).<br>
+<li class="fragment">The latent variable itself is unobserved, its influence is captured by indicator variable(s).<br>
 </li>
 <li class="fragment">Latents capture the common variance or overlapping information for a set of measures.</li>
-<li class="fragment">Direction of causality flows from latent variable to the observed variable(s).</li>
+<li class="fragment">Direction of causality flows from latent variable to the (reflective) indicator(s).</li>
 <li class="fragment">Latent variables are free of random or systematic measurement errors (unlike their indicators).</li>
-</ul>
-</section>
-<section id="latent-variables---a-word-of-caution" class="slide level2">
-<h2>Latent variables - a word of caution</h2>
-<ul>
-<li class="fragment">The design of latent variables requires deep thinking and justification</li>
-<li class="fragment">The choice of particular indicators to define a latent variable needs justification.</li>
-<li class="fragment">The naming fallacy: naming a latent variable in a certain way does not guarantee you capture the underling process.</li>
 </ul>
 </section>
 <section id="fitting-latent-variables" class="slide level2">
@@ -458,7 +454,7 @@ Frank Pennekamp
 </ul></li>
 <li class="fragment">2 indicators:
 <ul>
-<li class="fragment">need to make additional assumptions to identify the model.</li>
+<li class="fragment">requires assumptions to identify the model.</li>
 <li class="fragment">possible to remove measurement error.</li>
 </ul></li>
 <li class="fragment">3 or more indicators:
@@ -485,7 +481,7 @@ Frank Pennekamp
 <ol start="2" type="1">
 <li>Structural model
 <ul>
-<li>Estimates relationships between multiple latent variables and between latent and other variables.</li>
+<li>Estimates relationships betweenmultiple latent variables and between latent and other variables.</li>
 </ul></li>
 </ol>
 </div>
@@ -542,8 +538,8 @@ Frank Pennekamp
 <li class="fragment">How to account for regression dilution?</li>
 </ul>
 </section>
-<section id="latent-example-measurement-error-in-predictor-2" class="slide level2">
-<h2>Latent example: measurement error in predictor</h2>
+<section id="latent-example-1-measurement-error-in-predictor" class="slide level2">
+<h2>Latent example 1: measurement error in predictor</h2>
 <div class="cell" data-fig-width="8" data-fig-height="5" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -603,11 +599,11 @@ Frank Pennekamp
 </div>
 <ul>
 <li class="fragment">Latent captures the overlapping information in the repeated measures.</li>
-<li class="fragment">This results in better slope estimate and higher R<sup>2</sup> when regressing Y on latent rather than indicators.</li>
+<li class="fragment">Better slope estimate and higher R<sup>2</sup> when regressing Y on latent.</li>
 </ul>
 </section>
-<section id="latent-example-body-size" class="slide level2 smaller">
-<h2>Latent example: body size</h2>
+<section id="latent-example-2-body-size" class="slide level2 smaller">
+<h2>Latent example 2: body size</h2>
 <div class="cell" data-fig-width="4" data-fig-height="=&quot;2&quot;" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -683,19 +679,32 @@ Frank Pennekamp
 <li class="fragment">Multiple indicators of body size: mass, length, width</li>
 <li class="fragment">Identifiability:
 <ul>
-<li class="fragment">Loading of first indicator set to 1 by lavaan (sets scale of latent).</li>
+<li class="fragment">Loading of first indicator set to 1 by lavaan (sets scale of latent to 1st indicator).</li>
 <li class="fragment">Because of this, use standardized effect for interpretation.</li>
 <li class="fragment">Latents with two indicators require additional assumptions (e.g.&nbsp;similar loadings of latent on indicators).</li>
 </ul></li>
 </ul></li>
 </ul>
 </section>
-<section id="composite-variables" class="slide level2">
+<section id="latent-variables---a-word-of-caution" class="slide level2">
+<h2>Latent variables - a word of caution</h2>
+<ul>
+<li class="fragment">The design of latent variables requires deep thinking and justification</li>
+<li class="fragment">The choice of particular indicators to define a latent variable needs justification.</li>
+<li class="fragment">The naming fallacy: naming a latent variable in a certain way does not guarantee you capture the underling process.</li>
+</ul>
+</section></section>
+<section>
+<section id="composite-variables" class="title-slide slide level1 center">
+<h1>Composite variables</h1>
+
+</section>
+<section id="composite-variables-1" class="slide level2">
 <h2>Composite variables</h2>
 <ul>
 <li class="fragment">Composites can be used flexibly and require less assumptions than latents:
 <ul>
-<li class="fragment">Allow to summarize multiple drivers into a single cause.</li>
+<li class="fragment">Summarize multiple causes under a single composite (dimension reduction).</li>
 <li class="fragment">Allow to model interactions and nonlinear relationships.</li>
 </ul></li>
 <li class="fragment">Composites are shown as hexangular shapes in causal diagrams.</li>
@@ -931,7 +940,6 @@ Frank Pennekamp
 <ul>
 <li class="fragment">Nutrient effects on biomass may be nonlinear (e.g.&nbsp;hump-shaped)</li>
 <li class="fragment">Can be modelled by adding a linear and a squared term of nutrients</li>
-<li class="fragment">Composite to capture this joint effect of nutrient addition</li>
 <li class="fragment">Check validity of nonlinear effect by only constructing composite first (linear model)</li>
 </ul>
 <!--- ## Distinguishing latent and composite variables 
@@ -979,8 +987,13 @@ Pay attention to the flow of causation!
 <li>Adapt your meta-model accordingly.</li>
 </ul></li>
 </ul>
+</section></section>
+<section>
+<section id="interactions" class="title-slide slide level1 center">
+<h1>Interactions</h1>
+
 </section>
-<section id="interactions" class="slide level2">
+<section id="interactions-1" class="slide level2">
 <h2>Interactions</h2>
 <div class="cell" data-fig-width="6" data-fig-height="3" data-layout-align="default">
 <div class="cell-output-display">
@@ -1038,21 +1051,21 @@ Pay attention to the flow of causation!
 <li class="fragment">Effect of one variable may depend on another variable.</li>
 <li class="fragment">E.g., nutrient effect on plant growth, may depend on whether the environment was disturbed in the past.<br>
 </li>
+<li class="fragment">The interaction coefficient captures possible positive or negative deviation from additivity (e.g., the sum of the two effects in isolation).</li>
 <li class="fragment">In a regression model, interaction coefficient estimates the effect of the product of the two predictors.<br>
 </li>
-<li class="fragment">The interaction coefficient captures possible positive or negative deviation from additivity (e.g., the sum of the two effects in isolation).</li>
 </ul>
 </section>
-<section id="interactions-1" class="slide level2">
+<section id="interactions-2" class="slide level2">
 <h2>Interactions</h2>
 <p>Two ways to model interactions in lavaan:</p>
 <ol type="1">
-<li>Interactions between continous variables: composite variable</li>
-<li>Interactions with categorical variables: multi-group SEM</li>
+<li>Interactions between <strong>continous</strong> variables: composite variable</li>
+<li>Interactions with <strong>categorical</strong> variables: multi-group SEM</li>
 </ol>
 </section>
-<section id="interactions-between-continuous-variables-composite-example" class="slide level2">
-<h2>Interactions between continuous variables (composite example)</h2>
+<section id="interactions-between-continuous-variables-composite" class="slide level2">
+<h2>Interactions between continuous variables (composite)</h2>
 <div class="cell" data-fig-width="5" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1121,8 +1134,8 @@ Pay attention to the flow of causation!
 <li class="fragment">Preferable when only a few interactions are considered.</li>
 </ul>
 </section>
-<section id="interactions-with-categorical-variable-multi-group-sem" class="slide level2">
-<h2>Interactions with categorical variable (multi-group SEM)</h2>
+<section id="interactions-with-categorical-variable-multi-group" class="slide level2">
+<h2>Interactions with categorical variable (multi-group)</h2>
 <div class="column" style="width:40%;">
 <p>Group = Disturbed</p>
 <div class="cell" data-fig-width="5" data-layout-align="default">
@@ -1259,8 +1272,8 @@ Pay attention to the flow of causation!
 <li class="fragment">Allows formal tests of equality among causal diagrams</li>
 </ul>
 </section>
-<section id="interactions-with-categorical-variable-multi-group-sem-1" class="slide level2">
-<h2>Interactions with categorical variable (multi-group SEM)</h2>
+<section id="interactions-with-categorical-variable-multi-group-1" class="slide level2">
+<h2>Interactions with categorical variable (multi-group)</h2>
 <ul>
 <li class="fragment">Test interaction of a categorical factor with many or all paths in the causal diagram.</li>
 <li class="fragment">Lavaan allows to test various equality constraints:
@@ -1349,7 +1362,7 @@ survey.design = design)
 <!-- - Autocorrelation is a sign of non-independence, violating assumptions of linear models that data points are independent. -->
 <!-- - Does not influence estimates, but their standard errors and p values. -->
 <!-- - You think you have more information than you actually have. -->
-</section>
+</section></section>
 <section id="questions" class="title-slide slide level1 center">
 <h1>Questions?</h1>
 
@@ -1924,8 +1937,8 @@ survey.design = design)
 </div>
 </div><ul>
 <li>Investigate possible interaction between disturbance and nutrient addition on biomass with a multi-group SEM.</li>
-<li>Test the hypothesis that all paths are the same for disturbend and undisturbed plots.</li>
-<li>Test the hypothesis that all paths are the same for disturbend and undisturbed plots.</li>
+<li>Test the hypothesis that all paths are the same for disturbed and undisturbed plots.</li>
+<li>Test the hypothesis that all paths are the same for disturbed and undisturbed plots.</li>
 </ul>
 <!-- ## Exercise 7
 
