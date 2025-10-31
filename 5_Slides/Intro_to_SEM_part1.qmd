@@ -1588,7 +1588,7 @@ mod.fit <- sem(mod.form , data = dat1)
 
 ## Introduction to the dataset {.smaller}
 
-![](images/CedarCreek_exp_design.png){.relative width="800" right=200}
+![](images/CedarCreek_exp_design.png){.relative width="1000" right=200}
 
 - 4 x 4 m nutrient treatment plots within the intact or disturbed plots (within fields A-C). 
 - Letters indicate the nutrient treatments.
@@ -1603,7 +1603,7 @@ mod.fit <- sem(mod.form , data = dat1)
 ## Introduction to the dataset {.smaller}
 
 
-![](images/AGB_diversity.png){.relative width="700" right=200}
+![](images/AGB_diversity.png){.relative width="1000" right=200}
 
 - Effect of soil disturbance (disking) and nutrient enrichment on:
   A) effective number of species (ENS~PIE~)
