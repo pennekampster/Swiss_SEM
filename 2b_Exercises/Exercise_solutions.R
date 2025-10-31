@@ -5,6 +5,7 @@ library(AICcmodavg)
 library(here)
 library(corrplot)      # For correlation plots
 library(MVN)
+library(broom)
 
 # load the dataset
 seabloom <- read.table(here("2_Modeling/Data_preparation/seabloom-2020-ele-dryad-data/cdr-e001-e002-output-data.csv"),
@@ -220,7 +221,7 @@ fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 seabloom$rich_std <- (seabloom$rich-mean(seabloom$rich)) / sd(seabloom$rich)
 seabloom$even_std <- (seabloom$even-mean(seabloom$even)) / sd(seabloom$even)
 # reverse evenness so that higher values = lower evenness
-seabloom$even.rev_std <- seabloom$even_std * -1  
+seabloom$even.rev_std <- 1- seabloom$even_std
 
 # test measurement model
 diversity <- 'div =~ lambda*even.rev_std + lambda*rich_std'  
