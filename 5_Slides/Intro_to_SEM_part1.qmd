@@ -117,7 +117,6 @@ You can:
 ::: {.column width="50%"}
 -   Ecological systems characterized by complex network of interactions between organisms and the environment.
 -   Research questions are often about cause-effect relationships.
--   Create hypotheses about how things could be connected in ecological systems (e.g., species interactions, drivers). 
 -   Test these hypotheses using data and statistics.
 :::
 
@@ -159,9 +158,9 @@ You can:
 ::: columns
 ::: {.column width="50%"}
 - Causation: causing variation in X leading to variation in Y (=X causes Y), everything else being equal.
-- Experiments required to isolate effect of X on Y.
-- Randomized controlled trials as gold standard to infer causes
-- Problem: conducting experiments can be unethical or unfeasible.
+- Experiments are gold standard to infer causes.
+- However, conducting experiments can be unethical or unfeasible.
+- Can we learn about causality from observational data?
 :::
 
 ::: {.column width="40%"}
