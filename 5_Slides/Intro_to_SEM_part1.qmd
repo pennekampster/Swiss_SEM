@@ -315,16 +315,17 @@ digraph confounding_icecream {
 
 ## Directed acyclic graphs {.smaller}
 
-::: {.incremental}
 ::: columns
 ::: {.column width="50%"}
+::: {.incremental}
 - Directed = unidirectional. 
-- Acyclic = no cyclces (=causal loops) permitted.
+- Acyclic = no cycles (=causal loops) permitted.
 - Variables are nodes (boxes). 
 - Edges (one-headed arrows) are causal relationships such as X affects Y.  
 - Edges can have any functional shape. 
 - Omitted links and nodes have empirical implications (= assumptions about the causal diagram)
 - U variables represent unmeasured causes.
+:::
 :::
 
 ::: {.column width="50%"}
@@ -367,7 +368,6 @@ digraph {
 
   }
 ```
-:::
 :::
 :::
 
@@ -427,6 +427,7 @@ https://www.nature.com/articles/ncomms10541
 
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
 
+Meta-model:
 ```{dot}
 //| fig-width: 10
 digraph G {
@@ -444,9 +445,21 @@ digraph G {
 }
 ```
 
+:::notes
+This is an example of a meta-model of an ecological system that we might want to understand using SEM.
+The question could be: how do human impacts affect ecosystem functioning, and what role does biodiversity play in mediating this effect?
+Please note that the three drivers are general categories, and each can encompass multiple specific variables.
+How would we analyse the effect of the environment and human impact on functioning?
+:::
+
+
 ## Multiple regression {.smaller}
 
- `lm(biomass ~  nutrients + precipitation + richness)`
+```r
+model <- '
+biomass ~ richness + nutrients + precipitation'
+sem(model, data = data)
+```
 
 ```{dot}
 //| fig-width: 4
@@ -464,21 +477,16 @@ digraph  {
   X1 [pos = "0,-1!", label = nutrients]
   X2 [pos = "0,-2!",label = precipitation]
   X3 [pos = "0,-3!",label = richness]
-  X4 [pos = "0,-4!",label = evenness]
-  Y  [pos = "2,-2.5!",label = biomass]
+  Y  [pos = "2,-2!",label = biomass]
 
   # 'edge' statements
   X1 -> Y:w 
   X2 -> Y:w
   X3 -> Y:w
-  X4 -> Y:w
   
   X1:w -> X2:w [constraint=false, dir=both]
   X2:w -> X3:w [dir=both]
   X1:w -> X3:w [dir=both]
-  X1:w -> X4:w [dir=both]
-  X2:w -> X4:w [dir=both]
-  X3:w -> X4:w [dir=both]
   
 }
 
@@ -510,6 +518,7 @@ digraph  {
 
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
 
+Meta-model:
 ```{dot}
 //| fig-width: 10
 digraph G {
@@ -528,103 +537,6 @@ digraph G {
   
 }
 ```
-
-## Path model {.smaller}
-
-::: {.incremental}
-- Estimates multiple (regression) equations at once.
-- Allow understanding of potentially causal relationships between variables in a system.
-- Allows testing both direct and indirect effects.
-
-::: {layout-ncol="3"}
-```{dot}
-//| fig-width: 3
-digraph {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
-       rankdir = TB]
-
-   # 'node' statements
-  node [shape = box,
-        fontname = Helvetica];
-        
-  X1 [label = <X<SUB>1</SUB>>];
-  X2 [label = <X<SUB>2</SUB>>];
-  X3 [label = <X<SUB>3</SUB>>];
-
-  # 'edge' statements
-  X1 -> X2;
-  X2 -> X3;
-  
- # control the placement of elements on the graph 
-{rank = same; X1 ; X2; X3};
-}
-
-}
-")
-```
-
-```{dot}
-//| fig-width: 3
-digraph box2 {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
-       rankdir = TB];
-
-  
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica];
-        
-  X1 [label = <X<SUB>1</SUB>>];
-  X2 [label =<X<SUB>2</SUB>>];
-  X3 [label = <X<SUB>3</SUB>>];
-  U1 [label = <U<SUB>1</SUB>>];
-
-  # 'edge' statements
-  U1 -> X1;
-  U1 -> X2;
-  U1 -> X3;
-
- # control the placement of elements on the graph 
-{rank = same; X1 ; X2; X3};
-}
-")
-
-```
-
-```{dot}
-//| fig-width: 3
-digraph {
-
-  # a 'graph' statement
-  graph [layout = neato, overlap = true, fontsize = 10, ranksep = .7,
-       rankdir = TB];
-
-  
-  # 'node' statements
-  node [shape = box, fontname = Helvetica];
-        
-  X1 [pos = "-4,-1!" label = <X<SUB>1</SUB>>];
-  X2 [pos = "-3,-1!" label = <X<SUB>2</SUB>>];
-  X3 [pos = "-2,-1!" label = <X<SUB>3</SUB>>];
-  U1 [pos = "-3,0!"  label = <U<SUB>1</SUB>>];
-
-  # 'edge' statements
-  U1 -> X1;
-  U1 -> X3;
-  {X3 X1} -> X2;
-
- # control the placement of elements on the graph 
-{rank = same; X1 ; X2; X3};
-
-}
-```
-:::
-:::
-
 
 ## Path model {.smaller}
 
@@ -649,23 +561,24 @@ digraph  {
   node [shape = box,
         fontname = Helvetica]
         
-  nutrients; evenness, richness; biomass;
+  nutrients; richness; biomass; precipitation;
 
   # several 'edge' statements
-    nutrients->richness [style=dashed];
-    nutrients->evenness [style=dashed];
-    evenness->biomass [style=dashed];
-    richness->biomass [style=dashed];
-    nutrients->biomass [color=red, minlen=3];
+    nutrients->richness ;
+    precipitation->richness ;
+    richness->biomass ;
+    nutrients->biomass [minlen=3];
     
-    {rank=min; nutrients;}
+    {rank=min; nutrients; precipitation;}
     {rank=max; biomass;}
-    {rank=same; richness evenness;}
+    {rank=same; richness;}
 }
 ```
 
-
 ::: {.incremental}
+- Estimates multiple (regression) equations at once.
+- Allow understanding of potentially causal relationships between variables in a system.
+- Allows testing both direct and indirect effects.
 - Exogenous variables (independent variables): 
   - only have out-going paths.   
 - Endogenous variables (response variables):
@@ -777,9 +690,8 @@ digraph  {
 
 ::: {.incremental}
 - A SE model should be specified based on prior evidence / theory (i.e., a meta-model).
+- Causal diagram to specify relationships of actual variables.
 - Each path requires justification.
-- Continuum between theory (hypothesis-driven) to exploratory (data-driven) modelling.
-- Causal diagram to specify relationships of actual variables (using meta-model).
 :::
 
 
@@ -808,8 +720,12 @@ digraph  {
 
 ::: {.incremental}
 - Structural equation modelling is a framework rather than a statistical technique.   
+- Global estimation: based on variance-covariance matrix.  
 - Lavaan uses Maximum likelihood estimation (ML).   
-- Important: only variance-covariance matrix used for global estimation of SE models.    
+- Lavaan makes several assumptions:
+  + (Multivariate) normality of endogenous (but not exogenous!) variables required
+  + Only acyclic relationships (no loops)
+  + Linear relationships
 :::
 
 # Global estimation in a nutshell
@@ -893,14 +809,14 @@ digraph  {
   # 'node' statements
   node [shape = box,
         fontname = Helvetica]
-  Var1 
-  Var2 
-  Var3
-  Var4
+  X1 
+  X2
+  X3
+  Y
 
   # 'edge' statements
-  Var1 -> Var2 -> Var4;
-  Var1 -> Var3 -> Var4;  
+  X1 -> X2 -> Y;
+  X1 -> X3 -> Y;  
 }
 ```
 :::
@@ -944,20 +860,21 @@ Assess goodness of fit by comparing model-implied to observed covariance matrix.
   - \< 0.08 is considered good
 
 
-# Interpreting path coefficients
+# Calculating path coefficients
 
 <!-- https://jslefche.github.io/sem_book/global-estimation.html -->
 
 ::: notes
 - Path coefficients inferential heart of structural equation modeling.
-- Wright's rules for tracing paths can be used to calculate total correlations
-- Modern SEM software calculates these automatically
+- Wright's rules for tracing paths can be used to decompose total correlations into path coefficients.
+- Modern SEM software calculates these automatically.
 - Important to be aware of the defaults of SEM software, such as `lavaan`.
 
 :::
 
 ## Unspecified relationships among exogenous variables are their bivariate correlations. {.smaller}
 
+Accounts for existing correlations among exogenous variables not explained by the model.
 
 ```{dot}
 //| fig-width: 6
@@ -993,6 +910,9 @@ digraph  {
 
 ## When two variables are connected by a single path, the coefficient of that path is the regression coefficient. {.smaller}
 
+γ typically denotes coefficients for paths from exogenous to endogenous variables.    
+β typically denotes coefficients for paths between endogenous variables
+
 ```{dot}
 //| fig-width: 6
 digraph  {
@@ -1021,6 +941,8 @@ digraph  {
 :::
 
 ## The strength of a compound path is the product of the individual coefficients {.smaller} 
+
+How much of X's effect on Y2 is transmitted through Y1
 
 ```{dot}
 //| fig-width: 6
@@ -1098,7 +1020,7 @@ digraph {
 -   $R^{2}$: ratio of explained to total variation in response (here Y1)\
 -   Unexplained or residual variance = $1 - R^{2}$
 -   Captures other (unknown) sources causing correlation between Y1 and other variables to deviate from 1.
--   In a path diagram, error variances are often represented as $\zeta$ with an arrow leading into the endogenous variable.
+-   Error variances are often represented as $\zeta$ with an arrow leading into the endogenous variable.
 :::
 
 ```{dot}
@@ -1238,6 +1160,8 @@ digraph {
 
 ## The total effect (including undirected paths) is equivalent to the total correlation {.smaller}
 
+Total correlation 
+
 Observed correlation matrix:
 
 |  | X1 | X2 | X3 | Y |
@@ -1341,15 +1265,6 @@ Best practice: report both types of coefficients!
 $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
 where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)
 :::-->
-
-
-## Assumptions of SEM with lavaan
-
-::: {.incremental}
--   (Multivariate) normality of endogenous (but not exogenous!) variables required
--   Only acyclic relationships (no loops)
--   Linear relationships
-::: 
 
 ## Troubleshooting pathological models (a.k.a. Heywood cases)
 
@@ -1503,7 +1418,7 @@ https://www.aggieerin.com/post/quick-and-dirty-categorical-lavaan/
 -   The larger the sample size, the more precise your estimates will be.
 :::
 
-## SEM check list {.smaller}
+<!-- ## SEM check list {.smaller}
 
 1)  Review the relevant theory and research literature to support model specification
 2)  Specify a model (e.g., using causal diagram)
@@ -1515,7 +1430,7 @@ https://www.aggieerin.com/post/quick-and-dirty-categorical-lavaan/
 8)  Assess model goodness-of-fit
 9) Check for missing or unnecessary links
 10) Interpret model coefficients
-11) Present results visually
+11) Present results visually -->
 
 <!-- ## Basic lavaan syntax
 

@@ -104,13 +104,17 @@ digraph  {
 }
 ```
 
-::: incremental
 - So far, only observed variables were considered (i.e. path model).
+
+. . .
+
 - However, many ecological concepts are:
   -  abstract and difficult to quantify and measure directly
   -  multifaceted and multidimensional
+
+. . .
+
 -  Latent and composite variables help to capture such concepts
-:::
 
 # Latent variables
 
@@ -159,24 +163,28 @@ digraph  {
 ::: incremental
 -   Latent variables represented by oval node shape.\
 -   The latent variable itself is unobserved, its influence is captured by indicator variable(s).\
--   Latents capture the common variance or overlapping information for a set of measures. 
 -   Direction of causality flows from latent variable to the (reflective) indicator(s).
+-   Latents capture the common variance or overlapping information for a set of measures. 
 -   Latent variables are free of random or systematic measurement errors (unlike their indicators).
 :::
 
 ## Fitting latent variables
 
-::: incremental
-- Latent variable can have 1 to many indicators:
+- Latent variable can have from 1 to many indicators:
   - 1 indicator: 
     - assumes measured variable is perfect representation of the latent. 
-    - makes a conceptual distinction between the concept of interest and the observed measure.
+    - allows to make a conceptual distinction between a concept and the observed measure.
+
+. . .
+
   - 2 indicators:
-    - requires assumptions to identify the model. 
-    - possible to remove measurement error.
+    - requires imposing constraints to identify the parameters. 
+    - e.g., equal loadings of latent on indicators, or fixing error variances.
+
+ . . .
+
   - 3 or more indicators: 
     - allows to test whether or not the same process generated the indicators.
-:::
 
 ## Fitting latent variables
 
@@ -192,7 +200,7 @@ Latents fitted in two steps:
 . . .
 
 2)  Structural model
-    -   Estimates relationships betweenmultiple latent variables and between latent and other variables.
+    -   Estimates relationships between multiple latent variables and between latent and other variables.
 
 ## Latent example: measurement error in predictor
 
@@ -218,7 +226,7 @@ digraph  {
 
 ::: incremental
 -   Predictors are often measured with error.\
--   Regression assumes no error in X.\
+-   Multiple regression assumes no error in X.\
 -   What if this assumption is violated?
 :::
 
@@ -308,7 +316,7 @@ digraph  {
   - Multiple indicators of body size: mass, length, width
   - Identifiability: 
     - Loading of first indicator set to 1 by lavaan (sets scale of latent to 1st indicator).
-    - Because of this, use standardized effect for interpretation.
+    - Because of this, use standardized coefficients for interpretation.
     - Latents with two indicators require additional assumptions (e.g. similar loadings of latent on indicators).
 :::
 
@@ -368,7 +376,7 @@ digraph boxes_and_circles {
 - Composites specify the collective influence of a set of variables.
 - Arrows point from the indicators to the composite (i.e., formative or causal indicators).
 - The values of the composite determined by causes (i.e., indicators), thus error variance is set to 0.\
-  - Technically, predictions from linear combinations of variables.
+- Technically, composites = prediction from linear combinations of variables.
 :::
 
 ## Example composite: joint cause landuse
@@ -442,7 +450,7 @@ digraph boxes_and_circles {
 
 ::: incremental
 - Nutrient effects on biomass may be nonlinear (e.g. hump-shaped)
-- Can be modelled by adding a linear and a squared term of nutrients
+- Can be modelled by adding a squared term of nutrients to regression
 - Check validity of nonlinear effect by only constructing composite first (linear model)
 :::
 
@@ -469,14 +477,19 @@ Pay attention to the flow of causation!
 
 Rules of thumb:
 
-::: incremental
+. . .
+
 - Latent: 
   - indicators are redundant, e.g. 
     - multiple measurements of the same process
     - multiple proxies of the same process
+
+. . .
+
 - Composite:
   - the meaning of the construct changes after dropping one of the indicators
-:::
+
+
 
 
 ## Exercise:
@@ -516,10 +529,9 @@ digraph boxes_and_circles {
 ```
 
 ::: incremental
--   Effect of one variable may depend on another variable.
--   E.g., nutrient effect on plant growth, may depend on whether the environment was disturbed in the past.\
--   The interaction coefficient captures possible positive or negative deviation from additivity (e.g., the sum of the two effects in isolation).
--   In a regression model, interaction coefficient estimates the effect of the product of the two predictors.\
+-   Effect of one variable may depend on another variable.   
+    +   E.g., nutrient effect on plant growth may depend on past disturbance.
+-   The interaction coefficient describes positive/negative deviation from additivity.
 :::
 
 
@@ -562,8 +574,8 @@ disturbance->middleman [constraint=false, arrowhead=diamond];
 ```
 
 ::: incremental
-- Include interaction term in composite.
-- Preferable when only a few interactions are considered.
+- Composite that includes both main effects and their interaction.
+- Best approach when only a few interactions are considered and main effects are continuous.
 :::
 
 ## Interactions with categorical variable (multi-group)
@@ -641,7 +653,7 @@ digraph  {
    - Equal path coefficients, intercepts, residuals among groups
 - Even more control by naming and fixing parameters
   - Coefficients with same name are estimated to be the same
-  - Fixing coefficients to 0 allows graph to vary among groups.
+  - Fixing coefficients to 0 allows causal graphs to vary among groups.
 ::: 
 
 
@@ -783,7 +795,7 @@ digraph  {
 
 -   Construct a latent variable called diversity using richness and evenness as indicators and ens.pie:
     - Use confirmatory factor analysis
-    - Troubleshoot potential issues
+    - Troubleshoot potential issues 
 
 ## Exercise 2
 
@@ -829,8 +841,8 @@ digraph  {
 ```
 
 -   Construct a latent variable called diversity using richness and evenness as indicators:
-    -   Use confirmatory factor analysis to confirm validity of latent
-    -   Include latent variable into structural equation model
+    -   Use confirmatory factor analysis assuming the same loadings of indicators.
+-   Include latent variable into structural equation model
 -   What do you conclude?
 
 ## Exercise 3
@@ -873,9 +885,9 @@ digraph  {
 ```
 
 
--   Construct composite variable landuse based on nutrients and disturbance in lavaan.
--   Construct composite manually.
-- Compare original model with this one. Which one is better supported?
+- Construct composite variable landuse based on nutrients and disturbance in lavaan.
+- Construct composite manually.
+- Compare starting model with this one. Which one is better supported?
 
 ## Exercise 4
 

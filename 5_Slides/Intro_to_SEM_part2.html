@@ -347,14 +347,22 @@ Frank Pennekamp
 </div>
 </div>
 <ul>
-<li class="fragment">So far, only observed variables were considered (i.e.&nbsp;path model).</li>
-<li class="fragment">However, many ecological concepts are:
-<ul>
-<li class="fragment">abstract and difficult to quantify and measure directly</li>
-<li class="fragment">multifaceted and multidimensional</li>
-</ul></li>
-<li class="fragment">Latent and composite variables help to capture such concepts</li>
+<li>So far, only observed variables were considered (i.e.&nbsp;path model).</li>
 </ul>
+<div class="fragment">
+<ul>
+<li>However, many ecological concepts are:
+<ul>
+<li>abstract and difficult to quantify and measure directly</li>
+<li>multifaceted and multidimensional</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Latent and composite variables help to capture such concepts</li>
+</ul>
+</div>
 </section>
 <section>
 <section id="latent-variables" class="title-slide slide level1 center">
@@ -437,32 +445,40 @@ Frank Pennekamp
 </li>
 <li class="fragment">The latent variable itself is unobserved, its influence is captured by indicator variable(s).<br>
 </li>
-<li class="fragment">Latents capture the common variance or overlapping information for a set of measures.</li>
 <li class="fragment">Direction of causality flows from latent variable to the (reflective) indicator(s).</li>
+<li class="fragment">Latents capture the common variance or overlapping information for a set of measures.</li>
 <li class="fragment">Latent variables are free of random or systematic measurement errors (unlike their indicators).</li>
 </ul>
 </section>
 <section id="fitting-latent-variables" class="slide level2">
 <h2>Fitting latent variables</h2>
 <ul>
-<li class="fragment">Latent variable can have 1 to many indicators:
+<li>Latent variable can have from 1 to many indicators:
 <ul>
-<li class="fragment">1 indicator:
+<li>1 indicator:
 <ul>
-<li class="fragment">assumes measured variable is perfect representation of the latent.</li>
-<li class="fragment">makes a conceptual distinction between the concept of interest and the observed measure.</li>
-</ul></li>
-<li class="fragment">2 indicators:
-<ul>
-<li class="fragment">requires assumptions to identify the model.</li>
-<li class="fragment">possible to remove measurement error.</li>
-</ul></li>
-<li class="fragment">3 or more indicators:
-<ul>
-<li class="fragment">allows to test whether or not the same process generated the indicators.</li>
+<li>assumes measured variable is perfect representation of the latent.</li>
+<li>allows to make a conceptual distinction between a concept and the observed measure.</li>
 </ul></li>
 </ul></li>
 </ul>
+<div class="fragment">
+<ul>
+<li>2 indicators:
+<ul>
+<li>requires imposing constraints to identify the parameters.</li>
+<li>e.g., equal loadings of latent on indicators, or fixing error variances.</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>3 or more indicators:
+<ul>
+<li>allows to test whether or not the same process generated the indicators.</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section id="fitting-latent-variables-1" class="slide level2">
 <h2>Fitting latent variables</h2>
@@ -481,7 +497,7 @@ Frank Pennekamp
 <ol start="2" type="1">
 <li>Structural model
 <ul>
-<li>Estimates relationships betweenmultiple latent variables and between latent and other variables.</li>
+<li>Estimates relationships between multiple latent variables and between latent and other variables.</li>
 </ul></li>
 </ol>
 </div>
@@ -524,7 +540,7 @@ Frank Pennekamp
 <ul>
 <li class="fragment">Predictors are often measured with error.<br>
 </li>
-<li class="fragment">Regression assumes no error in X.<br>
+<li class="fragment">Multiple regression assumes no error in X.<br>
 </li>
 <li class="fragment">What if this assumption is violated?</li>
 </ul>
@@ -680,7 +696,7 @@ Frank Pennekamp
 <li class="fragment">Identifiability:
 <ul>
 <li class="fragment">Loading of first indicator set to 1 by lavaan (sets scale of latent to 1st indicator).</li>
-<li class="fragment">Because of this, use standardized effect for interpretation.</li>
+<li class="fragment">Because of this, use standardized coefficients for interpretation.</li>
 <li class="fragment">Latents with two indicators require additional assumptions (e.g.&nbsp;similar loadings of latent on indicators).</li>
 </ul></li>
 </ul></li>
@@ -785,10 +801,8 @@ Frank Pennekamp
 <li class="fragment">Composites specify the collective influence of a set of variables.</li>
 <li class="fragment">Arrows point from the indicators to the composite (i.e., formative or causal indicators).</li>
 <li class="fragment">The values of the composite determined by causes (i.e., indicators), thus error variance is set to 0.<br>
-
-<ul>
-<li class="fragment">Technically, predictions from linear combinations of variables.</li>
-</ul></li>
+</li>
+<li class="fragment">Technically, composites = prediction from linear combinations of variables.</li>
 </ul>
 </section>
 <section id="example-composite-joint-cause-landuse-1" class="slide level2">
@@ -939,7 +953,7 @@ Frank Pennekamp
 </div>
 <ul>
 <li class="fragment">Nutrient effects on biomass may be nonlinear (e.g.&nbsp;hump-shaped)</li>
-<li class="fragment">Can be modelled by adding a linear and a squared term of nutrients</li>
+<li class="fragment">Can be modelled by adding a squared term of nutrients to regression</li>
 <li class="fragment">Check validity of nonlinear effect by only constructing composite first (linear model)</li>
 </ul>
 <!--- ## Distinguishing latent and composite variables 
@@ -963,20 +977,26 @@ Pay attention to the flow of causation!
 <section id="distinguishing-latent-and-composite-variables" class="slide level2">
 <h2>Distinguishing latent and composite variables</h2>
 <p>Rules of thumb:</p>
+<div class="fragment">
 <ul>
-<li class="fragment">Latent:
+<li>Latent:
 <ul>
-<li class="fragment">indicators are redundant, e.g.&nbsp;
+<li>indicators are redundant, e.g.&nbsp;
 <ul>
-<li class="fragment">multiple measurements of the same process</li>
-<li class="fragment">multiple proxies of the same process</li>
+<li>multiple measurements of the same process</li>
+<li>multiple proxies of the same process</li>
 </ul></li>
-</ul></li>
-<li class="fragment">Composite:
-<ul>
-<li class="fragment">the meaning of the construct changes after dropping one of the indicators</li>
 </ul></li>
 </ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Composite:
+<ul>
+<li>the meaning of the construct changes after dropping one of the indicators</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section id="exercise" class="slide level2">
 <h2>Exercise:</h2>
@@ -1048,12 +1068,11 @@ Pay attention to the flow of causation!
 </div>
 </div>
 <ul>
-<li class="fragment">Effect of one variable may depend on another variable.</li>
-<li class="fragment">E.g., nutrient effect on plant growth, may depend on whether the environment was disturbed in the past.<br>
-</li>
-<li class="fragment">The interaction coefficient captures possible positive or negative deviation from additivity (e.g., the sum of the two effects in isolation).</li>
-<li class="fragment">In a regression model, interaction coefficient estimates the effect of the product of the two predictors.<br>
-</li>
+<li class="fragment">Effect of one variable may depend on another variable.
+<ul>
+<li class="fragment">E.g., nutrient effect on plant growth may depend on past disturbance.</li>
+</ul></li>
+<li class="fragment">The interaction coefficient describes positive/negative deviation from additivity.</li>
 </ul>
 </section>
 <section id="interactions-2" class="slide level2">
@@ -1130,8 +1149,8 @@ Pay attention to the flow of causation!
 </div>
 </div>
 <ul>
-<li class="fragment">Include interaction term in composite.</li>
-<li class="fragment">Preferable when only a few interactions are considered.</li>
+<li class="fragment">Composite that includes both main effects and their interaction.</li>
+<li class="fragment">Best approach when only a few interactions are considered and main effects are continuous.</li>
 </ul>
 </section>
 <section id="interactions-with-categorical-variable-multi-group" class="slide level2">
@@ -1283,7 +1302,7 @@ Pay attention to the flow of causation!
 <li class="fragment">Even more control by naming and fixing parameters
 <ul>
 <li class="fragment">Coefficients with same name are estimated to be the same</li>
-<li class="fragment">Fixing coefficients to 0 allows graph to vary among groups.</li>
+<li class="fragment">Fixing coefficients to 0 allows causal graphs to vary among groups.</li>
 </ul></li>
 </ul>
 <!-- ``` r
@@ -1560,9 +1579,9 @@ survey.design = design)
 <ul>
 <li>Construct a latent variable called diversity using richness and evenness as indicators:
 <ul>
-<li>Use confirmatory factor analysis to confirm validity of latent</li>
-<li>Include latent variable into structural equation model</li>
+<li>Use confirmatory factor analysis assuming the same loadings of indicators.</li>
 </ul></li>
+<li>Include latent variable into structural equation model</li>
 <li>What do you conclude?</li>
 </ul>
 </section>
@@ -1671,7 +1690,7 @@ survey.design = design)
 <ul>
 <li>Construct composite variable landuse based on nutrients and disturbance in lavaan.</li>
 <li>Construct composite manually.</li>
-<li>Compare original model with this one. Which one is better supported?</li>
+<li>Compare starting model with this one. Which one is better supported?</li>
 </ul>
 </section>
 <section id="exercise-4" class="slide level2">
