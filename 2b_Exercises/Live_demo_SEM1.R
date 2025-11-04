@@ -66,6 +66,7 @@ summary(fit2)
 
 # which important paths have been omitted?
 modindices(fit2)
+subset(modindices(fit2), mi > 3.84)
 
 # let's include additional path (x2 on y)
 model3 <- ' 
