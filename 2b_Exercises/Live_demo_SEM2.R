@@ -5,6 +5,7 @@ library(faux)
 
 ## Latent variables
 
+# Example 1
 # Accounting for measurement error using latent variables
 set.seed(1)
 n <- 100
@@ -29,12 +30,13 @@ latent <- '
 '
 summary(sem(latent, data = dat), standardized = T, rsq = T)
 
+# Example 2
 # Generate 2 correlated indicators of "body size"
 set.seed(72643276)
 dat <- rnorm_multi(
   n = 100, 
   mu = c(40, 80),              # length, mass
-  sd = c(4, 5),              # CV = 0.25 for both
+  sd = c(4, 5),                # CV = 0.25 for both
   r = 0.5,                     # correlation between them
   varnames = c("length", "mass"),
   empirical = FALSE
@@ -47,18 +49,14 @@ pairs(dat)
 cfa_model <- "body_size =~ length + mass"
 fit <- cfa(cfa_model, data=dat)
 
-# Note: Model has 0 degrees of freedom (just identified)
-# This means we can't test model fit
-
-# Force equal loadings (adds 1 df) to estimate parameters
+# Force equal loadings (frees 1 df) to estimate parameters
 # Assumption: The latent body size variable has an equal effect on both measurements. 
 # Requires that both are equally reliable, i.e., are measured with the same precision."
-
 cfa_equal <- "body_size =~ a*length + a*mass"
 
 fit_equal <- cfa(cfa_equal, data=dat)
 summary(fit_equal, standardized=T)
-
+# Parameters identified, but no ability to test model fit (0 df) 
 
 
 # CFA with more than two indicator variables
@@ -82,8 +80,11 @@ fit <- cfa(cfa, data=dat)
 # suggesting common cause
 summary(fit, standardized=T, rsq=T)
 
+
+
 # Composite variables
 
+# Example 1
 # Composite variables: model nonlinear relationships
 
 # let's generate some data (make drawing)
@@ -101,7 +102,7 @@ summary(lm(y ~ x + I(x^2), data=dat))
 
 # fit composite in lavaan automatically using "<~" operator
 model1a_nonlinear <- '
-comp.nonlinear <~ 1* x + x2
+comp.nonlinear <~ 1*x + x2
 y ~ comp.nonlinear
 '
 fit1a_nonlinear <- sem(model1a_nonlinear, data=dat)
@@ -110,7 +111,7 @@ summary(fit1a_nonlinear, standardized=T)
 
 
 
-
+# Example 2
 # Composite variables: model continuous interactions
 
 # let's generate some data (make drawing)
@@ -131,7 +132,7 @@ y ~ comp.int
 '
 
 fit2a_auto <- sem(model2a_auto, data=dat)
-summary(fit2a, standardized=T)
+summary(fit2a_auto, standardized=T)
 
 # 1) fit composite in lavaan manually (understand how composite is built internally)
 
@@ -160,7 +161,7 @@ fit2c_manual <- sem(model2c_manual, data=dat)
 summary(fit2c_manual, standardized=T)
 
 
-# Multigroup fitting: interaction
+# Multigroup fitting to model interactions
 
 # let's generate some data (make drawing)
 N <- 100

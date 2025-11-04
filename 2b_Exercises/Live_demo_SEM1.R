@@ -9,9 +9,8 @@ library(ggdag)
 # simulate a dataset with known causal structure (make drawing)
 
 # More realistic simulation with varying error structures
-set.seed(2397348)
-N <- 200  # Slightly larger sample
-
+N <- 200  
+set.seed(35421354)
 dat <- data.frame(x1 = rnorm(N, mean = 0, sd = 1))
 dat$x2 = 0.2 * dat$x1 + rnorm(N, mean = 0, sd = 0.8)
 dat$x3 = 0.3 * dat$x2 + rnorm(N, mean = 0, sd = 1.2)
@@ -29,7 +28,6 @@ p3 <- ggplot(data=dat, aes(x=x3,y=y)) + geom_point() + stat_smooth(method="lm")
 p1 + p2 +p3
 
 # fit multiple regression
-
 dagify(y ~ x1,
        y ~ x2,
        y ~ x3) %>% 
@@ -48,7 +46,6 @@ summary(fit)
 
 
 # Summarize the results
-# we know there is an effect mediated by X2 and X3 on Y, however, X2 not significant, while X1 is.
 # Let's fit a SEM instead
 
 
@@ -69,7 +66,6 @@ summary(fit2)
 
 # which important paths have been omitted?
 modindices(fit2)
-subset(modindices(fit2), modindices(fit2)$mi > 3.84)
 
 # let's include additional path (x2 on y)
 model3 <- ' 
