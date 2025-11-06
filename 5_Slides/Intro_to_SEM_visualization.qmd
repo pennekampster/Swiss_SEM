@@ -63,8 +63,9 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 :::
 
 ::: notes
-This is one of the most well cited empirical papers using SEM in ecology. It's interesting how little they show on the actual diagram, but rather show the coefficients for a huge number of responses. Question, which paths do these coefficients map onto?
-Lots of exogenous variables. red = negative, black = positive. no non-significant paths?
+https://onlinelibrary.wiley.com/doi/10.1111/ele.12469
+
+The strength of direct and indirect land-use effects on ecosystem multifunctionality. The index of multifunctionality was calculated for five scenarios, representing different land-use objectives (Fig. 1), and three regions. The structural equation model used to calculate the indirect effects (a) through changing species richness and (e) through changing specific leaf area (SLA). Indirect effects could be mediated through changing species richness (b–d) or through changes to the community weighted mean (CWM) of SLA (f–h). The best explanation for the indirect effects (either SLA or species richness) for each region is shown by an asterisk (*) (see, Methods and Table S3). Indirect effects are calculated by multiplying the path coefficient for the effect of land-use intensity (LUI) on species richness/SLA with the path coefficient for the effect of species richness/SLA on multifunctionality, see Table S4 for the individual path coefficients.
 :::
 
 ## A quick tour of SEM visualizations
@@ -72,7 +73,12 @@ Lots of exogenous variables. red = negative, black = positive. no non-significan
 ![](images/Lefcheck_sem.jpg){.absolute .absolute width="700" right=200}
 
 ::: notes
+https://www.pnas.org/doi/10.1073/pnas.1715798115#:~:text=We%20employ%20structural%20equation%20models,in%20almost%20half%20a%20century.
+
 Use of color to highlight important paths.
+SAV = submersed aquatic vegetation
+
+Structural equation models for total nitrogen (N) fit to subestuaries and their watersheds by salinity zone. (A) Tidal freshwater/oligohaline (0–5 psu), (B) mesohaline (5–15 psu), and (C) polyhaline (15–25 psu). Arrow width is proportional to the standardized effect size, given next to the arrows. Black arrows denote positive effects; red arrows, negative effects. Nonsignificant relationships (P > 0.05) have been omitted for clarity, including the nonsignificant effects of point source nutrients and total suspended solids (TSS) (SI Appendix, Fig. S5). Map Insets denote the location of watersheds. Units and unstandardized path coefficients are given in SI Appendix, Supplementary Materials.
 ::: 
 
 
@@ -125,7 +131,11 @@ Use of color. Showing a conceptual model in the same figure as the data-model. U
 ![](images/Mazancourt_sem.jpg){.absolute .absolute width="700" right=200}
 
 ::: notes
+https://onlinelibrary.wiley.com/doi/10.1111/ele.12088
 Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it's four separate models
+
+Structural Equation Modelling standardised results showing how planted or sown species richness (Sp. richness) affected the observed CV (coefficient of variation of community biomass, Obs. CV) through each of the six components of our prediction (Fig. 2). Sync: synchrony of species environmental responses ue; env var: mean scaled environmental variance R2  e ; com bio: mean community biomass NT ; dem var: mean scaled demographic variance R2  d; Simp: Simpson’s (1949)  concentration index, k; obs var: mean observation variance R2  o. Coefficients as in Fig. 4.
+
 :::
 
 <!--
@@ -145,6 +155,8 @@ I like the use of color here, but why does it go from bottom to top?
 
 ::: notes
 Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.
+
+The causal network based on structural equations. The path coefficients are shown in the small inset plots, with the different temperature regimes (groups) shown with different colours (constant = blue, slow = yellow, linear = orange, fast = red). The error bars indicate the standard error of the estimate. The temperature effect was fixed to zero for the constant treatment (hence no error bars). Dashed arrows indicate predominantly negative effects, while solid arrows indicate a positive effects across temperature change. Grey arrows indicate a switch of sign in the coefficients across treatments
 :::
 
 
@@ -153,8 +165,8 @@ Very high data-to-information ratio. this is a multi-group model. I like the way
 ::: {.incremental}
 1) Show relevant variables and paths
 1) Indicate path coefficients (direction, magnitude, significance)
-1) Show constructs with appropriate complexity (e.g. without indicators) 
-1) Include goodness of fit of the model 
+1) Show constructs with appropriate complexity 
+1) Report goodness-of-fit of the model 
 1) Report explanatory power for endogenous variables  
 1) Add graphs or tables with additional quantities (e.g, indirect and total effects) when relevant  
 :::
@@ -180,12 +192,11 @@ Very high data-to-information ratio. this is a multi-group model. I like the way
 :::::::::::::: {.columns}
 ::: {.column}
 - Represent all causal paths regardless of significance. 
-- Represent important covariance/correlation among variables (with double-headed arrows).
-- Include correlations among the errors of endogenous variables.
+- Represent important error correlations among endogenous variables (with double-headed arrows).
 :::
 
 ::: {.column}
-![](images/Poorter_sem.jpg){height=80%}
+![](images/Jones_sem.jpg){height=80%}
 :::
 ::::::::::::::
 :::
@@ -194,19 +205,15 @@ Very high data-to-information ratio. this is a multi-group model. I like the way
 
 
 ::: {.incremental}
-:::::::::::::: {.columns}
-::: {.column}
 - Indicate the direction, and significance by:   
   - Arrow width for magnitude
   - Add coefficients when possible  
   - Linetype or color for direction   
   - Dashed vs solid for significance  
 :::
-::: {.column}
-![](images/Duffy_sem.png){height=80%}
-:::
-::::::::::::::
-:::
+
+![](images/Mazziotta_sem.jpg){.absolute .absolute width="1000" right=0}
+
 
 
 ## Model goodness-of-fit
@@ -256,8 +263,6 @@ Very high data-to-information ratio. this is a multi-group model. I like the way
 
 - Show the underlying data:
   - Plots of raw correlations
-  - Correlation tables
-  - Distributions of raw data
   - Partial plots
 
 ## Plotting tools
@@ -302,9 +307,10 @@ lavaanPlot(model = fit.prune,
 ```
 
 ::: incremental
-- Allow for customization but may not provide full freedom
-- Allow to export to png or pdf
-- Caveat: interactions or multi-group models not supported yet
+- Allows for customization but does not provide full freedom
+- Allows to export to png or pdf
+- Interactions or multi-group models currently not supported.
+  - Workaround: fit separate models with fixed parameters. 
 :::
 
 ## Plotting tools II: semPlot package
@@ -320,19 +326,16 @@ semPaths(fit.prune, what = "est", whatLabels = "est",
 ```
 
 ::: incremental
-- Allow for customization but may not provide full freedom
-- Rather rigid layout of plots (required in some fields)
-- semptools package offers additional customization
+- Follows field specific conventions (e.g., psychology, social sciences)
+- Therefore rather rigid layout 
+- Allows for customization with semptools package
 :::
 
 
+## Plotting tools: conclusion 
 
-
-
-## Plotting tools
-
-- Good for quick visualization but not ready for publication.
-- Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.
+- Sufficient for visualizing SEM outputs but not ready for publication.
+- Fine-tuning in external software like powerpoint, illustrator, or Inkscape needed.
 
 
 ## Room for creativity 

@@ -259,7 +259,8 @@ Frank Pennekamp
 <p><img data-src="images/Allen_sem.jpg"></p>
 </div>
 <aside class="notes">
-<p>This is one of the most well cited empirical papers using SEM in ecology. It’s interesting how little they show on the actual diagram, but rather show the coefficients for a huge number of responses. Question, which paths do these coefficients map onto? Lots of exogenous variables. red = negative, black = positive. no non-significant paths?</p>
+<p>https://onlinelibrary.wiley.com/doi/10.1111/ele.12469</p>
+<p>The strength of direct and indirect land-use effects on ecosystem multifunctionality. The index of multifunctionality was calculated for five scenarios, representing different land-use objectives (Fig. 1), and three regions. The structural equation model used to calculate the indirect effects (a) through changing species richness and (e) through changing specific leaf area (SLA). Indirect effects could be mediated through changing species richness (b–d) or through changes to the community weighted mean (CWM) of SLA (f–h). The best explanation for the indirect effects (either SLA or species richness) for each region is shown by an asterisk (*) (see, Methods and Table S3). Indirect effects are calculated by multiplying the path coefficient for the effect of land-use intensity (LUI) on species richness/SLA with the path coefficient for the effect of species richness/SLA on multifunctionality, see Table S4 for the individual path coefficients.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -276,7 +277,9 @@ Frank Pennekamp
 <h2>A quick tour of SEM visualizations</h2>
 <p><img data-src="images/Lefcheck_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
 <aside class="notes">
-<p>Use of color to highlight important paths.</p>
+<p>https://www.pnas.org/doi/10.1073/pnas.1715798115#:~:text=We%20employ%20structural%20equation%20models,in%20almost%20half%20a%20century.</p>
+<p>Use of color to highlight important paths. SAV = submersed aquatic vegetation</p>
+<p>Structural equation models for total nitrogen (N) fit to subestuaries and their watersheds by salinity zone. (A) Tidal freshwater/oligohaline (0–5 psu), (B) mesohaline (5–15 psu), and (C) polyhaline (15–25 psu). Arrow width is proportional to the standardized effect size, given next to the arrows. Black arrows denote positive effects; red arrows, negative effects. Nonsignificant relationships (P &gt; 0.05) have been omitted for clarity, including the nonsignificant effects of point source nutrients and total suspended solids (TSS) (SI Appendix, Fig. S5). Map Insets denote the location of watersheds. Units and unstandardized path coefficients are given in SI Appendix, Supplementary Materials.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -334,7 +337,8 @@ Use of color. Showing a conceptual model in the same figure as the data-model. U
 <h2>A quick tour of SEM visualizations</h2>
 <p><img data-src="images/Mazancourt_sem.jpg" class="absolute" style="right: 200px; width: 700px; "></p>
 <aside class="notes">
-<p>Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it’s four separate models</p>
+<p>https://onlinelibrary.wiley.com/doi/10.1111/ele.12088 Unclear from the paper whether this is a multigroup model or four separate models. my intuition says it’s four separate models</p>
+<p>Structural Equation Modelling standardised results showing how planted or sown species richness (Sp. richness) affected the observed CV (coefficient of variation of community biomass, Obs. CV) through each of the six components of our prediction (Fig. 2). Sync: synchrony of species environmental responses ue; env var: mean scaled environmental variance R2 e ; com bio: mean community biomass NT ; dem var: mean scaled demographic variance R2 d; Simp: Simpson’s (1949) concentration index, k; obs var: mean observation variance R2 o. Coefficients as in Fig. 4.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -362,6 +366,7 @@ I like the use of color here, but why does it go from bottom to top?
 <p><img data-src="images/Tabi_SEM.png" class="absolute" style="right: 100px; width: 900px; "></p>
 <aside class="notes">
 <p>Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.</p>
+<p>The causal network based on structural equations. The path coefficients are shown in the small inset plots, with the different temperature regimes (groups) shown with different colours (constant = blue, slow = yellow, linear = orange, fast = red). The error bars indicate the standard error of the estimate. The temperature effect was fixed to zero for the constant treatment (hence no error bars). Dashed arrows indicate predominantly negative effects, while solid arrows indicate a positive effects across temperature change. Grey arrows indicate a switch of sign in the coefficients across treatments</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -379,8 +384,8 @@ I like the use of color here, but why does it go from bottom to top?
 <ol type="1">
 <li class="fragment">Show relevant variables and paths</li>
 <li class="fragment">Indicate path coefficients (direction, magnitude, significance)</li>
-<li class="fragment">Show constructs with appropriate complexity (e.g.&nbsp;without indicators)</li>
-<li class="fragment">Include goodness of fit of the model</li>
+<li class="fragment">Show constructs with appropriate complexity</li>
+<li class="fragment">Report goodness-of-fit of the model</li>
 <li class="fragment">Report explanatory power for endogenous variables<br>
 </li>
 <li class="fragment">Add graphs or tables with additional quantities (e.g, indirect and total effects) when relevant<br>
@@ -408,17 +413,14 @@ I like the use of color here, but why does it go from bottom to top?
 <div class="column">
 <ul>
 <li class="fragment">Represent all causal paths regardless of significance.</li>
-<li class="fragment">Represent important covariance/correlation among variables (with double-headed arrows).</li>
-<li class="fragment">Include correlations among the errors of endogenous variables.</li>
+<li class="fragment">Represent important error correlations among endogenous variables (with double-headed arrows).</li>
 </ul>
 </div><div class="column">
-<p><img data-src="images/Poorter_sem.jpg" style="height:80.0%"></p>
+<p><img data-src="images/Jones_sem.jpg" style="height:80.0%"></p>
 </div></div>
 </section>
 <section id="path-coefficients" class="slide level2 smaller">
 <h2>Path coefficients</h2>
-<div class="columns">
-<div class="column">
 <ul>
 <li class="fragment">Indicate the direction, and significance by:
 <ul>
@@ -431,9 +433,7 @@ I like the use of color here, but why does it go from bottom to top?
 </li>
 </ul></li>
 </ul>
-</div><div class="column">
-<p><img data-src="images/Duffy_sem.png" style="height:80.0%"></p>
-</div></div>
+<p><img data-src="images/Mazziotta_sem.jpg" class="absolute" style="right: 0px; width: 1000px; "></p>
 </section>
 <section id="model-goodness-of-fit" class="slide level2">
 <h2>Model goodness-of-fit</h2>
@@ -489,8 +489,6 @@ I like the use of color here, but why does it go from bottom to top?
 <li>Show the underlying data:
 <ul>
 <li>Plots of raw correlations</li>
-<li>Correlation tables</li>
-<li>Distributions of raw data</li>
 <li>Partial plots</li>
 </ul></li>
 </ul>
@@ -510,14 +508,17 @@ I like the use of color here, but why does it go from bottom to top?
 <span id="cb1-4"><a href=""></a>           <span class="at">edge_options =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
 <span id="cb1-5"><a href=""></a>           <span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">covs =</span> <span class="cn">FALSE</span>, <span class="at">stars =</span> <span class="st">"regress"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-4cdc0a7f39979158c1ca" style="width:960px;height:5in;"></div>
-<script type="application/json" data-for="htmlwidget-4cdc0a7f39979158c1ca">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-1946e554aaaaf6c8bb13" style="width:960px;height:5in;"></div>
+<script type="application/json" data-for="htmlwidget-1946e554aaaaf6c8bb13">{"x":{"diagram":" digraph plot { \n graph [ overlap = true, fontsize = 10 ] \n node [ shape = box, color = gray, fontname = Helvetica ] \n node [shape = box] \n nadd; rich; even; disk; massabove \n node [shape = oval] \n  \n \n edge [ color = black ] \n nadd->massabove [label = \"0.1***\"] rich->massabove [label = \"0.11***\"] even->massabove [label = \"-1.38*\"] disk->massabove [label = \"0.45***\"] nadd->rich [label = \"-0.19***\"] nadd->even [label = \"0.01***\"]  \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
-<li class="fragment">Allow for customization but may not provide full freedom</li>
-<li class="fragment">Allow to export to png or pdf</li>
-<li class="fragment">Caveat: interactions or multi-group models not supported yet</li>
+<li class="fragment">Allows for customization but does not provide full freedom</li>
+<li class="fragment">Allows to export to png or pdf</li>
+<li class="fragment">Interactions or multi-group models currently not supported.
+<ul>
+<li class="fragment">Workaround: fit separate models with fixed parameters.</li>
+</ul></li>
 </ul>
 </section>
 <section id="plotting-tools-ii-semplot-package" class="slide level2">
@@ -533,16 +534,16 @@ I like the use of color here, but why does it go from bottom to top?
 
 </div>
 <img data-src="Intro_to_SEM_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
-<li class="fragment">Allow for customization but may not provide full freedom</li>
-<li class="fragment">Rather rigid layout of plots (required in some fields)</li>
-<li class="fragment">semptools package offers additional customization</li>
+<li class="fragment">Follows field specific conventions (e.g., psychology, social sciences)</li>
+<li class="fragment">Therefore rather rigid layout</li>
+<li class="fragment">Allows for customization with semptools package</li>
 </ul>
 </section>
-<section id="plotting-tools-1" class="slide level2">
-<h2>Plotting tools</h2>
+<section id="plotting-tools-conclusion" class="slide level2">
+<h2>Plotting tools: conclusion</h2>
 <ul>
-<li>Good for quick visualization but not ready for publication.</li>
-<li>Fine-tuning in external software like powerpoint, illustrator, or Inkscape often needed.</li>
+<li>Sufficient for visualizing SEM outputs but not ready for publication.</li>
+<li>Fine-tuning in external software like powerpoint, illustrator, or Inkscape needed.</li>
 </ul>
 </section>
 <section id="room-for-creativity" class="slide level2">

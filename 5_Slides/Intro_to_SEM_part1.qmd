@@ -376,7 +376,7 @@ digraph {
 ::: columns
 ::: {.column width="100%"}
 - Build knowledge from past observation
-- Design and conduct experiment or observational study
+- Design and conduct an experiment or observational study
 - Test hypotheses
 - Develop theory 
 :::
@@ -498,7 +498,7 @@ digraph  {
 -   Only direct effects on Y considered.
 -   Regression coefficient quantifies the direction and strength of relationship.\
 -   How much change in Y for one unit change in X.
--   Partial effects (i.e. effect of precipitation on biomass when nutrient addition is fixed) when > 1 independent variables.
+-   Partial effects (i.e. effect of precipitation on biomass when nutrient addition and richness are fixed) when > 1 independent variables.
 -   Strong correlations between predictors may become problematic. 
 :::
 
@@ -528,6 +528,7 @@ digraph G {
 
   bgcolor="transparent"
   environment -> diversity;
+  environment -> function;
   impact -> diversity;
   diversity -> function;
   impact -> function;
@@ -565,6 +566,7 @@ digraph  {
   # several 'edge' statements
     nutrients->richness ;
     precipitation->richness ;
+    precipitation->biomass ;
     richness->biomass ;
     nutrients->biomass [minlen=3];
     
@@ -793,7 +795,7 @@ kable(cov2cor(V),  digits = 2)
   + Correlation matrix is standardized variance-covariance matrix
 
 
-## Compare model-implied to observed covariance 
+## Global estimation: compare model-implied to observed covariance 
 
 
 ::: columns
@@ -1617,8 +1619,8 @@ digraph  {
 - Inspect multivariate normality of the following variables using the `mvn()` function in `library(MVN)`: 
   - rich, even, mass.above
 - Fit multiple linear regression models to estimate coefficients
-    -   direct effects of environmental predictors on above ground biomass (AGB)
-    -   (in)direct effects of environmental predictors on richness and evenness
+    -   direct effects of nadd, disk, rich and even on above ground biomass (AGB)
+    -   direct effects of nadd and disk on richness and evenness
 - What do you conclude?
 
 ## Exercise 2
