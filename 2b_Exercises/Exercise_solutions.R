@@ -102,6 +102,7 @@ summary(fit.simple.up, fit.measures = TRUE)
 modindices(fit.simple.up, minimum.value = 0.01)
 
 
+
 # Exercise 3: standardized coefficients and derived quantities
 
 # get standardized coefficients
@@ -196,7 +197,7 @@ aictab(list(fit.no.mediation, fit.partial.mediation, fit.full.mediation),
 
 # Day 2:
 
-# Exercise 1:
+# Set up:
 
 simple <-
 "mass.above ~ nadd + disk + rich + even 
@@ -209,7 +210,7 @@ fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
 
 
-# Exercise 2:
+# Exercise 1:
 
 # investigate correlations among diversity metrics
 cor.test(seabloom$even, seabloom$rich)
@@ -226,13 +227,14 @@ seabloom$even_std <- (seabloom$even-mean(seabloom$even)) / sd(seabloom$even)
 # reverse evenness so that higher values = lower evenness
 seabloom$even.rev_std <- 1- seabloom$even_std
 
+
 # test measurement model
 diversity <- 'div =~ lambda*even.rev_std + lambda*rich_std'  
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 summary(fit.diversity, standardized=T)
 
 
-# Exercise 3:
+# Exercise 2:
 
 # fit full SEM with latent diversity variable 
 lv <- '

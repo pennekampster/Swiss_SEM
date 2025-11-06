@@ -1,5 +1,6 @@
 # Live coding part I
 
+library(tidyverse)
 library(lavaan)
 library(ggplot2)
 library(AICcmodavg)
@@ -77,7 +78,7 @@ x3 ~ x2
 
 dagify(y ~ x1 + x2 + x3,
        x2 ~ x1,
-       x3 ~ x1) %>% 
+       x3 ~ x2) %>% 
   ggdag() 
 
 
@@ -165,7 +166,7 @@ y ~ b1 * x2 +  b2 * x3
 x2 ~ b3 * x1
 x3 ~ b4 * x2
 
-b3 == 0
+b3 == 0.25
 
 dir.x1.y := b1
 indir.x1.y := b3 * b2

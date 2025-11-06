@@ -98,7 +98,7 @@ dat$y = 2 * dat$x -1.5 * dat$x2 + rnorm(N)
 plot(dat$x, dat$y)
 
 # fit quadratic in lm
-summary(lm(y ~ x + I(x^2), data=dat))
+summary(lm(y ~ x + x2, data=dat))
 
 # fit composite in lavaan automatically using "<~" operator
 model1a_nonlinear <- '
@@ -139,7 +139,6 @@ summary(fit2a_auto, standardized=T)
 # get coefficients
 summary(lm(y ~ x1 * x2, data=dat))
 coef(lm(y ~ x1 * x2, data=dat))
-
 
 model2b_manual <- ' 
 comp.int <~ 1.6860798 * x1 +   0.7543838 * x2 + -0.8553332  * x1x2
