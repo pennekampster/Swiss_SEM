@@ -188,6 +188,8 @@
       margin-right: 0; 
     }
   </style>
+  <script src="Intro_to_SEM_part1_files/libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="Intro_to_SEM_part1_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -1373,65 +1375,141 @@ Sewell Wright, 1923</p>
 </ul></li>
 </ul>
 </section>
-<section id="global-estimation-compare-model-implied-to-observed-covariance" class="slide level2">
-<h2>Global estimation: compare model-implied to observed covariance</h2>
-<div class="columns">
-<div class="column" style="width:35%;">
-<div class="cell" data-fig-width="4" data-layout-align="default">
+<section id="path-tracing-rules" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<div class="cell" data-fig-width="8" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="384" height="480" viewbox="0.00 0.00 242.00 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-94 238,-94 238,4 -4,4"></polygon>
-<!-- X1 -->
+<svg width="768" height="384" viewbox="0.00 0.00 575.71 268.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 264)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-264 571.71,-264 571.71,4 -4,4"></polygon>
+<!-- A -->
 <g id="node1" class="node">
-<title>X1</title>
-<polygon fill="none" stroke="black" points="54,-63 0,-63 0,-27 54,-27 54,-63"></polygon>
-<text text-anchor="middle" x="27" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">X1</text>
+<title>A</title>
+<polygon fill="none" stroke="black" points="127.5,-206 73.5,-206 73.5,-170 127.5,-170 127.5,-206"></polygon>
+<text text-anchor="middle" x="100.5" y="-183.8" font-family="Helvetica,sans-Serif" font-size="14.00">A</text>
 </g>
-<!-- X2 -->
+<!-- B -->
 <g id="node2" class="node">
-<title>X2</title>
-<polygon fill="none" stroke="black" points="144,-90 90,-90 90,-54 144,-54 144,-90"></polygon>
-<text text-anchor="middle" x="117" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">X2</text>
+<title>B</title>
+<polygon fill="none" stroke="black" points="127.5,-134 73.5,-134 73.5,-98 127.5,-98 127.5,-134"></polygon>
+<text text-anchor="middle" x="100.5" y="-111.8" font-family="Helvetica,sans-Serif" font-size="14.00">B</text>
 </g>
-<!-- X1&#45;&gt;X2 -->
-<g id="edge1" class="edge">
-<title>X1-&gt;X2</title>
-<path fill="none" stroke="black" d="M54.4,-53.1C62.48,-55.58 71.51,-58.35 80.1,-60.99"></path>
-<polygon fill="black" stroke="black" points="79.33,-64.41 89.92,-64 81.39,-57.72 79.33,-64.41"></polygon>
+<!-- A&#45;&gt;B -->
+<g id="edge6" class="edge">
+<title>A:w-&gt;B:w</title>
+<path fill="none" stroke="black" d="M62.57,-118.73C40.94,-131.89 44.25,-188 72.5,-188"></path>
+<polygon fill="black" stroke="black" points="63.79,-122.03 72.5,-116 61.93,-115.28 63.79,-122.03"></polygon>
+<text text-anchor="middle" x="51.83" y="-147.8" font-family="Times,serif" font-size="14.00">f</text>
 </g>
-<!-- X3 -->
+<!-- C -->
 <g id="node3" class="node">
-<title>X3</title>
-<polygon fill="none" stroke="black" points="144,-36 90,-36 90,0 144,0 144,-36"></polygon>
-<text text-anchor="middle" x="117" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X3</text>
+<title>C</title>
+<polygon fill="none" stroke="black" points="127.5,-62 73.5,-62 73.5,-26 127.5,-26 127.5,-62"></polygon>
+<text text-anchor="middle" x="100.5" y="-39.8" font-family="Helvetica,sans-Serif" font-size="14.00">C</text>
 </g>
-<!-- X1&#45;&gt;X3 -->
-<g id="edge3" class="edge">
-<title>X1-&gt;X3</title>
-<path fill="none" stroke="black" d="M54.4,-36.9C62.48,-34.42 71.51,-31.65 80.1,-29.01"></path>
-<polygon fill="black" stroke="black" points="81.39,-32.28 89.92,-26 79.33,-25.59 81.39,-32.28"></polygon>
+<!-- A&#45;&gt;C -->
+<g id="edge8" class="edge">
+<title>A:w-&gt;C:w</title>
+<path fill="none" stroke="black" d="M63.45,-186.72C12.81,-173.31 12.85,-58.49 63.57,-45.24"></path>
+<polygon fill="black" stroke="black" points="63.14,-190.21 73.5,-188 64.02,-183.27 63.14,-190.21"></polygon>
+<polygon fill="black" stroke="black" points="64.01,-48.72 73.5,-44 63.14,-41.77 64.01,-48.72"></polygon>
+<text text-anchor="middle" x="27" y="-111.8" font-family="Times,serif" font-size="14.00">h</text>
 </g>
-<!-- Y -->
+<!-- D -->
 <g id="node4" class="node">
-<title>Y</title>
-<polygon fill="none" stroke="black" points="234,-63 180,-63 180,-27 234,-27 234,-63"></polygon>
-<text text-anchor="middle" x="207" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+<title>D</title>
+<polygon fill="none" stroke="black" points="274.5,-171 220.5,-171 220.5,-135 274.5,-135 274.5,-171"></polygon>
+<text text-anchor="middle" x="247.5" y="-148.8" font-family="Helvetica,sans-Serif" font-size="14.00">D</text>
 </g>
-<!-- X2&#45;&gt;Y -->
+<!-- A&#45;&gt;D -->
+<g id="edge1" class="edge">
+<title>A-&gt;D</title>
+<path fill="none" stroke="black" d="M127.76,-181.66C150.96,-176.06 185,-167.85 210.69,-161.64"></path>
+<polygon fill="black" stroke="black" points="211.54,-165.04 220.44,-159.29 209.89,-158.24 211.54,-165.04"></polygon>
+<text text-anchor="middle" x="174" y="-175.2" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- B&#45;&gt;C -->
+<g id="edge7" class="edge">
+<title>B:w-&gt;C:w</title>
+<path fill="none" stroke="black" d="M62.57,-46.73C40.94,-59.89 44.25,-116 72.5,-116"></path>
+<polygon fill="black" stroke="black" points="63.79,-50.03 72.5,-44 61.93,-43.28 63.79,-50.03"></polygon>
+<text text-anchor="middle" x="53" y="-75.8" font-family="Times,serif" font-size="14.00">g</text>
+</g>
+<!-- B&#45;&gt;D -->
 <g id="edge2" class="edge">
-<title>X2-&gt;Y</title>
-<path fill="none" stroke="black" d="M144.4,-63.9C152.48,-61.42 161.51,-58.65 170.1,-56.01"></path>
-<polygon fill="black" stroke="black" points="171.39,-59.28 179.92,-53 169.33,-52.59 171.39,-59.28"></polygon>
+<title>B-&gt;D</title>
+<path fill="none" stroke="black" d="M127.76,-122.7C150.96,-128.62 185,-137.31 210.69,-143.86"></path>
+<polygon fill="black" stroke="black" points="209.88,-147.27 220.44,-146.35 211.61,-140.49 209.88,-147.27"></polygon>
+<text text-anchor="middle" x="174" y="-139.2" font-family="Times,serif" font-size="14.00">b</text>
 </g>
-<!-- X3&#45;&gt;Y -->
+<!-- E -->
+<g id="node5" class="node">
+<title>E</title>
+<polygon fill="none" stroke="black" points="421.5,-90 367.5,-90 367.5,-54 421.5,-54 421.5,-90"></polygon>
+<text text-anchor="middle" x="394.5" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">E</text>
+</g>
+<!-- C&#45;&gt;E -->
+<g id="edge3" class="edge">
+<title>C-&gt;E</title>
+<path fill="none" stroke="black" d="M127.67,-46.51C179.96,-51.52 297.46,-62.79 357.18,-68.52"></path>
+<polygon fill="black" stroke="black" points="357,-72.02 367.28,-69.49 357.66,-65.05 357,-72.02"></polygon>
+<text text-anchor="middle" x="247.5" y="-65.2" font-family="Times,serif" font-size="14.00">c</text>
+</g>
+<!-- D&#45;&gt;E -->
 <g id="edge4" class="edge">
-<title>X3-&gt;Y</title>
-<path fill="none" stroke="black" d="M144.4,-26.1C152.48,-28.58 161.51,-31.35 170.1,-33.99"></path>
-<polygon fill="black" stroke="black" points="169.33,-37.41 179.92,-37 171.39,-30.72 169.33,-37.41"></polygon>
+<title>D-&gt;E</title>
+<path fill="none" stroke="black" d="M274.76,-138.33C298.16,-125.26 332.6,-106.02 358.37,-91.62"></path>
+<polygon fill="black" stroke="black" points="360.41,-94.49 367.44,-86.56 357,-88.38 360.41,-94.49"></polygon>
+<text text-anchor="middle" x="321" y="-117.2" font-family="Times,serif" font-size="14.00">d</text>
+</g>
+<!-- F -->
+<g id="node6" class="node">
+<title>F</title>
+<polygon fill="none" stroke="black" points="567.71,-52 513.71,-52 513.71,-16 567.71,-16 567.71,-52"></polygon>
+<text text-anchor="middle" x="540.71" y="-29.8" font-family="Helvetica,sans-Serif" font-size="14.00">F</text>
+</g>
+<!-- E&#45;&gt;F -->
+<g id="edge5" class="edge">
+<title>E-&gt;F</title>
+<path fill="none" stroke="black" d="M421.62,-65.12C444.55,-59.08 478.13,-50.23 503.62,-43.51"></path>
+<polygon fill="black" stroke="black" points="504.53,-46.89 513.3,-40.96 502.74,-40.12 504.53,-46.89"></polygon>
+<text text-anchor="middle" x="467.61" y="-57.2" font-family="Times,serif" font-size="14.00">e</text>
+</g>
+<!-- i -->
+<g id="node7" class="node">
+<title>i</title>
+<text text-anchor="middle" x="100.5" y="-237.8" font-family="Helvetica,sans-Serif" font-size="14.00">i</text>
+</g>
+<!-- i&#45;&gt;D -->
+<g id="edge9" class="edge">
+<title>i-&gt;D</title>
+<path fill="none" stroke="black" d="M127.76,-225.88C151.27,-211.45 185.9,-190.19 211.71,-174.35"></path>
+<polygon fill="black" stroke="black" points="213.75,-177.21 220.44,-169 210.08,-171.25 213.75,-177.21"></polygon>
+</g>
+<!-- j -->
+<g id="node8" class="node">
+<title>j</title>
+<text text-anchor="middle" x="247.5" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">j</text>
+</g>
+<!-- j&#45;&gt;E -->
+<g id="edge10" class="edge">
+<title>j-&gt;E</title>
+<path fill="none" stroke="black" d="M274.76,-27.78C298.06,-36.46 332.3,-49.21 358.03,-58.79"></path>
+<polygon fill="black" stroke="black" points="356.84,-62.08 367.44,-62.29 359.29,-55.52 356.84,-62.08"></polygon>
+</g>
+<!-- k -->
+<g id="node9" class="node">
+<title>k</title>
+<text text-anchor="middle" x="394.5" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">k</text>
+</g>
+<!-- k&#45;&gt;F -->
+<g id="edge11" class="edge">
+<title>k-&gt;F</title>
+<path fill="none" stroke="black" d="M421.62,-20.9C444.44,-23.43 477.83,-27.13 503.28,-29.96"></path>
+<polygon fill="black" stroke="black" points="502.98,-33.45 513.3,-31.07 503.75,-26.49 502.98,-33.45"></polygon>
 </g>
 </g>
 </svg>
@@ -1440,83 +1518,22 @@ Sewell Wright, 1923</p>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:65%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-<p>Assess goodness of fit by comparing model-implied to observed covariance matrix.</p>
-</section>
-<section id="model-fit-measures" class="slide level2 smaller">
-<h2>Model fit measures</h2>
+<p>Sewall Wright (1918, 1934) developed a method of estimating causal path coefficients by decomposing the correlations among a set of variables:</p>
 <ul>
-<li><em><span class="math inline">\(\chi^2\)</span> statistic</em>
-<ul>
-<li>compare the model-implied to the observed variance-covariance</li>
-<li>good fit when <span class="math inline">\(\chi^2\)</span> statistic is small (P &gt; 0.05)<br>
+<li>He articulated a set of rules for examining a path diagram that would allow for this mathematical decomposition.<br>
 </li>
-<li>sample-size dependent</li>
-</ul></li>
+<li>The correlation of any two variables in a path diagram can be expressed as the sum of coefficients that connect two variables. The connection between one variable and another variable, then, can often be made through more than one route:
+<ol start="3" type="1">
+<li>No loops are allowed. In tracing from one variable to another, you cannot pass through the same variable twice following a particular route.</li>
+<li>No going forward and then backward. Once you have traveled along a route forward, you cannot travel backward to get to the variable at the end point. (Only use common causes to account for a correlation between two variables, not common outcomes).<br>
+</li>
+<li>Only one curved arrow is allowed in tracing from the first variable to the last variable in any route.</li>
+</ol></li>
 </ul>
-<div class="fragment">
-<ul>
-<li><em>Comparative fit index (CFI)</em>:
-<ul>
-<li>deviation from a ‘null’ model (variances estimated but covariances set to 0).</li>
-<li>higher is better, &gt; 0.95 is considered good.</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li><em>Root-mean squared error of approximation (RMSEA)</em>
-<ul>
-<li>statistic penalizes models based on sample size</li>
-<li>&lt; 0.10 is acceptable, and anything &lt; 0.06 is good</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li><em>Standardized root-mean squared residual (SRMR)</em>
-<ul>
-<li>standardized difference between the observed and predicted correlations</li>
-<li>&lt; 0.08 is considered good</li>
-</ul></li>
-</ul>
-</div>
-</section></section>
-<section>
-<section id="calculating-path-coefficients" class="title-slide slide level1 center">
-<h1>Calculating path coefficients</h1>
-<!-- https://jslefche.github.io/sem_book/global-estimation.html -->
-<aside class="notes">
-<ul>
-<li>Path coefficients inferential heart of structural equation modeling.</li>
-<li>Wright’s rules for tracing paths can be used to decompose total correlations into path coefficients.</li>
-<li>Modern SEM software calculates these automatically.</li>
-<li>Important to be aware of the defaults of SEM software, such as <code>lavaan</code>.</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="unspecified-relationships-among-exogenous-variables-are-their-bivariate-correlations." class="slide level2 smaller">
-<h2>Unspecified relationships among exogenous variables are their bivariate correlations.</h2>
+<section id="path-tracing-rules-1" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<p>Unspecified relationships among exogenous variables are their bivariate correlations.</p>
 <p>Accounts for existing correlations among exogenous variables not explained by the model.</p>
 <div class="cell" data-fig-width="6" data-layout-align="default">
 <div class="cell-output-display">
@@ -1588,8 +1605,9 @@ Sewell Wright, 1923</p>
           display:block!important;
       }</style></aside>
 </section>
-<section id="when-two-variables-are-connected-by-a-single-path-the-coefficient-of-that-path-is-the-regression-coefficient." class="slide level2 smaller">
-<h2>When two variables are connected by a single path, the coefficient of that path is the regression coefficient.</h2>
+<section id="path-tracing-rules-2" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<p>When two variables are connected by a single path, the coefficient of that path is the regression coefficient.</p>
 <p>γ typically denotes coefficients for paths from exogenous to endogenous variables.<br>
 β typically denotes coefficients for paths between endogenous variables</p>
 <div class="cell" data-fig-width="6" data-layout-align="default">
@@ -1660,8 +1678,9 @@ Sewell Wright, 1923</p>
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-strength-of-a-compound-path-is-the-product-of-the-individual-coefficients" class="slide level2 smaller">
-<h2>The strength of a compound path is the product of the individual coefficients</h2>
+<section id="path-tracing-rules-3" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<p>The strength of a compound path is the product of the individual coefficients.</p>
 <p>How much of X’s effect on Y2 is transmitted through Y1</p>
 <div class="cell" data-fig-width="6" data-layout-align="default">
 <div class="cell-output-display">
@@ -1737,8 +1756,9 @@ Sewell Wright, 1923</p>
           display:block!important;
       }</style></aside>
 </section>
-<section id="when-variables-are-connected-by-more-than-one-pathway-each-pathway-is-the-partial-regression-coefficient" class="slide level2 smaller">
-<h2>When variables are connected by more than one pathway, each pathway is the ‘partial’ regression coefficient</h2>
+<section id="path-tracing-rules-4" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<p>When variables are connected by more than one pathway, each pathway is the ‘partial’ regression coefficient</p>
 <ul>
 <li class="fragment">The partial regression coefficient estimates the effect of a pathway holding other pathways constant.<br>
 </li>
@@ -1810,15 +1830,9 @@ Sewell Wright, 1923</p>
           display:block!important;
       }</style></aside>
 </section>
-<section id="errors-on-endogenous-variables-relate-the-unexplained-correlations-or-variances-arising-from-unmeasured-variables" class="slide level2 smaller">
-<h2>Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables</h2>
-<ul>
-<li class="fragment"><span class="math inline">\(R^{2}\)</span>: ratio of explained to total variation in response (here Y1)<br>
-</li>
-<li class="fragment">Unexplained or residual variance = <span class="math inline">\(1 - R^{2}\)</span></li>
-<li class="fragment">Captures other (unknown) sources causing correlation between Y1 and other variables to deviate from 1.</li>
-<li class="fragment">Error variances are often represented as <span class="math inline">\(\zeta\)</span> with an arrow leading into the endogenous variable.</li>
-</ul>
+<section id="path-tracing-rules-5" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<p>Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables.</p>
 <div class="cell" data-fig-width="5" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1885,6 +1899,13 @@ Sewell Wright, 1923</p>
 </div>
 </div>
 </div>
+<ul>
+<li class="fragment"><span class="math inline">\(R^{2}\)</span>: ratio of explained to total variation in response (here Y1)<br>
+</li>
+<li class="fragment">Unexplained or residual variance = <span class="math inline">\(1 - R^{2}\)</span></li>
+<li class="fragment">Captures other (unknown) sources causing correlation between Y1 and other variables to deviate from 1.</li>
+<li class="fragment">Error variances are often represented as <span class="math inline">\(\zeta\)</span> with an arrow leading into the endogenous variable.</li>
+</ul>
 <aside class="notes">
 <ul>
 <li>Every endogenous variable has an error term</li>
@@ -1906,13 +1927,9 @@ Sewell Wright, 1923</p>
           display:block!important;
       }</style></aside>
 </section>
-<section id="unanalyzed-residual-correlations-among-two-endogenous-variables-are-their-partial-correlations." class="slide level2 smaller">
-<h2>Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.</h2>
-<ul>
-<li class="fragment">If they were exogenous variables, the relationship would be their bivariate correlation.</li>
-<li class="fragment">Here we have we have to remove the effects of X on both variables.</li>
-<li class="fragment">These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.</li>
-</ul>
+<section id="path-tracing-rules-6" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<p>Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.</p>
 <div class="cell" data-fig-width="6" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -1989,6 +2006,11 @@ Sewell Wright, 1923</p>
 </div>
 </div>
 </div>
+<ul>
+<li class="fragment">If they were exogenous variables, the relationship would be their bivariate correlation.</li>
+<li class="fragment">Here we have we have to remove the effects of X on both variables.</li>
+<li class="fragment">These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.</li>
+</ul>
 <aside class="notes">
 <ul>
 <li>Correlated errors represent shared unmeasured causes of Y1 and Y2</li>
@@ -2009,9 +2031,9 @@ Sewell Wright, 1923</p>
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-total-effect-one-variable-has-on-another-is-the-sum-of-its-direct-and-indirect-effects" class="slide level2 smaller">
-<h2>The total effect one variable has on another is the sum of its direct and indirect effects</h2>
-<p><span class="math display">\[ total = \gamma_{X, Y1} * \beta_{Y1, Y2} + \gamma_{X, Y2}\]</span></p>
+<section id="path-tracing-rules-7" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<p>The total effect one variable has on another is the sum of its direct and indirect effects <span class="math display">\[ total = \gamma_{X, Y1} * \beta_{Y1, Y2} + \gamma_{X, Y2}\]</span></p>
 <div class="cell" data-fig-width="6" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -2093,9 +2115,9 @@ Sewell Wright, 1923</p>
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-total-effect-including-undirected-paths-is-equivalent-to-the-total-correlation" class="slide level2 smaller">
-<h2>The total effect (including undirected paths) is equivalent to the total correlation</h2>
-<p>Total correlation</p>
+<section id="path-tracing-rules-8" class="slide level2 smaller">
+<h2>Path tracing rules</h2>
+<p>The total effect (including undirected paths) is equivalent to the total correlation</p>
 <p>Observed correlation matrix:</p>
 <table class="caption-top">
 <thead>
@@ -2151,9 +2173,307 @@ Sewell Wright, 1923</p>
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section></section>
+<section>
+<section id="path-tracing-in-practice" class="title-slide slide level1 center">
+<h1>Path tracing in practice</h1>
+
 </section>
-<section id="example-path-tracing-in-a-simple-model" class="slide level2 smaller">
-<h2>Example: path tracing in a simple model</h2>
+<section id="from-model-to-implied-correlation-matrix" class="slide level2 smaller">
+<h2>From model to implied correlation matrix</h2>
+<p>Implied path model for Y1, Y2, and Y3:</p>
+<div class="cell" data-fig-width="6" data-fig-height="3" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="576" height="288" viewbox="0.00 0.00 279.12 180.87" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 176.87)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-176.87 275.12,-176.87 275.12,4 -4,4"></polygon>
+<!-- Y1 -->
+<g id="node1" class="node">
+<title>Y1</title>
+<polygon fill="none" stroke="black" points="54,-43.27 0,-43.27 0,-7.27 54,-7.27 54,-43.27"></polygon>
+<text text-anchor="start" x="18.44" y="-22.07" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+<text text-anchor="start" x="27.78" y="-22.07" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text>
+</g>
+<!-- Y2 -->
+<g id="node2" class="node">
+<title>Y2</title>
+<polygon fill="none" stroke="black" points="162,-115.27 108,-115.27 108,-79.27 162,-79.27 162,-115.27"></polygon>
+<text text-anchor="start" x="126.44" y="-94.07" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+<text text-anchor="start" x="135.78" y="-94.07" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+</g>
+<!-- Y1&#45;&gt;Y2 -->
+<g id="edge1" class="edge">
+<title>Y1-&gt;Y2</title>
+<path fill="none" stroke="black" d="M54.25,-43.44C67.94,-52.56 84.69,-63.73 99.38,-73.52"></path>
+<polygon fill="black" stroke="black" points="97.49,-76.47 107.76,-79.11 101.38,-70.65 97.49,-76.47"></polygon>
+<text text-anchor="start" x="55.82" y="-63.68" font-family="Times,serif" font-size="14.00">β</text>
+<text text-anchor="start" x="62.82" y="-63.68" font-family="Times,serif" baseline-shift="sub" font-size="14.00">21</text>
+</g>
+<!-- Y3 -->
+<g id="node3" class="node">
+<title>Y3</title>
+<polygon fill="none" stroke="black" points="251.03,-36 197.03,-36 197.03,0 251.03,0 251.03,-36"></polygon>
+<text text-anchor="start" x="215.47" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+<text text-anchor="start" x="224.8" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text>
+</g>
+<!-- Y1&#45;&gt;Y3 -->
+<g id="edge3" class="edge">
+<title>Y1-&gt;Y3</title>
+<path fill="none" stroke="black" d="M54.4,-24.26C88.8,-22.99 148,-20.8 186.57,-19.38"></path>
+<polygon fill="black" stroke="black" points="187,-22.87 196.86,-19 186.74,-15.87 187,-22.87"></polygon>
+<text text-anchor="start" x="99.48" y="-27.02" font-family="Times,serif" font-size="14.00">β</text>
+<text text-anchor="start" x="106.48" y="-27.02" font-family="Times,serif" baseline-shift="sub" font-size="14.00">31</text>
+</g>
+<!-- Y2&#45;&gt;Y3 -->
+<g id="edge2" class="edge">
+<title>Y2-&gt;Y3</title>
+<path fill="none" stroke="black" d="M155.65,-78.88C167.64,-68.2 182.92,-54.6 195.99,-42.96"></path>
+<polygon fill="black" stroke="black" points="198.66,-45.28 203.8,-36.01 194,-40.05 198.66,-45.28"></polygon>
+<text text-anchor="start" x="154.82" y="-66.12" font-family="Times,serif" font-size="14.00">β</text>
+<text text-anchor="start" x="161.82" y="-66.12" font-family="Times,serif" baseline-shift="sub" font-size="14.00">32</text>
+</g>
+<!-- e2 -->
+<g id="node4" class="node">
+<title>e2</title>
+<text text-anchor="start" x="127.21" y="-151.67" font-family="Helvetica,sans-Serif" font-size="14.00">e</text>
+<text text-anchor="start" x="135" y="-151.67" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+</g>
+<!-- e2&#45;&gt;Y2 -->
+<g id="edge4" class="edge">
+<title>e2-&gt;Y2:n</title>
+<path fill="none" stroke="black" d="M135,-136.46C135,-132.74 135,-128.96 135,-125.64"></path>
+<polygon fill="black" stroke="black" points="138.5,-125.27 135,-115.27 131.5,-125.27 138.5,-125.27"></polygon>
+</g>
+<!-- e3 -->
+<g id="node5" class="node">
+<title>e3</title>
+<text text-anchor="start" x="236.34" y="-99.01" font-family="Helvetica,sans-Serif" font-size="14.00">e</text>
+<text text-anchor="start" x="244.12" y="-99.01" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">3</text>
+</g>
+<!-- e3&#45;&gt;Y3 -->
+<g id="edge5" class="edge">
+<title>e3-&gt;Y3:n</title>
+<path fill="none" stroke="black" d="M238.63,-84.12C234.87,-71.71 230.02,-55.74 226.97,-45.68"></path>
+<polygon fill="black" stroke="black" points="230.28,-44.55 224.03,-36 223.58,-46.59 230.28,-44.55"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Model-implied correlation matrix for Y1, Y2, and Y3:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-striped table-bordered table-hover caption-top" data-quarto-postprocess="true" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Y₁</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Y₂</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Y₃</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; width: 1cm; border-left: 1px solid; border-right: 1px solid;">Y₁</td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;"></td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;"></td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 1cm; border-left: 1px solid; border-right: 1px solid;">Y₂</td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;">β₂₁</td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;"></td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; width: 1cm; border-left: 1px solid; border-right: 1px solid;">Y₃</td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;">β₃₁ + β₂₁*β₃₂</td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;">β₃₂</td>
+<td style="text-align: center; width: 1cm; border-left: 1px solid; border-right: 1px solid;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="decomposing-the-correlation-matrix-into-path-coefficients" class="slide level2 smaller">
+<h2>Decomposing the correlation matrix into path coefficients</h2>
+<div class="cell" data-fig-width="5" data-fig-height="3" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="480" height="288" viewbox="0.00 0.00 213.50 152.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 148)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-148 209.5,-148 209.5,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<polygon fill="none" stroke="black" points="79.5,-108 25.5,-108 25.5,-72 79.5,-72 79.5,-108"></polygon>
+<text text-anchor="start" x="43.94" y="-86.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="53.27" y="-86.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<polygon fill="none" stroke="black" points="79.5,-36 25.5,-36 25.5,0 79.5,0 79.5,-36"></polygon>
+<text text-anchor="start" x="43.94" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="53.27" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+</g>
+<!-- X1&#45;&gt;X2 -->
+<g id="edge3" class="edge">
+<title>X1:w-&gt;X2:w</title>
+<path fill="none" stroke="black" d="M14.57,-20.73C-7.06,-33.89 -3.75,-90 24.5,-90"></path>
+<polygon fill="black" stroke="black" points="15.79,-24.03 24.5,-18 13.93,-17.28 15.79,-24.03"></polygon>
+<text text-anchor="start" x="1.5" y="-50.8" font-family="Times,serif" font-size="14.00">r</text>
+<text text-anchor="start" x="6.16" y="-50.8" font-family="Times,serif" baseline-shift="sub" font-size="14.00">12</text>
+</g>
+<!-- Y -->
+<g id="node3" class="node">
+<title>Y</title>
+<polygon fill="none" stroke="black" points="205.5,-72 151.5,-72 151.5,-36 205.5,-36 205.5,-72"></polygon>
+<text text-anchor="middle" x="178.5" y="-49.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M79.8,-82.37C97.71,-77.16 121.67,-70.21 141.38,-64.49"></path>
+<polygon fill="black" stroke="black" points="142.61,-67.77 151.24,-61.62 140.66,-61.05 142.61,-67.77"></polygon>
+<text text-anchor="start" x="108.5" y="-78.2" font-family="Times,serif" font-size="14.00">β</text>
+<text text-anchor="start" x="115.5" y="-78.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">1</text>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M79.8,-25.63C97.71,-30.84 121.67,-37.79 141.38,-43.51"></path>
+<polygon fill="black" stroke="black" points="140.66,-46.95 151.24,-46.38 142.61,-40.23 140.66,-46.95"></polygon>
+<text text-anchor="start" x="108.5" y="-43.2" font-family="Times,serif" font-size="14.00">β</text>
+<text text-anchor="start" x="115.5" y="-43.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">2</text>
+</g>
+<!-- e -->
+<g id="node4" class="node">
+<title>e</title>
+<text text-anchor="middle" x="178.5" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">e</text>
+</g>
+<!-- e&#45;&gt;Y -->
+<g id="edge4" class="edge">
+<title>e-&gt;Y</title>
+<path fill="none" stroke="black" d="M178.5,-107.95C178.5,-99.41 178.5,-90.86 178.5,-82.31"></path>
+<polygon fill="black" stroke="black" points="182,-82.28 178.5,-72.28 175,-82.28 182,-82.28"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Tracing rules allow to work backward from the correlations to derive the path coefficients.</p>
+<div class="fragment">
+<p>Assume that</p>
+<p>r12 = .50, r1Y =.65, and r2Y = .70.</p>
+<p>r1Y = beta1 + r12 * beta2.</p>
+<p>r2Y = beta2 + r12 * beta1.</p>
+</div>
+<div class="fragment">
+<p>Plugin the known values to solve the two equations:<br>
+0.65 = beta1 + .50 * beta2<br>
+0.70 = beta2 + .50 * beta1.</p>
+</div>
+<div class="fragment">
+<p>We get beta1 = .4 and beta2 = .5 (standardized coefficients since we used the correlation matrix).</p>
+</div>
+</section>
+<section id="accounting-for-error" class="slide level2 smaller">
+<h2>Accounting for error</h2>
+<div class="cell" data-fig-width="5" data-fig-height="3" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="480" height="288" viewbox="0.00 0.00 213.50 152.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 148)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-148 209.5,-148 209.5,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<polygon fill="none" stroke="black" points="79.5,-108 25.5,-108 25.5,-72 79.5,-72 79.5,-108"></polygon>
+<text text-anchor="start" x="43.94" y="-86.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="53.27" y="-86.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">1</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<polygon fill="none" stroke="black" points="79.5,-36 25.5,-36 25.5,0 79.5,0 79.5,-36"></polygon>
+<text text-anchor="start" x="43.94" y="-14.8" font-family="Helvetica,sans-Serif" font-size="14.00">X</text>
+<text text-anchor="start" x="53.27" y="-14.8" font-family="Helvetica,sans-Serif" baseline-shift="sub" font-size="14.00">2</text>
+</g>
+<!-- X1&#45;&gt;X2 -->
+<g id="edge3" class="edge">
+<title>X1:w-&gt;X2:w</title>
+<path fill="none" stroke="black" d="M14.57,-20.73C-7.06,-33.89 -3.75,-90 24.5,-90"></path>
+<polygon fill="black" stroke="black" points="15.79,-24.03 24.5,-18 13.93,-17.28 15.79,-24.03"></polygon>
+<text text-anchor="start" x="1.5" y="-50.8" font-family="Times,serif" font-size="14.00">r</text>
+<text text-anchor="start" x="6.16" y="-50.8" font-family="Times,serif" baseline-shift="sub" font-size="14.00">12</text>
+</g>
+<!-- Y -->
+<g id="node3" class="node">
+<title>Y</title>
+<polygon fill="none" stroke="black" points="205.5,-72 151.5,-72 151.5,-36 205.5,-36 205.5,-72"></polygon>
+<text text-anchor="middle" x="178.5" y="-49.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+</g>
+<!-- X1&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X1-&gt;Y</title>
+<path fill="none" stroke="black" d="M79.8,-82.37C97.71,-77.16 121.67,-70.21 141.38,-64.49"></path>
+<polygon fill="black" stroke="black" points="142.61,-67.77 151.24,-61.62 140.66,-61.05 142.61,-67.77"></polygon>
+<text text-anchor="start" x="108.5" y="-78.2" font-family="Times,serif" font-size="14.00">β</text>
+<text text-anchor="start" x="115.5" y="-78.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">1</text>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M79.8,-25.63C97.71,-30.84 121.67,-37.79 141.38,-43.51"></path>
+<polygon fill="black" stroke="black" points="140.66,-46.95 151.24,-46.38 142.61,-40.23 140.66,-46.95"></polygon>
+<text text-anchor="start" x="108.5" y="-43.2" font-family="Times,serif" font-size="14.00">β</text>
+<text text-anchor="start" x="115.5" y="-43.2" font-family="Times,serif" baseline-shift="sub" font-size="14.00">2</text>
+</g>
+<!-- e -->
+<g id="node4" class="node">
+<title>e</title>
+<text text-anchor="middle" x="178.5" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">e</text>
+</g>
+<!-- e&#45;&gt;Y -->
+<g id="edge4" class="edge">
+<title>e-&gt;Y</title>
+<path fill="none" stroke="black" d="M178.5,-107.95C178.5,-99.41 178.5,-90.86 178.5,-82.31"></path>
+<polygon fill="black" stroke="black" points="182,-82.28 178.5,-72.28 175,-82.28 182,-82.28"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
+<li>The disturbance term, e, is the amount of unaccounted for variance in Y and is equal to <span class="math inline">\(\sqrt{1 - R^2}\)</span>.</li>
+<li>R2 can be calculated as:
+<ul>
+<li><span class="math inline">\(R^2 = beta_1^2 + beta_2^2 + r(X1, X2) * beta_1 * beta_2\)</span></li>
+<li><span class="math inline">\(R^2 = .4^2 + .5^2 + .50 * .4 * .5 = 0.61\)</span></li>
+</ul></li>
+<li>Therefore, e = <span class="math inline">\(\sqrt{1 - 0.61} = .62\)</span>.</li>
+</ul>
+</section>
+<section id="checking-that-everything-adds-up" class="slide level2 smaller">
+<h2>Checking that everything adds up</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-fig-width="4" data-fig-height="4" data-layout-align="default">
@@ -2306,19 +2626,135 @@ Sewell Wright, 1923</p>
 </li>
 </ul></li>
 </ul>
-<aside class="notes">
-
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</div>
+</section>
+<section id="using-covariances-instead-of-correlations" class="slide level2 smaller">
+<h2>Using covariances instead of correlations</h2>
+<ul>
+<li>For simplicity, previous path analysis uses correlations and standardized path coefficients.</li>
+<li>In practice, path models are estimated using covariances and unstandardized coefficients.</li>
+<li>If using covariances, the variances need to be taken into account.</li>
+</ul>
+<p>Example: <span class="math inline">\(Cov(Y1, Y3)\)</span>, is <span class="math inline">\(Var(Y_1) * beta_31 + Var(Y_1)* beta_21 * beta_32\)</span>.<br>
+where beta is used for the unstandardized regression coefficients.</p>
+</section>
+<section id="global-estimation-compare-model-implied-to-observed-covariance" class="slide level2">
+<h2>Global estimation: compare model-implied to observed covariance</h2>
+<div class="columns">
+<div class="column" style="width:35%;">
+<div class="cell" data-fig-width="4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="384" height="480" viewbox="0.00 0.00 242.00 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-94 238,-94 238,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<polygon fill="none" stroke="black" points="54,-63 0,-63 0,-27 54,-27 54,-63"></polygon>
+<text text-anchor="middle" x="27" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">X1</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<polygon fill="none" stroke="black" points="144,-90 90,-90 90,-54 144,-54 144,-90"></polygon>
+<text text-anchor="middle" x="117" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">X2</text>
+</g>
+<!-- X1&#45;&gt;X2 -->
+<g id="edge1" class="edge">
+<title>X1-&gt;X2</title>
+<path fill="none" stroke="black" d="M54.4,-53.1C62.48,-55.58 71.51,-58.35 80.1,-60.99"></path>
+<polygon fill="black" stroke="black" points="79.33,-64.41 89.92,-64 81.39,-57.72 79.33,-64.41"></polygon>
+</g>
+<!-- X3 -->
+<g id="node3" class="node">
+<title>X3</title>
+<polygon fill="none" stroke="black" points="144,-36 90,-36 90,0 144,0 144,-36"></polygon>
+<text text-anchor="middle" x="117" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X3</text>
+</g>
+<!-- X1&#45;&gt;X3 -->
+<g id="edge3" class="edge">
+<title>X1-&gt;X3</title>
+<path fill="none" stroke="black" d="M54.4,-36.9C62.48,-34.42 71.51,-31.65 80.1,-29.01"></path>
+<polygon fill="black" stroke="black" points="81.39,-32.28 89.92,-26 79.33,-25.59 81.39,-32.28"></polygon>
+</g>
+<!-- Y -->
+<g id="node4" class="node">
+<title>Y</title>
+<polygon fill="none" stroke="black" points="234,-63 180,-63 180,-27 234,-27 234,-63"></polygon>
+<text text-anchor="middle" x="207" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+</g>
+<!-- X2&#45;&gt;Y -->
+<g id="edge2" class="edge">
+<title>X2-&gt;Y</title>
+<path fill="none" stroke="black" d="M144.4,-63.9C152.48,-61.42 161.51,-58.65 170.1,-56.01"></path>
+<polygon fill="black" stroke="black" points="171.39,-59.28 179.92,-53 169.33,-52.59 171.39,-59.28"></polygon>
+</g>
+<!-- X3&#45;&gt;Y -->
+<g id="edge4" class="edge">
+<title>X3-&gt;Y</title>
+<path fill="none" stroke="black" d="M144.4,-26.1C152.48,-28.58 161.51,-31.35 170.1,-33.99"></path>
+<polygon fill="black" stroke="black" points="169.33,-37.41 179.92,-37 171.39,-30.72 169.33,-37.41"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:65%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="Intro_to_SEM_part1_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<p>Assess goodness of fit by comparing model-implied to observed covariance matrix.</p>
+</section>
+<section id="model-fit-measures" class="slide level2 smaller">
+<h2>Model fit measures</h2>
+<ul>
+<li><em><span class="math inline">\(\chi^2\)</span> statistic</em>
+<ul>
+<li>compare the model-implied to the observed variance-covariance</li>
+<li>good fit when <span class="math inline">\(\chi^2\)</span> statistic is small (P &gt; 0.05)<br>
+</li>
+<li>sample-size dependent</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><em>Comparative fit index (CFI)</em>:
+<ul>
+<li>deviation from a ‘null’ model (variances estimated but covariances set to 0).</li>
+<li>higher is better, &gt; 0.95 is considered good.</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Root-mean squared error of approximation (RMSEA)</em>
+<ul>
+<li>statistic penalizes models based on sample size</li>
+<li>&lt; 0.10 is acceptable, and anything &lt; 0.06 is good</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Standardized root-mean squared residual (SRMR)</em>
+<ul>
+<li>standardized difference between the observed and predicted correlations</li>
+<li>&lt; 0.08 is considered good</li>
+</ul></li>
+</ul>
 </div>
 </section>
 <section id="unstandardized-vs-standardized-coefficients" class="slide level2">
@@ -2755,20 +3191,20 @@ mod.fit <- sem(mod.form , data = dat1)
 <svg width="1152" height="480" viewbox="0.00 0.00 388.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 384.44,-215 384.44,4 -4,4"></polygon>
-<g id="clust3" class="cluster">
-<title>cluster_prod</title>
-<polygon fill="none" stroke="lightgrey" points="288.31,-54 288.31,-126 372.44,-126 372.44,-54 288.31,-54"></polygon>
-<text text-anchor="middle" x="330.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
+<g id="clust1" class="cluster">
+<title>cluster_bio</title>
+<polygon fill="none" stroke="lightgrey" points="154.38,-77 154.38,-203 246.31,-203 246.31,-77 154.38,-77"></polygon>
+<text text-anchor="middle" x="200.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_env</title>
 <polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon>
 <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Human impact</text>
 </g>
-<g id="clust1" class="cluster">
-<title>cluster_bio</title>
-<polygon fill="none" stroke="lightgrey" points="154.38,-77 154.38,-203 246.31,-203 246.31,-77 154.38,-77"></polygon>
-<text text-anchor="middle" x="200.34" y="-190" font-family="Helvetica,sans-Serif" font-size="10.00">Biodiversity</text>
+<g id="clust3" class="cluster">
+<title>cluster_prod</title>
+<polygon fill="none" stroke="lightgrey" points="288.31,-54 288.31,-126 372.44,-126 372.44,-54 288.31,-54"></polygon>
+<text text-anchor="middle" x="330.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
 </g>
 <!-- evenness -->
 <g id="node1" class="node">
@@ -2876,8 +3312,8 @@ mod.fit <- sem(mod.form , data = dat1)
 </ul></li>
 <li>Fit multiple linear regression models to estimate coefficients
 <ul>
-<li>direct effects of environmental predictors on above ground biomass (AGB)</li>
-<li>(in)direct effects of environmental predictors on richness and evenness</li>
+<li>direct effects of nadd, disk, rich and even on above ground biomass (AGB)</li>
+<li>direct effects of nadd and disk on richness and evenness</li>
 </ul></li>
 <li>What do you conclude?</li>
 </ul>

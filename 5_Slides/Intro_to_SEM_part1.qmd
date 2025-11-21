@@ -26,6 +26,7 @@ knitr::opts_chunk$set(echo = FALSE, fig.align='center')
 library(DiagrammeR)
 library(ggplot2)
 library(knitr)
+library(kableExtra)
 ```
 
 ## Quick introduction of participants
@@ -795,85 +796,70 @@ kable(cov2cor(V),  digits = 2)
   + Correlation matrix is standardized variance-covariance matrix
 
 
-## Global estimation: compare model-implied to observed covariance 
 
+## Path tracing rules {.smaller}
 
-::: columns
-::: {.column width="35%"}
 ```{dot}
-//| fig-width: 4
-digraph  {
+//| fig-width: 8
+//| fig-height: 4
 
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR]
+digraph {
 
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X1 
-  X2
-  X3
-  Y
+  # graph statement
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = 1.2, rankdir = LR]
 
-  # 'edge' statements
-  X1 -> X2 -> Y;
-  X1 -> X3 -> Y;  
+  # node statements
+  node [shape = box, fontname = Helvetica]
+  A
+  B
+  C
+  D
+  E
+  F
+  
+  # error/disturbance terms
+  node [shape = plaintext, fontname = Helvetica]
+  i
+  j
+  k
+
+
+  # edge statements - main causal paths
+  A -> D [label = "a"]
+  B -> D [label = "b"]
+  C -> E [label = "c"]
+  D -> E [label = "d"]
+  E -> F [label = "e"]
+  
+  # bidirectional arrows between A, B, C
+  A:w -> B:w [dir=both, label = "f"]
+  B:w -> C:w [dir=both, label = "g"]
+  A:w -> C:w [dir=both, label = "h"]
+  
+  # error terms
+  i -> D
+  j -> E
+  k -> F
+
+  # control the placement of elements on the graph
+  {rank = same; A; B; C}
+  {rank = same; D}
+  {rank = same; E}
+  {rank = same; F}
 }
 ```
-:::
-::: {.column width="65%"}
-```{r, out.width="90%", fig.align='center'}
-set.seed(5)
-x <- rnorm(500, sd=runif(500, 2, 50))
-x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
-d <- matrix(c(x,x2), 250)
-colnames(d) <-   c("X1","X2", "X3", "Y")
-pairs(d, pch = 19)
-```
-:::
-:::
 
-Assess goodness of fit by comparing model-implied to observed covariance matrix.
+Sewall Wright (1918, 1934) developed a method of estimating causal path coefficients by decomposing the correlations among a set of variables: 
 
-## Model fit measures {.smaller}
-
-+ *$\chi^2$ statistic*
-  - compare the model-implied to the observed variance-covariance
-  - good fit when $\chi^2$ statistic is small (P > 0.05)   
-  - sample-size dependent
-
-. . .
-
-+ *Comparative fit index (CFI)*: 
-  - deviation from a 'null' model (variances estimated but covariances set to 0).
-  - higher is better, \> 0.95 is considered good.
-
-. . .
-
-+ *Root-mean squared error of approximation (RMSEA)*
-  - statistic penalizes models based on sample size
-  - \< 0.10 is acceptable, and anything \< 0.06 is good
-
-. . .
-
-+ *Standardized root-mean squared residual (SRMR)*
-  - standardized difference between the observed and predicted correlations
-  - \< 0.08 is considered good
+- He articulated a set of rules for examining a path diagram that would allow for this mathematical decomposition.   
+- The correlation of any two variables in a path diagram can be expressed as the sum of coefficients that connect two variables. The connection between one variable and another variable, then, can often be made through more than one route: 
+  3) No loops are allowed. In tracing from one variable to another, you cannot pass through the same variable twice following a particular route.
+  4) No going forward and then backward. Once you have traveled along a route forward, you cannot travel backward to get to the variable at the end point. (Only use common causes to account for a correlation between two variables, not common outcomes).   
+  5) Only one curved arrow is allowed in tracing from the first variable to the last variable in any route.  
 
 
-# Calculating path coefficients
-
-<!-- https://jslefche.github.io/sem_book/global-estimation.html -->
-
-::: notes
-- Path coefficients inferential heart of structural equation modeling.
-- Wright's rules for tracing paths can be used to decompose total correlations into path coefficients.
-- Modern SEM software calculates these automatically.
-- Important to be aware of the defaults of SEM software, such as `lavaan`.
-
-:::
-
-## Unspecified relationships among exogenous variables are their bivariate correlations. {.smaller}
+## Path tracing rules {.smaller}
+Unspecified relationships among exogenous variables are their bivariate correlations.
 
 Accounts for existing correlations among exogenous variables not explained by the model.
 
@@ -909,7 +895,8 @@ digraph  {
 
 
 
-## When two variables are connected by a single path, the coefficient of that path is the regression coefficient. {.smaller}
+## Path tracing rules {.smaller}
+When two variables are connected by a single path, the coefficient of that path is the regression coefficient.     
 
 γ typically denotes coefficients for paths from exogenous to endogenous variables.    
 β typically denotes coefficients for paths between endogenous variables
@@ -941,7 +928,8 @@ digraph  {
 - These coefficients are interpreted as standardized or unstandardized regression coefficients
 :::
 
-## The strength of a compound path is the product of the individual coefficients {.smaller} 
+## Path tracing rules {.smaller} 
+The strength of a compound path is the product of the individual coefficients.   
 
 How much of X's effect on Y2 is transmitted through Y1
 
@@ -981,7 +969,8 @@ digraph  {
 :::
 
 
-## When variables are connected by more than one pathway, each pathway is the 'partial' regression coefficient {.smaller}
+## Path tracing rules {.smaller}
+When variables are connected by more than one pathway, each pathway is the 'partial' regression coefficient
 
 ::: {.incremental}
 -   The partial regression coefficient estimates the effect of a pathway holding other pathways constant.\
@@ -1015,14 +1004,8 @@ digraph {
 :::
 
 
-## Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables {.smaller}
-
-::: {.incremental}
--   $R^{2}$: ratio of explained to total variation in response (here Y1)\
--   Unexplained or residual variance = $1 - R^{2}$
--   Captures other (unknown) sources causing correlation between Y1 and other variables to deviate from 1.
--   Error variances are often represented as $\zeta$ with an arrow leading into the endogenous variable.
-:::
+## Path tracing rules {.smaller}
+Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables.    
 
 ```{dot}
 //| fig-width: 5
@@ -1056,6 +1039,14 @@ E1 [label = <&zeta;<SUB>Y1</SUB>>];
 }
 ```
 
+::: {.incremental}
+-   $R^{2}$: ratio of explained to total variation in response (here Y1)\
+-   Unexplained or residual variance = $1 - R^{2}$
+-   Captures other (unknown) sources causing correlation between Y1 and other variables to deviate from 1.
+-   Error variances are often represented as $\zeta$ with an arrow leading into the endogenous variable.
+:::
+
+
 :::notes
 - Every endogenous variable has an error term
 - The error represents all unmeasured causes of that variable
@@ -1066,13 +1057,10 @@ E1 [label = <&zeta;<SUB>Y1</SUB>>];
 :::
 
 
-## Unanalyzed (residual) correlations among two endogenous variables are their partial correlations. {.smaller}
+## Path tracing rules {.smaller}
+Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.    
 
-::: {.incremental}
--   If they were exogenous variables, the relationship would be their bivariate correlation.
--   Here we have we have to remove the effects of X on both variables.
--   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.
-:::
+
 
 ```{dot}
 //| fig-width: 6
@@ -1107,6 +1095,12 @@ digraph {
 }
 ```
 
+::: {.incremental}
+-   If they were exogenous variables, the relationship would be their bivariate correlation.
+-   Here we have we have to remove the effects of X on both variables.
+-   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.
+:::
+
 :::notes
 - Correlated errors represent shared unmeasured causes of Y1 and Y2
 - The correlation is "partial" because it's after accounting for X
@@ -1116,8 +1110,9 @@ digraph {
 :::
 
 
-## The total effect one variable has on another is the sum of its direct and indirect effects {.smaller}
+## Path tracing rules {.smaller}
 
+The total effect one variable has on another is the sum of its direct and indirect effects
 $$ total = \gamma_{X, Y1} * \beta_{Y1, Y2} + \gamma_{X, Y2}$$
 
 ```{dot}
@@ -1148,6 +1143,8 @@ digraph {
 
 ```
 
+
+
 :::notes
 - Example calculation: 
   - Direct effect = 0.30
@@ -1159,9 +1156,8 @@ digraph {
 :::
 
 
-## The total effect (including undirected paths) is equivalent to the total correlation {.smaller}
-
-Total correlation 
+## Path tracing rules {.smaller}
+The total effect (including undirected paths) is equivalent to the total correlation
 
 Observed correlation matrix:
 
@@ -1176,8 +1172,191 @@ Observed correlation matrix:
 
 :::
 
+# Path tracing in practice
 
-## Example: path tracing in a simple model {.smaller}
+## From model to implied correlation matrix {.smaller}
+
+Implied path model for Y1, Y2, and Y3:
+
+```{dot}
+//| fig-width: 6
+//| fig-height: 3
+
+digraph {
+
+  # graph statement
+  graph [overlap = false, fontsize = 10, layout = neato, ranksep=1.5]
+
+  # node statements with explicit positions
+  node [shape = box, fontname = Helvetica]
+  Y1 [label = <Y<SUB>1</SUB>>, pos = "0,0!"]
+  Y2 [label = <Y<SUB>2</SUB>>, pos = "1.5,1!"]
+  Y3 [label = <Y<SUB>3</SUB>>, pos = "3.0,0!"]
+  
+  # error terms
+  node [shape = plaintext, fontname = Helvetica]
+  e2 [label = <e<SUB>2</SUB>>, pos = "1.5,1.8!"]
+  e3 [label = <e<SUB>3</SUB>>, pos = "3,0.5!"]
+
+  # edge statements - causal paths
+  Y1 -> Y2 [label = <β<SUB>21</SUB>>]
+  Y2 -> Y3 [label = <β<SUB>32</SUB>>]
+  Y1 -> Y3 [label = <β<SUB>31</SUB>>]
+  
+  # error terms
+  e2 -> Y2:n
+  e3 -> Y3:n
+}
+```
+
+Model-implied correlation matrix for Y1, Y2, and Y3:
+
+```{r}
+# Create matrix with beta symbols
+mat <- matrix(c(" ", " ", " ",
+                "β₂₁", " ", " ",
+                "β₃₁ + β₂₁*β₃₂", "β₃₂", " "), 
+              nrow = 3, byrow = TRUE)
+
+# Add row and column names
+colnames(mat) <- c("Y₁", "Y₂", "Y₃")
+rownames(mat) <- c("Y₁", "Y₂", "Y₃")
+
+# Display with kable
+
+kable(mat, escape = FALSE, align = "c") %>%
+   kable_styling(bootstrap_options = c("striped", "bordered", "hover"),
+                full_width = FALSE) %>%
+  column_spec(1:4, width = "1cm", border_right = TRUE, border_left =T)  # Set all columns to 3cm width
+
+```
+
+## Decomposing the correlation matrix into path coefficients {.smaller}
+
+
+```{dot}
+//| fig-width: 5
+//| fig-height: 3
+
+digraph {
+
+  # graph statement
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = 0.8, rankdir = LR]
+
+  # node statements
+  node [shape = box, fontname = Helvetica]
+  X1 [label = <X<SUB>1</SUB>> pos = "0,1!"]
+  X2 [label = <X<SUB>2</SUB>> pos = "0,-1!"]
+  Y [pos = "2,0.5"]
+  
+  # error term
+  node [shape = plaintext, fontname = Helvetica]
+  e [pos = "2,2!"]
+
+  # edge statements - causal paths
+  X1 -> Y [label = <β<SUB>1</SUB>>]
+  X2 -> Y [label = <β<SUB>2</SUB>>]
+  
+  # correlation between X1 and X2
+  X1:w -> X2:w [dir=both, label = <r<SUB>12</SUB>>]
+  
+  # error term on Y
+  e -> Y
+
+  # control the placement of elements
+  {rank = same; X1; X2}
+  {rank = same; Y; e}
+}
+```
+
+Tracing rules allow to work backward from the correlations to derive the path coefficients. 
+
+.  .  . 
+
+Assume that 
+
+r12 = .50, r1Y =.65, and r2Y = .70.   
+
+r1Y = beta1 + r12 * beta2.  
+
+r2Y = beta2 + r12 * beta1.  
+
+.  . .
+
+Plugin the known values to solve the two equations:   
+ 0.65 = beta1 + .50 * beta2    
+ 0.70 = beta2 + .50 * beta1.  
+
+.  . .
+
+We get beta1 = .4 and beta2 = .5 (standardized coefficients since we used the correlation matrix).
+
+## Accounting for error {.smaller}
+
+
+```{dot}
+//| fig-width: 5
+//| fig-height: 3
+
+digraph {
+
+  # graph statement
+  graph [overlap = false, fontsize = 10, layout = dot, ranksep = 0.8, rankdir = LR]
+
+  # node statements
+  node [shape = box, fontname = Helvetica]
+  X1 [label = <X<SUB>1</SUB>> pos = "0,1!"]
+  X2 [label = <X<SUB>2</SUB>> pos = "0,-1!"]
+  Y [pos = "2,-0.5"]
+  
+  # error term
+  node [shape = plaintext, fontname = Helvetica]
+  e
+
+  # edge statements - causal paths
+  X1 -> Y [label = <β<SUB>1</SUB>>]
+  X2 -> Y [label = <β<SUB>2</SUB>>]
+  
+  # correlation between X1 and X2
+  X1:w -> X2:w [dir=both, label = <r<SUB>12</SUB>>]
+  
+  # error term on Y
+  e -> Y
+
+  # control the placement of elements
+  {rank = same; X1; X2}
+   {rank = same; Y; e}
+
+}
+```
+
+- The disturbance term, e, is the amount of unaccounted for variance in Y and is equal to $\sqrt{1 - R^2}$.
+- R2 can be calculated as: 
+  - $R^2 = beta_1^2 + beta_2^2 + r(X1, X2) * beta_1 * beta_2$
+  - $R^2 = .4^2 + .5^2 + .50 * .4 * .5 = 0.61$
+- Therefore, e = $\sqrt{1 - 0.61} = .62$.
+
+```{r eval=F}
+# Method 1: Using solve() with matrix notation
+# System: 0.65 = beta1 + 0.5*beta2
+#         0.7 = beta2 + 0.5*beta1
+# Rearranged as: Ax = b where x = [beta1, beta2]
+
+# Coefficient matrix A
+A <- matrix(c(1, 0.5,      # coefficients for equation 1
+              0.5, 1),     # coefficients for equation 2
+            nrow = 2, byrow = TRUE)
+
+# Constants vector b
+b <- c(0.65, 0.7)
+
+# Solve for betas
+betas <- solve(A, b)
+names(betas) <- c("beta1", "beta2")
+print(betas)
+```
+
+## Checking that everything adds up {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
@@ -1242,10 +1421,80 @@ Correlation matrix:
   - r(X3, Y) = .167 + (.4 * .133) + (.2 * .4) = **.3**\
 
 
-:::notes
+## Using covariances instead of correlations {.smaller}
+- For simplicity, previous path analysis uses correlations and standardized path coefficients.
+- In practice, path models are estimated using covariances and unstandardized coefficients.
+- If using covariances, the variances need to be taken into account.
 
+
+Example:
+$Cov(Y1, Y3)$, is $Var(Y_1) * beta_31 + Var(Y_1)* beta_21 * beta_32$.   
+where beta is used for the unstandardized regression coefficients.
+
+## Global estimation: compare model-implied to observed covariance 
+
+
+::: columns
+::: {.column width="35%"}
+```{dot}
+//| fig-width: 4
+digraph  {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR]
+
+  # 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  X1 
+  X2
+  X3
+  Y
+
+  # 'edge' statements
+  X1 -> X2 -> Y;
+  X1 -> X3 -> Y;  
+}
+```
+:::
+::: {.column width="65%"}
+```{r, out.width="90%", fig.align='center'}
+set.seed(5)
+x <- rnorm(500, sd=runif(500, 2, 50))
+x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
+d <- matrix(c(x,x2), 250)
+colnames(d) <-   c("X1","X2", "X3", "Y")
+pairs(d, pch = 19)
+```
+:::
 :::
 
+Assess goodness of fit by comparing model-implied to observed covariance matrix.
+
+## Model fit measures {.smaller}
+
++ *$\chi^2$ statistic*
+  - compare the model-implied to the observed variance-covariance
+  - good fit when $\chi^2$ statistic is small (P > 0.05)   
+  - sample-size dependent
+
+. . .
+
++ *Comparative fit index (CFI)*: 
+  - deviation from a 'null' model (variances estimated but covariances set to 0).
+  - higher is better, \> 0.95 is considered good.
+
+. . .
+
++ *Root-mean squared error of approximation (RMSEA)*
+  - statistic penalizes models based on sample size
+  - \< 0.10 is acceptable, and anything \< 0.06 is good
+
+. . .
+
++ *Standardized root-mean squared residual (SRMR)*
+  - standardized difference between the observed and predicted correlations
+  - \< 0.08 is considered good
 
 
 ## Unstandardized vs standardized coefficients
