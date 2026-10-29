@@ -4,7 +4,7 @@ subtitle: "Day 1: Path modelling"
 author: "Frank Pennekamp"
 institute:
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
-date: "11/5/2025"
+date: "11/4/2026"
 date-format: long
 format:
   revealjs: 
@@ -27,6 +27,7 @@ library(DiagrammeR)
 library(ggplot2)
 library(knitr)
 library(kableExtra)
+
 ```
 
 ## Quick introduction of participants
@@ -39,31 +40,30 @@ library(kableExtra)
 
 ## Acknowledgements {.smaller}
 
-
 \centering
 
 ![](images/Swiss_SEM_team.png){width="100%"}
 
--  Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course design)
--  Dr. Rachel Korn (course development: exercises and solutions)
--  Dr. Frank Pennekamp (course development: exercises, solutions and slides, instructor)
+-   Dr. Noémie Pichon, Dr. Fletcher Halliday, Dr. Eliane Meier, Dr. Hugo Saiz, Dr. Debra Zuppinger-Dingley, Rebecca Oester, Annabelle Constance, Fabienne Wiederkehr (course design)
+-   Dr. Rachel Korn (course development: exercises and solutions)
+-   Dr. Frank Pennekamp (course development: exercises, solutions and slides, instructor)
 
 ## Schedule & content {.smaller}
 
 -   *Day 1*:
-    -  General introduction to path modelling for ecological systems (lecture)
-    -  Fitting path models to data (live demo)
-    -  Case study: fitting path models to data (exercises)
-    -  Work on your research question /  meta-model (self-study)
--   *Day 2*: 
-    -  Constructs: latent and composite variables (lecture)
-    -  Fitting SE models to data (live demo & case study exercises)
-    -  Work on your research question /  SE model (self-study)
-    -  Progress update
+    -   General introduction to path modelling for ecological systems (lecture)
+    -   Fitting path models to data (live demo)
+    -   Case study: fitting path models to data (exercises)
+    -   Work on your research question / meta-model (self-study)
+-   *Day 2*:
+    -   Constructs: latent and composite variables (lecture)
+    -   Fitting SE models to data (live demo & case study exercises)
+    -   Work on your research question / SE model (self-study)
+    -   Progress update
 -   *Day 3*:
-    -  Model visualization (lecture)
-    -  Work on your research question /  SE model (self-study)
-    -  Presentation of your SE model and discussion with instructor and peers
+    -   Model visualization (lecture)
+    -   Work on your research question / SE model (self-study)
+    -   Presentation of your SE model and discussion with instructor and peers
 
 ## Overview {.smaller}
 
@@ -73,31 +73,33 @@ library(kableExtra)
     -   A single ecological dataset for demonstration (Seabloom et al. 2020)
     -   Develop your own SE model
 
-.  .  .  
+. . .
 
 -   What will *not* be covered
-    - Local estimation of SE models (with R package piecewiseSEM)
-    - Advanced topics:
-      + integrate random effects
-      + disentangle feedback loops
-      + dealing with spatial and temporal autocorrelation
+    -   Local estimation of SE models (with R package piecewiseSEM)
+    -   Advanced topics:
+        -   integrate random effects
+        -   disentangle feedback loops
+        -   dealing with spatial and temporal autocorrelation
 
 ## Learning objectives
 
 You can:
 
 ::: incremental
-  - translate your research question into a meta-model.
-  - fit a SE model with the R package `lavaan`.
-  - assess the quality of a fitted SE model
-  - interpret your SE model and those reported by others.
-   - present SE models graphically.
+-   translate your research question into a meta-model.
+-   fit a path or structural equation model with the R package `lavaan`.
+-   assess the quality of a fitted path or SE model.
+-   interpret your path or SE model and those reported by others.
+-   present path and SE models graphically.
 :::
 
+```{=html}
 <!-- ## Course materials
 
 [Slide decks and R code available on github](https://github.com/pennekampster/Swiss_SEM/)
   -->
+```
 
 # Getting started with Structural Equation Modeling
 
@@ -113,94 +115,84 @@ You can:
 
 <!-- Concepts for technical part that could be introduced also here: global vs local, information criteria for arrow selection (for me better on technical part). -->
 
-::: {.incremental}
-::: columns
+:::::: incremental
+::::: columns
 ::: {.column width="50%"}
--   Ecological systems characterized by complex network of interactions between organisms and the environment.
--   Research questions are often about cause-effect relationships.
--   Test these hypotheses using data and statistics.
+-   Ecological systems characterized by complex causal networks that link environmental gradients, species interactions, and feedback processes across scales
+-   Understanding these networks requires analyses that go beyond correlations and can disentangle direct and indirect effects.
+-   Testing hypotheses about specific cause-effect relationships in these networks.
 :::
 
 ::: {.column width="50%"}
 ![](images/ecosystem.jpg)
 :::
-:::
-:::
+:::::
+::::::
 
 ::: notes
-
 :::
-
 
 ## Why is understanding causes important? {.smaller}
 
-::: {.incremental}
-::: columns
+:::::: incremental
+::::: columns
 ::: {.column width="50%"}
-- Causes = mechanisms
-  + Allows us to predict the behaviour of a system
-  + Justify interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
-- What is the problem?
-  + Confounding of cause with non-cause (e.g., avoid interventions with no or detrimental effects)
+-   Causes = mechanisms
+    -   Allows us to predict the behaviour of a system
+    -   Justify interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
+-   What is the problem?
+    -   Confounding of cause with non-cause (e.g., avoid interventions with no or detrimental effects)
 :::
 
 ::: {.column width="40%"}
 ![](images/quagga.jpeg)
 :::
-:::
-:::
-
+:::::
+::::::
 
 ## Causality
 
 > "Correlation does not imply causation"
 
-::: {.incremental}
-::: columns
+:::::: incremental
+::::: columns
 ::: {.column width="50%"}
-- Causation: causing variation in X leading to variation in Y (=X causes Y), everything else being equal.
-- Experiments are gold standard to infer causes.
-- However, conducting experiments can be unethical or unfeasible.
-- Can we learn about causality from observational data?
+-   Causation: causing variation in X leading to variation in Y (=X causes Y), everything else being equal.
+-   Experiments are gold standard to infer causes.
+-   However, conducting experiments can be unethical or unfeasible.
+-   Can we learn about causality from observational data?
 :::
 
 ::: {.column width="40%"}
 ![](images/correlation.jpg)
 :::
-:::
-:::
+:::::
+::::::
 
 ::: notes
--   Example shown: is this correlation or causation? 
+-   Example shown: is this correlation or causation?
 :::
 
+## "Correlation can indicate causation"
 
+> A simple correlation implies an unresolved causal structure, since we cannot know which is the cause, which is the effect, or even if both are common effects of some third, unmeasured variable.\
+> Bill Shipley (Cause and correlation in biology, 2004)
 
-## "Correlation can indicate causation" 
-
-
-> A simple correlation implies an unresolved causal structure, since we cannot know which is the cause, which is the effect, or even if both are common effects of some third, unmeasured variable.    
-Bill Shipley (Cause and correlation in biology, 2004)
-
-::: {.incremental}
-::: columns
+:::::: incremental
+::::: columns
 ::: {.column width="100%"}
-- Inferring causes from observations is possible, but requires to rule out confounding.
-- What is confounding?
-
-
-
+-   Inferring causes from observations is possible, but requires to rule out confounding.
+-   What is confounding?
 :::
 
 ::: {.column width="0%"}
 :::
-:::
-:::
+:::::
+::::::
 
 ## Confounding
 
 > Confounding occurs when an outside variable influences both the independent variable (X) and the dependent variable (Y), creating a false impression of a causal relationship between them. This can lead to incorrect conclusions about the nature of the relationship.
-
 
 ```{dot}
 digraph confounding_classic {
@@ -220,8 +212,6 @@ digraph confounding_classic {
 }
 
 ```
-
-
 
 ## Confounding example
 
@@ -303,30 +293,22 @@ digraph confounding_icecream {
 }
 ```
 
+## Causal diagrams (directed acyclic graphs) {.smaller}
 
+A causal diagram specifies putative cause-effect relationships — the data-generating mechanisms that lead to a set of observational expectations.
 
-## Causal diagram
-
-::: {.incremental}
--   Graph specifying putative cause-effect relationships.
--   Which data-generating mechanisms lead to a set of observational expectations.
--   Formalized as Directed Acyclic Graphs (DAGs).
+:::::: columns
+:::: {.column width="50%"}
+::: incremental
+-   Directed = unidirectional.
+-   Acyclic = no cycles (=causal loops) permitted.
+-   Variables are nodes (boxes).
+-   Edges (one-headed arrows) are causal relationships such as X affects Y.\
+-   Edges can have any functional shape.
+-   Omitted links and nodes have empirical implications (= assumptions about the causal diagram)
+-   U variables represent unmeasured causes.
 :::
-
-## Directed acyclic graphs {.smaller}
-
-::: columns
-::: {.column width="50%"}
-::: {.incremental}
-- Directed = unidirectional. 
-- Acyclic = no cycles (=causal loops) permitted.
-- Variables are nodes (boxes). 
-- Edges (one-headed arrows) are causal relationships such as X affects Y.  
-- Edges can have any functional shape. 
-- Omitted links and nodes have empirical implications (= assumptions about the causal diagram)
-- U variables represent unmeasured causes.
-:::
-:::
+::::
 
 ::: {.column width="50%"}
 ```{dot}
@@ -369,65 +351,67 @@ digraph {
   }
 ```
 :::
-:::
+::::::
 
-## How can we determine causality? 
+## How do we establish causality?
 
-::: {.incremental}
-::: columns
+:::::: incremental
+::::: columns
 ::: {.column width="100%"}
-- Build knowledge from past observation
-- Design and conduct an experiment or observational study
-- Test hypotheses
-- Develop theory 
+-   Build knowledge from past observation
+-   Design and conduct an experiment or observational study
+-   Test hypotheses
+-   Develop theory
 :::
 
 ::: {.column width="0%"}
 :::
-:::
-:::
+:::::
+::::::
 
-.  .  . 
+. . .
 
+> The combination of knowledge of correlations with knowledge of causal relations, to obtain certain results, is a different thing from the deduction of causal relations from correlations.”\
+> Sewell Wright, 1923
 
-> The combination of knowledge of correlations with knowledge of causal relations, to obtain certain results, is a different thing from the deduction of causal relations from correlations.”    
-Sewell Wright, 1923
+## The SEM workflow
 
+Evaluates whether the observed data are consistent with a hypothesised causal network, rather than proving causation.
 
+-   Build a hypothesized causal diagram ![](images/A_priori_SEM.jpg){width="50%"}
 
-## How can we evaluate causality? 
-- Build a hypothesized causal diagram
-![](images/A_priori_SEM.jpg){width="50%"}
+## The SEM workflow
 
-## How can we evaluate causality? 
-- Build a hypothesized causal diagram
-- Collect data
+Evaluates whether the observed data are consistent with a hypothesised causal network, rather than proving causation.
 
-## How can we evaluate causality? 
-- Build a hypothesized causal diagram
-- Collect data
-- Build SEM and test against causal diagram
-![](images/Final_SEM.jpg){width="50%"}
+-   Build a hypothesized causal diagram
+-   Collect data
 
-## How can we evaluate causality? 
-- Build a hypothesized causal diagram
-- Collect data
-- Build SEM and test against causal diagram
-![](images/Final_SEM.jpg){width="50%"}
-- Repeat!
+## The SEM workflow
 
+Evaluates whether the observed data are consistent with a hypothesised causal network, rather than proving causation.
 
-:::notes
+-   Build a hypothesized causal diagram
+-   Collect data
+-   Build SEM and test against causal diagram ![](images/Final_SEM.jpg){width="50%"}
+
+## The SEM workflow
+
+Evaluates whether the observed data are consistent with a hypothesised causal network, rather than proving causation.
+
+-   Build a hypothesized causal diagram
+-   Collect data
+-   Build SEM and test against causal diagram ![](images/Final_SEM.jpg){width="50%"}
+-   Repeat!
+
+::: notes
 https://www.nature.com/articles/ncomms10541
 :::
-
-
-
-
 
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
 
 Meta-model:
+
 ```{dot}
 //| fig-width: 10
 digraph G {
@@ -445,19 +429,15 @@ digraph G {
 }
 ```
 
-:::notes
-This is an example of a meta-model of an ecological system that we might want to understand using SEM.
-The question could be: how do human impacts affect ecosystem functioning, and what role does biodiversity play in mediating this effect?
-Please note that the three drivers are general categories, and each can encompass multiple specific variables.
-How would we analyse the effect of the environment and human impact on functioning?
+::: notes
+This is an example of a meta-model of an ecological system that we might want to understand using SEM. The question could be: how do human impacts affect ecosystem functioning, and what role does biodiversity play in mediating this effect? Please note that the three drivers are general categories, and each can encompass multiple specific variables. How would we analyse the effect of the environment and human impact on functioning?
 :::
-
 
 ## Multiple regression {.smaller}
 
-```r
+``` r
 model <- '
-biomass ~ richness + nutrients + precipitation'
+biomass ~ richness + nutrients + disturbance'
 sem(model, data = data)
 ```
 
@@ -475,7 +455,7 @@ digraph  {
         fontname = Helvetica]
         
   X1 [pos = "0,-1!", label = nutrients]
-  X2 [pos = "0,-2!",label = precipitation]
+  X2 [pos = "0,-2!",label = disturbance]
   X3 [pos = "0,-3!",label = richness]
   Y  [pos = "2,-2!",label = biomass]
 
@@ -492,15 +472,11 @@ digraph  {
 
 ```
 
-
-
-::: {.incremental}
--   Effect of one or more independent variables (X) on a dependent variable (Y).
--   Only direct effects on Y considered.
--   Regression coefficient quantifies the direction and strength of relationship.\
--   How much change in Y for one unit change in X.
--   Partial effects (i.e. effect of precipitation on biomass when nutrient addition and richness are fixed) when > 1 independent variables.
--   Strong correlations between predictors may become problematic. 
+::: incremental
+-   *Direct* effects of one or more independent variables (X) on a dependent variable (Y).
+-   Regression coefficient quantifies the direction and strength of relationship (i.e., how much change in Y for one unit change in X).
+-   Partial regression coefficients when more than one independent variable.
+-   Strong correlations among predictors may be problematic for interpretation.
 :::
 
 <!-- - Discuss with students other variables that may affect B.   -->
@@ -515,10 +491,10 @@ digraph  {
 
 <!-- - Be clear this is a multiple regression model.  -->
 
-
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
 
 Meta-model:
+
 ```{dot}
 //| fig-width: 10
 digraph G {
@@ -541,10 +517,10 @@ digraph G {
 
 ## Path model {.smaller}
 
-```r
+``` r
 model <- '
-richness ~ nutrients + precipitation
-biomass ~ richness + nutrients + precipitation'
+richness ~ nutrients + disturbance
+biomass ~ richness + nutrients + disturbance'
 sem(model, data = data)
 ```
 
@@ -562,48 +538,43 @@ digraph  {
   node [shape = box,
         fontname = Helvetica]
         
-  nutrients; richness; biomass; precipitation;
+  nutrients; richness; biomass; disturbance;
 
   # several 'edge' statements
     nutrients->richness ;
-    precipitation->richness ;
-    precipitation->biomass ;
+    disturbance->richness ;
+    disturbance->biomass ;
     richness->biomass ;
     nutrients->biomass [minlen=3];
     
-    {rank=min; nutrients; precipitation;}
+    {rank=min; nutrients; disturbance;}
     {rank=max; biomass;}
     {rank=same; richness;}
 }
 ```
 
-::: {.incremental}
-- Estimates multiple (regression) equations at once.
-- Allow understanding of potentially causal relationships between variables in a system.
-- Allows testing both direct and indirect effects.
-- Exogenous variables (independent variables): 
-  - only have out-going paths.   
-- Endogenous variables (response variables):
-  - have in-going paths
-  - can have out-going paths.  
+::: incremental
+-   Simultaneously estimates multiple (regression) equations.
+-   Allows testing both direct and indirect effects.
+-   Exogenous variables (independent variables):
+    -   only have out-going paths.\
+-   Endogenous variables (response variables):
+    -   have in-going paths
+    -   can have out-going paths.\
 :::
-
-
-
-
 
 ## Mediation {.smaller}
 
-::: {.incremental}
+::: incremental
 -   Tests whether a particular variable has a mediating effect on a path.\
 -   Often used to test underlying mechanisms.
 -   In our example, we could ask whether the effect of nutrients on biomass is mediated through biodiversity.
 -   Possibilities: complete mediation, partial mediation, no mediation.
 :::
 
-.  .  .  
+. . .
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 ```{dot}
 //| fig-width: 5
@@ -667,36 +638,34 @@ digraph  {
     {rank=same; richness;}
 }
 ```
-
 :::
-:::
+:::::
 
-
-
-
+```{=html}
 <!-- your comment x
 ## Regression anatomy
 ![](Anatomy_linear_model.jpeg){.absolute width="800"}
 -->
+```
 
 ## Motivations to use path models:
 
-::: {.incremental}
-1) Driver-focused: Understand how drivers influence a system 
-2) Response-focused: Understand and explain a particular response of a system  
-3) Mediation-focused: Understand underlying causal pathways  
-4) Theory-focused: compare observations of a system to available theory 
-::: 
+::: incremental
+1)  Driver-focused: Understand how drivers influence a system
+2)  Response-focused: Understand and explain a particular response of a system\
+3)  Mediation-focused: Understand underlying causal pathways\
+4)  Theory-focused: compare observations of a system to available theory
+:::
 
 ## SE modelling philosophy
 
-::: {.incremental}
-- A SE model should be specified based on prior evidence / theory (i.e., a meta-model).
-- Causal diagram to specify relationships of actual variables.
-- Each path requires justification.
+::: incremental
+-   A SE model should be specified based on prior evidence / theory (i.e., a meta-model).
+-   Each path requires explicit justification.
+-   DAG to specify relationships of actual variables and compare with observed data.
 :::
 
-
+```{=html}
 <!-- ## Explanatory modelling with SEM
 
 ![](images/Explanatory_modelling.png){width="60%"}
@@ -704,6 +673,7 @@ digraph  {
 ::: aside
 [Grace, James B., and Kathryn M. Irvine. 2020. “Scientist’s Guide to Developing Explanatory Statistical Models Using Causal Analysis Principles.” Ecology 101 (4): e02962.]{style="font-size: 5mm; text-align: center"}
 ::: -->
+```
 
 # Questions?
 
@@ -714,20 +684,18 @@ digraph  {
 -   Draw a causal diagram of the dataset you want to understand (define nodes and edges).
 -   Make a table with putative causal relationships.
 
+# Path and SE model fitting
 
+## How to estimate path and SE models?
 
-# SE model fitting
-
-## How to estimate SE models? 
-
-::: {.incremental}
-- Structural equation modelling is a framework rather than a statistical technique.   
-- Global estimation: based on variance-covariance matrix.  
-- Lavaan uses Maximum likelihood estimation (ML).   
-- Lavaan makes several assumptions:
-  + (Multivariate) normality of endogenous (but not exogenous!) variables required
-  + Only acyclic relationships (no loops)
-  + Linear relationships
+::: incremental
+-   Path and structural equation modelling is a framework rather than a statistical technique.\
+-   Global estimation: based on variance-covariance matrix.\
+-   Lavaan uses Maximum likelihood estimation (ML).\
+-   Lavaan makes several assumptions:
+    -   (Multivariate) normality of endogenous (but not exogenous!) variables required
+    -   Only acyclic relationships (no loops)
+    -   Linear relationships among variables
 :::
 
 # Global estimation in a nutshell
@@ -751,10 +719,9 @@ panel_regression_line = function(x,y, ...){
 pairs(d, pch = 19, lower.panel=panel_regression_line, upper.panel = panel_regression_line)
 ```
 
-Scatter plots of observed variables and fitted lines.   
+Scatter plots of observed variables and fitted lines.
 
-
-## Variance-covariance matrix estimated from data {.smaller}
+## Estimated variance-covariance matrix {.smaller}
 
 ```{r}
 set.seed(5)
@@ -763,7 +730,7 @@ x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
 d <- matrix(c(round(x, 2),round(x2, 2)), 250)
 V <- cov(d)
 colnames(V)  <- c("X1","X2", "X3", "Y")
-rownames(V)  <- c("X","X2", "X3", "Y")
+rownames(V)  <- c("X1","X2", "X3", "Y")
 kable(V, digits = 2)
 ```
 
@@ -788,653 +755,631 @@ x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
 d <- matrix(c(x,x2), 250)
 V <- cov(d)
 colnames(V)  <- c("X1","X2", "X3", "Y")
-rownames(V)  <- c("X","X2", "X3", "Y")
+rownames(V)  <- c("X1","X2", "X3", "Y")
 kable(cov2cor(V),  digits = 2)
 ```
 
-- Correlation: $COR_{x,y}=\frac{COV_{x,y}}{\sigma_x*\sigma_y}$
-  + Correlation matrix is standardized variance-covariance matrix
+-   Correlation: $COR_{x,y}=\frac{COV_{x,y}}{\sigma_x*\sigma_y}$
+    -   Correlation matrix is standardized variance-covariance matrix
 
+# Path tracing rules - deriving coefficients from correlations
 
+```{r worked-setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center')
+library(knitr)
+library(kableExtra)
 
-## Path tracing rules {.smaller}
+# Standardized path coefficients used throughout
+r <- 0.30   # X1 <-> X2 (exogenous correlation)
+a <- 0.60   # X1 -> Y1
+b <- 0.40   # X2 -> Y1
+c <- 0.50   # Y1 -> Y2
+d <- 0.30   # X1 -> Y2 (direct)
+
+# Implied correlation matrix as a table, optionally highlighting cells (worked example)
+mat_tab <- function(hl = list()) {
+  Mc <- formatC(M, format = "f", digits = 3)
+  dimnames(Mc) <- dimnames(M)
+  for (cell in hl) {
+    Mc[cell[1], cell[2]] <- cell_spec(Mc[cell[1], cell[2]], format = "html", background = "#ffe3e3", bold = TRUE)
+    if (cell[1] != cell[2])
+      Mc[cell[2], cell[1]] <- cell_spec(Mc[cell[2], cell[1]], format = "html", background = "#ffe3e3", bold = TRUE)
+  }
+  kable(Mc, format = "html", escape = FALSE, align = "c") |>
+    kable_styling(full_width = FALSE, bootstrap_options = "bordered", font_size = 20)
+}
+```
+
+## The idea behind path tracing
+
+> Sewall Wright (1918, 1934): the correlation between any two variables can be **decomposed** into the paths that connect them in a causal diagram.
+
+::: incremental
+-   Each path in the diagram carries a coefficient.
+-   A correlation is rebuilt by **summing** over the routes that connect two variables, **multiplying** the coefficients **along** each route.
+-   Fitting a structural equation (SE) model reverses this logic: finding the coefficients whose implied correlations match the observed ones.
+:::
+
+## The model we will use {.smaller}
 
 ```{dot}
-//| fig-width: 8
-//| fig-height: 4
-
+//| fig-width: 7
+//| fig-height: 4.5
 digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.1, nodesep = 0.7]
 
-  # graph statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = 1.2, rankdir = LR]
-
-  # node statements
   node [shape = box, fontname = Helvetica]
-  A
-  B
-  C
-  D
-  E
-  F
-  
-  # error/disturbance terms
-  node [shape = plaintext, fontname = Helvetica]
-  i
-  j
-  k
-
-
-  # edge statements - main causal paths
-  A -> D [label = "a"]
-  B -> D [label = "b"]
-  C -> E [label = "c"]
-  D -> E [label = "d"]
-  E -> F [label = "e"]
-  
-  # bidirectional arrows between A, B, C
-  A:w -> B:w [dir=both, label = "f"]
-  B:w -> C:w [dir=both, label = "g"]
-  A:w -> C:w [dir=both, label = "h"]
-  
-  # error terms
-  i -> D
-  j -> E
-  k -> F
-
-  # control the placement of elements on the graph
-  {rank = same; A; B; C}
-  {rank = same; D}
-  {rank = same; E}
-  {rank = same; F}
-}
-```
-
-Sewall Wright (1918, 1934) developed a method of estimating causal path coefficients by decomposing the correlations among a set of variables: 
-
-- He articulated a set of rules for examining a path diagram that would allow for this mathematical decomposition.   
-- The correlation of any two variables in a path diagram can be expressed as the sum of coefficients that connect two variables. The connection between one variable and another variable, then, can often be made through more than one route: 
-  3) No loops are allowed. In tracing from one variable to another, you cannot pass through the same variable twice following a particular route.
-  4) No going forward and then backward. Once you have traveled along a route forward, you cannot travel backward to get to the variable at the end point. (Only use common causes to account for a correlation between two variables, not common outcomes).   
-  5) Only one curved arrow is allowed in tracing from the first variable to the last variable in any route.  
-
-
-## Path tracing rules {.smaller}
-Unspecified relationships among exogenous variables are their bivariate correlations.
-
-Accounts for existing correlations among exogenous variables not explained by the model.
-
-```{dot}
-//| fig-width: 6
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR]
-
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X 
-  Y1 
-  Y2
-
-  # 'edge' statements
-  X -> Y2
-  Y1 -> Y2
-  X:w -> Y1:w [dir=both]
-  
-  {rank=same X; Y1}
-
-}
-```
-
-:::notes
-- Define exogenous variables as variables that are not caused by other variables in the model
-- Explain that bivariate correlation is simply the Pearson correlation coefficient between the two variables
-- Emphasize that this correlation is assumed to exist but not explained by the model
-:::
-
-
-
-## Path tracing rules {.smaller}
-When two variables are connected by a single path, the coefficient of that path is the regression coefficient.     
-
-γ typically denotes coefficients for paths from exogenous to endogenous variables.    
-β typically denotes coefficients for paths between endogenous variables
-
-```{dot}
-//| fig-width: 6
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR]
-
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X 
-  Y1 
-  Y2
-  
-  # 'edge' statements
-  X -> Y1 [label = <&gamma;<SUB>X,Y1</SUB>>]
-  Y1 -> Y2 [label = <&beta;<SUB>Y1,Y2</SUB>>]
-}
-```
-
-:::notes
-- A single directional path represents a simple regression relationship
-- γ (gamma) typically denotes coefficients for paths from exogenous to endogenous variables
-- β (beta) typically denotes coefficients for paths between endogenous variables
-- These coefficients are interpreted as standardized or unstandardized regression coefficients
-:::
-
-## Path tracing rules {.smaller} 
-The strength of a compound path is the product of the individual coefficients.   
-
-How much of X's effect on Y2 is transmitted through Y1
-
-```{dot}
-//| fig-width: 6
-digraph  {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 15, layout = dot, rankdir = TB, splines=ortho]
-
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X 
-  Y1 
-  Y2
-
-  # 'edge' statements
-  X -> Y2 [style = dashed label = <&gamma;<SUB>X,Y1</SUB> * &beta;<SUB>Y1,Y2</SUB>>, color=white]
-  X  -> Y1
-  Y1 -> Y2
-
-  
-
-{rank=same X; Y1, Y2}
-
-
-}
-
-```
-
-:::notes
-- Use an example: if γ = 0.5 and β = 0.4, then indirect effect = 0.5 × 0.4 = 0.20
-- Explain that this represents how much of X's effect on Y2 is transmitted through Y1
-- This is fundamental to mediation analysis
-- The dashed line is conceptual - it's not estimated separately but calculated from the product
-:::
-
-
-## Path tracing rules {.smaller}
-When variables are connected by more than one pathway, each pathway is the 'partial' regression coefficient
-
-::: {.incremental}
--   The partial regression coefficient estimates the effect of a pathway holding other pathways constant.\
-::: 
-
-```{dot}
-//| fig-width: 5
-digraph {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 5, layout = dot, rankdir = LR];
-
-  # 'node' statements
-  node [shape = box, fontname = Helvetica];
-  
-  X; 
-  Y1; 
-  Y2;
-  
-  # 'edge' statements
-  X -> Y2 [label = <&beta;<SUB>X,Y2</SUB>> minlen=3 ];
-  Y1 -> Y2 [label = <&beta;<SUB>Y1,Y2</SUB>> minlen=3 ];
-
-}
-```
-
-:::notes
-- Each β is a partial coefficient - it shows the effect of one predictor while holding the other constant
-- This is different from bivariate regression where other variables are not controlled
-- This is why partial coefficients are often smaller than bivariate correlations
-:::
-
-
-## Path tracing rules {.smaller}
-Errors on endogenous variables relate the unexplained correlations or variances arising from unmeasured variables.    
-
-```{dot}
-//| fig-width: 5
-digraph {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR];
-
-  # 'node' statements
-  node [shape = box, fontname = Helvetica];
-  
-  X; 
-  Y1; 
-  Y2;
-
-  E3 [label = < &zeta;<SUB>Y1</SUB> = 1 - R<SUP>2</SUP>>];
-
-    node [shape = plain,
-        fontname = Helvetica];
-  E1;
-
-  # 'edge' statements
-  X -> Y1;
-  X -> Y2;
-  E1 -> Y1; 
-
-E1 [label = <&zeta;<SUB>Y1</SUB>>]; 
-
-  {rank=min; X; };
-{rank=max; E1; };
-}
-```
-
-::: {.incremental}
--   $R^{2}$: ratio of explained to total variation in response (here Y1)\
--   Unexplained or residual variance = $1 - R^{2}$
--   Captures other (unknown) sources causing correlation between Y1 and other variables to deviate from 1.
--   Error variances are often represented as $\zeta$ with an arrow leading into the endogenous variable.
-:::
-
-
-:::notes
-- Every endogenous variable has an error term
-- The error represents all unmeasured causes of that variable
-- If R² = 0.60, then ζ = 1 - 0.60 = 0.40
-- This means 60% of variance is explained, 40% is unexplained
-- Error terms are crucial for model identification and estimation
-- In lavaan and other SEM software, these are typically estimated automatically
-:::
-
-
-## Path tracing rules {.smaller}
-Unanalyzed (residual) correlations among two endogenous variables are their partial correlations.    
-
-
-
-```{dot}
-//| fig-width: 6
-digraph {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 15, layout = dot, rankdir = LR];
-
-  # 'node' statements
-  node [shape = box, fontname = Helvetica];
-  
-  X; 
-  Y1; 
-  Y2;
-  
-  node [shape = plain,
-        fontname = Helvetica];
-        
-  E1 [label = <&zeta;<SUB>Y1</SUB>>]; 
-  E2 [label = <&zeta;<SUB>Y2</SUB>>]; 
-
-  # 'edge' statements
-  X -> Y1;
-  X -> Y2;
-  E1 -> Y1; 
-  E2 -> Y2;
-  E1:e -> E2:e [dir=both];
-
-  {rank=min; X; };
-  {rank=max; E1, E2};
-
-}
-```
-
-::: {.incremental}
--   If they were exogenous variables, the relationship would be their bivariate correlation.
--   Here we have we have to remove the effects of X on both variables.
--   These are known as correlated errors and represented by double-headed arrows between the errors of two endogenous variables.
-:::
-
-:::notes
-- Correlated errors represent shared unmeasured causes of Y1 and Y2
-- The correlation is "partial" because it's after accounting for X
-- This is conceptually similar to partial correlation in statistics
-- Should only be included when theoretically justified
-- Overuse of correlated errors can indicate model misspecification
-:::
-
-
-## Path tracing rules {.smaller}
-
-The total effect one variable has on another is the sum of its direct and indirect effects
-$$ total = \gamma_{X, Y1} * \beta_{Y1, Y2} + \gamma_{X, Y2}$$
-
-```{dot}
-//| fig-width: 6
-digraph {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 15, layout = dot, rankdir = TB, splines=ortho, ranksep = .5]
-
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  X 
-  Y1 
-  Y2
-
-  # 'edge' statements
-
-  
-  X -> Y1 [label = <&gamma;<SUB>X,Y1</SUB>> minlen=3];
-  Y1 -> Y2 [xlabel = <&beta;<SUB>Y1,Y2</SUB>> minlen=3];  
-  X -> Y2 [xlabel = <&gamma;<SUB>X,Y2</SUB>>];
-
-  {rank=same X; Y1, Y2};
-
-
-}
-
-```
-
-
-
-:::notes
-- Example calculation: 
-  - Direct effect = 0.30
-  - Indirect effect = 0.50 × 0.40 = 0.20
-  - Total effect = 0.30 + 0.20 = 0.50
-- This decomposition is useful for understanding mediation
-- In complete mediation, direct effect = 0
-- In partial mediation, both direct and indirect effects are significant
-:::
-
-
-## Path tracing rules {.smaller}
-The total effect (including undirected paths) is equivalent to the total correlation
-
-Observed correlation matrix:
-
-|  | X1 | X2 | X3 | Y |
-|:---|:---|:---|:---|:---|
-| X1  | 1  | .5   |  .4  | .4  |
-| X2  | .5  |  1  | .2   | .5  |
-| X3  | .4  |  .2  | 1   | .3  |
-| Y   | .4  |  .5  | .3   | 1  |
-
-:::notes
-
-:::
-
-# Path tracing in practice
-
-## From model to implied correlation matrix {.smaller}
-
-Implied path model for Y1, Y2, and Y3:
-
-```{dot}
-//| fig-width: 6
-//| fig-height: 3
-
-digraph {
-
-  # graph statement
-  graph [overlap = false, fontsize = 10, layout = neato, ranksep=1.5]
-
-  # node statements with explicit positions
-  node [shape = box, fontname = Helvetica]
-  Y1 [label = <Y<SUB>1</SUB>>, pos = "0,0!"]
-  Y2 [label = <Y<SUB>2</SUB>>, pos = "1.5,1!"]
-  Y3 [label = <Y<SUB>3</SUB>>, pos = "3.0,0!"]
-  
-  # error terms
-  node [shape = plaintext, fontname = Helvetica]
-  e2 [label = <e<SUB>2</SUB>>, pos = "1.5,1.8!"]
-  e3 [label = <e<SUB>3</SUB>>, pos = "3,0.5!"]
-
-  # edge statements - causal paths
-  Y1 -> Y2 [label = <β<SUB>21</SUB>>]
-  Y2 -> Y3 [label = <β<SUB>32</SUB>>]
-  Y1 -> Y3 [label = <β<SUB>31</SUB>>]
-  
-  # error terms
-  e2 -> Y2:n
-  e3 -> Y3:n
-}
-```
-
-Model-implied correlation matrix for Y1, Y2, and Y3:
-
-```{r}
-# Create matrix with beta symbols
-mat <- matrix(c(" ", " ", " ",
-                "β₂₁", " ", " ",
-                "β₃₁ + β₂₁*β₃₂", "β₃₂", " "), 
-              nrow = 3, byrow = TRUE)
-
-# Add row and column names
-colnames(mat) <- c("Y₁", "Y₂", "Y₃")
-rownames(mat) <- c("Y₁", "Y₂", "Y₃")
-
-# Display with kable
-
-kable(mat, escape = FALSE, align = "c") %>%
-   kable_styling(bootstrap_options = c("striped", "bordered", "hover"),
-                full_width = FALSE) %>%
-  column_spec(1:4, width = "1cm", border_right = TRUE, border_left =T)  # Set all columns to 3cm width
-
-```
-
-## Decomposing the correlation matrix into path coefficients {.smaller}
-
-
-```{dot}
-//| fig-width: 5
-//| fig-height: 3
-
-digraph {
-
-  # graph statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = 0.8, rankdir = LR]
-
-  # node statements
-  node [shape = box, fontname = Helvetica]
-  X1 [label = <X<SUB>1</SUB>> pos = "0,1!"]
-  X2 [label = <X<SUB>2</SUB>> pos = "0,-1!"]
-  Y [pos = "2,0.5"]
-  
-  # error term
-  node [shape = plaintext, fontname = Helvetica]
-  e [pos = "2,2!"]
-
-  # edge statements - causal paths
-  X1 -> Y [label = <β<SUB>1</SUB>>]
-  X2 -> Y [label = <β<SUB>2</SUB>>]
-  
-  # correlation between X1 and X2
-  X1:w -> X2:w [dir=both, label = <r<SUB>12</SUB>>]
-  
-  # error term on Y
-  e -> Y
-
-  # control the placement of elements
-  {rank = same; X1; X2}
-  {rank = same; Y; e}
-}
-```
-
-Tracing rules allow to work backward from the correlations to derive the path coefficients. 
-
-.  .  . 
-
-Assume that 
-
-r12 = .50, r1Y =.65, and r2Y = .70.   
-
-r1Y = beta1 + r12 * beta2.  
-
-r2Y = beta2 + r12 * beta1.  
-
-.  . .
-
-Plugin the known values to solve the two equations:   
- 0.65 = beta1 + .50 * beta2    
- 0.70 = beta2 + .50 * beta1.  
-
-.  . .
-
-We get beta1 = .4 and beta2 = .5 (standardized coefficients since we used the correlation matrix).
-
-## Accounting for error {.smaller}
-
-
-```{dot}
-//| fig-width: 5
-//| fig-height: 3
-
-digraph {
-
-  # graph statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = 0.8, rankdir = LR]
-
-  # node statements
-  node [shape = box, fontname = Helvetica]
-  X1 [label = <X<SUB>1</SUB>> pos = "0,1!"]
-  X2 [label = <X<SUB>2</SUB>> pos = "0,-1!"]
-  Y [pos = "2,-0.5"]
-  
-  # error term
-  node [shape = plaintext, fontname = Helvetica]
-  e
-
-  # edge statements - causal paths
-  X1 -> Y [label = <β<SUB>1</SUB>>]
-  X2 -> Y [label = <β<SUB>2</SUB>>]
-  
-  # correlation between X1 and X2
-  X1:w -> X2:w [dir=both, label = <r<SUB>12</SUB>>]
-  
-  # error term on Y
-  e -> Y
-
-  # control the placement of elements
-  {rank = same; X1; X2}
-   {rank = same; Y; e}
-
-}
-```
-
-- The disturbance term, e, is the amount of unaccounted for variance in Y and is equal to $\sqrt{1 - R^2}$.
-- R2 can be calculated as: 
-  - $R^2 = beta_1^2 + beta_2^2 + r(X1, X2) * beta_1 * beta_2$
-  - $R^2 = .4^2 + .5^2 + .50 * .4 * .5 = 0.61$
-- Therefore, e = $\sqrt{1 - 0.61} = .62$.
-
-```{r eval=F}
-# Method 1: Using solve() with matrix notation
-# System: 0.65 = beta1 + 0.5*beta2
-#         0.7 = beta2 + 0.5*beta1
-# Rearranged as: Ax = b where x = [beta1, beta2]
-
-# Coefficient matrix A
-A <- matrix(c(1, 0.5,      # coefficients for equation 1
-              0.5, 1),     # coefficients for equation 2
-            nrow = 2, byrow = TRUE)
-
-# Constants vector b
-b <- c(0.65, 0.7)
-
-# Solve for betas
-betas <- solve(A, b)
-names(betas) <- c("beta1", "beta2")
-print(betas)
-```
-
-## Checking that everything adds up {.smaller}
-
-::: columns
-::: {.column width="50%"}
-```{dot}
-//| fig-width: 4
-//| fig-height: 4
-
-digraph {
-
-  # a 'graph' statement
-  graph [overlap = false, fontsize = 10, layout = dot, ranksep = .5,
-       rankdir = RL]
-
-  # 'node' statements
-  node [shape = box,
-        fontname = Helvetica]
-  Y
   X1 [label = <X<SUB>1</SUB>>]
   X2 [label = <X<SUB>2</SUB>>]
-  X3 [label = <X<SUB>3</SUB>>]
-  
+  Y1 [label = <Y<SUB>1</SUB>>]
+  Y2 [label = <Y<SUB>2</SUB>>]
 
-  # 'edge' statements
-  X1 -> Y [label = "0.133"]
-  X2 -> Y [label = "0.40"]
-  X3 -> Y [label = "0.167"]
-  
-  X1:w -> X2:w [dir=both, style="dashed", label = "0.5"]
-  X2:w -> X3:w [dir=both, style="dashed", label = "0.2"]
-  X1:e -> X3:e [dir=both, minlen = 4, style="dashed", label = "0.4"]
-  
- # control the placement of elements on the graph 
-{rank = same; X1 ; X2; X3}
+  node [shape = plaintext, fontname = Helvetica]
+  z1 [label = <&zeta;<SUB>1</SUB>>]
+  z2 [label = <&zeta;<SUB>2</SUB>>]
 
+  X1 -> Y1 [label = "a"]
+  X2 -> Y1 [label = "b"]
+  Y1 -> Y2 [label = "c"]
+  X1 -> Y2 [label = "d"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+
+  z1 -> Y1
+  z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+::: incremental
+-   **X₁, X₂** are exogenous and **correlated** (double-headed arrow).
+-   **Y₁, Y₂** are endogenous variables, **Y₁** is a mediator with two causes; **Y₂** is the outcome.
+-   **X₁** affects Y₂ **directly** *and* **indirectly** through Y₁.
+-   Coefficients are **standardized**, so traced routes give **correlations** directly.
+:::
+
+## Rule 1: exogenous correlations {.smaller}
+
+An unspecified relationship between two exogenous variables is their **bivariate correlation**, drawn as a double-headed arrow (`r`).
+
+```{dot}
+//| fig-width: 6.5
+//| fig-height: 3.3
+
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
+  
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; 
+  X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; 
+  Y2 [label = <Y<SUB>2</SUB>>]
+  
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  
+  edge [color = "gray70", fontcolor = "gray55"]
+  X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
+  Y1 -> Y2 [label = "c"]; X1 -> Y2 [label = "d"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000", style = dashed]
+  
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+## Rule 2: single paths {.smaller}
+
+Imagine path d does not exist. For two variables joined by a **single** directed arrow: the path *is* the regression coefficient (`c`). For standardized data it equals their **correlation**.
+
+```{dot}
+//| fig-width: 6.5
+//| fig-height: 3.3
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
+  X1 -> Y2 [label = "d"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+Convention:\
+**γ** for exogenous → endogenous (`a, b, d`).\
+**β** for endogenous → endogenous (`c`).
+
+## Rule 3: compound paths {.smaller}
+
+A route through intermediate variables is the **product** of its coefficients — the indirect effect of X₁ on Y₂ runs `X1 → Y1 → Y2` and equals **a · c**.
+
+```{dot}
+//| fig-width: 6.5
+//| fig-height: 3.2
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X2 -> Y1 [label = "b"]; X1 -> Y2 [label = "d"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  X1 -> Y1 [label = "a", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+## Rule 4: partial coefficients for multiple paths {.smaller}
+
+When a variable has **several** causes, each path is a **partial** regression coefficient — it controls for the others.
+
+```{dot}
+//| fig-width: 6.0
+//| fig-height: 2.6
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  X1 -> Y2 [label = "d", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+For the two causes of Y₂ (Y₁ and X₁): $$ \beta_{X_1 \rightarrow Y_2} = \frac{r_{X_1,Y_2} - r_{X_1,Y_1}\, r_{Y_1,Y_2}}{1 - r_{X_1,Y_1}^2} $$
+
+## Rule 5: endogenous errors {.smaller}
+
+Every endogenous variable carries an error (disturbance) term, denoted by ζ, for unexplained variance. Its variance is $1 - R^2$ and the standardized error path is $\zeta = \sqrt{1 - R^2}$.
+
+```{dot}
+//| fig-width: 6.5
+//| fig-height: 3.3
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, fontname = Helvetica, color = "#cc0000", fontcolor = "#cc0000"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
+  Y1 -> Y2 [label = "c"]; X1 -> Y2 [label = "d"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  z1 -> Y1 [color = "#cc0000", penwidth = 2.6]
+  z2 -> Y2 [color = "#cc0000", penwidth = 2.6]
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+## Rule 6: residual correlations (partial correlation) {.smaller}
+
+If two endogenous variables share an **unmeasured** cause, their **partial** correlation (after removing shared predictors) is drawn as a double-headed arrow between their **errors** (ψ). This needs a **sibling** structure — it cannot coexist with a direct `Y₁ → Y₂` path.
+
+::::: columns
+::: {.column width="42%"}
+```{dot}
+//| fig-width: 4
+//| fig-height: 3
+digraph {
+  graph [rankdir = LR, fontsize = 14, nodesep = 0.5, ranksep = 0.8]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X; Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X -> Y1; X -> Y2
+  z1:e -> z2:e [dir = both, constraint = false, label = "ψ", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000", style = dashed]
+  z1 -> Y1; z2 -> Y2
+  {rank = same; Y1; Y2}
+  {rank = max; z1; z2}
 }
 ```
 :::
 
-::: {.column width="30%"}
-Correlation matrix:
+::: {.column width="58%"}
+$$ r_{Y_1,Y_2} = \underbrace{\gamma_1 \gamma_2}_{\text{shared cause } X} + \underbrace{\psi}_{\text{partial corr.}} $$
 
-|  | X1 | X2 | X3 | Y |
-|:---|:---|:---|:---|:---|
-| X1  | 1  | .5   |  .4  | .4  |
-| X2  | .5  |  1  | .2   | .5  |
-| X3  | .4  |  .2  | 1   | .3  |
-| Y   | .4  |  .5  | .3   | 1  |
+If Y₁ and Y₂ are conditionally independent given X, then ψ = 0 and their correlation is just $\gamma_1\gamma_2$.
 :::
+:::::
+
+## Rule 7: total effects {.smaller}
+
+The total effect of one variable on another is the **sum of its direct and indirect effects**.
+
+$$ \text{total}(X_1 \rightarrow Y_2) = \underbrace{d}_{\text{direct}} + \underbrace{a\,c}_{\text{indirect}} $$
+
+```{dot}
+//| fig-width: 6.0
+//| fig-height: 2.6
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X2 -> Y1 [label = "b"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  X1 -> Y1 [label = "a", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  X1 -> Y2 [label = "d", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+## Rule 8: total effect ≠ total correlation {.smaller}
+
+The correlation also contains **undirected** routes (through the exogenous correlation).\
+[**Causal**]{style="color:#cc0000;"} routes + [**non-causal**]{style="color:#1f77b4;"} routes = the observed correlation.
+
+$$ r_{X_1,Y_2} = \underbrace{d + a c}_{\text{total effect (causal)}} + \underbrace{r\,b\,c}_{\text{backdoor (non-causal)}} $$
+
+```{dot}
+//| fig-width: 6.0
+//| fig-height: 2.6
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X1 -> Y1 [label = "a", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  X1 -> Y2 [label = "d", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4", style = dashed]
+  X2 -> Y1 [label = "b", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+## Tracing a valid route {.smaller}
+
+::: incremental
+1.  **No loops** — never pass through a variable twice.
+2.  **No forward-then-backward** — connect only through a **common cause**, never a **common effect** (collider).
+3.  **At most one curved arrow** per route.
 :::
 
-.  .  .  
+. . .
 
-- Path tracing for X1-Y correlation:
-  - r(X1, Y) = X1->Y + X1->X2->Y + X1->X3->Y \   
-  - r(X1, Y) = .133 + (.5 * .4) + (.4 * .167) = **.4**\
+For `r(X₁, Y₁)`: valid in [**green**]{style="color:#2ca02c;"}; the [**red**]{style="color:#cc0000;"} route turns around at the collider Y₂ — forbidden.
 
-.  .  .  
+```{dot}
+//| fig-width: 6.0
+//| fig-height: 2.4
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]
+  Y2 [label = <Y<SUB>2</SUB>>, color = "#cc0000", fontcolor = "#cc0000"]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X1 -> Y1 [label = "a", color = "#2ca02c", penwidth = 2.6, fontcolor = "#2ca02c"]
+  X2 -> Y1 [label = "b", color = "#2ca02c", penwidth = 2.6, fontcolor = "#2ca02c"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r", color = "#2ca02c", penwidth = 2.6, fontcolor = "#2ca02c"]
+  X1 -> Y2 [label = "d", color = "#cc0000", style = dashed, penwidth = 2.4, fontcolor = "#cc0000"]
+  Y1 -> Y2 [label = "c", color = "#cc0000", style = dashed, penwidth = 2.4, fontcolor = "#cc0000"]
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
 
+# Worked example
 
-- likewise for corr(X2, Y) and corr(X3, Y):
-  - r(X2, Y) = .4 + (.5 * .133) + (.2 * .167) = **.5** \   
-  - r(X3, Y) = .167 + (.4 * .133) + (.2 * .4) = **.3**\
+## The model in numbers {.smaller}
 
+Standardized coefficients `a = 0.60, b = 0.40, c = 0.50, d = 0.30, r = 0.30`. Tracing rebuilds the **implied correlation matrix** on the right.
+
+::::: columns
+::: {.column width="52%"}
+```{dot}
+//| fig-width: 4.8
+//| fig-height: 3.6
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.6]
+  node [shape = box, fontname = Helvetica]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, fontname = Helvetica]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  X1 -> Y1 [label = "0.60"]
+  X2 -> Y1 [label = "0.40"]
+  Y1 -> Y2 [label = "0.50"]
+  X1 -> Y2 [label = "0.30"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "0.30"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+:::
+
+::: {.column width="48%"}
+```{r}
+rX1Y1 <- a + b*r
+rX2Y1 <- b + a*r
+rX1Y2 <- d + a*c + r*b*c
+rX2Y2 <- b*c + r*d + r*a*c
+rY1Y2 <- c + a*d + b*r*d
+
+M <- diag(4)
+dimnames(M) <- list(c("X1","X2","Y1","Y2"), c("X1","X2","Y1","Y2"))
+M["X1","X2"] <- M["X2","X1"] <- r
+M["X1","Y1"] <- M["Y1","X1"] <- rX1Y1
+M["X2","Y1"] <- M["Y1","X2"] <- rX2Y1
+M["X1","Y2"] <- M["Y2","X1"] <- rX1Y2
+M["X2","Y2"] <- M["Y2","X2"] <- rX2Y2
+M["Y1","Y2"] <- M["Y2","Y1"] <- rY1Y2
+
+kable(M, digits = 3) |>
+  kable_styling(bootstrap_options = c("bordered"), full_width = FALSE)
+```
+:::
+:::::
+
+## Simple paths and the curved arrow {.smaller}
+
+::::: columns
+::: {.column width="60%"}
+```{dot}
+//| fig-width: 5.3
+//| fig-height: 2.5
+digraph {
+  graph [rankdir = LR, fontsize = 13, ranksep = 1.0, nodesep = 0.5]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  Y1 -> Y2 [label = "c = 0.5"]; X1 -> Y2 [label = "d = 0.3"]
+  X1 -> Y1 [label = "a = 0.6", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  X2 -> Y1 [label = "b = 0.4", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+:::
+
+::: {.column width="40%"}
+```{r}
+mat_tab(list(c("X1","Y1"), c("X2","Y1")))
+```
+:::
+:::::
+
+$$ \text{cor}(X_1, Y_1) = a + r\,b = 0.60 + 0.30\times 0.40 = \mathbf{0.72} $$
+
+$$ \text{cor}(X_2, Y_1) = b + r\,a = 0.40 + 0.30\times 0.60 = \mathbf{0.58} $$
+
+## Direct, indirect and backdoor routes {.smaller}
+
+::::: columns
+::: {.column width="60%"}
+```{dot}
+//| fig-width: 5.3
+//| fig-height: 2.5
+digraph {
+  graph [rankdir = LR, fontsize = 13, ranksep = 1.0, nodesep = 0.5]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X1 -> Y1 [label = "a = 0.6", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  Y1 -> Y2 [label = "c = 0.5", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  X1 -> Y2 [label = "d = 0.3", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  X2 -> Y1 [label = "b = 0.4", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+:::
+
+::: {.column width="40%"}
+```{r}
+mat_tab(list(c("X1","Y2"), c("X2","Y2")))
+```
+:::
+:::::
+
+$$ \text{cor}(X_1, Y_2) = d + a c + r b c = 0.30 + 0.30 + 0.06 = \mathbf{0.66} $$
+
+$$ \text{cor}(X_2, Y_2) = b c + r d + r a c = 0.20 + 0.09 + 0.09 = \mathbf{0.38} $$
+
+## Backward-then-forward {.smaller}
+
+::::: columns
+::: {.column width="60%"}
+```{dot}
+//| fig-width: 5.3
+//| fig-height: 2.5
+digraph {
+  graph [rankdir = LR, fontsize = 13, ranksep = 1.0, nodesep = 0.5]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, color = "gray65", fontcolor = "gray55"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  Y1 -> Y2 [label = "c = 0.5", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
+  X1 -> Y1 [label = "a = 0.6", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  X1 -> Y2 [label = "d = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  X2 -> Y1 [label = "b = 0.4", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  X1:w -> X2:w [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  z1 -> Y1; z2 -> Y2
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+:::
+
+::: {.column width="40%"}
+```{r}
+mat_tab(list(c("Y1","Y2")))
+```
+:::
+:::::
+
+$$ \text{cor}(Y_1, Y_2) = c + a d + b r d = 0.50 + 0.18 + 0.036 = \mathbf{0.716} $$
+
+## Total effect vs total correlation {.smaller}
+
+::::: columns
+::: {.column width="60%"}
+**Total effect** of X₁ on Y₂ (Rule 7) — direct + indirect:
+
+$$ d + a c = 0.30 + 0.30 = \mathbf{0.60} $$
+
+**Correlation** (Rule 8) — the effect **plus** the undirected backdoor:
+
+$$ r_{X_1,Y_2} = 0.60 + \underbrace{r\,b\,c}_{0.06} = \mathbf{0.66} $$
+
+**Partial coefficient** (Rule 4 check) recovers the direct path `d`:
+
+$$ \beta_{X_1 \rightarrow Y_2} = \frac{0.66 - 0.72\times 0.716}{1 - 0.72^2} = \mathbf{0.30} = d $$
+:::
+
+::: {.column width="40%"}
+```{r}
+mat_tab(list(c("X1","Y2")))
+```
+:::
+:::::
+
+## Errors and R² {.smaller}
+
+::::: columns
+::: {.column width="54%"}
+```{dot}
+//| fig-width: 5.0
+//| fig-height: 2.8
+digraph {
+  graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.6]
+  node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
+  X1 [label = <X<SUB>1</SUB>>]; X2 [label = <X<SUB>2</SUB>>]
+  Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
+  node [shape = plaintext, fontname = Helvetica, color = "#cc0000", fontcolor = "#cc0000"]
+  z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
+  edge [color = "gray70", fontcolor = "gray55"]
+  X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
+  Y1 -> Y2 [label = "c"]; X1 -> Y2 [label = "d"]
+  X1 -> X2 [dir = both, constraint = false, label = "r", style = dashed]
+  z1 -> Y1 [color = "#cc0000", penwidth = 2.6]
+  z2 -> Y2 [color = "#cc0000", penwidth = 2.6]
+  {rank = min; X1; X2}
+  {rank = max; Y2}
+}
+```
+
+```{r}
+R2_Y1 <- a^2 + b^2 + 2*a*b*r
+R2_Y2 <- c^2 + d^2 + 2*c*d*rX1Y1
+tab <- data.frame(
+  Variable = c("Y<sub>1</sub>", "Y<sub>2</sub>"),
+  R2       = round(c(R2_Y1, R2_Y2), 3),
+  zeta     = round(sqrt(1 - c(R2_Y1, R2_Y2)), 3)
+)
+kable(tab, format = "html", escape = FALSE, align = "c",
+      col.names = c("Variable", "R<sup>2</sup>",
+                    "&zeta; = &radic;(1 &minus; R<sup>2</sup>)")) |>
+  kable_styling(full_width = FALSE)
+```
+:::
+
+::: {.column width="46%"}
+```{r}
+mat_tab(list(c("Y1","Y1"), c("Y2","Y2")))
+```
+
+Each **endogenous** variable's variance is completed by its ζ (exogenous X₁, X₂ have none), making its **diagonal** entry 1:
+
+$$ 1 = R^2 + \zeta^2 $$
+
+So in the **standardized** correlations the error is only *implicit*: it fixes the endogenous **diagonal** but **drops out of the off-diagonal** cells — which is why none of the traced routes contained ζ.
+:::
+:::::
+
+## Everything adds up {.smaller}
+
+Every traced route fills a cell of the implied correlation matrix — the model reproduces all six correlations exactly.
+
+. . .
+
+Fitting an SE model runs this **in reverse**: it searches for the coefficients whose implied matrix best matches the **observed** one.
 
 ## Using covariances instead of correlations {.smaller}
-- For simplicity, previous path analysis uses correlations and standardized path coefficients.
-- In practice, path models are estimated using covariances and unstandardized coefficients.
-- If using covariances, the variances need to be taken into account.
 
+-   So far we used **correlations** and **standardized** coefficients, where every variance = 1.
+-   In practice, SE models are fit from **covariances** with **unstandardized** coefficients — then the **variances must be carried along**.
 
-Example:
-$Cov(Y1, Y3)$, is $Var(Y_1) * beta_31 + Var(Y_1)* beta_21 * beta_32$.   
-where beta is used for the unstandardized regression coefficients.
+For our model, tracing the covariance of Y₁ and Y₂:
 
-## Global estimation: compare model-implied to observed covariance 
+$$ \text{Cov}(Y_1, Y_2) = c\,\text{Var}(Y_1) + d\,\text{Cov}(X_1, Y_1) \qquad (c, d \text{ unstandardized}) $$
 
+. . .
 
-::: columns
+**This is where ζ reappears:** the route leaving Y₁ carries its *full* variance —
+
+$$ \text{Var}(Y_1) = \underbrace{a^2\text{Var}(X_1) + b^2\text{Var}(X_2) + 2ab\,\text{Cov}(X_1,X_2)}_{\text{explained}} + \underbrace{\sigma^2_{\zeta_1}}_{\text{error}} $$
+
+so the **error variance of the upstream variable** enters the covariance, whereas in the standardized form it stayed hidden inside Var(Y₁) = 1.
+
+## Summary of path tracing rules: {.smaller}
+
+Wright's route rules: no loops, no forward-then-backward, ≤ one curved arrow.
+
+::: incremental
+1.  Exogenous correlations = bivariate correlation (double-headed arrow).
+2.  A single path = its coefficient (= correlation if standardized).
+3.  A compound path = the **product** of its coefficients.
+4.  Multiple pathways = **partial** coefficients (control for the others).
+5.  Endogenous errors: $\zeta = \sqrt{1 - R^2}$.
+6.  Residual correlation between endogenous = **partial** correlation (correlated errors).
+7.  Total effect = direct + indirect.
+8.  Total effect ≠ total correlation (the correlation also includes undirected routes).
+:::
+
+## Global estimation: compare model-implied to observed covariance
+
+::::: columns
 ::: {.column width="35%"}
 ```{dot}
 //| fig-width: 4
@@ -1457,6 +1402,7 @@ digraph  {
 }
 ```
 :::
+
 ::: {.column width="65%"}
 ```{r, out.width="90%", fig.align='center'}
 set.seed(5)
@@ -1467,94 +1413,79 @@ colnames(d) <-   c("X1","X2", "X3", "Y")
 pairs(d, pch = 19)
 ```
 :::
-:::
+:::::
 
 Assess goodness of fit by comparing model-implied to observed covariance matrix.
 
 ## Model fit measures {.smaller}
 
-+ *$\chi^2$ statistic*
-  - compare the model-implied to the observed variance-covariance
-  - good fit when $\chi^2$ statistic is small (P > 0.05)   
-  - sample-size dependent
+-   $\chi^2$ statistic
+    -   compare the model-implied to the observed variance-covariance
+    -   good fit when $\chi^2$ statistic is small (P \> 0.05)\
+    -   sample-size dependent
 
 . . .
 
-+ *Comparative fit index (CFI)*: 
-  - deviation from a 'null' model (variances estimated but covariances set to 0).
-  - higher is better, \> 0.95 is considered good.
+-   *Comparative fit index (CFI)*:
+    -   deviation from a 'null' model (variances estimated but covariances set to 0).
+    -   higher is better, \> 0.95 is considered good.
 
 . . .
 
-+ *Root-mean squared error of approximation (RMSEA)*
-  - statistic penalizes models based on sample size
-  - \< 0.10 is acceptable, and anything \< 0.06 is good
+-   *Root-mean squared error of approximation (RMSEA)*
+    -   statistic penalizes models based on sample size
+    -   \< 0.10 is acceptable, and anything \< 0.06 is good
 
 . . .
 
-+ *Standardized root-mean squared residual (SRMR)*
-  - standardized difference between the observed and predicted correlations
-  - \< 0.08 is considered good
-
+-   *Standardized root-mean squared residual (SRMR)*
+    -   standardized difference between the observed and predicted correlations
+    -   \< 0.08 is considered good
 
 ## Unstandardized vs standardized coefficients
 
-
-| Unstandardized   | Standardized  |
-|:-----------------------------------|--------------------------------------------|
-| Reported in raw units  | Expressed in units of standard deviations (z transformation) |
+| Unstandardized | Standardized |
+|:--------------------------------|---------------------------------------|
+| Reported in raw units | Expressed in units of standard deviations (z transformation) |
 | Depend on the scale of the variables | Used for interpretation of relative strength |
-| Contain information about variance and mean  | Facilitate comparison of paths within a model |
-| For predictions in original units | To calculate indirect and total effects within your model|
+| Contain information about variance and mean | Facilitate comparison of paths within a model |
+| For predictions in original units | To calculate indirect and total effects within your model |
 
 Best practice: report both types of coefficients!
 
 > Z transformation results in mean of 0 and SD of 1: $Z = \frac{x - \mu(x)}{\sigma(x)}$
 
+```{=html}
 <!-- ::: aside
 $r_{xy} = \frac{cov_{xy}}{SD_x \times SD_y}$
 where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $SD_y$ the respective standard deviations (the square roots of the respective variance $= \sqrt{var_x}$ and $= \sqrt{var_y}$)
 :::-->
+```
 
-## Troubleshooting pathological models (a.k.a. Heywood cases)
+## Model identification {.smaller}
 
--   Improper solutions:
-    -   Negative variances
-    -   Correlations larger than 1
+::: incremental
+-   Identifiability is a common issue in SEM
+-   Some of the free parameters you are trying to estimate are interchangeable (e.g., a and b in `y = a*x + b*x + c`)
+-   Even an infinite amount of data does not allow to identify parameters precisely (e.g. one could be high the other low or vice-versa)
+-   The more complex a SEM is, the more likely issues of identifiability will become
+-   Fixing parameters or their variance may be needed to achieve model convergence (especially when latents or composites are involved).
+:::
 
 . . .
 
--   Reasons for the warnings can be:
-    1)  Slightly negative error estimates (not really a problem)\
-    3)  Local non-identification of parameters\
-    4)  Model misspecification
+-   Underidentified:
+    -   Not enough pieces of information to identify parameters uniquely (df \< 0).\
 
-## Parameter identification
+. . .
 
-::: {.incremental}
-- Identifiability is a common issue in SEM
-- Some of the free parameters you are trying to estimate are interchangeable (e.g., a and b in `y = a*x + b*x + c`)
-- Even an infinite amount of data does not allow to identify parameters precisely (e.g. one could be high the other low or vice-versa)
-- The more complex a SEM is, the more likely issues of identifiability will become
-- Fixing parameters or their variance may be needed to achieve model convergence (especially when latents or composites are involved).
-::: 
+-   Just identified:
+    -   Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
 
+. . .
 
-## Model identification
-
-- Underidentified: 
-  - Not enough pieces of information to identify parameters uniquely (df \< 0).\
-
-. . . 
-
-- Just identified: 
-  - Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
-
-.  .  .
-
-- Over-identified: 
-  - Parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
-
+-   Over-identified:
+    -   Parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
 
 ## Model identification
 
@@ -1568,28 +1499,27 @@ $$ t \leq \frac{n (n + 1 )}{2} $$
 The LHS is how many pieces of information we want to know.\
 RHS: information we have (number of unique cells in the observed variance-covariance matrix).
 
-
 ## Model identification example
 
 $$ t \leq \frac{n (n + 1 )}{2} $$
 
 *Unidentified:*
 
-- a + b = 8 
-- multiple possible solutions (e.g., a=7, b=1, a=6, b=2 ...)
+-   a + b = 8
+-   multiple possible solutions (e.g., a=7, b=1, a=6, b=2 ...)
 
 . . .
 
 *Just identified:*
 
-- add equation a = 3b allows to solve the system
-- Single solution a = 6 and b = 2 
+-   add equation a = 3b allows to solve the system
+-   Single solution a = 6 and b = 2
 
-. . . 
+. . .
 
 *Over-identified:*
 
-- add equation 2a - 4 = 4b gives us more information than we need 
+-   add equation 2a - 4 = 4b gives us more information than we need
 
 ## Model identification example
 
@@ -1618,56 +1548,67 @@ digraph  {
 
 Can we identify this simple mediation model?
 
-- How many many pieces of information do we have (n) and how many do we need to estimate (t)?
+-   How many many pieces of information do we have (n) and how many do we need to estimate (t)?
 
+. . .
 
-. . . 
+$$ 5 \leq \frac{3 (3 + 1 )}{2} $$ $$ 5 \leq 6 $$
 
-$$ 5 \leq \frac{3 (3 + 1 )}{2} $$
-$$ 5 \leq 6 $$
+## Troubleshooting pathological models (a.k.a. Heywood cases)
 
+-   Improper solutions:
+    -   Negative variances
+    -   Correlations larger than 1
+
+. . .
+
+-   Reasons for the warnings can be:
+    1)  Slightly negative error estimates (not really a problem)\
+    2)  Local non-identification of parameters\
+    3)  Model misspecification
 
 ## Variable types: continuous
 
-::: {.incremental}
-  - Exogenous variables:
-    - No limitations, can be used as endo- and exogenous variables
-  - Endogenous variables:
-    - lavaan handles Gaussian error distributions 
-    - For other error distributions consider the piecewiseSEM package.
+::: incremental
+-   Exogenous variables:
+    -   No limitations, can be used as endo- and exogenous variables
+-   Endogenous variables:
+    -   lavaan handles Gaussian error distributions
+    -   For other error distributions consider the piecewiseSEM package.
 :::
 
 ## Variable types: categorical
-::: {.incremental}
 
+::: incremental
+```{=html}
 <!-- https://personality-project.org/r/tutorials/summerschool.14/rosseel_sem_cat.pdf 
 
 https://www.aggieerin.com/post/quick-and-dirty-categorical-lavaan/
 
 -->
+```
 
-- Includes binary (yes/no, failure/success, etc.), nominal (site 1, site 2), or ordinal levels (small < medium < large) variables.
-  - nominal variables currently not covered by lavaan
-- Exogenous variables:
-  - code binary variables as dummy variable (0/1)
-  - if more than 2 levels, create multiple dummy variables
-- Endogenous variables:
-  - for binary and ordinal variables, use R's `ordered()` function to specify the order, or use `ordered=` argument.
-  - when `ordered=` argument is used, WLSMV estimator is used by lavaan.
-- Bootstrapping approach to get robust standard error estimates due to non-normal errors when dealing with categorical variables.
+-   Includes binary (yes/no, failure/success, etc.), nominal (site 1, site 2), or ordinal levels (small \< medium \< large) variables.
+    -   nominal variables currently not covered by lavaan
+-   Exogenous variables:
+    -   code binary variables as dummy variable (0/1)
+    -   if more than 2 levels, create multiple dummy variables
+-   Endogenous variables:
+    -   for binary and ordinal variables, use R's `ordered()` function to specify the order, or use `ordered=` argument.
+    -   when `ordered=` argument is used, WLSMV estimator is used by lavaan.
+-   Bootstrapping approach to get robust standard error estimates due to non-normal errors when dealing with categorical variables.
 :::
-
-
 
 ## Data requirements
 
-::: {.incremental}
+::: incremental
 -   Replication should be at least 5x the number of estimated coefficients (not error variances or other correlations).
 -   To estimate two relationships, at least n = 10 required to fit model.
 -   Ideally, replication is 5-20x the number of estimated parameters.
 -   The larger the sample size, the more precise your estimates will be.
 :::
 
+```{=html}
 <!-- ## SEM check list {.smaller}
 
 1)  Review the relevant theory and research literature to support model specification
@@ -1681,7 +1622,9 @@ https://www.aggieerin.com/post/quick-and-dirty-categorical-lavaan/
 9) Check for missing or unnecessary links
 10) Interpret model coefficients
 11) Present results visually -->
+```
 
+````{=html}
 <!-- ## Basic lavaan syntax
 
 Define model:
@@ -1710,6 +1653,7 @@ mod.fit <- sem(mod.form , data = dat1)
 | latent       | `=~`  | set reflective indicators | `LV =~ x1 + x2 + x3`      |
 | composite    | `<~`  | set formative indicators  | `Comp <~ 1*x1 + x2 + x3`  |
 -->
+````
 
 # Questions?
 
@@ -1717,60 +1661,57 @@ mod.fit <- sem(mod.form , data = dat1)
 
 # Your turn: working with the Seabloom dataset
 
-## Introduction to the dataset 
+## Introduction to the dataset
 
 ![](images/CedarCreek.jpg)
 
-- Experimental grassland study (started in 1982)
-- Long-term consequences of human-driven environmental changes on grasslands:
-  + Soil disturbance
-  + Nitrogen deposition
+-   Experimental grassland study (started in 1982)
+-   Long-term consequences of human-driven environmental changes on grasslands:
+    -   Soil disturbance
+    -   Nitrogen deposition
 
-## Introduction to the dataset 
+## Introduction to the dataset
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 ![](images/CedarCreek_map.png){width="100%"}
 :::
 
 ::: {.column width="50%"}
-- Study site located in Minnesota (Cedar Creek Ecosystem Science Reserve).
-- Design:
-  + three study fields within the reserve.
-  + 35 x 55 m intact (black) and disturbed (red) plots within each field.
+-   Study site located in Minnesota (Cedar Creek Ecosystem Science Reserve).
+-   Design:
+    -   three study fields within the reserve.
+    -   35 x 55 m intact (black) and disturbed (red) plots within each field.
 :::
-:::
-
+:::::
 
 ## Introduction to the dataset {.smaller}
 
-![](images/CedarCreek_exp_design.png){.relative width="1000" right=200}
+![](images/CedarCreek_exp_design.png){.relative width="1000" right="200"}
 
-- 4 x 4 m nutrient treatment plots within the intact or disturbed plots (within fields A-C). 
-- Letters indicate the nutrient treatments.
+-   4 x 4 m nutrient treatment plots within the intact or disturbed plots (within fields A-C).
+-   Letters indicate the nutrient treatments.
 
 ## Introduction to the dataset {.smaller}
 
 ![](images/AGB_disturbance.png)
 
-- Effect of soil disturbance and nutrient enrichment on aboveground plant biomass. 
-- Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).
+-   Effect of soil disturbance and nutrient enrichment on aboveground plant biomass.
+-   Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).
 
 ## Introduction to the dataset {.smaller}
 
+![](images/AGB_diversity.png){.relative width="1000" right="200"}
 
-![](images/AGB_diversity.png){.relative width="1000" right=200}
-
-- Effect of soil disturbance (disking) and nutrient enrichment on:
-  A) effective number of species (ENS~PIE~)
-  A) richness (S, species 0.3 m−2)
-  A) Simpsons's evenness 
+-   Effect of soil disturbance (disking) and nutrient enrichment on:
+    A)  effective number of species (ENS~PIE~)
+    B)  richness (S, species 0.3 m−2)
+    C)  Simpsons's evenness
 
 ::: aside
 ENS~PIE~ equivalent to $1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass represented by species $i$.
 :::
 
-  
 ## Potential research questions
 
 ```{dot}
@@ -1848,29 +1789,26 @@ digraph  {
 }
 ```
 
-::: {.incremental}
+::: incremental
 1)  Function (biomass) is directly influenced by human impact (nutrients, disturbance)
 2)  Function (biomass) is directly influenced by biodiversity (richness and evenness).
 3)  Human impact also influences biodiversity and thus, have an indirect effect on function via biodiversity.
 :::
 
-
 ::: notes
-
 :::
 
+## Exercise 1
 
-## Exercise 1 
-
-- Load and aggregate the Seabloom dataset (data and code provided)
-- Inspect raw correlations between the following variables:
-  - nadd, disk, rich, even, ens.pie, mass.above
-- Inspect multivariate normality of the following variables using the `mvn()` function in `library(MVN)`: 
-  - rich, even, mass.above
-- Fit multiple linear regression models to estimate coefficients
+-   Load and aggregate the Seabloom dataset (data and code provided)
+-   Inspect raw correlations between the following variables:
+    -   nadd, disk, rich, even, ens.pie, mass.above
+-   Inspect multivariate normality of the following variables using the `mvn()` function in `library(MVN)`:
+    -   rich, even, mass.above
+-   Fit multiple linear regression models to estimate coefficients
     -   direct effects of nadd, disk, rich and even on above ground biomass (AGB)
     -   direct effects of nadd and disk on richness and evenness
-- What do you conclude?
+-   What do you conclude?
 
 ## Exercise 2
 
@@ -1910,11 +1848,9 @@ digraph  {
     -   Assess model goodness of fit.
     -   Investigate the modification indices. Any paths that need adding?
     -   Check model summary.
-- Do you have a valid model?
+-   Do you have a valid model?
 
-## Exercise 3 
-
-
+## Exercise 3
 
 ```{dot}
 //| fig-width: 10
@@ -1947,15 +1883,13 @@ digraph  {
 }
 ```
 
-
 After finding a model with good fit:
 
 -   Model analysis:
     -   Calculate the standardized coefficients.
     -   Calculate derived quantities (direct, indirect and total effects of nutrient addition on biomass).
 
-## Exercise 4 
-
+## Exercise 4
 
 ```{dot}
 //| fig-width: 10
@@ -1991,17 +1925,16 @@ digraph  {
 }
 ```
 
--  Build the saturated model, then:
+-   Build the saturated model, then:
     -   AIC comparison with simpler model used in exercise 3. Which one is more parsimonious?
     -   Perform model pruning on saturated model.
 
-## Exercise 5 
+## Exercise 5
 
-
-::: columns
-
+:::::: columns
 ::: {.column width="33%"}
 Full mediation
+
 ```{dot}
 //| fig-width: 3
 //| fig-height: 4
@@ -2037,11 +1970,9 @@ digraph  {
 ```
 :::
 
-
-
-
 ::: {.column width="33%"}
 Partial mediation
+
 ```{dot}
 //| fig-width: 3
 //| fig-height: 4
@@ -2079,6 +2010,7 @@ digraph  {
 
 ::: {.column width="33%"}
 No mediation
+
 ```{dot}
 //| fig-width: 3
 //| fig-height: 4
@@ -2111,12 +2043,9 @@ digraph  {
 }
 ```
 :::
-:::
+::::::
 
 -   Perform mediation analysis:
-    - Is there no, partial, or full mediation of disturbance on biomass via richness and eveness?
-    - Compare model fits.
-    - Which model better represents your data?
-
-
-  
+    -   Is there no, partial, or full mediation of disturbance on biomass via richness and eveness?
+    -   Compare model fits.
+    -   Which model better represents your data?

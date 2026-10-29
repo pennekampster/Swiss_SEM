@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content="Frank Pennekamp">
-  <meta name="dcterms.date" content="2025-11-06">
+  <meta name="dcterms.date" content="2026-11-05">
   <title>Introduction to path and structural equation modelling</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -208,7 +208,7 @@ Frank Pennekamp
     </div>
 </div>
 
-  <p class="date">November 6, 2025</p>
+  <p class="date">November 5, 2026</p>
 </section>
 <section id="schedule-content" class="slide level2 smaller">
 <h2>Schedule &amp; content</h2>
@@ -377,7 +377,7 @@ Frank Pennekamp
 <ul>
 <li class="fragment">In the social sciences, latent variables are widely used to capture abstract concepts.</li>
 <li class="fragment">Human attitudes and motivations are assumed to be “deeply latent” and only discernible indirectly.</li>
-<li class="fragment">Moreover, the properties often of primary interest itself and used as instruments.</li>
+<li class="fragment">Moreover, the latent constructs are often of primary interest themselves, not merely used as instruments.</li>
 <li class="fragment">Powerful but currently underused tool in ecology.</li>
 </ul>
 </section>
@@ -502,124 +502,8 @@ Frank Pennekamp
 </ol>
 </div>
 </section>
-<section id="latent-example-measurement-error-in-predictor" class="slide level2">
-<h2>Latent example: measurement error in predictor</h2>
-<div class="cell" data-fig-width="8" data-fig-height="5" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<svg width="768" height="480" viewbox="0.00 0.00 185.57 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-40 181.57,-40 181.57,4 -4,4"></polygon>
-<!-- X -->
-<g id="node1" class="node">
-<title>X</title>
-<polygon fill="none" stroke="black" points="87.36,-36 0.21,-36 0.21,0 87.36,0 87.36,-36"></polygon>
-<text text-anchor="middle" x="43.79" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X with error</text>
-</g>
-<!-- Y -->
-<g id="node2" class="node">
-<title>Y</title>
-<polygon fill="none" stroke="black" points="177.57,-36 123.57,-36 123.57,0 177.57,0 177.57,-36"></polygon>
-<text text-anchor="middle" x="150.57" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
-</g>
-<!-- X&#45;&gt;Y -->
-<g id="edge1" class="edge">
-<title>X-&gt;Y</title>
-<path fill="none" stroke="black" d="M87.41,-18C96.01,-18 104.98,-18 113.34,-18"></path>
-<polygon fill="black" stroke="black" points="113.54,-21.5 123.54,-18 113.54,-14.5 113.54,-21.5"></polygon>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<ul>
-<li class="fragment">Predictors are often measured with error.<br>
-</li>
-<li class="fragment">Multiple regression assumes no error in X.<br>
-</li>
-<li class="fragment">What if this assumption is violated?</li>
-</ul>
-</section>
-<section id="latent-example-measurement-error-in-predictor-1" class="slide level2">
-<h2>Latent example: measurement error in predictor</h2>
-
-<img data-src="Intro_to_SEM_part2_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><p>Red = true slope, blue = OLS slope.</p>
-<ul>
-<li class="fragment">Measurement error biases the slope towards zero = regression dilution.</li>
-<li class="fragment">How to account for regression dilution?</li>
-</ul>
-</section>
-<section id="latent-example-1-measurement-error-in-predictor" class="slide level2">
-<h2>Latent example 1: measurement error in predictor</h2>
-<div class="cell" data-fig-width="8" data-fig-height="5" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<svg width="768" height="480" viewbox="0.00 0.00 483.60 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-94 479.6,-94 479.6,4 -4,4"></polygon>
-<!-- X1 -->
-<g id="node1" class="node">
-<title>X1</title>
-<polygon fill="none" stroke="black" points="162.94,-90 2.48,-90 2.48,-54 162.94,-54 162.94,-90"></polygon>
-<text text-anchor="middle" x="82.71" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">1st noisy measurement</text>
-</g>
-<!-- X2 -->
-<g id="node2" class="node">
-<title>X2</title>
-<polygon fill="none" stroke="black" points="165.62,-36 -0.21,-36 -0.21,0 165.62,0 165.62,-36"></polygon>
-<text text-anchor="middle" x="82.71" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">2nd noisy measurement</text>
-</g>
-<!-- Z -->
-<g id="node3" class="node">
-<title>Z</title>
-<ellipse fill="none" stroke="black" cx="293.51" cy="-45" rx="92.19" ry="18"></ellipse>
-<text text-anchor="middle" x="293.51" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">underlying process</text>
-</g>
-<!-- Z&#45;&gt;X1 -->
-<g id="edge1" class="edge">
-<title>Z-&gt;X1</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M216.08,-54.88C202.16,-56.68 187.51,-58.58 173.25,-60.42"></path>
-<polygon fill="black" stroke="black" points="172.41,-57 162.94,-61.75 173.31,-63.94 172.41,-57"></polygon>
-</g>
-<!-- Z&#45;&gt;X2 -->
-<g id="edge2" class="edge">
-<title>Z-&gt;X2</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M216.27,-35.14C203.14,-33.44 189.37,-31.66 175.88,-29.92"></path>
-<polygon fill="black" stroke="black" points="176,-26.41 165.63,-28.59 175.1,-33.35 176,-26.41"></polygon>
-</g>
-<!-- Y -->
-<g id="node4" class="node">
-<title>Y</title>
-<ellipse fill="none" stroke="black" cx="448.6" cy="-45" rx="27" ry="18"></ellipse>
-<text text-anchor="middle" x="448.6" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
-</g>
-<!-- Z&#45;&gt;Y -->
-<g id="edge3" class="edge">
-<title>Z-&gt;Y</title>
-<path fill="none" stroke="black" d="M385.77,-45C394.75,-45 403.45,-45 411.35,-45"></path>
-<polygon fill="black" stroke="black" points="411.58,-48.5 421.58,-45 411.58,-41.5 411.58,-48.5"></polygon>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<ul>
-<li class="fragment">Latent captures the overlapping information in the repeated measures.</li>
-<li class="fragment">Better slope estimate and higher R<sup>2</sup> when regressing Y on latent.</li>
-</ul>
-</section>
-<section id="latent-example-2-body-size" class="slide level2 smaller">
-<h2>Latent example 2: body size</h2>
+<section id="latent-example-1-body-size" class="slide level2 smaller">
+<h2>Latent example 1: body size</h2>
 <div class="cell" data-fig-width="4" data-fig-height="=&quot;2&quot;" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -692,7 +576,7 @@ Frank Pennekamp
 <ul>
 <li class="fragment">Body size is multidimensional.
 <ul>
-<li class="fragment">Multiple indicators of body size: mass, length, width</li>
+<li class="fragment">Multiple indicators of body size: mass, length, width and height</li>
 <li class="fragment">Identifiability:
 <ul>
 <li class="fragment">Loading of first indicator set to 1 by lavaan (sets scale of latent to 1st indicator).</li>
@@ -700,6 +584,122 @@ Frank Pennekamp
 <li class="fragment">Latents with two indicators require additional assumptions (e.g.&nbsp;similar loadings of latent on indicators).</li>
 </ul></li>
 </ul></li>
+</ul>
+</section>
+<section id="latent-example-2-measurement-error-in-a-predictor-13" class="slide level2">
+<h2>Latent example 2: measurement error in a predictor (1/3)</h2>
+<div class="cell" data-fig-width="8" data-fig-height="5" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="768" height="480" viewbox="0.00 0.00 185.57 44.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-40 181.57,-40 181.57,4 -4,4"></polygon>
+<!-- X -->
+<g id="node1" class="node">
+<title>X</title>
+<polygon fill="none" stroke="black" points="87.36,-36 0.21,-36 0.21,0 87.36,0 87.36,-36"></polygon>
+<text text-anchor="middle" x="43.79" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">X with error</text>
+</g>
+<!-- Y -->
+<g id="node2" class="node">
+<title>Y</title>
+<polygon fill="none" stroke="black" points="177.57,-36 123.57,-36 123.57,0 177.57,0 177.57,-36"></polygon>
+<text text-anchor="middle" x="150.57" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+</g>
+<!-- X&#45;&gt;Y -->
+<g id="edge1" class="edge">
+<title>X-&gt;Y</title>
+<path fill="none" stroke="black" d="M87.41,-18C96.01,-18 104.98,-18 113.34,-18"></path>
+<polygon fill="black" stroke="black" points="113.54,-21.5 123.54,-18 113.54,-14.5 113.54,-21.5"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Predictors are often measured with error.<br>
+</li>
+<li class="fragment">Multiple regression assumes no error in X.<br>
+</li>
+<li class="fragment">What if this assumption is violated?</li>
+</ul>
+</section>
+<section id="latent-example-2-measurement-error-in-a-predictor-23" class="slide level2">
+<h2>Latent example 2: measurement error in a predictor (2/3)</h2>
+
+<img data-src="Intro_to_SEM_part2_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"><p>Red = true slope, blue = OLS slope.</p>
+<ul>
+<li class="fragment">Measurement error biases the slope towards zero = regression dilution.</li>
+<li class="fragment">How to account for regression dilution?</li>
+</ul>
+</section>
+<section id="latent-example-2-measurement-error-in-a-predictor-33" class="slide level2">
+<h2>Latent example 2: measurement error in a predictor (3/3)</h2>
+<div class="cell" data-fig-width="8" data-fig-height="5" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="768" height="480" viewbox="0.00 0.00 483.60 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-94 479.6,-94 479.6,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<polygon fill="none" stroke="black" points="162.94,-90 2.48,-90 2.48,-54 162.94,-54 162.94,-90"></polygon>
+<text text-anchor="middle" x="82.71" y="-67.8" font-family="Helvetica,sans-Serif" font-size="14.00">1st noisy measurement</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<polygon fill="none" stroke="black" points="165.62,-36 -0.21,-36 -0.21,0 165.62,0 165.62,-36"></polygon>
+<text text-anchor="middle" x="82.71" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">2nd noisy measurement</text>
+</g>
+<!-- Z -->
+<g id="node3" class="node">
+<title>Z</title>
+<ellipse fill="none" stroke="black" cx="293.51" cy="-45" rx="92.19" ry="18"></ellipse>
+<text text-anchor="middle" x="293.51" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">underlying process</text>
+</g>
+<!-- Z&#45;&gt;X1 -->
+<g id="edge1" class="edge">
+<title>Z-&gt;X1</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M216.08,-54.88C202.16,-56.68 187.51,-58.58 173.25,-60.42"></path>
+<polygon fill="black" stroke="black" points="172.41,-57 162.94,-61.75 173.31,-63.94 172.41,-57"></polygon>
+</g>
+<!-- Z&#45;&gt;X2 -->
+<g id="edge2" class="edge">
+<title>Z-&gt;X2</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M216.27,-35.14C203.14,-33.44 189.37,-31.66 175.88,-29.92"></path>
+<polygon fill="black" stroke="black" points="176,-26.41 165.63,-28.59 175.1,-33.35 176,-26.41"></polygon>
+</g>
+<!-- Y -->
+<g id="node4" class="node">
+<title>Y</title>
+<ellipse fill="none" stroke="black" cx="448.6" cy="-45" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="448.6" y="-40.8" font-family="Helvetica,sans-Serif" font-size="14.00">Y</text>
+</g>
+<!-- Z&#45;&gt;Y -->
+<g id="edge3" class="edge">
+<title>Z-&gt;Y</title>
+<path fill="none" stroke="black" d="M385.77,-45C394.75,-45 403.45,-45 411.35,-45"></path>
+<polygon fill="black" stroke="black" points="411.58,-48.5 421.58,-45 411.58,-41.5 411.58,-48.5"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Latent captures the overlapping information in the repeated measures.</li>
+<li class="fragment">Better slope estimate and higher R<sup>2</sup> when regressing Y on latent.</li>
 </ul>
 </section>
 <section id="latent-variables---a-word-of-caution" class="slide level2">
@@ -718,22 +718,22 @@ Frank Pennekamp
 <section id="composite-variables-1" class="slide level2">
 <h2>Composite variables</h2>
 <ul>
-<li class="fragment">Composites can be used flexibly and require less assumptions than latents:
+<li class="fragment">Composites can be used flexibly and require fewer assumptions than latents:
 <ul>
 <li class="fragment">Summarize multiple causes under a single composite (dimension reduction).</li>
 <li class="fragment">Allow to model interactions and nonlinear relationships.</li>
 </ul></li>
-<li class="fragment">Composites are shown as hexangular shapes in causal diagrams.</li>
+<li class="fragment">Composites are shown as hexagonal shapes in causal diagrams.</li>
 </ul>
 </section>
-<section id="example-composite-joint-cause-landuse" class="slide level2">
-<h2>Example composite: joint cause landuse</h2>
-<div class="cell" data-fig-width="8" data-fig-height="5" data-layout-align="default">
+<section id="composite-example-1-joint-cause-landuse" class="slide level2 smaller">
+<h2>Composite example 1: joint cause landuse</h2>
+<div class="cell" data-fig-width="8" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="768" height="480" viewbox="0.00 0.00 346.32 132.40" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="768" height="384" viewbox="0.00 0.00 346.32 132.40" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 128.4)">
 <title>boxes_and_circles</title>
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-128.4 342.32,-128.4 342.32,4 -4,4"></polygon>
@@ -798,94 +798,16 @@ Frank Pennekamp
 </div>
 </div>
 <ul>
-<li class="fragment">Composites specify the collective influence of a set of variables.</li>
+<li class="fragment">Composites specify the collective influence of a set of variables — technically, a prediction from linear combinations of variables.</li>
 <li class="fragment">Arrows point from the indicators to the composite (i.e., formative or causal indicators).</li>
 <li class="fragment">The values of the composite determined by causes (i.e., indicators), thus error variance is set to 0.<br>
 </li>
-<li class="fragment">Technically, composites = prediction from linear combinations of variables.</li>
-</ul>
-</section>
-<section id="example-composite-joint-cause-landuse-1" class="slide level2">
-<h2>Example composite: joint cause landuse</h2>
-<div class="cell" data-fig-width="8" data-fig-height="5" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<svg width="768" height="480" viewbox="0.00 0.00 346.32 132.40" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 128.4)">
-<title>boxes_and_circles</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-128.4 342.32,-128.4 342.32,4 -4,4"></polygon>
-<!-- X1 -->
-<g id="node1" class="node">
-<title>X1</title>
-<polygon fill="none" stroke="black" points="88.57,-124.4 -0.19,-124.4 -0.19,-88.4 88.57,-88.4 88.57,-124.4"></polygon>
-<text text-anchor="middle" x="44.19" y="-102.2" font-family="Helvetica,sans-Serif" font-size="14.00">disturbance</text>
-</g>
-<!-- Y -->
-<g id="node4" class="node">
-<title>Y</title>
-<polygon fill="none" stroke="black" points="234.09,-79.4 206.68,-97.4 151.88,-97.4 124.48,-79.4 151.88,-61.4 206.68,-61.4 234.09,-79.4"></polygon>
-<text text-anchor="middle" x="179.28" y="-75.2" font-family="Helvetica,sans-Serif" font-size="14.00">land use</text>
-</g>
-<!-- X1&#45;&gt;Y -->
-<g id="edge2" class="edge">
-<title>X1-&gt;Y</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M88.4,-97.63C100.74,-95.13 114.3,-92.38 127.07,-89.79"></path>
-<polygon fill="black" stroke="black" points="127.99,-93.17 137.1,-87.75 126.6,-86.31 127.99,-93.17"></polygon>
-</g>
-<!-- X2 -->
-<g id="node2" class="node">
-<title>X2</title>
-<polygon fill="none" stroke="black" points="78.89,-70.4 9.49,-70.4 9.49,-34.4 78.89,-34.4 78.89,-70.4"></polygon>
-<text text-anchor="middle" x="44.19" y="-48.2" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
-</g>
-<!-- X2&#45;&gt;Y -->
-<g id="edge3" class="edge">
-<title>X2-&gt;Y</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M79.12,-59.28C93.52,-62.21 110.64,-65.68 126.56,-68.91"></path>
-<polygon fill="black" stroke="black" points="126.31,-72.43 136.81,-70.99 127.7,-65.57 126.31,-72.43"></polygon>
-</g>
-<!-- Z -->
-<g id="node3" class="node">
-<title>Z</title>
-<polygon fill="none" stroke="black" points="338.38,-97.4 270.12,-97.4 270.12,-61.4 338.38,-61.4 338.38,-97.4"></polygon>
-<text text-anchor="middle" x="304.25" y="-75.2" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text>
-</g>
-<!-- Y&#45;&gt;Z -->
-<g id="edge4" class="edge">
-<title>Y-&gt;Z</title>
-<path fill="none" stroke="black" d="M234.22,-79.4C242.75,-79.4 251.47,-79.4 259.73,-79.4"></path>
-<polygon fill="black" stroke="black" points="259.88,-82.9 269.88,-79.4 259.88,-75.9 259.88,-82.9"></polygon>
-</g>
-<!-- E -->
-<g id="node5" class="node">
-<title>E</title>
-<text text-anchor="middle" x="44.19" y="-4.2" font-family="Helvetica,sans-Serif" font-size="14.00">0</text>
-</g>
-<!-- E&#45;&gt;Y -->
-<g id="edge1" class="edge">
-<title>E-&gt;Y</title>
-<path fill="none" stroke="black" d="M47.99,-9.32C54.96,-11.65 73.63,-18.13 88.38,-25.4 106.84,-34.5 126.53,-46.1 142.77,-56.21"></path>
-<polygon fill="black" stroke="black" points="141.07,-59.28 151.4,-61.65 144.8,-53.35 141.07,-59.28"></polygon>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<ul>
-<li class="fragment">Estimation can cause convergence issues, lavaan can only handle a single composite per model.
-<ul>
-<li class="fragment">Solution: hand-code composites.</li>
-</ul></li>
+<li class="fragment">Estimation can cause convergence issues, lavaan can only handle a single composite per model (hand-code additional composites).</li>
 <li class="fragment">Only standardised coefficients interpretable.</li>
 </ul>
 </section>
-<section id="example-composite-model-nonlinear-effects" class="slide level2">
-<h2>Example composite: model nonlinear effects</h2>
+<section id="composite-example-2-model-nonlinear-effects" class="slide level2">
+<h2>Composite example 2: model nonlinear effects</h2>
 <div class="cell" data-fig-width="8" data-fig-height="2" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -952,9 +874,9 @@ Frank Pennekamp
 </div>
 </div>
 <ul>
-<li class="fragment">Nutrient effects on biomass may be nonlinear (e.g.&nbsp;hump-shaped)</li>
-<li class="fragment">Can be modelled by adding a squared term of nutrients to regression</li>
-<li class="fragment">Check validity of nonlinear effect by only constructing composite first (linear model)</li>
+<li class="fragment">Nutrient effects on biomass can be nonlinear (e.g.&nbsp;hump-shaped); too much nutrients can be detrimental to biomass.</li>
+<li class="fragment">Nonlinear effect can be modelled by adding a squared term of nutrients to regression</li>
+<li class="fragment">Check validity of nonlinear effect by only constructing regression model (polynomial versus linear model).</li>
 </ul>
 <!--- ## Distinguishing latent and composite variables 
 
@@ -1472,7 +1394,7 @@ survey.design = design)
 </div>
 </div>
 <ul>
-<li>Construct a latent variable called diversity using richness and evenness as indicators and ens.pie:
+<li>Construct a latent variable called diversity using richness, evenness and ens.pie as indicators:
 <ul>
 <li>Use confirmatory factor analysis</li>
 <li>Troubleshoot potential issues</li>

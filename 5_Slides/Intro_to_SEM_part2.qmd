@@ -4,7 +4,7 @@ title: "Introduction to path and structural equation modelling"
 subtitle: "Day 2: Structural equation modelling"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences, University of Zurich
-date: "11/6/2025"
+date: "11/5/2026"
 date-format: long
 format:
   revealjs: 
@@ -44,17 +44,6 @@ library(ggplot2)
     -  Model visualization (lecture)
     -  Work on your research question /  SE model (self-study)
     -  Presentation of your SE model and discussion with instructor and peers
-
-## SE modelling for causal understanding of systems
-
-::: incremental
-- Meta-model aims to connect general theory with study specific model and data
-- Theory is often more general than particular proxies used (e.g. climate change includes temperature mean, extremes, precipitation changes etc.)
-- Constructs can bridge between general theory and the complexity of case studies:
-  - Capture underlying processes and multiple causes
-  - Interactions between variables
-  - Nonlinear relationships
-:::
 
 ## Motivation for SE modelling {.smaller}
 
@@ -108,13 +97,14 @@ digraph  {
 
 . . .
 
-- However, many ecological concepts are:
-  -  abstract and difficult to quantify and measure directly
-  -  multifaceted and multidimensional
+- However, many ecological concepts are abstract and multidimensional, and theory is often more general than the proxies we measure (e.g. climate change spans mean temperature, extremes, precipitation changes, etc.).
 
 . . .
 
--  Latent and composite variables help to capture such concepts
+- Latent and composite variables bridge general theory and case-study data, capturing:
+  - underlying processes and multiple causes
+  - interactions between variables
+  - nonlinear relationships
 
 # Latent variables
 
@@ -125,7 +115,7 @@ digraph  {
 ::: incremental
 - In the social sciences, latent variables are widely used to capture abstract concepts.
 - Human attitudes and motivations are assumed to be “deeply latent” and only discernible indirectly.
-- Moreover, the properties often of primary interest itself and used as instruments.
+- Moreover, the latent constructs are often of primary interest themselves, not merely used as instruments.
 - Powerful but currently underused tool in ecology.
 :::
 
@@ -134,7 +124,7 @@ digraph  {
 
 ```{dot}
 //| fig-width: 6
-//| fig-height=: 1
+//| fig-height: 1
 digraph  {
 
   graph [rankdir = LR]
@@ -202,7 +192,46 @@ Latents fitted in two steps:
 2)  Structural model
     -   Estimates relationships between multiple latent variables and between latent and other variables.
 
-## Latent example: measurement error in predictor
+## Latent example 1: body size {.smaller}
+
+```{dot}
+//| fig-width: 4
+//| fig-height: 2
+digraph  {
+
+  graph [rankdir = LR, fontname = Helvetica]
+   
+   node [shape=box, fontname = Helvetica]
+   X1 [label="mass"];
+   X2 [label="length"];
+   X3 [label="width"];
+   X4 [label="height"];
+
+   
+   node [shape=oval]
+  Y [label="body size"]
+  
+  Y -> X1 [style="dashed"];
+  Y -> X2[style="dashed"];
+  Y -> X3[style="dashed"];
+  Y -> X4[style="dashed"];
+   
+  {rank = max; Y}
+  {rank = min; X1}
+  {rank = same; X1;X2; X3;X4}
+}
+```
+
+::: incremental
+- Body size is multidimensional.
+  - Multiple indicators of body size: mass, length, width and height
+  - Identifiability: 
+    - Loading of first indicator set to 1 by lavaan (sets scale of latent to 1st indicator).
+    - Because of this, use standardized coefficients for interpretation.
+    - Latents with two indicators require additional assumptions (e.g. similar loadings of latent on indicators).
+:::
+
+## Latent example 2: measurement error in a predictor (1/3)
 
 ```{dot}
 //| fig-width: 8
@@ -230,7 +259,7 @@ digraph  {
 -   What if this assumption is violated?
 :::
 
-## Latent example: measurement error in predictor
+## Latent example 2: measurement error in a predictor (2/3)
 
 ```{r}
 #| echo: false
@@ -248,7 +277,7 @@ Red = true slope, blue = OLS slope.
 -   How to account for regression dilution?
 :::
 
-## Latent example 1: measurement error in predictor
+## Latent example 2: measurement error in a predictor (3/3)
 
 ```{dot}
 //| fig-width: 8
@@ -281,45 +310,6 @@ digraph  {
 -   Better slope estimate and higher R^2^ when regressing Y on latent.
 :::
 
-## Latent example 2: body size {.smaller}
-
-```{dot}
-//| fig-width: 4
-//| fig-height=: 2
-digraph  {
-
-  graph [rankdir = LR, fontname = Helvetica]
-   
-   node [shape=box, fontname = Helvetica]
-   X1 [label="mass"];
-   X2 [label="length"];
-   X3 [label="width"];
-   X4 [label="height"];
-
-   
-   node [shape=oval]
-  Y [label="body size"]
-  
-  Y -> X1 [style="dashed"];
-  Y -> X2[style="dashed"];
-  Y -> X3[style="dashed"];
-  Y -> X4[style="dashed"];
-   
-  {rank = max; Y}
-  {rank = min; X1}
-  {rank = same; X1;X2; X3;X4}
-}
-```
-
-::: incremental
-- Body size is multidimensional.
-  - Multiple indicators of body size: mass, length, width
-  - Identifiability: 
-    - Loading of first indicator set to 1 by lavaan (sets scale of latent to 1st indicator).
-    - Because of this, use standardized coefficients for interpretation.
-    - Latents with two indicators require additional assumptions (e.g. similar loadings of latent on indicators).
-:::
-
 ## Latent variables - a word of caution
 ::: incremental
 - The design of latent variables requires deep thinking and justification
@@ -332,18 +322,18 @@ digraph  {
 ## Composite variables
 
 ::: incremental
-- Composites can be used flexibly and require less assumptions than latents:
+- Composites can be used flexibly and require fewer assumptions than latents:
   - Summarize multiple causes under a single composite (dimension reduction).
   - Allow to model interactions and nonlinear relationships.
-- Composites are shown as hexangular shapes in causal diagrams.
+- Composites are shown as hexagonal shapes in causal diagrams.
 :::
 
 
-## Example composite: joint cause landuse
+## Composite example 1: joint cause landuse {.smaller}
 
 ```{dot}
 //| fig-width: 8
-//| fig-height: 5
+//| fig-height: 4
 
 
 digraph boxes_and_circles {
@@ -373,51 +363,14 @@ digraph boxes_and_circles {
 ```
 
 ::: incremental
-- Composites specify the collective influence of a set of variables.
+- Composites specify the collective influence of a set of variables — technically, a prediction from linear combinations of variables.
 - Arrows point from the indicators to the composite (i.e., formative or causal indicators).
 - The values of the composite determined by causes (i.e., indicators), thus error variance is set to 0.\
-- Technically, composites = prediction from linear combinations of variables.
-:::
-
-## Example composite: joint cause landuse
-
-```{dot}
-//| fig-width: 8
-//| fig-height: 5
-
-digraph boxes_and_circles {
-   
-   graph [overlap = false, fontsize = 10, rankdir = LR, fontname = Helvetica]
-   
-   node [shape=box, fontname = Helvetica]
-   X1 [label="disturbance"];
-   X2 [label="nutrients"];
-   Z [label="biomass"];
-
-   
-   node [shape=hexagon, fontname = Helvetica]
-  Y [label="land use"]
-
-  node [shape=plain, fontname = Helvetica]
-  E [label="0"]
-  E -> Y [constraint=false];
-
-  X1 -> Y [style="dashed"];
-  X2 -> Y [style="dashed"];
-  Y -> Z;
-
-  {rank = "max"; Z}
-  {rank = "same"; X1;X2;}
-}
-```
-
-::: incremental
-- Estimation can cause convergence issues, lavaan can only handle a single composite per model.
-  - Solution: hand-code composites.
+- Estimation can cause convergence issues, lavaan can only handle a single composite per model (hand-code additional composites).
 - Only standardised coefficients interpretable.
 :::
 
-## Example composite: model nonlinear effects
+## Composite example 2: model nonlinear effects
 
 
 ```{dot}
@@ -449,9 +402,9 @@ digraph boxes_and_circles {
 ```
 
 ::: incremental
-- Nutrient effects on biomass may be nonlinear (e.g. hump-shaped)
-- Can be modelled by adding a squared term of nutrients to regression
-- Check validity of nonlinear effect by only constructing composite first (linear model)
+- Nutrient effects on biomass can be nonlinear (e.g. hump-shaped); too much nutrients can be detrimental to biomass.
+- Nonlinear effect can be modelled by adding a squared term of nutrients to regression
+- Check validity of nonlinear effect by only constructing regression model (polynomial versus linear model).
 :::
 
 <!--- ## Distinguishing latent and composite variables 
@@ -793,7 +746,7 @@ digraph  {
 ```
 
 
--   Construct a latent variable called diversity using richness and evenness as indicators and ens.pie:
+-   Construct a latent variable called diversity using richness, evenness and ens.pie as indicators:
     - Use confirmatory factor analysis
     - Troubleshoot potential issues 
 
