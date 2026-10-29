@@ -794,7 +794,7 @@ mat_tab <- function(hl = list()) {
 
 > Sewall Wright (1918, 1934): the correlation between any two variables can be **decomposed** into the paths that connect them in a causal diagram.
 
-![](guinea_pigs.png){width=200% fig-align="center"}
+![](/images/guinea_pigs.png){width=200% fig-align="center"}
 
 ::: incremental
 -   Each path in the diagram carries a coefficient.
@@ -999,7 +999,7 @@ digraph {
   z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
   edge [color = "gray70", fontcolor = "gray55"]
   X -> Y1; X -> Y2
-  z1:e -> z2:e [dir = both, constraint = false, label = "ψ", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000", style = dashed]
+  z1 -> z2 [dir = both, constraint = false, label = "ψ", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000", style = dashed]
   z1 -> Y1; z2 -> Y2
   {rank = same; Y1; Y2}
   {rank = max; z1; z2}
@@ -1344,14 +1344,6 @@ So in the **standardized** correlations the error is only *implicit*: it fixes t
 :::
 :::::
 
-## Everything adds up {.smaller}
-
-Every traced route fills a cell of the implied correlation matrix — the model reproduces all six correlations exactly.
-
-. . .
-
-Fitting an SE model runs this **in reverse**: it searches for the coefficients whose implied matrix best matches the **observed** one.
-
 ## Using covariances instead of correlations {.smaller}
 
 -   So far we used **correlations** and **standardized** coefficients, where every variance = 1.
@@ -1448,6 +1440,20 @@ Assess goodness of fit by comparing model-implied to observed covariance matrix.
 -   *Standardized root-mean squared residual (SRMR)*
     -   standardized difference between the observed and predicted correlations
     -   \< 0.08 is considered good
+
+## Modification indices
+
+What if the model does not fit?
+
+::: incremental
+- Modification indices (MIs) can be used to identify which parameters, if freed, would improve model fit.
+- The modification index is the χ2 value, with 1 degree of freedom, by which model fit would improve if a particular path was added or constraint freed.
+- Values bigger than 3.84 indicate that the model would be ‘improved’, and the p value for the added parameter would be < .05
+- MIs need to be used with caution: some suggestions may be plain wrong and even contradictory. 
+- MIs can aid in improving the model, but should be strictly used in combination with domain or theoretical knowledge.
+- When modification indices are explored, any adjustments should be treated as explanatory rather than confirmatory and reported transparently.
+:::
+
 
 ## Unstandardized vs standardized coefficients
 
@@ -1674,8 +1680,11 @@ mod.fit <- sem(mod.form , data = dat1)
 
 -   Experimental grassland study (started in 1982)
 -   Long-term consequences of human-driven environmental changes on grasslands:
-    -   Soil disturbance
-    -   Nitrogen deposition
+    -   Soil disturbance (disk harrowing)
+    -   Nitrogen deposition 
+
+![](images/Disking.jpg){.relative width="400" right="400"}
+
 
 ## Introduction to the dataset
 
@@ -1703,21 +1712,17 @@ mod.fit <- sem(mod.form , data = dat1)
 
 ![](images/AGB_disturbance.png)
 
--   Effect of soil disturbance and nutrient enrichment on aboveground plant biomass.
--   Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).
+-   Response variable: aboveground plant biomass.
 
 ## Introduction to the dataset {.smaller}
 
-![](images/AGB_diversity.png){.relative width="1000" right="200"}
+Response variables of interest:     
 
--   Effect of soil disturbance (disking) and nutrient enrichment on:
-    A)  effective number of species (ENS~PIE~)
-    B)  richness (S, species 0.3 m−2)
-    C)  Simpsons's evenness
+  A)  Species richness (number of species per 0.3 m$^2$)
+  B)  effective number of species (ENS~PIE~)
+  C)  Simpsons's evenness
 
-::: aside
 ENS~PIE~ equivalent to $1 / \sum_{i=1}^{S} p_i^2$ where $S$ is the total number of species and $p_i$ is the proportion of the community biomass represented by species $i$.
-:::
 
 ## Potential research questions
 
@@ -1807,11 +1812,9 @@ digraph  {
 
 ## Exercise 1
 
--   Load and aggregate the Seabloom dataset (data and code provided)
--   Inspect raw correlations between the following variables:
+-   Load the Seabloom dataset and average over the available years(data and code provided)
+-   Inspect relationships between the following variables:
     -   nadd, disk, rich, even, ens.pie, mass.above
--   Inspect multivariate normality of the following variables using the `mvn()` function in `library(MVN)`:
-    -   rich, even, mass.above
 -   Fit multiple linear regression models to estimate coefficients
     -   direct effects of nadd, disk, rich and even on above ground biomass (AGB)
     -   direct effects of nadd and disk on richness and evenness

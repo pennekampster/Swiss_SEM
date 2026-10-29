@@ -1379,7 +1379,7 @@ Sewell Wright, 1923</p>
 <p>Sewall Wright (1918, 1934): the correlation between any two variables can be <strong>decomposed</strong> into the paths that connect them in a causal diagram.</p>
 </blockquote>
 
-<img data-src="guinea_pigs.png" class="quarto-figure quarto-figure-center r-stretch" style="width:200.0%"><ul>
+<img data-src="./images/guinea_pigs.png" class="quarto-figure quarto-figure-center r-stretch" style="width:200.0%"><ul>
 <li class="fragment">Each path in the diagram carries a coefficient.</li>
 <li class="fragment">A correlation is rebuilt by <strong>summing</strong> over the routes that connect two variables, <strong>multiplying</strong> the coefficients <strong>along</strong> each route.</li>
 <li class="fragment">Fitting a structural equation (SE) model reverses this logic: finding the coefficients whose implied correlations match the observed ones.</li>
@@ -2046,9 +2046,9 @@ Sewell Wright, 1923</p>
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="384" height="288" viewbox="0.00 0.00 332.00 152.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="384" height="288" viewbox="0.00 0.00 288.00 152.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 148)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-148 328,-148 328,4 -4,4"></polygon>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-148 284,-148 284,4 -4,4"></polygon>
 <!-- X -->
 <g id="node1" class="node">
 <title>X</title>
@@ -2101,11 +2101,11 @@ Sewell Wright, 1923</p>
 </g>
 <!-- z1&#45;&gt;z2 -->
 <g id="edge3" class="edge">
-<title>z1:e-&gt;z2:e</title>
-<path fill="none" stroke="#cc0000" stroke-width="2.6" stroke-dasharray="5,2" d="M291.11,-19.77C325.7,-32.66 325.63,-111.69 290.89,-124.3"></path>
-<polygon fill="#cc0000" stroke="#cc0000" stroke-width="2.6" points="291.45,-16.28 281,-18 290.24,-23.18 291.45,-16.28"></polygon>
-<polygon fill="#cc0000" stroke="#cc0000" stroke-width="2.6" points="290.26,-120.86 281,-126 291.45,-127.76 290.26,-120.86"></polygon>
-<text text-anchor="middle" x="320.5" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#cc0000">ψ</text>
+<title>z1-&gt;z2</title>
+<path fill="none" stroke="#cc0000" stroke-width="2.6" stroke-dasharray="5,2" d="M253,-97.72C253,-81.92 253,-62.29 253,-46.46"></path>
+<polygon fill="#cc0000" stroke="#cc0000" stroke-width="2.6" points="249.5,-97.95 253,-107.95 256.5,-97.95 249.5,-97.95"></polygon>
+<polygon fill="#cc0000" stroke="#cc0000" stroke-width="2.6" points="256.5,-46.32 253,-36.32 249.5,-46.32 256.5,-46.32"></polygon>
+<text text-anchor="middle" x="241.6" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#cc0000">ψ</text>
 </g>
 <!-- z2&#45;&gt;Y2 -->
 <g id="edge5" class="edge">
@@ -3304,13 +3304,6 @@ Sewell Wright, 1923</p>
 <p>So in the <strong>standardized</strong> correlations the error is only <em>implicit</em>: it fixes the endogenous <strong>diagonal</strong> but <strong>drops out of the off-diagonal</strong> cells — which is why none of the traced routes contained ζ.</p>
 </div></div>
 </section>
-<section id="everything-adds-up" class="slide level2 smaller">
-<h2>Everything adds up</h2>
-<p>Every traced route fills a cell of the implied correlation matrix — the model reproduces all six correlations exactly.</p>
-<div class="fragment">
-<p>Fitting an SE model runs this <strong>in reverse</strong>: it searches for the coefficients whose implied matrix best matches the <strong>observed</strong> one.</p>
-</div>
-</section>
 <section id="using-covariances-instead-of-correlations" class="slide level2 smaller">
 <h2>Using covariances instead of correlations</h2>
 <ul>
@@ -3457,6 +3450,18 @@ Sewell Wright, 1923</p>
 </ul></li>
 </ul>
 </div>
+</section>
+<section id="modification-indices" class="slide level2">
+<h2>Modification indices</h2>
+<p>What if the model does not fit?</p>
+<ul>
+<li class="fragment">Modification indices (MIs) can be used to identify which parameters, if freed, would improve model fit.</li>
+<li class="fragment">The modification index is the χ2 value, with 1 degree of freedom, by which model fit would improve if a particular path was added or constraint freed.</li>
+<li class="fragment">Values bigger than 3.84 indicate that the model would be ‘improved’, and the p value for the added parameter would be &lt; .05</li>
+<li class="fragment">MIs need to be used with caution: some suggestions may be plain wrong and even contradictory.</li>
+<li class="fragment">MIs can aid in improving the model, but should be strictly used in combination with domain or theoretical knowledge.</li>
+<li class="fragment">When modification indices are explored, any adjustments should be treated as explanatory rather than confirmatory and reported transparently.</li>
+</ul>
 </section>
 <section id="unstandardized-vs-standardized-coefficients" class="slide level2">
 <h2>Unstandardized vs standardized coefficients</h2>
@@ -3753,15 +3758,16 @@ mod.fit <- sem(mod.form , data = dat1)
 </section>
 <section id="introduction-to-the-dataset" class="slide level2">
 <h2>Introduction to the dataset</h2>
-
-<img data-src="images/CedarCreek.jpg" class="r-stretch"><ul>
+<p><img data-src="images/CedarCreek.jpg"></p>
+<ul>
 <li>Experimental grassland study (started in 1982)</li>
 <li>Long-term consequences of human-driven environmental changes on grasslands:
 <ul>
-<li>Soil disturbance</li>
+<li>Soil disturbance (disk harrowing)</li>
 <li>Nitrogen deposition</li>
 </ul></li>
 </ul>
+<p><img data-src="images/Disking.jpg" class="relative" data-right="400" width="400"></p>
 </section>
 <section id="introduction-to-the-dataset-1" class="slide level2">
 <h2>Introduction to the dataset</h2>
@@ -3791,25 +3797,19 @@ mod.fit <- sem(mod.form , data = dat1)
 <h2>Introduction to the dataset</h2>
 
 <img data-src="images/AGB_disturbance.png" class="r-stretch"><ul>
-<li>Effect of soil disturbance and nutrient enrichment on aboveground plant biomass.</li>
-<li>Colors: Control and NPK+ (all nutrients plus 9.5 g N m-2 yr-1).</li>
+<li>Response variable: aboveground plant biomass.</li>
 </ul>
 </section>
 <section id="introduction-to-the-dataset-4" class="slide level2 smaller">
 <h2>Introduction to the dataset</h2>
-<p><img data-src="images/AGB_diversity.png" class="relative" data-right="200" width="1000"></p>
-<ul>
-<li>Effect of soil disturbance (disking) and nutrient enrichment on:
+<p>Response variables of interest:</p>
 <ol type="A">
+<li>Species richness (number of species per 0.3 m<span class="math inline">\(^2\)</span>)</li>
 <li>effective number of species (ENS<sub>PIE</sub>)</li>
-<li>richness (S, species 0.3 m−2)</li>
 <li>Simpsons’s evenness</li>
-</ol></li>
-</ul>
-
-<aside><div>
+</ol>
 <p>ENS<sub>PIE</sub> equivalent to <span class="math inline">\(1 / \sum_{i=1}^{S} p_i^2\)</span> where <span class="math inline">\(S\)</span> is the total number of species and <span class="math inline">\(p_i\)</span> is the proportion of the community biomass represented by species <span class="math inline">\(i\)</span>.</p>
-</div></aside></section>
+</section>
 <section id="potential-research-questions" class="slide level2">
 <h2>Potential research questions</h2>
 <div class="cell" data-fig-width="8" data-layout-align="default">
@@ -3891,11 +3891,6 @@ mod.fit <- sem(mod.form , data = dat1)
 <svg width="1152" height="480" viewbox="0.00 0.00 388.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 384.44,-215 384.44,4 -4,4"></polygon>
-<g id="clust3" class="cluster">
-<title>cluster_prod</title>
-<polygon fill="none" stroke="lightgrey" points="288.31,-54 288.31,-126 372.44,-126 372.44,-54 288.31,-54"></polygon>
-<text text-anchor="middle" x="330.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
-</g>
 <g id="clust1" class="cluster">
 <title>cluster_bio</title>
 <polygon fill="none" stroke="lightgrey" points="154.38,-77 154.38,-203 246.31,-203 246.31,-77 154.38,-77"></polygon>
@@ -3905,6 +3900,11 @@ mod.fit <- sem(mod.form , data = dat1)
 <title>cluster_env</title>
 <polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon>
 <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Human impact</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_prod</title>
+<polygon fill="none" stroke="lightgrey" points="288.31,-54 288.31,-126 372.44,-126 372.44,-54 288.31,-54"></polygon>
+<text text-anchor="middle" x="330.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
 </g>
 <!-- evenness -->
 <g id="node1" class="node">
@@ -4001,14 +4001,10 @@ mod.fit <- sem(mod.form , data = dat1)
 <section id="exercise-1" class="slide level2">
 <h2>Exercise 1</h2>
 <ul>
-<li>Load and aggregate the Seabloom dataset (data and code provided)</li>
-<li>Inspect raw correlations between the following variables:
+<li>Load the Seabloom dataset and average over the available years(data and code provided)</li>
+<li>Inspect relationships between the following variables:
 <ul>
 <li>nadd, disk, rich, even, ens.pie, mass.above</li>
-</ul></li>
-<li>Inspect multivariate normality of the following variables using the <code>mvn()</code> function in <code>library(MVN)</code>:
-<ul>
-<li>rich, even, mass.above</li>
 </ul></li>
 <li>Fit multiple linear regression models to estimate coefficients
 <ul>
