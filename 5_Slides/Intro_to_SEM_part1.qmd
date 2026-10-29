@@ -464,9 +464,9 @@ digraph  {
   X2 -> Y:w
   X3 -> Y:w
   
-  X1:w -> X2:w [constraint=false, dir=both]
-  X2:w -> X3:w [dir=both]
-  X1:w -> X3:w [dir=both]
+  X1:w -> X2:w [constraint=false, dir=both, style=dashed]
+  X2:w -> X3:w [dir=both, style=dashed]
+  X1:w -> X3:w [dir=both, style=dashed]
   
 }
 
@@ -700,7 +700,7 @@ digraph  {
 
 # Global estimation in a nutshell
 
-## Observed variables
+## Observed variables and their relationships {.smaller}
 
 ```{r, out.width="90%", fig.align='center'}
 set.seed(5)
@@ -794,11 +794,17 @@ mat_tab <- function(hl = list()) {
 
 > Sewall Wright (1918, 1934): the correlation between any two variables can be **decomposed** into the paths that connect them in a causal diagram.
 
+![](guinea_pigs.png){width=200% fig-align="center"}
+
 ::: incremental
 -   Each path in the diagram carries a coefficient.
 -   A correlation is rebuilt by **summing** over the routes that connect two variables, **multiplying** the coefficients **along** each route.
 -   Fitting a structural equation (SE) model reverses this logic: finding the coefficients whose implied correlations match the observed ones.
 :::
+
+
+
+
 
 ## The model we will use {.smaller}
 
@@ -822,7 +828,7 @@ digraph {
   X2 -> Y1 [label = "b"]
   Y1 -> Y2 [label = "c"]
   X1 -> Y2 [label = "d"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  X1 -> X2 [dir = both, constraint = false, label = "r", style = dashed]
 
   z1 -> Y1
   z2 -> Y2
@@ -837,6 +843,7 @@ digraph {
 -   **X₁** affects Y₂ **directly** *and* **indirectly** through Y₁.
 -   Coefficients are **standardized**, so traced routes give **correlations** directly.
 :::
+
 
 ## Rule 1: exogenous correlations {.smaller}
 
@@ -861,7 +868,7 @@ digraph {
   edge [color = "gray70", fontcolor = "gray55"]
   X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
   Y1 -> Y2 [label = "c"]; X1 -> Y2 [label = "d"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000", style = dashed]
+  X1 -> X2 [dir = both, constraint = false, label = "r", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000", style = dashed]
   
   z1 -> Y1; z2 -> Y2
   {rank = min; X1; X2}
@@ -886,7 +893,7 @@ digraph {
   edge [color = "gray70", fontcolor = "gray55"]
   X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
   X1 -> Y2 [label = "d"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  X1 -> X2 [dir = both, constraint = false, label = "r", style = dashed]
   Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   z1 -> Y1; z2 -> Y2
   {rank = min; X1; X2}
@@ -914,7 +921,7 @@ digraph {
   z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
   edge [color = "gray70", fontcolor = "gray55"]
   X2 -> Y1 [label = "b"]; X1 -> Y2 [label = "d"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  X1 -> X2 [dir = both, constraint = false, label = "r", style = dashed]
   X1 -> Y1 [label = "a", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   z1 -> Y1; z2 -> Y2
@@ -939,7 +946,7 @@ digraph {
   z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
   edge [color = "gray70", fontcolor = "gray55"]
   X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  X1 -> X2 [dir = both, constraint = false, label = "r", style = dashed]
   Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   X1 -> Y2 [label = "d", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   z1 -> Y1; z2 -> Y2
@@ -967,7 +974,7 @@ digraph {
   edge [color = "gray70", fontcolor = "gray55"]
   X1 -> Y1 [label = "a"]; X2 -> Y1 [label = "b"]
   Y1 -> Y2 [label = "c"]; X1 -> Y2 [label = "d"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  X1 -> X2 [dir = both, constraint = false, label = "r", style = dashed]
   z1 -> Y1 [color = "#cc0000", penwidth = 2.6]
   z2 -> Y2 [color = "#cc0000", penwidth = 2.6]
   {rank = min; X1; X2}
@@ -1025,7 +1032,7 @@ digraph {
   z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
   edge [color = "gray70", fontcolor = "gray55"]
   X2 -> Y1 [label = "b"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", style = dashed]
+  X1 -> X2 [dir = both, constraint = false, label = "r", style = dashed]
   X1 -> Y1 [label = "a", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   X1 -> Y2 [label = "d", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
@@ -1056,7 +1063,7 @@ digraph {
   X1 -> Y1 [label = "a", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   X1 -> Y2 [label = "d", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4", style = dashed]
+  X1 -> X2 [dir = both, constraint = false, label = "r", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4", style = dashed]
   X2 -> Y1 [label = "b", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
   z1 -> Y1; z2 -> Y2
   {rank = min; X1; X2}
@@ -1088,9 +1095,9 @@ digraph {
   edge [color = "gray70", fontcolor = "gray55"]
   X1 -> Y1 [label = "a", color = "#2ca02c", penwidth = 2.6, fontcolor = "#2ca02c"]
   X2 -> Y1 [label = "b", color = "#2ca02c", penwidth = 2.6, fontcolor = "#2ca02c"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r", color = "#2ca02c", penwidth = 2.6, fontcolor = "#2ca02c"]
-  X1 -> Y2 [label = "d", color = "#cc0000", style = dashed, penwidth = 2.4, fontcolor = "#cc0000"]
-  Y1 -> Y2 [label = "c", color = "#cc0000", style = dashed, penwidth = 2.4, fontcolor = "#cc0000"]
+  X1 -> X2 [dir = both, constraint = false, label = "r", color = "#2ca02c", penwidth = 2.6, fontcolor = "#2ca02c", style = dashed]
+  X1 -> Y2 [label = "d", color = "#cc0000", penwidth = 2.4, fontcolor = "#cc0000"]
+  Y1 -> Y2 [label = "c", color = "#cc0000", penwidth = 2.4, fontcolor = "#cc0000"]
   {rank = min; X1; X2}
   {rank = max; Y2}
 }
@@ -1118,7 +1125,7 @@ digraph {
   X2 -> Y1 [label = "0.40"]
   Y1 -> Y2 [label = "0.50"]
   X1 -> Y2 [label = "0.30"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "0.30"]
+  X1 -> X2 [dir = both, constraint = false, label = "0.30", style = dashed]
   z1 -> Y1; z2 -> Y2
   {rank = min; X1; X2}
   {rank = max; Y2}
@@ -1166,7 +1173,7 @@ digraph {
   edge [color = "gray70", fontcolor = "gray55"]
   Y1 -> Y2 [label = "c = 0.5"]; X1 -> Y2 [label = "d = 0.3"]
   X1 -> Y1 [label = "a = 0.6", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  X1 -> X2 [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4", style = dashed]
   X2 -> Y1 [label = "b = 0.4", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
   z1 -> Y1; z2 -> Y2
   {rank = min; X1; X2}
@@ -1204,7 +1211,7 @@ digraph {
   X1 -> Y1 [label = "a = 0.6", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   Y1 -> Y2 [label = "c = 0.5", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
   X1 -> Y2 [label = "d = 0.3", color = "#cc0000", penwidth = 2.6, fontcolor = "#cc0000"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  X1 -> X2 [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4", style = dashed]
   X2 -> Y1 [label = "b = 0.4", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
   z1 -> Y1; z2 -> Y2
   {rank = min; X1; X2}
@@ -1243,7 +1250,7 @@ digraph {
   X1 -> Y1 [label = "a = 0.6", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
   X1 -> Y2 [label = "d = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
   X2 -> Y1 [label = "b = 0.4", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
-  X1:w -> X2:w [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4"]
+  X1 -> X2 [dir = both, constraint = false, label = "r = 0.3", color = "#1f77b4", penwidth = 2.6, fontcolor = "#1f77b4", style = dashed]
   z1 -> Y1; z2 -> Y2
   {rank = min; X1; X2}
   {rank = max; Y2}
@@ -1633,7 +1640,7 @@ Define model:
 mod.form  <-
 "Y ~ X1 + X2 + x3
 X3 ~ X1
-````
+```
 
 Fit model:
 
@@ -1873,7 +1880,7 @@ digraph  {
     nutrients -> biomass;
     disturbance -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3] ;
+    evenness:e-> richness:e [dir=both; minlen=3, style="dashed"] ;
 
     evenness->biomass ;
     richness->biomass ;
@@ -1959,7 +1966,7 @@ digraph  {
     nutrients->evenness;
     nutrients -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3];
+    evenness:e-> richness:e [dir=both; minlen=3, style="dashed"];
 
     evenness->biomass ;
     richness->biomass ;
@@ -1997,7 +2004,7 @@ digraph  {
     disturbance -> biomass;
     nutrients -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3];
+    evenness:e-> richness:e [dir=both; minlen=3, style="dashed"];
 
     evenness->biomass ;
     richness->biomass ;
@@ -2033,7 +2040,7 @@ digraph  {
     disturbance -> biomass;
     nutrients -> biomass;
 
-    evenness:e-> richness:e [dir=both; minlen=3];
+    evenness:e-> richness:e [dir=both; minlen=3, style="dashed"];
 
     evenness->biomass ;
     richness->biomass ;

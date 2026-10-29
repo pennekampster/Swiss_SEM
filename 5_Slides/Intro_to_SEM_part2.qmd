@@ -830,7 +830,7 @@ digraph  {
     nutrients -> landuse [style="dashed"];
     disturbance -> landuse [style="dashed"];
 
-    evenness-> richness [dir=both, minlen=3] ;
+    evenness-> richness [dir=both, minlen=3, style="dashed"] ;
 
   
  { rank="same"; evenness, richness}
@@ -872,7 +872,7 @@ disturbance->middleman [constraint=false, arrowhead=diamond];
     nutrients -> evenness;
    nutrients -> richness;
 
- evenness-> richness [dir=both; minlen=3] ;
+ evenness-> richness [dir=both; minlen=3, style="dashed"] ;
 
  { rank="same"; evenness, richness}
 }
@@ -908,7 +908,7 @@ digraph  {
     evenness-> biomass;
     richness->biomass;
 
- evenness-> richness [dir=both; minlen=3] ;
+ evenness-> richness [dir=both; minlen=3, style="dashed"] ;
 
  { rank="same"; evenness, richness}
 
@@ -941,7 +941,7 @@ digraph  {
     evenness-> biomass;
     richness->biomass;
 
- evenness-> richness [dir=both; minlen=3] ;
+ evenness-> richness [dir=both; minlen=3, style="dashed"] ;
 
  { rank="same"; evenness, richness}
   
