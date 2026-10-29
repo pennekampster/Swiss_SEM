@@ -138,12 +138,22 @@ summary(fit2a_auto, standardized=T)
 
 # get coefficients
 summary(lm(y ~ x1 * x2, data=dat))
-coef(lm(y ~ x1 * x2, data=dat))
+w <- coef(lm(y ~ x1 * x2, data=dat))[-1]   # weights for x1, x2, x1x2 (drop intercept)
+w
 
-model2b_manual <- ' 
-comp.int <~ 1.6860798 * x1 +   0.7543838 * x2 + -0.8553332  * x1x2
+# A "<~" composite is scaled by lavaan to UNIT VARIANCE. If we plug in the raw
+# regression weights, the implied composite variance (here ~2.95) contradicts
+# that unit-variance scaling and lavaan returns an improper (Heywood) solution
+# with a negative residual variance for y. So we normalize the weights by the
+# SD of the weighted sum, which keeps their relative sizes but makes var(comp) = 1.
+comp.raw <- w[1] * dat$x1 + w[2] * dat$x2 + w[3] * dat$x1x2
+w <- w / sd(comp.raw)
+w
+
+model2b_manual <- sprintf('
+comp.int <~ %f * x1 + %f * x2 + %f * x1x2
 y ~ comp.int
-'
+', w[1], w[2], w[3])
 
 fit2b_manual <- sem(model2b_manual, data=dat)
 summary(fit2b_manual, standardized=T)

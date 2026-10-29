@@ -10,7 +10,7 @@ library(ggdag)
 # simulate a dataset with known causal structure (make drawing)
 
 # More realistic simulation with varying error structures
-N <- 200  
+N <- 400  
 set.seed(35421354)
 dat <- data.frame(x1 = rnorm(N, mean = 0, sd = 1))
 dat$x2 = 0.2 * dat$x1 + rnorm(N, mean = 0, sd = 0.8)
@@ -26,7 +26,7 @@ p1 <- ggplot(data=dat, aes(x=x1,y=y)) + geom_point() + stat_smooth(method="lm")
 p2 <- ggplot(data=dat, aes(x=x2,y=y)) + geom_point() + stat_smooth(method="lm")
 p3 <- ggplot(data=dat, aes(x=x3,y=y)) + geom_point() + stat_smooth(method="lm")
 
-p1 + p2 +p3
+p1 + p2 + p3
 
 # fit multiple regression
 dagify(y ~ x1,
@@ -89,9 +89,7 @@ summary(fit3)
 summary(fit3, fit.measures = T)
 
 # any more paths to include?
-subset(modindices(fit))
-
-
+subset(modindices(fit3), mi > 3.84)
 
 
 # after a fitting model is found, let's do some pruning
@@ -107,7 +105,7 @@ dagify(y ~ x2 + x3,
   ggdag()
 
 fit_true <- sem(model_true, data=dat)
-summary(fit_true)
+summary(fit_true, fit.measures = T)
 
 # compare fits
 aictab(list(fit2, fit_true), c("fit 2", "fit true"))
@@ -168,9 +166,9 @@ x3 ~ b4 * x2
 
 b3 == 0.25
 
-dir.x1.y := b1
-indir.x1.y := b3 * b2
-tot.x1.y := b3 * b2 + b1 
+# x1 has no direct path to y; it acts only through x2
+indir.x1.y := b3 * b1 + b3 * b4 * b2
+tot.x1.y   := b3 * b1 + b3 * b4 * b2
 '
 
 fit1b <- sem(model1b, data=dat)
