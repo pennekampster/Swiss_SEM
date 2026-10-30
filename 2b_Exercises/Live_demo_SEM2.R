@@ -36,8 +36,8 @@ set.seed(72643276)
 dat <- rnorm_multi(
   n = 100, 
   mu = c(40, 80),              # length, mass
-  sd = c(4, 5),                # CV = 0.25 for both
-  r = 0.5,                     # correlation between them
+  sd = c(4, 5),                # set different SDs
+  r = 0.5,                     # specify correlation between them
   varnames = c("length", "mass"),
   empirical = FALSE
 )
@@ -73,8 +73,8 @@ dat <- rnorm_multi(
 # Are indicators correlated?
 pairs(dat)
 
-cfa <- "body_size =~ mass + width + length + height"
-fit <- cfa(cfa, data=dat)
+cfa_model4 <- "body_size =~ mass + width + length + height"
+fit <- cfa(cfa_model4, data=dat)
 
 # check that standardised lambdas are of similar magnitude (similar loadings) 
 # suggesting common cause
@@ -178,7 +178,6 @@ set.seed(2397348)
 dat <- data.frame(x1 = rnorm(N), x2 = rnorm(N))
 dat$group = rep(c("0","1"), each = N/2)
 dat$y <- ifelse(dat$group == "1", 0.2 * dat$x1, 0.9 * dat$x1) + 0.5 * dat$x2 + rnorm(N)
-dat$group_num <- as.numeric(dat$group)
 
 model3a <- ' 
 y ~ x1 + x2
