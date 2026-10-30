@@ -143,3 +143,48 @@ rich ~~ even"
 
 fit.comp2 <- sem(comp2, data = seabloom)
 summary(fit.comp2, standardize = T, fit.measures=T)
+
+
+
+# ============================================================
+# Exercise: two hand-coded composites
+#   (1) a nonlinear (saturating) nutrient effect
+#   (2) a diversity composite from richness + evenness
+# ============================================================
+
+# ---- Composite 1: nonlinear effect of nutrients ------------------------
+# Centre nadd before squaring (reduces collinearity between the linear and
+# quadratic terms). Check first that the curvature is real:
+seabloom$nadd.c  <- seabloom$nadd - mean(seabloom$nadd)
+seabloom$nadd.c2 <- seabloom$nadd.c^2
+anova(lm(mass.above ~ nadd.c,            data = seabloom),
+      lm(mass.above ~ nadd.c + nadd.c2,  data = seabloom))
+# -> adding nadd^2 is highly significant (F = 25, p = 1e-6): biomass saturates
+#    with nutrient addition rather than rising linearly.
+
+# Build the composite by hand: weights = coefficients of that regression.
+w.nut <- coef(lm(mass.above ~ nadd.c + nadd.c2, data = seabloom))
+seabloom$nutrient <- w.nut["nadd.c"] * seabloom$nadd.c +
+  w.nut["nadd.c2"] * seabloom$nadd.c2   # one "nutrient" axis
+
+# ---- Composite 2: diversity (richness + evenness) ----------------------
+# Standardise both indicators first so they share a common scale (richness is
+# a count, evenness is 0-1). Note they are strongly NEGATIVELY correlated:
+seabloom$rich.z <- as.numeric(scale(seabloom$rich))
+seabloom$even.z <- as.numeric(scale(seabloom$even))
+cor(seabloom$rich.z, seabloom$even.z)                      # ~ -0.71
+
+w.div <- coef(lm(mass.above ~ rich.z + even.z, data = seabloom))
+seabloom$diversity <- w.div["rich.z"] * seabloom$rich.z +
+  w.div["even.z"] * seabloom$even.z    # one "diversity" axis
+
+# ---- SEM with the two composites ---------------------------------------
+two.comp <- "mass.above ~ nutrient + diversity"
+fit.two.comp <- sem(two.comp, data = seabloom, estimator = "MLM")
+summary(fit.two.comp, standardized = TRUE, rsq = TRUE)
+
+# ---- Extension: nutrients also shape diversity (mediation) -------------
+two.comp.med <- "mass.above ~ nutrient + diversity
+                 diversity  ~ nadd.c"
+fit.med <- sem(two.comp.med, data = seabloom, estimator = "MLM")
+summary(fit.med, standardized = TRUE, rsq = TRUE)
