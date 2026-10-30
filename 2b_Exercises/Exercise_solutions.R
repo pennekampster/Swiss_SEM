@@ -40,19 +40,19 @@ corrplot(cor_matrix,
 
 # 2. MULTIVARIATE NORMALITY TESTS
 
-lm.dir <- lm(mass.above ~ nadd  + rich + even, data = seabloom)
+lm.dir <- lm(mass.above ~ nadd  + disk + rich + even, data = seabloom)
 summary(lm.dir)
 par(mfrow=c(2,2))
 plot(lm.dir)
 par(mfrow=c(1,1))
 
-lm.rich <- lm(rich ~ nadd, data = seabloom)
+lm.rich <- lm(rich ~ nadd + disk, data = seabloom)
 summary(lm.rich)
 par(mfrow=c(2,2))
 plot(lm.rich)
 par(mfrow=c(1,1))
 
-lm.even <- lm(even ~ nadd, data = seabloom)
+lm.even <- lm(even ~ nadd + disk, data = seabloom)
 summary(lm.even)
 par(mfrow=c(2,2))
 plot(lm.even)
@@ -249,69 +249,39 @@ fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
 summary(fit.lv)
 
 
-# Exercise 3:
-# construct and estimate composite variable in SEM
-  
-comp.auto <- '
-comp.landuse <~ 1 * disk + nadd
+# Exercise 3: composite variable 'landuse' (joint cause: nutrients + disturbance)
 
+# A composite is a weighted sum of its indicators (here disk and nadd), capturing
+# their collective "land use" influence. Here land use drives biomass, richness
+# and evenness (see the Ex3 DAG). The composite's error variance is fixed to 0
+# (it is fully determined by its indicators).
+
+# (a) Construct the composite directly in lavaan with the "<~" operator.
+# IMPORTANT: fit it on the SAME data and estimator as fit.simple (plain seabloom,
+# MLM). Rescaling the variables for only one of the two models would make their
+# log-likelihoods - and therefore the AIC comparison below - meaningless.
+comp.auto <-
+'comp.landuse <~ 1 * disk + nadd
+mass.above ~ comp.landuse + rich + even
 rich ~ comp.landuse
 even ~ comp.landuse
+rich ~~ even'
 
-mass.above ~ comp.landuse + rich + even
+fit.comp.auto <- sem(comp.auto, data = seabloom, estimator = "MLM")
+summary(fit.comp.auto, standardized = TRUE, rsq = TRUE)
 
-rich ~~ even
-'
+# (b) Compare the starting model with the composite model (both on plain seabloom,
+# both MLM, same observed variables -> a valid comparison).
+aictab(list(fit.simple, fit.comp.auto),
+       c("starting (simple)", "composite landuse"))
+# The starting model is far better supported (much lower AICc): forcing nutrients
+# and disturbance onto a single 1-D "land use" axis fits the data clearly worse
+# than letting the two drivers act separately.
+# Caveat: because disk is binary and sits inside the composite, the composite's
+# fit (unlike the starting model's) is not invariant to rescaling its indicators,
+# so always compare the two models on identical data, as done here.
 
-fit.comp.auto <- sem(comp.auto, data = seabloom)
-summary(fit.comp.auto, standardized=T, rsq=T)
 
-# what is a composite variable?
-# A composite variable is a weighted sum of its indicators,
-# where weights are estimated from the data to maximize explained variance in the response variable.
-# calculate composite variable manually
-lm(mass.above ~ disk + nadd, data = seabloom)
-lm(rich ~ disk + nadd, data = seabloom)
-lm(even ~ disk + nadd, data = seabloom)
-
-# fit more than 1 composite as part of SEM model
-comp <- "
-comp.biomass <~ 0.4928826 * disk + 0.06799544 * nadd
-comp.rich <~ 0.4123 * disk + -0.1902 * nadd
-
-rich ~ comp.rich
-even ~ nadd
-
-mass.above ~ comp.biomass + rich + even
-
-rich ~~ even
-"
-
-fit.comp <- sem(comp, data = seabloom)
-summary(fit.comp, standardized=T, rsq=T)
-
-# calculate composite variable manually
-seabloom2 <- seabloom
-seabloom2$even_rev <- 1-seabloom$even # reverse evenness so that higher values = lower evenness
-coef(lm(mass.above ~ disk + nadd, data = seabloom2))
-seabloom2$comp.biomass <- 0.49288262 * seabloom2$disk + 0.06799544 * seabloom2$nadd
-
-coef(lm(rich ~ disk + nadd, data = seabloom2))
-seabloom2$comp.rich <- 0.4122807 * seabloom2$disk + -0.1902469 * seabloom2$nadd
-
-coef(lm(even_rev ~ disk + nadd, data = seabloom2))
-seabloom2$comp.even <- 0.002715821 * seabloom2$disk + -0.005796789 * seabloom2$nadd
-
-# fit more than 1 composite as part of SEM model
-comp <- '
-mass.above ~ comp.biomass + rich + even
-even ~ comp.even
-
-rich ~~ even
-'
-
-fit.comp <- sem(comp, data = seabloom2)
-summary(fit.comp, standardized=T, rsq=T)
 
 
 
@@ -320,39 +290,39 @@ summary(fit.comp, standardized=T, rsq=T)
 # manual calculation of product of two predictors
 seabloom$diskxnadd <- seabloom$disk * seabloom$nadd
 
-int <- "mass.above ~ disk + nadd + diskxnadd"
-fit.int <- sem(int, data = seabloom)
-summary(fit.int, standardized=T)
-
-compint <-
-"comp.int <~ 1 * disk + nadd + diskxnadd
-mass.above ~ comp.int"
-
-fit.compint <- sem(compint, data = seabloom)
-summary(fit.compint, standardized = TRUE)
-
-# Full model:
+# We cannot build the interaction composite with "<~" here, because nadd would be
+# BOTH an indicator of the composite AND a direct cause of richness and evenness.
+# lavaan's composite (LISREL) representation does not allow an indicator to also
+# have that second role, and the model errors out. So we build the composite by
+# hand: take the weights from the interaction regression of biomass on disk, nadd
+# and their product, form the composite as a data column, and enter it as an
+# observed predictor.
+w.int <- coef(lm(mass.above ~ disk + nadd + diskxnadd, data = seabloom))
+w.int
+seabloom$comp.int.manual <- w.int["disk"] * seabloom$disk +
+                     w.int["nadd"] * seabloom$nadd +
+                     w.int["diskxnadd"] * seabloom$diskxnadd
 
 int.full <-
-"comp.int <~ 1 * disk + nadd + diskxnadd
-
-mass.above ~ rich + even + comp.int 
-rich ~ nadd 
-even ~ nadd 
+"mass.above ~ rich + even + comp.int.manual
+rich ~ nadd
+even ~ nadd
 
 rich ~~ even"
 
-fit.int.full <- sem(int.full, data = seabloom)
+fit.int.full <- sem(int.full, data = seabloom, estimator = "MLM")
 summary(fit.int.full, standardized = TRUE, rsq = TRUE)
 
 
 # Does interaction term increase variance explained?
 lavInspect(fit.int.full, "R2")
 lavInspect(fit.simple, "R2")
+
 # Yes, inclusion of interaction term increases R2 for mass.above from 0.57 to 0.60
 # what about goodness-of-fit?
 fitmeasures(fit.int.full, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
 fitmeasures(fit.simple, c("chisq", "df", "pvalue", "cfi", "tli", "rmsea"))
+
 
 # Exercise 5:
 
@@ -380,15 +350,11 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
   guides(colour="none") +
   theme_bw() 
 
-# constrain certain pathways to be the same
-int.mg.constrain <- ' 
-mass.above ~ c("b1", "b1") * rich + c("b2", "b2") * even
-rich ~ c("b4a", "b4b") * nadd 
-even ~ c("b6a", "b6b") *  nadd
-
-rich ~~ even'
-
-fit.int.mg.constrain <- sem(int.mg.constrain, group = "disk", data = seabloom)
+# Test the hypothesis that ALL paths are the same across disturbed and undisturbed
+# plots: refit the same model but constrain every regression coefficient to be equal
+# across groups (group.equal = "regressions").
+fit.int.mg.constrain <- sem(int.mg, group = "disk",
+                            group.equal = "regressions", data = seabloom)
 summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
 
 fit_tab <- (summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE))$pe
@@ -406,8 +372,11 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
 
 
 library(AICcmodavg)
-aictab(list(fit.int.mg, fit.int.mg.constrain))
-# The constrained model is less parsimonious and has a higher AICc value, indicating that not all pathways have the same strength between disturbed and undisturbed plots.
+aictab(list(fit.int.mg, fit.int.mg.constrain),
+       c("free (per-group paths)", "all paths equal"))
+# Although the "all paths equal" model is more parsimonious (fewer parameters), it
+# has a much higher AICc, so it is not supported: the path strengths differ between
+# disturbed and undisturbed plots (i.e. disturbance interacts with the other drivers).
 
 
 
