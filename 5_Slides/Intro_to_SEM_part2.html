@@ -1329,9 +1329,9 @@ survey.design = design)
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="384" height="480" viewbox="0.00 0.00 249.54 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="384" height="480" viewbox="0.00 0.00 170.03 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 245.54,-112 245.54,4 -4,4"></polygon>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 166.03,-112 166.03,4 -4,4"></polygon>
 <!-- X1 -->
 <g id="node1" class="node">
 <title>X1</title>
@@ -1344,35 +1344,23 @@ survey.design = design)
 <polygon fill="none" stroke="black" points="162.1,-108 93.83,-108 93.83,-72 162.1,-72 162.1,-108"></polygon>
 <text text-anchor="middle" x="127.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text>
 </g>
-<!-- X3 -->
-<g id="node3" class="node">
-<title>X3</title>
-<polygon fill="none" stroke="black" points="241.61,-108 180.32,-108 180.32,-72 241.61,-72 241.61,-108"></polygon>
-<text text-anchor="middle" x="210.97" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00">ens.pie</text>
-</g>
 <!-- Y -->
-<g id="node4" class="node">
+<g id="node3" class="node">
 <title>Y</title>
-<ellipse fill="none" stroke="black" cx="127.97" cy="-18" rx="46.41" ry="18"></ellipse>
-<text text-anchor="middle" x="127.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">diversity</text>
+<ellipse fill="none" stroke="black" cx="82.97" cy="-18" rx="46.41" ry="18"></ellipse>
+<text text-anchor="middle" x="82.97" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">diversity</text>
 </g>
 <!-- Y&#45;&gt;X1 -->
 <g id="edge1" class="edge">
 <title>Y-&gt;X1</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M108.12,-34.44C96.39,-43.56 81.3,-55.3 68.12,-65.54"></path>
-<polygon fill="black" stroke="black" points="65.96,-62.79 60.21,-71.7 70.25,-68.32 65.96,-62.79"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M72.28,-35.62C66.98,-43.87 60.46,-54.01 54.53,-63.23"></path>
+<polygon fill="black" stroke="black" points="51.55,-61.39 49.09,-71.7 57.44,-65.18 51.55,-61.39"></polygon>
 </g>
 <!-- Y&#45;&gt;X2 -->
 <g id="edge2" class="edge">
 <title>Y-&gt;X2</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M127.97,-36.1C127.97,-43.79 127.97,-53.05 127.97,-61.67"></path>
-<polygon fill="black" stroke="black" points="124.47,-61.7 127.97,-71.7 131.47,-61.7 124.47,-61.7"></polygon>
-</g>
-<!-- Y&#45;&gt;X3 -->
-<g id="edge3" class="edge">
-<title>Y-&gt;X3</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M146.55,-34.67C157.14,-43.6 170.63,-54.98 182.52,-65.01"></path>
-<polygon fill="black" stroke="black" points="180.55,-67.93 190.45,-71.7 185.06,-62.57 180.55,-67.93"></polygon>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M93.65,-35.62C98.95,-43.87 105.47,-54.01 111.4,-63.23"></path>
+<polygon fill="black" stroke="black" points="108.49,-65.18 116.84,-71.7 114.38,-61.39 108.49,-65.18"></polygon>
 </g>
 </g>
 </svg>
@@ -1382,10 +1370,14 @@ survey.design = design)
 </div>
 </div>
 <ul>
-<li>Construct a latent variable called diversity using richness, evenness and ens.pie as indicators:
+<li>Construct a latent variable called diversity using richness and evenness as indicators:
 <ul>
-<li>Use confirmatory factor analysis</li>
-<li>Troubleshoot potential issues</li>
+<li>Test construct with confirmatory factor analysis</li>
+<li>Troubleshoot potential issues:
+<ul>
+<li>Standarize indicators (mean=0, sd=1)</li>
+<li>Reverse coding of evenness (e.g., even = 1 - even)</li>
+</ul></li>
 </ul></li>
 </ul>
 </section>
@@ -1412,7 +1404,7 @@ survey.design = design)
 <text text-anchor="middle" x="88.85" y="-229.8" font-family="Helvetica,sans-Serif" font-size="14.00">evenness</text>
 </g>
 <!-- diversity&#45;&gt;evenness -->
-<g id="edge6" class="edge">
+<g id="edge5" class="edge">
 <title>diversity-&gt;evenness</title>
 <path fill="none" stroke="black" stroke-dasharray="5,2" d="M126.64,-143.99C119.46,-160.89 108.34,-187.08 100.02,-206.68"></path>
 <polygon fill="black" stroke="black" points="96.76,-205.4 96.08,-215.97 103.21,-208.13 96.76,-205.4"></polygon>
@@ -1424,7 +1416,7 @@ survey.design = design)
 <text text-anchor="middle" x="178.85" y="-229.8" font-family="Helvetica,sans-Serif" font-size="14.00">richness</text>
 </g>
 <!-- diversity&#45;&gt;richness -->
-<g id="edge7" class="edge">
+<g id="edge6" class="edge">
 <title>diversity-&gt;richness</title>
 <path fill="none" stroke="black" stroke-dasharray="5,2" d="M141.06,-143.99C148.24,-160.89 159.35,-187.08 167.67,-206.68"></path>
 <polygon fill="black" stroke="black" points="164.49,-208.13 171.62,-215.97 170.93,-205.4 164.49,-208.13"></polygon>
@@ -1443,7 +1435,7 @@ survey.design = design)
 <text text-anchor="middle" x="133.85" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">biomass</text>
 </g>
 <!-- diversity&#45;&gt;biomass -->
-<g id="edge5" class="edge">
+<g id="edge4" class="edge">
 <title>diversity-&gt;biomass</title>
 <path fill="none" stroke="black" d="M133.85,-107.97C133.85,-91.38 133.85,-65.88 133.85,-46.43"></path>
 <polygon fill="black" stroke="black" points="137.35,-46.34 133.85,-36.34 130.35,-46.34 137.35,-46.34"></polygon>
@@ -1455,26 +1447,20 @@ survey.design = design)
 <text text-anchor="middle" x="34.85" y="-121.8" font-family="Helvetica,sans-Serif" font-size="14.00">nutrients</text>
 </g>
 <!-- nutrients&#45;&gt;diversity -->
-<g id="edge2" class="edge">
+<g id="edge1" class="edge">
 <title>nutrients-&gt;diversity</title>
 <path fill="none" stroke="black" d="M69.65,-113.69C76.18,-112.63 82.71,-112.28 89.24,-112.63"></path>
 <polygon fill="black" stroke="black" points="89.17,-116.15 99.49,-113.76 89.94,-109.19 89.17,-116.15"></polygon>
 </g>
 <!-- nutrients&#45;&gt;diversity -->
 <!-- nutrients&#45;&gt;biomass -->
-<g id="edge4" class="edge">
+<g id="edge3" class="edge">
 <title>nutrients-&gt;biomass</title>
 <path fill="none" stroke="black" d="M50.75,-107.97C66.97,-90.61 92.28,-63.5 110.71,-43.77"></path>
 <polygon fill="black" stroke="black" points="113.38,-46.04 117.65,-36.34 108.27,-41.26 113.38,-46.04"></polygon>
 </g>
-<!-- disturbance&#45;&gt;diversity -->
-<g id="edge1" class="edge">
-<title>disturbance-&gt;diversity</title>
-<path fill="none" stroke="black" d="M198.54,-112.97C192.12,-112.38 185.7,-112.34 179.28,-112.87"></path>
-<polygon fill="black" stroke="black" points="178.66,-109.42 169.19,-114.17 179.55,-116.37 178.66,-109.42"></polygon>
-</g>
 <!-- disturbance&#45;&gt;biomass -->
-<g id="edge3" class="edge">
+<g id="edge2" class="edge">
 <title>disturbance-&gt;biomass</title>
 <path fill="none" stroke="black" d="M225.34,-107.97C207.41,-90.53 179.36,-63.26 159.05,-43.51"></path>
 <polygon fill="black" stroke="black" points="161.29,-40.8 151.68,-36.34 156.41,-45.82 161.29,-40.8"></polygon>
@@ -1487,10 +1473,6 @@ survey.design = design)
 </div>
 </div>
 <ul>
-<li>Construct a latent variable called diversity using richness and evenness as indicators:
-<ul>
-<li>Use confirmatory factor analysis assuming the same loadings of indicators.</li>
-</ul></li>
 <li>Include latent variable into structural equation model</li>
 <li>What do you conclude?</li>
 </ul>

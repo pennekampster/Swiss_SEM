@@ -214,10 +214,8 @@ summary(fit.simple)
 
 # investigate correlations among diversity metrics
 cor.test(seabloom$even, seabloom$rich)
-cor.test(seabloom$ens.pie, seabloom$rich)
-cor.test(seabloom$even, seabloom$ens.pie)
 
-diversity <- 'div =~ rich + even + ens.pie'
+diversity <- 'div =~ rich + even'
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 # CFA model fails with Heywood case (negative variance estimate)
 
@@ -225,6 +223,9 @@ fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 # Standardising puts richness (counts) and evenness (0-1) on a common scale. 
 seabloom$rich_std <- (seabloom$rich-mean(seabloom$rich)) / sd(seabloom$rich)
 seabloom$even_std <- (seabloom$even-mean(seabloom$even)) / sd(seabloom$even)
+
+diversity <- 'div =~ rich_std + even_std'
+fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 
 # Richness and evenness are strongly NEGATIVELY correlated
 # (r = -0.71). A reflective latent with EQUAL (same-sign) loadings implies its
@@ -251,7 +252,7 @@ lv <- '
 diversity =~ lambda*even.rev_std + lambda*rich_std
 
 mass.above ~ nadd + disk + diversity
-diversity ~ nadd + disk
+diversity ~ nadd
 '
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")

@@ -731,24 +731,24 @@ digraph  {
    node [shape=box, fontname = Helvetica]
    X1 [label="evenness"];
    X2 [label="richness"];
-   X3 [label="ens.pie"];
-
    
    node [shape=oval]
     Y [label="diversity"]
     
     Y -> X1 [style="dashed"];
     Y -> X2 [style="dashed"];
-    Y -> X3 [style="dashed"];
     
-  {rank = min; X1;X2; X3}
+  {rank = min; X1;X2}
 }
 ```
 
 
--   Construct a latent variable called diversity using richness, evenness and ens.pie as indicators:
-    - Use confirmatory factor analysis
-    - Troubleshoot potential issues 
+
+-   Construct a latent variable called diversity using richness and evenness as indicators:
+    - Test construct with confirmatory factor analysis
+    - Troubleshoot potential issues:
+      - Standarize indicators (mean=0, sd=1)
+      - Reverse coding of evenness (e.g., even = 1 - even)
 
 ## Exercise 2
 
@@ -771,7 +771,6 @@ digraph  {
         disturbance;
         biomass;
 
-    disturbance->diversity;
     nutrients->diversity;
     disturbance -> biomass;
     nutrients->biomass;
@@ -793,8 +792,6 @@ digraph  {
 }
 ```
 
--   Construct a latent variable called diversity using richness and evenness as indicators:
-    -   Use confirmatory factor analysis assuming the same loadings of indicators.
 -   Include latent variable into structural equation model
 -   What do you conclude?
 
