@@ -819,9 +819,8 @@ digraph  {
         disturbance;
         biomass;
 
-    nutrients->richness;
-    nutrients -> evenness;
-
+    landuse -> richness;
+    landuse ->  evenness;
     landuse -> biomass;
 
     evenness-> biomass;
@@ -839,7 +838,6 @@ digraph  {
 
 
 - Construct composite variable landuse based on nutrients and disturbance in lavaan.
-- Construct composite manually.
 - Compare starting model with this one. Which one is better supported?
 
 ## Exercise 4
@@ -879,9 +877,9 @@ disturbance->middleman [constraint=false, arrowhead=diamond];
 ```
 
 -   Investigate possible interaction between disturbance and nutrient addition on above ground biomass.
--   Use composite to model an interaction between nutrients and disturbance on biomass. 
+-   Use a composite to model an interaction between nutrients and disturbance on biomass. 
 -   Incorporate composite into full model
-- How does the interaction term influence the R$^2$ of biomass?
+-   How does the interaction term influence the R$^2$ of biomass?
 
 ## Exercise 5
 
@@ -953,7 +951,6 @@ digraph  {
 
 
 - Investigate possible interaction between disturbance and nutrient addition on biomass with a multi-group SEM.
-- Test the hypothesis that all paths are the same for disturbed and undisturbed plots.
 - Test the hypothesis that all paths are the same for disturbed and undisturbed plots.
 
 

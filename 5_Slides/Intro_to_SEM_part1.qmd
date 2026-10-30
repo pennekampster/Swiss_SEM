@@ -1817,7 +1817,8 @@ digraph  {
     -   nadd, disk, rich, even, ens.pie, mass.above
 -   Fit multiple linear regression models to estimate coefficients
     -   direct effects of nadd, disk, rich and even on above ground biomass (AGB)
-    -   direct effects of nadd and disk on richness and evenness
+    -  direct effects of nadd and disk on richness and evenness
+    -  check multivariate normality of model residuals (hint: use the function mvn() in the R package MVN)
 -   What do you conclude?
 
 ## Exercise 2
