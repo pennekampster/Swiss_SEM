@@ -245,11 +245,6 @@ Frank Pennekamp
 <svg width="864" height="480" viewbox="0.00 0.00 488.44 219.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-215 484.44,-215 484.44,4 -4,4"></polygon>
-<g id="clust3" class="cluster">
-<title>cluster_prod</title>
-<polygon fill="none" stroke="lightgrey" points="388.31,-54 388.31,-126 472.44,-126 472.44,-54 388.31,-54"></polygon>
-<text text-anchor="middle" x="430.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
-</g>
 <g id="clust1" class="cluster">
 <title>cluster_bio</title>
 <polygon fill="none" stroke="lightgrey" points="204.38,-77 204.38,-203 296.31,-203 296.31,-77 204.38,-77"></polygon>
@@ -259,6 +254,11 @@ Frank Pennekamp
 <title>cluster_env</title>
 <polygon fill="none" stroke="lightgrey" points="8,-8 8,-134 112.38,-134 112.38,-8 8,-8"></polygon>
 <text text-anchor="middle" x="60.19" y="-121" font-family="Helvetica,sans-Serif" font-size="10.00">Human impact</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_prod</title>
+<polygon fill="none" stroke="lightgrey" points="388.31,-54 388.31,-126 472.44,-126 472.44,-54 388.31,-54"></polygon>
+<text text-anchor="middle" x="430.38" y="-113" font-family="Helvetica,sans-Serif" font-size="10.00">Function</text>
 </g>
 <!-- evenness -->
 <g id="node1" class="node">
@@ -346,8 +346,7 @@ Frank Pennekamp
 <li>Latent and composite variables bridge general theory and case-study data, capturing:
 <ul>
 <li>underlying processes and multiple causes</li>
-<li>interactions between variables</li>
-<li>nonlinear relationships</li>
+<li>help with interpretability and dimensionality reduction</li>
 </ul></li>
 </ul>
 </div>
@@ -371,12 +370,12 @@ Frank Pennekamp
 </section>
 <section id="latent-variables-1" class="slide level2 smaller">
 <h2>Latent variables</h2>
-<div class="cell" data-fig-width="6" data-fig-height="1" data-layout-align="default">
+<div class="cell" data-fig-width="6" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="576" height="96" viewbox="0.00 0.00 316.97 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="576" height="384" viewbox="0.00 0.00 316.97 98.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 94)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-94 312.97,-94 312.97,4 -4,4"></polygon>
 <!-- X1 -->
@@ -476,7 +475,7 @@ Frank Pennekamp
 <li>Measurement model (Confirmatory Factor Analysis)
 <ul>
 <li>Precursor to any SEM in which the latent variables appear.</li>
-<li>For multi-indicator latent variables: check that the same process generated multiple indicators.</li>
+<li>For multi-indicator latent variables: confirm that the same process generated multiple indicators.</li>
 <li>All indicators need to be correlated with similar loadings to justify an underlying latent variable (i.e., the cause).</li>
 </ul></li>
 </ol>
@@ -492,12 +491,12 @@ Frank Pennekamp
 </section>
 <section id="latent-example-1-body-size" class="slide level2 smaller">
 <h2>Latent example 1: body size</h2>
-<div class="cell" data-fig-width="4" data-fig-height="2" data-layout-align="default">
+<div class="cell" data-fig-width="4" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<svg width="384" height="192" viewbox="0.00 0.00 201.81 206.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<svg width="384" height="384" viewbox="0.00 0.00 201.81 206.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 202)">
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-202 197.81,-202 197.81,4 -4,4"></polygon>
 <!-- X1 -->
@@ -693,9 +692,11 @@ Frank Pennekamp
 <section id="latent-variables---a-word-of-caution" class="slide level2">
 <h2>Latent variables - a word of caution</h2>
 <ul>
-<li class="fragment">The design of latent variables requires deep thinking and justification</li>
-<li class="fragment">The choice of particular indicators to define a latent variable needs justification.</li>
-<li class="fragment">The naming fallacy: naming a latent variable in a certain way does not guarantee you capture the underling process.</li>
+<li class="fragment">The design of latent variables requires deep thinking and justification:
+<ul>
+<li class="fragment">Choice of particular indicators to define a latent</li>
+<li class="fragment">Naming a latent variable in a certain way does not guarantee you capture the underling process (naming fallacy).</li>
+</ul></li>
 </ul>
 </section></section>
 <section>
@@ -2037,7 +2038,7 @@ survey.design = design)
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1200,
+        width: 1778,
 
         height: 1000,
 

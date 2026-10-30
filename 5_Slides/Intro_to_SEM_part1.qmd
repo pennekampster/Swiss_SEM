@@ -14,7 +14,7 @@ format:
     slide-number: true
     show-slide-number: all
     footer: Introduction to SEM (2025)
-    width: 1200
+    width: 1778
     height: 1000
 editor:
   render-on-save: true
@@ -1690,7 +1690,7 @@ mod.fit <- sem(mod.form , data = dat1)
 
 ::::: columns
 ::: {.column width="50%"}
-![](images/CedarCreek_map.png){width="100%"}
+![](images/CedarCreek_map.png){height="700"}
 :::
 
 ::: {.column width="50%"}
