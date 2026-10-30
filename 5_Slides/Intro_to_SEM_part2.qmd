@@ -15,7 +15,7 @@ format:
     show-slide-number: all
     code-overflow: wrap
     footer: Introduction to SEM (2025)
-    width: 1778
+    width: 1200
     height: 1000
 editor:
   render-on-save: true

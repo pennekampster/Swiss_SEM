@@ -14,7 +14,7 @@ format:
     slide-number: true
     show-slide-number: all
     footer: Introduction to SEM (2025)
-    width: 1778
+    width: 1200
     height: 1000
 editor:
   render-on-save: true
@@ -794,7 +794,7 @@ mat_tab <- function(hl = list()) {
 
 > Sewall Wright (1918, 1934): the correlation between any two variables can be **decomposed** into the paths that connect them in a causal diagram.
 
-![](/images/guinea_pigs.png){width=200% fig-align="center"}
+![](/images/guinea_pigs.png){fig-align="center"}
 
 ::: incremental
 -   Each path in the diagram carries a coefficient.
