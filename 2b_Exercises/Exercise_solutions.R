@@ -221,12 +221,21 @@ diversity <- 'div =~ rich + even + ens.pie'
 fit.diversity <- cfa(diversity, data = seabloom, estimator = "MLM")
 # CFA model fails with Heywood case (negative variance estimate)
 
-# construct simpler 2 indicator latent variable
+# Construct simpler 2 indicator latent variable using two steps:
+# Standardising puts richness (counts) and evenness (0-1) on a common scale. 
 seabloom$rich_std <- (seabloom$rich-mean(seabloom$rich)) / sd(seabloom$rich)
 seabloom$even_std <- (seabloom$even-mean(seabloom$even)) / sd(seabloom$even)
-# reverse evenness so that higher values = lower evenness
-seabloom$even.rev_std <- 1- seabloom$even_std
 
+# Richness and evenness are strongly NEGATIVELY correlated
+# (r = -0.71). A reflective latent with EQUAL (same-sign) loadings implies its
+# indicators are POSITIVELY correlated (cov = lambda^2 * var(div)). To reproduce a
+# negative observed correlation the model would need a negative latent variance -
+# an impossible, improper (Heywood) solution, so it fails to give a usable fit.
+
+# Reversing evenness makes cor(richness, even.rev) = +0.71, so equal positive
+# loadings are consistent with the data and the latent variance is valid.
+# (Note: high div then means high richness AND low evenness - a dominance axis.)
+seabloom$even.rev_std <- 1- seabloom$even_std
 
 # test measurement model
 diversity <- 'div =~ lambda*even.rev_std + lambda*rich_std'  
@@ -273,7 +282,7 @@ summary(fit.comp.auto, standardized = TRUE, rsq = TRUE)
 # (b) Compare the starting model with the composite model (both on plain seabloom,
 # both MLM, same observed variables -> a valid comparison).
 aictab(list(fit.simple, fit.comp.auto),
-       c("starting (simple)", "composite landuse"))
+       c("separate disk and nadd", "composite landuse"))
 # The starting model is far better supported (much lower AICc): forcing nutrients
 # and disturbance onto a single 1-D "land use" axis fits the data clearly worse
 # than letting the two drivers act separately.
