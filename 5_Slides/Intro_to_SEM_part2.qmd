@@ -3,7 +3,8 @@ author: "Frank Pennekamp"
 title: "Introduction to path and structural equation modelling"
 subtitle: "Day 2: Structural equation modelling"
 institute: 
-- Department of Evolutionary Biology and Environmental Sciences, University of Zurich
+- Department of Evolutionary Biology and Environmental Sciences
+- University of Zurich
 date: "11/5/2026"
 date-format: long
 format:
@@ -13,8 +14,7 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
-    code-overflow: wrap
-    footer: Introduction to SEM (2025)
+    footer: Introduction to path and structural equation modelling (2026)
     width: 1200
     height: 1000
 editor:
@@ -159,21 +159,21 @@ digraph  {
 
 ## Fitting latent variables
 
-- Latent variable can have from 1 to many indicators:
-  - 1 indicator: 
-    - assumes measured variable is perfect representation of the latent. 
-    - allows to make a conceptual distinction between a concept and the observed measure.
+Latent variable can have from 1 to many indicators:
+
+- 1 indicator: 
+  - assumes measured variable is perfect representation of the latent. 
+  - allows to make a conceptual distinction between a concept and the observed measure.
 
 . . .
 
-  - 2 indicators:
-    - requires imposing constraints to identify the parameters. 
-    - e.g., equal loadings of latent on indicators, or fixing error variances.
+- 2 indicators:
+  - requires imposing constraints to identify the parameters e.g., equal loadings of latent on indicators, or fixing error variances.
 
  . . .
 
-  - 3 or more indicators: 
-    - allows to test whether or not the same process generated the indicators.
+- 3 or more indicators: 
+  - allows to test whether or not the same process generated the indicators.
 
 ## Fitting latent variables
 
@@ -228,12 +228,13 @@ digraph  {
     - Loading of first indicator set to 1 by lavaan (sets scale of latent to 1st indicator).
     - Because of this, use standardized coefficients for interpretation.
     - Latents with two indicators require additional assumptions (e.g. similar loadings of latent on indicators).
+- Latent variable reduces the complexity of the model.
 :::
 
 ## Latent example 2: measurement error in a predictor (1/3)
 
 ```{dot}
-//| fig-width: 8
+//| fig-width: 4
 //| fig-height: 5
 
 
@@ -392,8 +393,6 @@ digraph boxes_and_circles {
   X1 -> Y [style="dashed"];
   X2 -> Y [style="dashed"];
   Y -> Z;
-
-  X1:w -> X2:w [dir="both"]
 
   {rank = "max"; Z}
   {rank = "same"; X1;X2;}

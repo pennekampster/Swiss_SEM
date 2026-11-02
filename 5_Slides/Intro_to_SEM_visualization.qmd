@@ -14,7 +14,7 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
-    footer: Introduction to SEM (2025)
+    footer: Introduction to path and structural equation modelling (2026)
     width: 1200
     height: 1000
 editor:
@@ -160,18 +160,18 @@ The causal network based on structural equations. The path coefficients are show
 :::
 
 
-##  What is a good SEM drawing? 
+##  What makes for a powerful SEM visualisation? 
 
 ::: {.incremental}
 1) Show relevant variables and paths
-1) Indicate path coefficients (direction, magnitude, significance)
-1) Show constructs with appropriate complexity 
+1) Show path coefficients (direction, magnitude, uncertainty, significance)
+1) Show constructs to reduce model complexity (latent and composite variables)
 1) Report goodness-of-fit of the model 
 1) Report explanatory power for endogenous variables  
-1) Add graphs or tables with additional quantities (e.g, indirect and total effects) when relevant  
+1) Only show graphs or tables with additional quantities (e.g, indirect and total effects) when relevant  
 :::
 
-## Relevant variables and their types
+## Relevant variables 
 
 ::: {.incremental}
 :::::::::::::: {.columns}
@@ -203,16 +203,23 @@ The causal network based on structural equations. The path coefficients are show
 
 ## Path coefficients  {.smaller}
 
-
+:::::::::::::: {.columns}
+::: {.column width="50%"}
 ::: {.incremental}
 - Indicate the direction, and significance by:   
   - Arrow width for magnitude
   - Add coefficients when possible  
-  - Linetype or color for direction   
-  - Dashed vs solid for significance  
+  - Color for direction (e.g., green = positive, red = negative)   
+  - Linetype or stars for significance (e.g., solid = significant, dashed = non-significant)
 :::
+:::
+::: {.column width="50%"}
+![](images/Lefcheck_sem.jpg)
+:::
+::::::::::::::
 
-![](images/Mazziotta_sem.jpg){.absolute .absolute width="1000" right=0}
+
+
 
 
 
@@ -224,7 +231,8 @@ The causal network based on structural equations. The path coefficients are show
   - $\chi^2$  
   - CFI  
   - SRMR  
-  - RMSEA  
+  - RMSEA
+  - degrees of freedom  
 :::
 ::: {.column}
 ![](images/Jones_sem.jpg){height=80%}
@@ -265,9 +273,34 @@ The causal network based on structural equations. The path coefficients are show
   - Plots of raw correlations
   - Partial plots
 
-## Plotting tools
+```{r, out.width="90%", fig.align='center'}
+set.seed(5)
+x <- rnorm(500, sd=runif(500, 2, 50))
+x2 <- 0.5 *x + rnorm(500, sd=runif(500, 2, 50))
+d <- matrix(c(round(x, 2),round(x2, 2)), 250)
+colnames(d) <-   c("X1","X2", "X3", "Y")
 
-- Dedicated packages available in R 
+panel_regression_line = function(x,y, ...){
+  points(x,y,...)
+  linear_regression = lm(y~x)
+  linear_regression_line = abline(linear_regression)
+}
+
+
+pairs(d, pch = 19, lower.panel=panel_regression_line, upper.panel = panel_regression_line)
+```
+
+
+## Room for creativity {.smaller}
+
+- Combine meta-model with fitted SEM
+
+![](images/Mazziotta_sem.jpg){height=60%}
+
+
+
+
+# Plotting tools - available R packages
 
 ## Plotting tools I: lavaanPlot package 
 
@@ -331,32 +364,15 @@ semPaths(fit.prune, what = "est", whatLabels = "est",
 - Allows for customization with semptools package
 :::
 
+:::notes
+https://cjvanlissa.github.io/tidySEM/articles/sem_graph.html
+:::
 
 ## Plotting tools: conclusion 
 
 - Sufficient for visualizing SEM outputs but not ready for publication.
 - Fine-tuning in external software like powerpoint, illustrator, or Inkscape needed.
 
-
-## Room for creativity 
-
-Will depend on the audience and the purpose
-
-. . .
-
-  - Is this a paper?
-  - Is this a presentation?
-  - What is the narrative structure?
-
-. . .
-
-Design the figure accordingly! 
-
-## Room for creativity {.smaller}
-
-- Combine meta-model with fitted SEM
-
-![](images/Mazziotta_sem.jpg){height=60%}
 
 
 # Questions?  

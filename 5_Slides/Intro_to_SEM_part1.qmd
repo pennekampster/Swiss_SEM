@@ -13,7 +13,7 @@ format:
     theme: simple
     slide-number: true
     show-slide-number: all
-    footer: Introduction to SEM (2025)
+    footer: Introduction to path and structural equation modelling (2026)
     width: 1200
     height: 1000
 editor:
@@ -68,15 +68,15 @@ library(kableExtra)
 ## Overview {.smaller}
 
 -   What the course is about:
-    -   Global estimation of SEMs with R package lavaan (including latents and composites)
+    -   Global estimation of path and SE models with R package lavaan (including latents and composites)
     -   Hands-on exercises and live coding
     -   A single ecological dataset for demonstration (Seabloom et al. 2020)
-    -   Develop your own SE model
+    -   Develop your own model
 
 . . .
 
 -   What will *not* be covered
-    -   Local estimation of SE models (with R package piecewiseSEM)
+    -   Local estimation of path and SE models (with R package piecewiseSEM)
     -   Advanced topics:
         -   integrate random effects
         -   disentangle feedback loops
@@ -89,8 +89,8 @@ You can:
 ::: incremental
 -   translate your research question into a meta-model.
 -   fit a path or structural equation model with the R package `lavaan`.
--   assess the quality of a fitted path or SE model.
--   interpret your path or SE model and those reported by others.
+-   assess the quality of a fitted model.
+-   interpret your model and those reported by others.
 -   present path and SE models graphically.
 :::
 
@@ -100,8 +100,6 @@ You can:
 [Slide decks and R code available on github](https://github.com/pennekampster/Swiss_SEM/)
   -->
 ```
-
-# Getting started with Structural Equation Modeling
 
 ## Understanding (ecological) systems {.smaller}
 
@@ -138,10 +136,9 @@ You can:
 ::::: columns
 ::: {.column width="50%"}
 -   Causes = mechanisms
-    -   Allows us to predict the behaviour of a system
-    -   Justify interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
--   What is the problem?
-    -   Confounding of cause with non-cause (e.g., avoid interventions with no or detrimental effects)
+-   Allows us to predict the behaviour of a system
+-   Justify interventions (e.g., eradication of invasive species, habitat restoration for threatened species)
+-   Avoid confounding of cause with non-cause (e.g., avoid interventions with no or detrimental effects)
 :::
 
 ::: {.column width="40%"}
@@ -170,7 +167,6 @@ You can:
 ::::::
 
 ::: notes
--   Example shown: is this correlation or causation?
 :::
 
 ## "Correlation can indicate causation"
@@ -207,7 +203,7 @@ digraph confounding_classic {
   U -> Y [color = "red", penwidth = 2];
   X -> Y [style = "dashed"];
   
-  label = "Example 1: Classic Confounding\nU affects both X and Y";
+  label = "Example 1: Classic confounding\nU affects both X and Y";
   labelloc = "b";
 }
 
@@ -293,59 +289,49 @@ digraph confounding_icecream {
 }
 ```
 
-## Causal diagrams (directed acyclic graphs) {.smaller}
+## Path diagrams {.smaller}
 
-A causal diagram specifies putative cause-effect relationships — the data-generating mechanisms that lead to a set of observational expectations.
+A path diagram specifies putative cause-effect relationships — the data-generating mechanisms that lead to a set of observational expectations.
 
 :::::: columns
 :::: {.column width="50%"}
 ::: incremental
--   Directed = unidirectional.
--   Acyclic = no cycles (=causal loops) permitted.
--   Variables are nodes (boxes).
--   Edges (one-headed arrows) are causal relationships such as X affects Y.\
--   Edges can have any functional shape.
--   Omitted links and nodes have empirical implications (= assumptions about the causal diagram)
--   U variables represent unmeasured causes.
+-   Nodes = measured variable (box shape).
+-   One-headed arrow = causal relationship.
+-   Double-headed arrow = non-causal relationship. 
+-   Relationships can have any functional shape.
+-   Omitted links and nodes have empirical implications (= assumptions about the causal diagram).
+-   U = unmeasured cause.
 :::
 ::::
 
 ::: {.column width="50%"}
 ```{dot}
-//| fig-width: 4
+//| fig-width: 5
+//| fig-height: 2
 digraph {
 
   # a 'graph' statement
-  graph [overlap = true, fontsize = 15, layout = dot, ranksep = equally,
-       rankdir = Tb];
+  graph [overlap = true, fontsize = 15, layout = dot, nodesep = 0.5, ranksep = 0.8,
+       rankdir = LR];
 
   # 'node' statements
   node [shape = box,
         fontname = Helvetica];
-  X; Y;
+  Y;
 
   # 'edge' statements
-  X -> W;
-  X -> Z;
   W -> Y;
   Z -> Y;
-  
+  W -> Z[dir=both, constraint=false, style=dashed]; 
+
  node [shape = plaintext,
         fontname = Helvetica];
-  U_w  -> W;
-  U_x -> X;
   U_y -> Y;
-  U_z -> Z;
-  
-  U_w [label = <U<SUB>w</SUB>>];
-  U_x [label = <U<SUB>x</SUB>>];
   U_y [label = <U<SUB>y</SUB>>];
-  U_z [label = <U<SUB>z</SUB>>];
- 
  
  # control the placement of elements on the graph 
- {rank = min; U_x };
- {rank = same; Z ; W;};
+ {rank = min; Z ; W;};
  {rank = max; U_y};
 
   }
@@ -358,10 +344,10 @@ digraph {
 :::::: incremental
 ::::: columns
 ::: {.column width="100%"}
--   Build knowledge from past observation
+-   Build knowledge from past observation (meta-model)
 -   Design and conduct an experiment or observational study
 -   Test hypotheses
--   Develop theory
+-   Develop/refine theory
 :::
 
 ::: {.column width="0%"}
@@ -372,7 +358,7 @@ digraph {
 . . .
 
 > The combination of knowledge of correlations with knowledge of causal relations, to obtain certain results, is a different thing from the deduction of causal relations from correlations.”\
-> Sewell Wright, 1923
+> Sewall Wright, 1923
 
 ## The SEM workflow
 
@@ -384,24 +370,24 @@ Evaluates whether the observed data are consistent with a hypothesised causal ne
 
 Evaluates whether the observed data are consistent with a hypothesised causal network, rather than proving causation.
 
--   Build a hypothesized causal diagram
+-   Build a hypothesized causal diagram (meta-model)
 -   Collect data
 
 ## The SEM workflow
 
 Evaluates whether the observed data are consistent with a hypothesised causal network, rather than proving causation.
 
--   Build a hypothesized causal diagram
+-   Build a hypothesized causal diagram (meta-model)
 -   Collect data
--   Build SEM and test against causal diagram ![](images/Final_SEM.jpg){width="50%"}
+-   Build SEM and test against data ![](images/Final_SEM.jpg){width="50%"}
 
 ## The SEM workflow
 
 Evaluates whether the observed data are consistent with a hypothesised causal network, rather than proving causation.
 
--   Build a hypothesized causal diagram
+-   Build a hypothesized causal diagram (meta-model)
 -   Collect data
--   Build SEM and test against causal diagram ![](images/Final_SEM.jpg){width="50%"}
+-   Build SEM and test against data ![](images/Final_SEM.jpg){width="50%"}
 -   Repeat!
 
 ::: notes
@@ -559,8 +545,7 @@ digraph  {
 -   Exogenous variables (independent variables):
     -   only have out-going paths.\
 -   Endogenous variables (response variables):
-    -   have in-going paths
-    -   can have out-going paths.\
+    -   have in-going and out-going paths.\
 :::
 
 ## Mediation {.smaller}
@@ -648,7 +633,7 @@ digraph  {
 -->
 ```
 
-## Motivations to use path models:
+## Motivations to use path model and SE models:
 
 ::: incremental
 1)  Driver-focused: Understand how drivers influence a system
@@ -657,12 +642,13 @@ digraph  {
 4)  Theory-focused: compare observations of a system to available theory
 :::
 
-## SE modelling philosophy
+## Path and SE modelling philosophy
 
 ::: incremental
--   A SE model should be specified based on prior evidence / theory (i.e., a meta-model).
--   Each path requires explicit justification.
--   DAG to specify relationships of actual variables and compare with observed data.
+-   A model should be based on prior evidence / theory (i.e., a meta-model).
+-   Each path requires explicit justification: make table with expected directions and magnitudes of paths.
+-   Diagram to specify relationships of actual variables and compare with observed data.
+-   Make the model as simple as possible: only include paths directly relevant to your research question rather than modelling all possible relationships.
 :::
 
 ```{=html}
@@ -679,26 +665,22 @@ digraph  {
 
 ## Exercise
 
--   Your turn!
--   What type is your SEM (response, driver, mediation, theory focused)?
 -   Draw a causal diagram of the dataset you want to understand (define nodes and edges).
--   Make a table with putative causal relationships.
+-   Make a table specifying putative causal relationships.
+-   Of what type is your SEM (response, driver, mediation, theory focused)?
 
 # Path and SE model fitting
 
 ## How to estimate path and SE models?
 
 ::: incremental
--   Path and structural equation modelling is a framework rather than a statistical technique.\
+-   Path and structural equation modelling is a framework for causal reasoning rather than a statistical technique.\
 -   Global estimation: based on variance-covariance matrix.\
 -   Lavaan uses Maximum likelihood estimation (ML).\
 -   Lavaan makes several assumptions:
-    -   (Multivariate) normality of endogenous (but not exogenous!) variables required
-    -   Only acyclic relationships (no loops)
-    -   Linear relationships among variables
+    -   (Multivariate) normality of endogenous (but not exogenous!) variables
+    -   Linear relationships among variables (transformations allowed)
 :::
-
-# Global estimation in a nutshell
 
 ## Observed variables and their relationships {.smaller}
 
@@ -762,7 +744,7 @@ kable(cov2cor(V),  digits = 2)
 -   Correlation: $COR_{x,y}=\frac{COV_{x,y}}{\sigma_x*\sigma_y}$
     -   Correlation matrix is standardized variance-covariance matrix
 
-# Path tracing rules - deriving coefficients from correlations
+# Path tracing rules - deriving path coefficients from correlations {.smaller}
 
 ```{r worked-setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center')
@@ -806,11 +788,10 @@ mat_tab <- function(hl = list()) {
 
 
 
-## The model we will use {.smaller}
+## The path diagram we will use {.smaller}
 
 ```{dot}
-//| fig-width: 7
-//| fig-height: 4.5
+//| fig-width: 9
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.1, nodesep = 0.7]
 
@@ -850,9 +831,7 @@ digraph {
 An unspecified relationship between two exogenous variables is their **bivariate correlation**, drawn as a double-headed arrow (`r`).
 
 ```{dot}
-//| fig-width: 6.5
-//| fig-height: 3.3
-
+//| fig-width: 9
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
   
@@ -881,8 +860,7 @@ digraph {
 Imagine path d does not exist. For two variables joined by a **single** directed arrow: the path *is* the regression coefficient (`c`). For standardized data it equals their **correlation**.
 
 ```{dot}
-//| fig-width: 6.5
-//| fig-height: 3.3
+//| fig-width: 9
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -901,17 +879,13 @@ digraph {
 }
 ```
 
-Convention:\
-**γ** for exogenous → endogenous (`a, b, d`).\
-**β** for endogenous → endogenous (`c`).
 
 ## Rule 3: compound paths {.smaller}
 
 A route through intermediate variables is the **product** of its coefficients — the indirect effect of X₁ on Y₂ runs `X1 → Y1 → Y2` and equals **a · c**.
 
 ```{dot}
-//| fig-width: 6.5
-//| fig-height: 3.2
+//| fig-width: 9
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -935,8 +909,7 @@ digraph {
 When a variable has **several** causes, each path is a **partial** regression coefficient — it controls for the others.
 
 ```{dot}
-//| fig-width: 6.0
-//| fig-height: 2.6
+//| fig-width: 9
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -962,8 +935,7 @@ For the two causes of Y₂ (Y₁ and X₁): $$ \beta_{X_1 \rightarrow Y_2} = \fr
 Every endogenous variable carries an error (disturbance) term, denoted by ζ, for unexplained variance. Its variance is $1 - R^2$ and the standardized error path is $\zeta = \sqrt{1 - R^2}$.
 
 ```{dot}
-//| fig-width: 6.5
-//| fig-height: 3.3
+//| fig-width: 9
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -984,13 +956,13 @@ digraph {
 
 ## Rule 6: residual correlations (partial correlation) {.smaller}
 
-If two endogenous variables share an **unmeasured** cause, their **partial** correlation (after removing shared predictors) is drawn as a double-headed arrow between their **errors** (ψ). This needs a **sibling** structure — it cannot coexist with a direct `Y₁ → Y₂` path.
+If two endogenous variables share an **unmeasured** cause, their **partial** correlation (after removing shared predictors) is drawn as a double-headed arrow between their **errors** (ψ).    
+This needs a **sibling** structure — it cannot coexist with a direct `Y₁ → Y₂` path.
 
 ::::: columns
 ::: {.column width="42%"}
 ```{dot}
-//| fig-width: 4
-//| fig-height: 3
+//| fig-width: 5
 digraph {
   graph [rankdir = LR, fontsize = 14, nodesep = 0.5, ranksep = 0.8]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -1021,8 +993,7 @@ The total effect of one variable on another is the **sum of its direct and indir
 $$ \text{total}(X_1 \rightarrow Y_2) = \underbrace{d}_{\text{direct}} + \underbrace{a\,c}_{\text{indirect}} $$
 
 ```{dot}
-//| fig-width: 6.0
-//| fig-height: 2.6
+//| fig-width: 9
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -1050,8 +1021,7 @@ The correlation also contains **undirected** routes (through the exogenous corre
 $$ r_{X_1,Y_2} = \underbrace{d + a c}_{\text{total effect (causal)}} + \underbrace{r\,b\,c}_{\text{backdoor (non-causal)}} $$
 
 ```{dot}
-//| fig-width: 6.0
-//| fig-height: 2.6
+//| fig-width: 9
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.65]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -1161,8 +1131,8 @@ kable(M, digits = 3) |>
 ::::: columns
 ::: {.column width="60%"}
 ```{dot}
-//| fig-width: 5.3
-//| fig-height: 2.5
+//| fig-width: 7
+//| fig-height: 3.5
 digraph {
   graph [rankdir = LR, fontsize = 13, ranksep = 1.0, nodesep = 0.5]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -1198,8 +1168,8 @@ $$ \text{cor}(X_2, Y_1) = b + r\,a = 0.40 + 0.30\times 0.60 = \mathbf{0.58} $$
 ::::: columns
 ::: {.column width="60%"}
 ```{dot}
-//| fig-width: 5.3
-//| fig-height: 2.5
+//| fig-width: 7
+//| fig-height: 3.5
 digraph {
   graph [rankdir = LR, fontsize = 13, ranksep = 1.0, nodesep = 0.5]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -1236,8 +1206,8 @@ $$ \text{cor}(X_2, Y_2) = b c + r d + r a c = 0.20 + 0.09 + 0.09 = \mathbf{0.38}
 ::::: columns
 ::: {.column width="60%"}
 ```{dot}
-//| fig-width: 5.3
-//| fig-height: 2.5
+//| fig-width: 7
+//| fig-height: 3.5
 digraph {
   graph [rankdir = LR, fontsize = 13, ranksep = 1.0, nodesep = 0.5]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -1296,8 +1266,8 @@ mat_tab(list(c("X1","Y2")))
 ::::: columns
 ::: {.column width="54%"}
 ```{dot}
-//| fig-width: 5.0
-//| fig-height: 2.8
+//| fig-width: 5
+//| fig-height: 3
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.6]
   node [shape = box, fontname = Helvetica, color = "gray65", fontcolor = "gray30"]
@@ -1347,19 +1317,19 @@ So in the **standardized** correlations the error is only *implicit*: it fixes t
 ## Using covariances instead of correlations {.smaller}
 
 -   So far we used **correlations** and **standardized** coefficients, where every variance = 1.
--   In practice, SE models are fit from **covariances** with **unstandardized** coefficients — then the **variances must be carried along**.
+-   In practice, SEMs are fit to **covariances** with **unstandardized** coefficients — so the **variances must be carried along**.
 
-For our model, tracing the covariance of Y₁ and Y₂:
+Tracing the covariance of Y₁ and Y₂ (c, d, a unstandardized):
 
-$$ \text{Cov}(Y_1, Y_2) = c\,\text{Var}(Y_1) + d\,\text{Cov}(X_1, Y_1) \qquad (c, d \text{ unstandardized}) $$
+$$
+\begin{aligned}
+\text{Cov}(Y_1, Y_2) &= c\,\text{Var}(Y_1) + d\,\text{Cov}(X_1, Y_1) \\
+                     &= \underbrace{c\,\text{Var}(Y_1)}_{Y_1 \to Y_2} + \underbrace{a\,d\,\text{Var}(X_1)}_{Y_1 \leftarrow X_1 \to Y_2}
+\end{aligned}
+$$
 
-. . .
-
-**This is where ζ reappears:** the route leaving Y₁ carries its *full* variance —
-
-$$ \text{Var}(Y_1) = \underbrace{a^2\text{Var}(X_1) + b^2\text{Var}(X_2) + 2ab\,\text{Cov}(X_1,X_2)}_{\text{explained}} + \underbrace{\sigma^2_{\zeta_1}}_{\text{error}} $$
-
-so the **error variance of the upstream variable** enters the covariance, whereas in the standardized form it stayed hidden inside Var(Y₁) = 1.
+-   Each path: product of coefficients × variance of the variable where the path starts or turns around.
+-   Standardized check: all variances = 1 → $r_{Y_1 Y_2} = c + a\,d$
 
 ## Summary of path tracing rules: {.smaller}
 
@@ -1449,7 +1419,7 @@ What if the model does not fit?
 - Modification indices (MIs) can be used to identify which parameters, if freed, would improve model fit.
 - The modification index is the χ2 value, with 1 degree of freedom, by which model fit would improve if a particular path was added or constraint freed.
 - Values bigger than 3.84 indicate that the model would be ‘improved’, and the p value for the added parameter would be < .05
-- MIs need to be used with caution: some suggestions may be plain wrong and even contradictory. 
+- MIs need to be used with caution: some suggestions may be non-sensical. 
 - MIs can aid in improving the model, but should be strictly used in combination with domain or theoretical knowledge.
 - When modification indices are explored, any adjustments should be treated as explanatory rather than confirmatory and reported transparently.
 :::
