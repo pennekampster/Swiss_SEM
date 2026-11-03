@@ -1,7 +1,7 @@
 ---
 author: "Frank Pennekamp"
 title: "Introduction to path and structural equation modelling"
-subtitle: "Day 2: Structural equation modelling"
+subtitle: "Day 2: Constructs: latent and composite variables"
 institute: 
 - Department of Evolutionary Biology and Environmental Sciences
 - University of Zurich
