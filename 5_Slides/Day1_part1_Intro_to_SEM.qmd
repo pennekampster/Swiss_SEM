@@ -386,10 +386,18 @@ https://www.nature.com/articles/ncomms10541
 
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
 
+
+::::: columns
+::: {.column width="40%"}
+![](images/BEF_Wagg_crop.png)
+![](images/Jena_BEF.jpg)
+:::
+
+::: {.column width="60%"}
 Meta-model:
 
 ```{dot}
-//| fig-width: 10
+//| fig-width: 7
 digraph G {
 
   graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
@@ -404,6 +412,9 @@ digraph G {
   
 }
 ```
+:::
+:::::
+
 
 ::: notes
 This is an example of a meta-model of an ecological system that we might want to understand using SEM. The question could be: how do human impacts affect ecosystem functioning, and what role does biodiversity play in mediating this effect? Please note that the three drivers are general categories, and each can encompass multiple specific variables. How would we analyse the effect of the environment and human impact on functioning?
@@ -469,10 +480,17 @@ digraph  {
 
 ## Biodiversity-ecosystem functioning {background-image="images/meadow.JPG" background-opacity="0.4"}
 
+::::: columns
+::: {.column width="40%"}
+![](images/BEF_Wagg_crop.png)
+![](images/Jena_BEF.jpg)
+:::
+
+::: {.column width="50%"}
 Meta-model:
 
 ```{dot}
-//| fig-width: 10
+//| fig-width: 6
 digraph G {
 
   graph [overlap = false, fontsize = 10, layout = dot, ranksep = .7,
@@ -490,6 +508,15 @@ digraph G {
   
 }
 ```
+:::
+:::::
+
+
+
+
+
+
+
 
 ## Path model {.smaller}
 

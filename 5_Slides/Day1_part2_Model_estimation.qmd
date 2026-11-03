@@ -433,14 +433,14 @@ digraph {
 # Worked example
 
 ## The model in numbers {.smaller}
-
-Standardized coefficients `a = 0.60, b = 0.40, c = 0.50, d = 0.30, r = 0.30`. Tracing rebuilds the **implied correlation matrix** on the right.
+  
+Tracing rebuilds the **implied correlation matrix** on the right.
 
 ::::: columns
-::: {.column width="52%"}
+::: {.column width="55%"}
 ```{dot}
-//| fig-width: 4.8
-//| fig-height: 3.6
+//| fig-width: 5
+//| fig-height: 3
 digraph {
   graph [rankdir = LR, fontsize = 14, ranksep = 1.0, nodesep = 0.6]
   node [shape = box, fontname = Helvetica]
@@ -448,11 +448,11 @@ digraph {
   Y1 [label = <Y<SUB>1</SUB>>]; Y2 [label = <Y<SUB>2</SUB>>]
   node [shape = plaintext, fontname = Helvetica]
   z1 [label = <&zeta;<SUB>1</SUB>>]; z2 [label = <&zeta;<SUB>2</SUB>>]
-  X1 -> Y1 [label = "0.60"]
-  X2 -> Y1 [label = "0.40"]
-  Y1 -> Y2 [label = "0.50"]
-  X1 -> Y2 [label = "0.30"]
-  X1 -> X2 [dir = both, constraint = false, label = "0.30", style = dashed]
+  X1 -> Y1 [label = "a = 0.60"]
+  X2 -> Y1 [label = "b = 0.40"]
+  Y1 -> Y2 [label = "c = 0.50"]
+  X1 -> Y2 [label = "d = 0.30"]
+  X1 -> X2 [dir = both, constraint = false, label = "r = 0.30", style = dashed]
   z1 -> Y1; z2 -> Y2
   {rank = min; X1; X2}
   {rank = max; Y2}
@@ -460,7 +460,7 @@ digraph {
 ```
 :::
 
-::: {.column width="48%"}
+::: {.column width="45%"}
 ```{r}
 rX1Y1 <- a + b*r
 rX2Y1 <- b + a*r
@@ -667,7 +667,7 @@ Each **endogenous** variable's variance is completed by its ζ (exogenous X₁, 
 
 $$ 1 = R^2 + \zeta^2 $$
 
-So in the **standardized** correlations the error is only *implicit*: it fixes the endogenous **diagonal** but **drops out of the off-diagonal** cells — which is why none of the traced routes contained ζ.
+In **standardized** correlations the error is only *implicit*: fixes the endogenous **diagonal** but **drops out of the off-diagonal** cells — which is why none of the traced routes contained ζ.
 :::
 :::::
 
@@ -685,8 +685,6 @@ $$
 \end{aligned}
 $$
 
--   Each path: product of coefficients × variance of the variable where the path starts or turns around.
--   Standardized check: all variances = 1 → $r_{Y_1 Y_2} = c + a\,d$
 
 ## Summary of path tracing rules: {.smaller}
 
@@ -741,32 +739,42 @@ pairs(d, pch = 19)
 :::
 :::::
 
-Assess goodness of fit by comparing model-implied to observed covariance matrix.
+::: incremental
+-   In practice, lavaan handles the path tracing automatically.
+-   The model is fit to the **observed covariance matrix** (or correlation matrix).
+-   Assess goodness of fit by comparing model-implied to observed covariance matrix.  
+:::
 
 ## Model fit measures {.smaller}
 
 -   $\chi^2$ statistic
-    -   compare the model-implied to the observed variance-covariance
-    -   good fit when $\chi^2$ statistic is small (P \> 0.05)\
-    -   sample-size dependent
+    -   Compare the model-implied to the observed variance-covariance matrix
+    -   Good fit when $\chi^2$ statistic is small and p value large (P \> 0.05)\
+    -   Sample-size dependent
 
 . . .
 
 -   *Comparative fit index (CFI)*:
-    -   deviation from a 'null' model (variances estimated but covariances set to 0).
-    -   higher is better, \> 0.95 is considered good.
+    -   Deviation from a 'null' model (variances estimated but covariances set to 0)
+    -   Higher is better: \> 0.95 is considered good.
+    - Sample-size independent
 
 . . .
 
 -   *Root-mean squared error of approximation (RMSEA)*
-    -   statistic penalizes models based on sample size
-    -   \< 0.10 is acceptable, and anything \< 0.06 is good
+    -  How well does the model fit the population covariance matrix?
+    -  Lower is better: \< 0.10 is acceptable, and anything \< 0.06 is good
+    -  RMSEA misbehaves for models with small df and small N
 
 . . .
 
 -   *Standardized root-mean squared residual (SRMR)*
-    -   standardized difference between the observed and predicted correlations
-    -   \< 0.08 is considered good
+    -   Caculates the average discrepancy between observed and reproduced correlations
+    -   Lower is better: \< 0.08 is considered good
+
+. . .
+
+Best practice: combine multiple fit indices, do not rely on just one.
 
 ## Modification indices
 
@@ -778,7 +786,7 @@ What if the model does not fit?
 - Values bigger than 3.84 indicate that the model would be ‘improved’, and the p value for the added parameter would be < .05
 - MIs need to be used with caution: some suggestions may be non-sensical. 
 - MIs can aid in improving the model, but should be strictly used in combination with domain or theoretical knowledge.
-- When modification indices are explored, any adjustments should be treated as explanatory rather than confirmatory and reported transparently.
+- Adjustments using MIs should be treated as exploratory rather than confirmatory and reported transparently.
 :::
 
 
@@ -786,12 +794,12 @@ What if the model does not fit?
 
 | Unstandardized | Standardized |
 |:--------------------------------|---------------------------------------|
-| Reported in raw units | Expressed in units of standard deviations (z transformation) |
-| Depend on the scale of the variables | Used for interpretation of relative strength |
+| Reported in raw units (scale dependent) | Expressed in units of standard deviations (z transformation) |
+| Used to compare across populations | Used for interpretation of relative strength |
 | Contain information about variance and mean | Facilitate comparison of paths within a model |
 | For predictions in original units | To calculate indirect and total effects within your model |
 
-Best practice: report both types of coefficients!
+Complementary information: report both types of coefficients!
 
 > Z transformation results in mean of 0 and SD of 1: $Z = \frac{x - \mu(x)}{\sigma(x)}$
 
@@ -814,18 +822,15 @@ where $r_{xy}$ are the correlations, $cov_{xy}$ the covariances and $SD_x$ and $
 
 . . .
 
--   Underidentified:
-    -   Not enough pieces of information to identify parameters uniquely (df \< 0).\
+-   Underidentified: Not enough pieces of information to identify parameters uniquely (df \< 0).\
 
 . . .
 
--   Just identified:
-    -   Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
+-   Just identified: Just enough information to uniquely identify parameters, but no df to check model fit (df = 0).\
 
 . . .
 
--   Over-identified:
-    -   Parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
+-   Over-identified: Parameters can be uniquely identified and positive dfs to test model goodness-of-fit (df \> 0).
 
 ## Model identification
 
@@ -911,10 +916,10 @@ $$ 5 \leq \frac{3 (3 + 1 )}{2} $$ $$ 5 \leq 6 $$
 
 ::: incremental
 -   Exogenous variables:
-    -   No limitations, can be used as endo- and exogenous variables
+    -   No limitations
 -   Endogenous variables:
-    -   lavaan handles Gaussian error distributions
-    -   For other error distributions consider the piecewiseSEM package.
+    -   lavaan handles Gaussian error distributions.
+    -   Transformations can be applied to the dependent variable to meet this assumption.
 :::
 
 ## Variable types: categorical
