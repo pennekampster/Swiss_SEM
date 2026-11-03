@@ -20,15 +20,19 @@ measure2 <- x_true + rnorm(n)
 
 dat <- data.frame(y, measure1, measure2)
 
-# WRONG: Direct regression (biased toward 0)
+# Direct regression (biased toward 0, low R2)
 summary(lm(y ~ measure1, data = dat))
 
-# CORRECT: Latent variable (recovers true effect)
+# Better: Latent variable
 latent <- '
-  x_true_latent =~ a*measure1 + a*measure2
+  x_true_latent =~ measure1 + measure2
   y ~ x_true_latent
 '
+
 summary(sem(latent, data = dat), standardized = T, rsq = T)
+# look at recovered path coefficient
+# look at R2
+
 
 # Example 2
 # Generate 2 correlated indicators of "body size"
@@ -64,7 +68,7 @@ set.seed(72643276)
 dat <- rnorm_multi(
   n = 100, 
   mu = c(40, 15, 80, 200),           # Similar scales
-  sd = c(10, 3.75, 20, 50),          # CV = 0.25 for all
+  sd = c(10, 3.75, 20, 50),          
   r = c(0.5, 0.6, 0.5, 0.6, 0.5, 0.5),  # 6 correlations for 4 vars
   varnames = c("length", "width", "mass", "height"),
   empirical = FALSE
@@ -173,11 +177,11 @@ summary(fit2c_manual, standardized=T)
 # Multigroup fitting to model interactions
 
 # let's generate some data (make drawing)
-N <- 100
+N <- 200
 set.seed(2397348)
 dat <- data.frame(x1 = rnorm(N), x2 = rnorm(N))
 dat$group = rep(c("0","1"), each = N/2)
-dat$y <- ifelse(dat$group == "1", 0.2 * dat$x1, 0.9 * dat$x1) + 0.5 * dat$x2 + rnorm(N)
+dat$y <- ifelse(dat$group == "1", 0.5 * dat$x1, 1.9 * dat$x1) + 0.5 * dat$x2 + rnorm(N)
 
 model3a <- ' 
 y ~ x1 + x2
@@ -200,7 +204,7 @@ fit3c <- sem(model3c, group = "group", data=dat)
 summary(fit3c)
 
 # compare models
-aictab(list(fit3a, fit3b, fit3c), modnames=c("no groups", "free params", "spec. params"))
+aictab(list(fit3a, fit3b, fit3c), modnames=c("no groups", "all free", "b3 shared"))
 
 # Any questions?
 

@@ -10,7 +10,7 @@ library(ggdag)
 # simulate a dataset with known causal structure (make drawing)
 
 # More realistic simulation with varying error structures
-N <- 400  
+N <- 100  
 set.seed(35421354)
 dat <- data.frame(x1 = rnorm(N, mean = 0, sd = 1))
 dat$x2 = 0.2 * dat$x1 + rnorm(N, mean = 0, sd = 0.8)
@@ -45,10 +45,8 @@ y ~ x1 + x2 + x3'
 fit <- sem(model, meanstructure=T, data=dat)
 summary(fit)
 
-
 # Summarize the results
 # Let's fit a SEM instead
-
 
 # Fit first SEM
 model2 <- '
@@ -164,7 +162,7 @@ y ~ b1 * x2 +  b2 * x3
 x2 ~ b3 * x1
 x3 ~ b4 * x2
 
-b3 == 0.25
+b3 == 0.2
 
 # x1 has no direct path to y; it acts only through x2
 indir.x1.y := b3 * b1 + b3 * b4 * b2
@@ -178,11 +176,11 @@ summary(fit1b, fit.measures = F, standardized=T)
 resid(fit1b, type="cor")
 
 
-# interpretation
+# model reporting and interpretation
 
 # table of parameter estimates (confidence intervals)
-parameterEstimates(fit3)
-subset(parameterEstimates(fit3, standardized=T), op == "~")
+parameterEstimates(fit_true)
+subset(parameterEstimates(fit_true, standardized=T), op == "~")
 
 # get standardized estimates, SE and CIs
 standardizedSolution(fit3, type = "std.all")
