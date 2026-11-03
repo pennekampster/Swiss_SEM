@@ -158,7 +158,7 @@ digraph  {
 ::: notes
 :::
 
-## Exercise 1
+## Exercise 1 (explore variable interrelationships)
 
 -   Load the Seabloom dataset and average over the available years(data and code provided)
 -   Inspect relationships between the following variables:
@@ -169,7 +169,7 @@ digraph  {
     -  check multivariate normality of model residuals (hint: use the function mvn() in the R package MVN)
 -   What do you conclude?
 
-## Exercise 2
+## Exercise 2 (fit and inspect a path model)
 
 ```{dot}
 //| fig-width: 10
@@ -209,7 +209,7 @@ digraph  {
     -   Check model summary.
 -   Do you have a valid model?
 
-## Exercise 3
+## Exercise 3 (derived quantities)
 
 ```{dot}
 //| fig-width: 10
@@ -248,7 +248,7 @@ After finding a model with good fit:
     -   Calculate the standardized coefficients.
     -   Calculate derived quantities (direct, indirect and total effects of nutrient addition on biomass).
 
-## Exercise 4
+## Exercise 4 (fit a saturated model)
 
 ```{dot}
 //| fig-width: 10
@@ -288,14 +288,14 @@ digraph  {
     -   AIC comparison with simpler model used in exercise 3. Which one is more parsimonious?
     -   Perform model pruning on saturated model.
 
-## Exercise 5
+## Exercise 5 (mediation analysis)
 
 :::::: columns
 ::: {.column width="33%"}
 Full mediation
 
 ```{dot}
-//| fig-width: 3
+//| fig-width: 4
 //| fig-height: 4
 
 digraph  {
@@ -333,7 +333,7 @@ digraph  {
 Partial mediation
 
 ```{dot}
-//| fig-width: 3
+//| fig-width: 4
 //| fig-height: 4
 
 digraph  {
@@ -371,7 +371,7 @@ digraph  {
 No mediation
 
 ```{dot}
-//| fig-width: 3
+//| fig-width: 4
 //| fig-height: 4
 
 digraph  {
@@ -407,4 +407,4 @@ digraph  {
 -   Perform mediation analysis:
     -   Is there no, partial, or full mediation of disturbance on biomass via richness and eveness?
     -   Compare model fits.
-    -   Which model better represents your data?
+    -   Which model better represents the data?

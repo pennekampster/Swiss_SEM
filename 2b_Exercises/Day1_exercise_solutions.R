@@ -35,7 +35,7 @@ corrplot(cor_matrix,
          title = "Correlation Matrix",
          mar = c(0,0,1,0))
 
-# Rule of thumb: correlations > 0.9 indicate potential collinearity issues, correlations between 0.7-0.9 warrant attention
+# Rule of thumb: correlations > 0.9 indicate potential collinearity issues
 
 
 # 2. MULTIVARIATE NORMALITY TESTS
@@ -75,7 +75,6 @@ plot(mvn_result, diagnostic = "multivariate", type = "qq")
 
 
 # Exercise 2:
-
 simple <-
 "mass.above ~ nadd + rich + even + disk
 rich ~ nadd
@@ -89,17 +88,23 @@ seabloom$mass.above <- seabloom$mass.above / 100
 
 # estimate again
 fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
-summary(fit.simple, fit.measures = TRUE)
+summary(fit.simple)
 
 # modification indices
 modindices(fit.simple, minimum.value = 3.84)
 
 # add error correlation between evenness and richness
-fit.simple.up <- update(fit.simple, add = "rich ~~ even")
+simple.up <-
+"mass.above ~ nadd + rich + even + disk
+rich ~ nadd
+even ~ nadd
+rich ~~ even"
+
+fit.simple.up <- sem(simple.up, data = seabloom, estimator = "MLM")
 summary(fit.simple.up, fit.measures = TRUE)
 
 # modification indices
-modindices(fit.simple.up, minimum.value = 0.01)
+modindices(fit.simple.up)
 
 
 
@@ -143,7 +148,7 @@ aictab(list(fit.simple.up, fit.satur),
 # model pruning (remove non-significant paths)
 prune <-
 "mass.above ~ nadd + rich + even +  disk
-rich ~ nadd
+rich ~ nadd + disk
 even ~ nadd   
 
 rich ~~ even"

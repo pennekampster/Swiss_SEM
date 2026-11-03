@@ -717,7 +717,7 @@ fit.simple <- sem(simple, data = seabloom, estimator = "MLM")
 summary(fit.simple)
 ```
 
-## Exercise 1
+## Exercise 1 (confirmatory factor analysis)
 
 ```{dot}
 //| fig-width: 4
@@ -748,7 +748,7 @@ digraph  {
       - Standarize indicators (mean=0, sd=1)
       - Reverse coding of evenness (e.g., even = 1 - even)
 
-## Exercise 2
+## Exercise 2 (path model with latent variable)
 
 ```{dot}
 //| fig-width: 6
@@ -793,7 +793,7 @@ digraph  {
 -   Include latent variable into structural equation model
 -   What do you conclude?
 
-## Exercise 3
+## Exercise 3 (composite variable land use)
 
 ```{dot}
 //| fig-width: 5
@@ -835,48 +835,7 @@ digraph  {
 - Construct composite variable landuse based on nutrients and disturbance in lavaan.
 - Compare starting model with this one. Which one is better supported?
 
-## Exercise 4
-
-```{dot}
-//| fig-width: 5
-digraph  {
-
-   # a 'graph' statement
-  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5]
-
-  # several 'node' statements
-  node [shape = box,
-        fontname = Helvetica, color="gray"]
-  
-        evenness, richness;
-        nutrients;
-        disturbance;
-        middleman
-
-  middleman[shape=none width=0 height=0 label="" style=invis]
-disturbance->middleman [constraint=false, arrowhead=diamond];
-
-    middleman->biomass;
-  
-    evenness-> biomass;
-    richness->biomass;
-
-    nutrients -> middleman[arrowhead=none];
-    nutrients -> evenness;
-   nutrients -> richness;
-
- evenness-> richness [dir=both; minlen=3, style="dashed"] ;
-
- { rank="same"; evenness, richness}
-}
-```
-
--   Investigate possible interaction between disturbance and nutrient addition on above ground biomass.
--   Use a composite to model an interaction between nutrients and disturbance on biomass. 
--   Incorporate composite into full model
--   How does the interaction term influence the R$^2$ of biomass?
-
-## Exercise 5
+## Exercise 4 (multigroup SEM)
 
 ::: {.column width="40%"}
 Group = Disturbed
@@ -947,6 +906,50 @@ digraph  {
 
 - Investigate possible interaction between disturbance and nutrient addition on biomass with a multi-group SEM.
 - Test the hypothesis that all paths are the same for disturbed and undisturbed plots.
+
+
+
+## Exercise 5 (interaction modelled by composite)
+
+```{dot}
+//| fig-width: 5
+digraph  {
+
+   # a 'graph' statement
+  graph [overlap = false, fontsize = 10, rankdir = TB, ranksep=.5]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica, color="gray"]
+  
+        evenness, richness;
+        nutrients;
+        disturbance;
+        middleman
+
+  middleman[shape=none width=0 height=0 label="" style=invis]
+disturbance->middleman [constraint=false, arrowhead=diamond];
+
+    middleman->biomass;
+  
+    evenness-> biomass;
+    richness->biomass;
+
+    nutrients -> middleman[arrowhead=none];
+    nutrients -> evenness;
+   nutrients -> richness;
+
+ evenness-> richness [dir=both; minlen=3, style="dashed"] ;
+
+ { rank="same"; evenness, richness}
+}
+```
+
+-   Investigate possible interaction between disturbance and nutrient addition on above ground biomass.
+-   Use a composite to model an interaction between nutrients and disturbance on biomass. 
+-   Incorporate composite into full model
+-   How does the interaction term influence the R$^2$ of biomass?
+
 
 
 <!-- ## Exercise 7
