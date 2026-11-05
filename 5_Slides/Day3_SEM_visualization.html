@@ -359,37 +359,30 @@ Use of color. Showing a conceptual model in the same figure as the data-model. U
 I like the use of color here, but why does it go from bottom to top?
 :::
 
+
+
+## A quick tour of SEM visualizations
+
+![](images/Tabi_SEM.png){.absolute .absolute width="900" right=100}
+
+::: notes
+Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.
+
+The causal network based on structural equations. The path coefficients are shown in the small inset plots, with the different temperature regimes (groups) shown with different colours (constant = blue, slow = yellow, linear = orange, fast = red). The error bars indicate the standard error of the estimate. The temperature effect was fixed to zero for the constant treatment (hence no error bars). Dashed arrows indicate predominantly negative effects, while solid arrows indicate a positive effects across temperature change. Grey arrows indicate a switch of sign in the coefficients across treatments
+:::
+
 --->
-</section>
-<section id="a-quick-tour-of-sem-visualizations-3" class="slide level2">
-<h2>A quick tour of SEM visualizations</h2>
-<p><img data-src="images/Tabi_SEM.png" class="absolute" style="right: 100px; width: 900px; "></p>
-<aside class="notes">
-<p>Very high data-to-information ratio. this is a multi-group model. I like the way they show significance of paths and errors on the path coefficient estimates. They de-emphasize metrics like p-values in doing so.</p>
-<p>The causal network based on structural equations. The path coefficients are shown in the small inset plots, with the different temperature regimes (groups) shown with different colours (constant = blue, slow = yellow, linear = orange, fast = red). The error bars indicate the standard error of the estimate. The temperature effect was fixed to zero for the constant treatment (hence no error bars). Dashed arrows indicate predominantly negative effects, while solid arrows indicate a positive effects across temperature change. Grey arrows indicate a switch of sign in the coefficients across treatments</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="what-makes-for-a-powerful-sem-visualisation" class="slide level2">
 <h2>What makes for a powerful SEM visualisation?</h2>
 <ol type="1">
-<li class="fragment">Show relevant variables and paths</li>
-<li class="fragment">Show path coefficients (direction, magnitude, uncertainty, significance)</li>
-<li class="fragment">Show constructs to reduce model complexity (latent and composite variables)</li>
-<li class="fragment">Report goodness-of-fit of the model</li>
-<li class="fragment">Report explanatory power for endogenous variables<br>
+<li>Show relevant variables and types</li>
+<li>Show path coefficients (direction, magnitude, uncertainty, significance)</li>
+<li>Show constructs to reduce model complexity (latent and composite variables)</li>
+<li>Report goodness-of-fit of the model</li>
+<li>Report explanatory power for endogenous variables<br>
 </li>
-<li class="fragment">Only show graphs or tables with additional quantities (e.g, indirect and total effects) when relevant<br>
-</li>
+<li>Only show graphs or tables with additional quantities (e.g, indirect and total effects) when relevant</li>
 </ol>
 </section>
 <section id="relevant-variables" class="slide level2">
@@ -500,10 +493,12 @@ I like the use of color here, but why does it go from bottom to top?
 <img data-src="Day3_SEM_visualization_files/figure-revealjs/unnamed-chunk-1-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:90.0%"></section>
 <section id="room-for-creativity" class="slide level2 smaller">
 <h2>Room for creativity</h2>
-<ul>
-<li>Combine meta-model with fitted SEM</li>
-</ul>
-<p><img data-src="images/Mazziotta_sem.jpg" style="height:60.0%"></p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><img data-src="images/Siren_MM.png" style="width:100.0%"></p>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/Siren_SEM.png" style="width:100.0%"></p>
+</div></div>
 </section>
 <section>
 <section id="plotting-tools---available-r-packages" class="title-slide slide level1 center">

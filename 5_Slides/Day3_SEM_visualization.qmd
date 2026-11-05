@@ -147,7 +147,7 @@ Structural Equation Modelling standardised results showing how planted or sown s
 I like the use of color here, but why does it go from bottom to top?
 :::
 
---->
+
 
 ## A quick tour of SEM visualizations
 
@@ -159,17 +159,17 @@ Very high data-to-information ratio. this is a multi-group model. I like the way
 The causal network based on structural equations. The path coefficients are shown in the small inset plots, with the different temperature regimes (groups) shown with different colours (constant = blue, slow = yellow, linear = orange, fast = red). The error bars indicate the standard error of the estimate. The temperature effect was fixed to zero for the constant treatment (hence no error bars). Dashed arrows indicate predominantly negative effects, while solid arrows indicate a positive effects across temperature change. Grey arrows indicate a switch of sign in the coefficients across treatments
 :::
 
+--->
 
 ##  What makes for a powerful SEM visualisation? 
 
-::: {.incremental}
-1) Show relevant variables and paths
+1) Show relevant variables and types
 1) Show path coefficients (direction, magnitude, uncertainty, significance)
 1) Show constructs to reduce model complexity (latent and composite variables)
 1) Report goodness-of-fit of the model 
 1) Report explanatory power for endogenous variables  
 1) Only show graphs or tables with additional quantities (e.g, indirect and total effects) when relevant  
-:::
+
 
 ## Relevant variables 
 
@@ -293,9 +293,16 @@ pairs(d, pch = 19, lower.panel=panel_regression_line, upper.panel = panel_regres
 
 ## Room for creativity {.smaller}
 
-- Combine meta-model with fitted SEM
+:::: {.columns}
+::: {.column width="60%"}
+![](images/Siren_MM.png){width="100%"}
+:::
+::: {.column width="40%"}
+![](images/Siren_SEM.png){width="100%"}
+:::
+::::
 
-![](images/Mazziotta_sem.jpg){height=60%}
+
 
 
 

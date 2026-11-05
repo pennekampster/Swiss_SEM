@@ -84,7 +84,23 @@ diversity ~ nadd
 '
 
 fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
-summary(fit.lv)
+summary(fit.lv, standardized=T)
+
+# 
+
+# fit full SEM with latent diversity variable where loadings of rich and even 
+# can be independently estimated due to additional dfs
+lv <- '
+# Latent variable definition
+diversity =~ even.rev_std + rich_std
+
+mass.above ~ nadd + disk + diversity
+diversity ~ nadd
+'
+
+fit.lv <- sem(lv, data = seabloom, estimator = "MLM")
+summary(fit.lv, standardized=T)
+
 
 
 # Exercise 3: composite variable 'land use' (joint cause: nutrients + disturbance)
@@ -105,6 +121,7 @@ rich_std ~~ even_std'
 
 fit.comp.auto <- sem(comp.auto, data = seabloom, estimator = "MLM")
 summary(fit.comp.auto, standardized = TRUE, rsq = TRUE)
+
 
 # (b) Compare the starting model with the composite model (both on plain seabloom,
 # both MLM, same observed variables -> a valid comparison).
@@ -147,6 +164,18 @@ fit.int.mg.constrain <- sem(int.mg, group = "disk",
                             group.equal = "regressions", data = seabloom)
 summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
 
+# AIC comparison rejects all paths the same
+aictab(list(fit.int.mg, fit.int.mg.constrain))
+
+# we can also test whether intercepts are the same across groups
+# this tests whether the biomass is higher/lower in one of the groups, while the paths could be unchanged
+fit.int.mg.intercept <- sem(int.mg, group = "disk",
+                            group.equal = "intercepts", data = seabloom)
+summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
+
+
+
+# show coefficients side-by-side
 fit_tab <- (summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE))$pe
 fit_tab$term <- paste0(fit_tab$lhs, " ", fit_tab$op, " ", fit_tab$rhs)
 fit_tab$group_chr <- ifelse(fit_tab$group == 1, "undisturbed", 
@@ -160,10 +189,22 @@ ggplot(data=subset(fit_tab, op == "~"), aes(y=est, x=group_chr, colour=group_chr
   guides(colour="none") +
   theme_bw() 
 
+int.mg.constraint <-
+"mass.above ~ rich + even + nadd
+rich ~ c('b', 'b') * nadd 
+even ~ nadd 
+
+rich ~~ even"
+
+fit.int.mg.constrain <- sem(int.mg.constraint, group = "disk", data = seabloom)
+summary(fit.int.mg.constrain, standardized = TRUE, rsq = TRUE)
+
+
+
 
 library(AICcmodavg)
 aictab(list(fit.int.mg, fit.int.mg.constrain),
-       c("free (per-group paths)", "all paths equal"))
+       c("free (per-group paths)", "one path shared"))
 # Although the "all paths equal" model is more parsimonious (fewer parameters), it
 # has a much higher AICc, so it is not supported: the path strengths differ between
 # disturbed and undisturbed plots (i.e. disturbance interacts with the other drivers).

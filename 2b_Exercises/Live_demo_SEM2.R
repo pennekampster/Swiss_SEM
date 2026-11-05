@@ -141,8 +141,8 @@ summary(fit2a_auto, standardized=T)
 # 1) fit composite in lavaan manually (understand how composite is built internally)
 
 # get coefficients
-summary(lm(y ~ x1 * x2, data=dat))
-w <- coef(lm(y ~ x1 * x2, data=dat))[-1]   # weights for x1, x2, x1x2 (drop intercept)
+summary(lm(y ~ x1 + x2 +x1:x2, data=dat))
+w <- coef(lm(y ~ x1 + x2 +x1:x2, data=dat))[-1]   # weights for x1, x2, x1x2 (drop intercept)
 w
 
 # A "<~" composite is scaled by lavaan to UNIT VARIANCE. If we plug in the raw

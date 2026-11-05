@@ -906,7 +906,7 @@ digraph  {
 
 - Investigate possible interaction between disturbance and nutrient addition on biomass with a multi-group SEM.
 - Test the hypothesis that all paths are the same for disturbed and undisturbed plots.
-
+- Test the hypothesis that all intercepts are the same for disturbed and undisturbed plots.
 
 
 ## Exercise 5 (interaction modelled by composite)
